@@ -3,8 +3,11 @@
 Living-doc z zadaniami i pomysłami. **Ty wybierasz** co robimy (po ID, np. „zrób T3").
 Claude **aktualizuje** ten plik na bieżąco: przenosi do „Zrobione", dopisuje nowe pomysły.
 
-**Legenda statusu:** ⬜ do zrobienia · 🟡 w toku · ✅ zrobione · 💡 pomysł (niezweryfikowany)
-**Nakład:** S (mały) · M (średni) · L (duży) — **Wartość:** ⭐–⭐⭐⭐
+Przy każdym zadaniu jest **„Co to da"** napisane po ludzku — żebyś wiedział, co zmiana
+realnie wniesie, zanim ją wybierzesz.
+
+**Status:** ⬜ do zrobienia · 🟡 w toku · ✅ zrobione · 💡 pomysł
+**Nakład:** S (szybkie) · M (średnie) · L (duże) — **Wartość:** ⭐–⭐⭐⭐
 
 _Ostatnia aktualizacja: 2026-05-27_
 
@@ -12,52 +15,86 @@ _Ostatnia aktualizacja: 2026-05-27_
 
 ## 🔝 Priorytet (rekomendowana kolejność)
 
-| ID | Zadanie | Wartość | Nakład | Status |
-|----|---------|:------:|:-----:|:-----:|
-| **T1** | Optymalizacja obrazów → WebP/AVIF + `srcset` (public/images ~36 MB PNG) | ⭐⭐⭐ | S | ⬜ |
-| **T2** | SEO / meta per trasa + Open Graph (miniaturka z key-artem na social) | ⭐⭐⭐ | S–M | ⬜ |
-| **T3** | ErrorBoundary dla lazy-chunków (retry, gdy chunk się nie pobierze) | ⭐⭐ | S | ⬜ |
-| **T4** | Mini-player nie zasłania stopki (padding-bottom gdy gra) | ⭐ | S | ⬜ |
-| **T5** | Strona `/player` spięta z realnym audio (dziś symuluje oś czasu) | ⭐⭐ | M | ⬜ |
-| **T6** | „Moja biblioteka" / widok ulubionych (mamy favorites w localStorage) | ⭐⭐ | M | ⬜ |
-| **T7** | Realny backend pod formularze (newsletter/rejestracja/kontakt) | ⭐⭐ | M | ⬜ |
-| **T8** | SFX + muzyka pod narrację (mix warstw ffmpegiem) | ⭐⭐ | M | ⬜ |
-| **T9** | Dokończyć i18n stron prawnych (Prawne/Stany/Mailingi hardcoded PL) | ⭐⭐ | M | ⬜ |
-| **T10** | Testy (Vitest + RTL): PlayerContext + smoke-testy tras | ⭐⭐ | M | ⬜ |
+### T1 · Lżejsze, szybciej ładujące się obrazy ⭐⭐⭐ · S · ⬜
+**Co to da:** strona wczytuje się wyraźnie szybciej, zwłaszcza na telefonie i wolniejszym
+necie. Zdjęcia (potwór, karty historii) ważą dziś ~36 MB — to najcięższa rzecz na stronie.
+Po zmianie ważyłyby kilka razy mniej, bez widocznej utraty jakości. Mniej „mrugania" przy
+wchodzeniu, lepszy wynik w Google.
+<sub>Tech: konwersja PNG→WebP/AVIF, responsywne `srcset`, lazy poza foldem.</sub>
 
-### Szczegóły zadań
+### T2 · Ładny podgląd przy udostępnianiu + widoczność w Google ⭐⭐⭐ · S–M · ⬜
+**Co to da:** gdy ktoś wrzuci link do OBSKURY na Facebooka / Discorda / iMessage, pokaże się
+key-art potwora z tytułem i opisem zamiast gołego linka. Każda podstrona dostaje własny tytuł
+i opis — lepiej wygląda w wyszukiwarce i kusi do kliknięcia.
+<sub>Tech: per-route `<title>`/`<meta>`/Open Graph + obrazek OG.</sub>
 
-- **T1** — Konwersja PNG→WebP/AVIF, responsywne rozmiary, `loading="lazy"` poza foldem. Największy zysk LCP/Lighthouse (code-splitting już zrobiony).
-- **T2** — Per-route `<title>`/`<meta>`/OG (np. lekki helmet albo własny hook). Wymaga obrazka OG (key-art).
-- **T3** — `Suspense` ma fallback, ale brak obsługi błędu pobrania chunku (typowe po redeployu przy starej karcie). Granica błędu z „spróbuj ponownie".
-- **T4** — Player to fixed overlay zakrywający dół `Footer`. Dodać dolny padding do treści, gdy `current` aktywny. (zgłoszone w pass-ie polish)
-- **T5** — Zsynchronizować transkrypt/rozdziały w `pages/Player.jsx` z prawdziwym `currentTime` z `PlayerContext`.
-- **T6** — Ekran ulubionych spięty z `Konto`; render z `favorites` + `getTrack`.
-- **T7** — Serverless na Vercelu (`api/*`) + walidacja; dziś formularze są UI-only.
-- **T8** — Generator SFX/muzyki (wzorzec jak narracja) + krok mixujący ffmpegiem. Wymaga scope'ów Sound Effects/Music na kluczu.
-- **T9** — Wyciągnąć teksty do `public/locales/*/translation.json`. Dług z notatek (i18n_gap_legal_pages).
-- **T10** — Najpierw krytyczna logika `PlayerContext` (kolejka, resume, sleep), potem smoke-testy tras.
+### T3 · Strona się nie „wykłada" po aktualizacji ⭐⭐ · S · ⬜
+**Co to da:** dziś, jeśli ktoś ma otwartą starą kartę i wgramy nową wersję, kliknięcie w inną
+podstronę może pokazać białą/pustą stronę. Po zmianie zobaczy zamiast tego czytelny komunikat
+„coś poszło nie tak — spróbuj ponownie" z przyciskiem odświeżenia. Mniej zgubionych userów.
+<sub>Tech: ErrorBoundary wokół lazy-tras z retry.</sub>
+
+### T4 · Player nie zasłania stopki ⭐ · S · ⬜
+**Co to da:** odtwarzacz na dole obecnie nachodzi na ostatni kawałek treści/stopki. Drobny
+fix, ale strona wygląda dopracowanie — nic nie jest „przykryte" paskiem gracza.
+<sub>Tech: dolny padding treści, gdy ścieżka aktywna.</sub>
+
+### T5 · Pełny odtwarzacz pokazuje prawdziwy postęp nagrania ⭐⭐ · M · ⬜
+**Co to da:** strona `/player` (ta duża, immersyjna z transkryptem) działa teraz „na niby" —
+oś czasu i przesuwające się napisy są symulowane. Po zmianie będą zgrane z realnym dźwiękiem:
+napisy lecą w rytm tego, co faktycznie słychać, suwak działa naprawdę.
+<sub>Tech: spiąć transkrypt/rozdziały z `currentTime` z PlayerContext.</sub>
+
+### T6 · „Moja biblioteka" — ulubione w jednym miejscu ⭐⭐ · M · ⬜
+**Co to da:** serduszka, które user klika, już są zapamiętywane — ale nie ma ekranu, gdzie by
+je zobaczył. Po zmianie w „Koncie" pojawi się lista zapisanych odcinków, gotowa do odtworzenia
+jednym kliknięciem. Daje poczucie, że to realna platforma, nie makieta.
+<sub>Tech: widok z `favorites` (localStorage) + `getTrack`, spięty z Konto.</sub>
+
+### T7 · Formularze, które naprawdę działają ⭐⭐ · M · ⬜
+**Co to da:** zapis do newslettera, rejestracja, kontakt są dziś tylko „na pokaz" — nic się nie
+wysyła. Po zmianie dane faktycznie gdzieś trafiają (mail/baza), z walidacją i potwierdzeniem.
+Niezbędne, jeśli strona ma kiedyś ruszyć na żywo.
+<sub>Tech: funkcje serverless na Vercelu (`api/*`) + walidacja.</sub>
+
+### T8 · Dźwięki tła i muzyka pod narrację ⭐⭐ · M · ⬜
+**Co to da:** zamiast samego głosu lektora — pełna atmosfera: cichy ambient w tle, efekty
+(mgła, plusk, oddech, infradźwięk) w konkretnych momentach. To właśnie to, co robi „ciarki"
+na platformie audio-horror. Generowane i miksowane automatycznie w jeden plik.
+<sub>Tech: generator SFX/muzyki (jak narracja) + mix warstw ffmpegiem; wymaga scope'ów na kluczu ElevenLabs.</sub>
+
+### T9 · Strony prawne tłumaczą się na inne języki ⭐⭐ · M · ⬜
+**Co to da:** masz 40 języków, ale Regulamin / Stany / Mailingi są zapisane na sztywno po
+polsku i nie przełączają się. Obcojęzyczny user widzi tam polski tekst. Po zmianie tłumaczą się
+jak reszta strony.
+<sub>Tech: wyciągnąć teksty do `public/locales/*/translation.json`.</sub>
+
+### T10 · Zabezpieczenie przed psuciem tego, co działa ⭐⭐ · M · ⬜
+**Co to da:** automatyczne testy pilnują, że logika playera (kolejka, wznawianie, sleep timer)
+i strony nie popsują się przy kolejnych zmianach. Mniej „działało wczoraj, dziś nie wiadomo
+czemu". Spokój przy dalszym rozwoju.
+<sub>Tech: Vitest + RTL — najpierw PlayerContext, potem smoke-testy tras.</sub>
 
 ---
 
 ## 💡 Pomysły / parking (do oceny)
 
-- Footer social to `href="#"` — podłączyć realne URL-e przed produkcją.
-- Waveform w `pages/Player.jsx` bleeduje ~5 px na 375 — `overflow-hidden` na kontenerze.
-- Po upgradzie planu ElevenLabs: odkomentować polskie library voices w `scripts/narration/voices.mjs` + `npm run narration -- --force`.
-- Głos per postać w pełnych odcinkach (rozbudowa dialogów w `episodes.mjs`).
-- Skip-link „przejdź do treści" dla dostępności klawiaturowej.
-- Consent/analytics (jeśli wejdzie produkcyjnie).
-- Scena 3D w hero (R3F) — mocny efekt „0–3s", ale L i ryzyko perf.
-- Resume „kontynuuj słuchanie" jako widoczny baner na Home (mamy stan w localStorage).
+- **Linki social w stopce** prowadzą donikąd (`#`) — podpiąć realne profile przed startem.
+- **Drobny błąd na telefonie (375 px):** waveform na stronie `/player` wystaje ~5 px poza ekran.
+- **Lepsze polskie głosy narracji** — po wykupieniu planu ElevenLabs wracamy do głosów z Library (mam je zapisane). Teraz głosy darmowe mają lekki angielski akcent.
+- **Różne głosy postaci w pełnych odcinkach** — rozbudowa dialogów (mamy już mechanizm).
+- **Skrót „przejdź do treści"** dla osób korzystających z klawiatury (dostępność).
+- **Zgoda na ciasteczka / analityka** — gdy strona pójdzie na produkcję.
+- **Animowana scena 3D w hero** — efektowne pierwsze 3 sekundy, ale duży nakład i ryzyko spowolnienia.
+- **Baner „słuchaj dalej"** na stronie głównej — wraca do miejsca, w którym user przerwał (dane już zapisujemy).
 
 ---
 
 ## ✅ Zrobione
 
-- Naprawa holograficznego nagłówka (`SciFiText`) — czysty neon + chromatic aberration, złagodzony glitch.
-- Cinematic page transitions (AnimatePresence + frozen outlet) w `Layout`.
-- Pass polish-reviewer na 22 stronach — focus states, kontrast WCAG, mobile breakpointy.
-- Globalny player audio — trwały mini-player, kolejka, resume, sleep timer, ulubione (localStorage).
-- Performance — code-splitting per trasa (React.lazy + Suspense shimmer); główny chunk 724→398 KB.
-- ElevenLabs — pre-generacja narracji (skrypt + role/dialog), 7 odcinków, ep-12 wielogłosowy.
+- **Naprawiony „holograficzny" nagłówek hero** — czysty czerwony neon zamiast rozmazanej plamy, spokojniejszy glitch.
+- **Filmowe przejścia między stronami** — płynne fade zamiast przeskoku.
+- **Przegląd jakości 22 stron** — widoczny focus klawiatury, czytelny kontrast, poprawki na telefonie.
+- **Globalny odtwarzacz** — pasek na dole grający bez przerwy przy zmianie stron, kolejka, wznawianie po odświeżeniu, sleep timer, ulubione.
+- **Przyspieszenie ładowania** — strona wczytuje tylko to, co potrzebne (główna paczka 724→398 KB).
+- **Narracja głosowa (ElevenLabs)** — 7 odcinków, finał (ep-12) z kilkoma głosami w dialogu.
