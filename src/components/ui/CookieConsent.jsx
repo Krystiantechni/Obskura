@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { getConsent, setConsent } from "../../lib/consent";
-import { getLenis } from "../../lib/lenisRef";
+import useScrollBlood from "../../hooks/useScrollBlood";
 
 // Ikonki kategorii
 const Shield = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>);
@@ -63,38 +63,11 @@ export default function CookieConsent() {
   const [analytics, setAnalytics] = useState(saved?.analytics ?? false);
   const [marketing, setMarketing] = useState(saved?.marketing ?? false);
   const bannerRef = useRef(null);
+  const fabRef = useRef(null);
 
-  // Krew w obramowaniu reaguje na prędkość scrolla: w dół → wjeżdża w górę, grawitacja ściąga ją z powrotem.
-  useEffect(() => {
-    if (view === "hidden") return undefined;
-    const el = bannerRef.current;
-    if (!el) return undefined;
-    const BASE = 14;
-    const MAX = 100;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.style.setProperty("--blood-fill", `${BASE}%`);
-      return undefined;
-    }
-    let lastY = window.scrollY;
-    let target = BASE;
-    let level = BASE;
-    let raf;
-    const tick = () => {
-      // Prędkość scrolla: preferuj Lenis (lepiej oddaje siłę flicka), fallback do delty scrollY.
-      const lenis = getLenis();
-      const y = window.scrollY;
-      const d = lenis && typeof lenis.velocity === "number" ? lenis.velocity : y - lastY;
-      lastY = y;
-      // szybki scroll w dół wbija krew aż na górę (peak-hold); slow = niżej
-      if (d > 0.5) target = Math.max(target, Math.min(MAX, BASE + d * 2.4));
-      target += (BASE - target) * 0.045; // grawitacja — powrót na dół
-      level += (target - level) * 0.2; // wygładzenie
-      el.style.setProperty("--blood-fill", `${level.toFixed(2)}%`);
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [view]);
+  // Krew reaguje na prędkość scrolla — baner (obramowanie) i ikona (ciecz w środku koła).
+  useScrollBlood(bannerRef, view !== "hidden", { base: 14 });
+  useScrollBlood(fabRef, view === "hidden", { base: 22 });
 
   const close = (choice) => {
     setConsent(choice);
@@ -114,23 +87,19 @@ export default function CookieConsent() {
       {/* Pływająca ikona — wycofaj/zmień zgodę (prawy dół, obok panelu A/B) */}
       {view === "hidden" && (
         <button
+          ref={fabRef}
           type="button"
           onClick={reopen}
           aria-label="Ustawienia plików cookie"
           className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
         >
+          {/* Krew jako ciecz w środku koła (poziom = --blood-fill, sterowany scrollem) */}
+          <span className="cookie-blood" aria-hidden><span className="cookie-blood-fill" /></span>
           <span className="cookie-fab-ring" aria-hidden />
           <span className="cookie-fab-sheen" aria-hidden />
-          <span className="relative z-[1]"><Cookie size={26} /></span>
-          <span className="blood-pool" aria-hidden />
-          {/* krople boczne mniejsze, środkowa główna większa (-30% wobec poprzednich) */}
-          <span className="blood-drip" style={{ left: "16px", width: "2.8px", height: "3.5px", animationDelay: "0.6s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "28px", width: "5.6px", height: "7px", animationDelay: "1.8s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "40px", width: "2.8px", height: "3.5px", animationDelay: "3.1s" }} aria-hidden />
+          <span className="relative z-[2]"><Cookie size={26} /></span>
         </button>
       )}
-      {/* Krew zebrana na dole ekranu pod ikoną */}
-      {view === "hidden" && <span className="blood-puddle" aria-hidden />}
 
       <AnimatePresence>
         {view !== "hidden" && (
