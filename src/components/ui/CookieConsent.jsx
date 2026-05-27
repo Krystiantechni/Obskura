@@ -9,7 +9,8 @@ const Shield = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none
 const Sliders = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg>);
 const Chart = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 19V5M4 19h16M8 16l4-5 3 3 4-6"/></svg>);
 const Megaphone = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 10v4h3l9 5V5L7 10H4zM18 9a3 3 0 0 1 0 6"/></svg>);
-const Cookie = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3a9 9 0 1 0 9 9 3.5 3.5 0 0 1-4-4 3.5 3.5 0 0 1-5-5z"/><circle cx="9" cy="11" r="1" fill="currentColor"/><circle cx="14" cy="14" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>);
+const Cookie = ({ size = 18 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3a9 9 0 1 0 9 9 3.5 3.5 0 0 1-4-4 3.5 3.5 0 0 1-5-5z"/><circle cx="9" cy="11" r="1" fill="currentColor"/><circle cx="14" cy="14" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>);
+Cookie.propTypes = { size: PropTypes.number };
 
 function Toggle({ checked, onChange, label }) {
   return (
@@ -82,16 +83,18 @@ export default function CookieConsent() {
           type="button"
           onClick={reopen}
           aria-label="Ustawienia plików cookie"
-          className="cookie-fab fixed bottom-6 right-[84px] z-[85] grid h-11 w-11 place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-1 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
+          className="cookie-fab fixed bottom-6 right-[84px] z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
         >
           <span className="cookie-fab-ring" aria-hidden />
-          <span className="relative z-[1]"><Cookie /></span>
+          <span className="relative z-[1]"><Cookie size={26} /></span>
           <span className="blood-pool" aria-hidden />
-          <span className="blood-drip" style={{ left: "12px", animationDelay: "0s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "22px", animationDelay: "1.4s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "31px", animationDelay: "2.7s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "16px", animationDelay: "0s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "29px", animationDelay: "1.4s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "42px", animationDelay: "2.7s" }} aria-hidden />
         </button>
       )}
+      {/* Krew zebrana na dole ekranu pod ikoną */}
+      {view === "hidden" && <span className="blood-puddle" aria-hidden />}
 
       <AnimatePresence>
         {view !== "hidden" && (
