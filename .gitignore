@@ -1,0 +1,81 @@
+# --- Dependencies ---
+node_modules/
+.pnp
+.pnp.js
+
+# --- Build output ---
+dist/
+dist-ssr/
+build/
+.vite/
+
+# --- Env / secrets (NEVER commit) ---
+.env
+.env.*
+!.env.example
+*.local
+.mcp.local.json
+
+# --- Deployment ---
+.vercel/
+.netlify/
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- OS files ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Editor ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.history/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+
+# --- Coverage / cache ---
+coverage/
+*.tsbuildinfo
+.cache/
+.parcel-cache/
+
+# --- Test / automation artifacts ---
+test-results/
+playwright-report/
+playwright/.cache/
+
+# --- Claude Code (not part of app, kept local only) ---
+.claude/
+CLAUDE.md
+.mcp.json
+.mcp.local.json
+
+# --- Local-only files (kept on disk, not in repo) ---
+README.md
+public/fonts/README.md
+public/icons.svg
+src/assets/
+
+# --- i18n working/temp files (generowane lokalnie, nie wchodzą do repo) ---
+_frag_*.json
+_tmp_*.json
+.tmp_i18n/
