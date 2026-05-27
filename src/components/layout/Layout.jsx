@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Outlet, useOutlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import ScrollProgressBar from "../ui/ScrollProgressBar";
 import MiniPlayer from "../ui/MiniPlayer";
+import PageFallback from "../ui/PageFallback";
 
 // Zamraża bieżący outlet w momencie montażu, żeby podczas exit-animacji
 // stara trasa nie podmieniła się na nową (wymóg data routera dla AnimatePresence).
@@ -54,7 +55,9 @@ export default function Layout() {
             exit={reduce ? undefined : "exit"}
             style={{ willChange: reduce ? undefined : "opacity, transform, filter" }}
           >
-            <FrozenOutlet />
+            <Suspense fallback={<PageFallback />}>
+              <FrozenOutlet />
+            </Suspense>
           </motion.div>
         </AnimatePresence>
       </main>

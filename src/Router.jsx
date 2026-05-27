@@ -1,27 +1,32 @@
+/* eslint-disable react-refresh/only-export-components -- plik konfiguracji routera, nie granica fast-refresh */
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Archive from "./pages/Archive";
-import Club from "./pages/Club";
-import Episode from "./pages/Episode";
-import Aplikacja from "./pages/Aplikacja";
-import Forum from "./pages/Forum";
-import Kariera from "./pages/Kariera";
-import Konto from "./pages/Konto";
-import Mailingi from "./pages/Mailingi";
-import Newsletter from "./pages/Newsletter";
-import Onboarding from "./pages/Onboarding";
-import Patroni from "./pages/Patroni";
-import Player from "./pages/Player";
-import Prasa from "./pages/Prasa";
-import Prawne from "./pages/Prawne";
-import Spotkania from "./pages/Spotkania";
-import Stany from "./pages/Stany";
-import Tworcy from "./pages/Tworcy";
-import Wsparcie from "./pages/Wsparcie";
-import ComingSoon from "./pages/ComingSoon";
+
+// Home eager — najczęstsze wejście, szybki pierwszy paint.
+// Pozostałe trasy lazy — własny chunk ładowany na żądanie (Suspense + shimmer w Layout).
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Archive = lazy(() => import("./pages/Archive"));
+const Club = lazy(() => import("./pages/Club"));
+const Episode = lazy(() => import("./pages/Episode"));
+const Aplikacja = lazy(() => import("./pages/Aplikacja"));
+const Forum = lazy(() => import("./pages/Forum"));
+const Kariera = lazy(() => import("./pages/Kariera"));
+const Konto = lazy(() => import("./pages/Konto"));
+const Mailingi = lazy(() => import("./pages/Mailingi"));
+const Newsletter = lazy(() => import("./pages/Newsletter"));
+const Onboarding = lazy(() => import("./pages/Onboarding"));
+const Patroni = lazy(() => import("./pages/Patroni"));
+const Player = lazy(() => import("./pages/Player"));
+const Prasa = lazy(() => import("./pages/Prasa"));
+const Prawne = lazy(() => import("./pages/Prawne"));
+const Spotkania = lazy(() => import("./pages/Spotkania"));
+const Stany = lazy(() => import("./pages/Stany"));
+const Tworcy = lazy(() => import("./pages/Tworcy"));
+const Wsparcie = lazy(() => import("./pages/Wsparcie"));
+const ComingSoon = lazy(() => import("./pages/ComingSoon"));
 
 export const router = createBrowserRouter([
   {
