@@ -91,3 +91,4 @@ czemu". Spokój przy dalszym rozwoju.
 - **T1 · Lżejsze obrazy** — PNG→JPEG (q82, max 2400 px): **36 MB → 6 MB** (6× mniej), bez widocznej utraty jakości. Szybsze ładowanie, lepszy Lighthouse.
 - **T2 · SEO + podgląd przy udostępnianiu** — statyczne OG/Twitter w index.html + obrazek OG 1200×630 (key-art), per-trasowe tytuły/opisy, nowy favicon (czerwona kropka marki), theme-color.
 - **Favicon** — zmieniony z resztki szablonu na markę OBSKURY (czerwona kropka w obrysie).
+- **Karta OG z nagłówkiem + CTA** — `npm run og` (sharp) wypala na key-arcie nagłówek „Słuchaj, czego inni nie słyszą" + przycisk „Słuchaj teraz"; dłuższy tytuł (58) i opis (160) pod zalecenia walidatorów.
