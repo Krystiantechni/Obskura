@@ -4,9 +4,9 @@
 const SITE = "OBSKURA";
 
 const DEFAULT = {
-  title: "OBSKURA — platforma audio horror",
+  title: "OBSKURA — oryginalny audio horror w binauralnym dźwięku 3D",
   description:
-    "Oryginalne historie grozy w binauralnym 3D. Głosy, które zostają z Tobą długo po tym, jak zdejmiesz słuchawki.",
+    "Oryginalne historie grozy w binauralnym dźwięku 3D. Schodzisz do tunelu, a coś już tam na Ciebie czeka — i zostaje z Tobą długo po tym, jak zdejmiesz słuchawki.",
 };
 
 // Tytuł krótki (bez sufiksu) — sufiks „· OBSKURA" doklejany automatycznie poza stroną główną.
