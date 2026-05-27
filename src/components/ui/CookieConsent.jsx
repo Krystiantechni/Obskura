@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -64,8 +64,30 @@ export default function CookieConsent() {
   const [analytics, setAnalytics] = useState(saved?.analytics ?? false);
   const [marketing, setMarketing] = useState(saved?.marketing ?? false);
   // Ikona: przeciągalna (zapis pozycji) + krew o stałej objętości przechylająca się przy scrollu/drag.
-  const { ref: fabRef, pos, style: fabStyle, onPointerDown, onPointerMove, onPointerUp, shouldIgnoreClick } = useCookieFab();
-  const puddleStyle = pos ? { left: `${pos.x + 29}px`, right: "auto", transform: "translateX(-50%)" } : undefined;
+  const { ref: fabRef, style: fabStyle, onPointerDown, onPointerMove, onPointerUp, shouldIgnoreClick } = useCookieFab();
+
+  // Kałuże na podłodze — krople spadają pionowo i zostają tam, gdzie spadły (ślad za ciastkiem).
+  const [puddles, setPuddles] = useState([]);
+  useEffect(() => {
+    if (view !== "hidden") return undefined;
+    const id = setInterval(() => {
+      const el = fabRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const x = Math.round(r.left + r.width / 2);
+      setPuddles((list) => {
+        const i = list.findIndex((p) => Math.abs(p.x - x) < 26);
+        if (i >= 0) {
+          const next = list.slice();
+          next[i] = { ...next[i], grow: Math.min(1, next[i].grow + 0.16) };
+          return next;
+        }
+        const np = [...list, { id: Date.now() + Math.random(), x, grow: 0.25 }];
+        return np.length > 14 ? np.slice(np.length - 14) : np;
+      });
+    }, 1300);
+    return () => clearInterval(id);
+  }, [view, fabRef]);
 
   const close = (choice) => {
     setConsent(choice);
@@ -106,8 +128,15 @@ export default function CookieConsent() {
           <span className="blood-drip" style={{ left: "40px", width: "2.8px", height: "3.5px", animationDelay: "3.1s" }} aria-hidden />
         </button>
       )}
-      {/* Kałuża krwi na dole ekranu pod ikoną */}
-      {view === "hidden" && <span className="blood-puddle" style={puddleStyle} aria-hidden />}
+      {/* Kałuże krwi na podłodze — zostają w miejscach, gdzie krople spadły */}
+      {view === "hidden" && puddles.map((p) => (
+        <span
+          key={p.id}
+          className="floor-puddle"
+          style={{ left: `${p.x}px`, width: `${24 + p.grow * 72}px`, height: `${5 + p.grow * 9}px`, opacity: 0.4 + p.grow * 0.5 }}
+          aria-hidden
+        />
+      ))}
 
       <AnimatePresence>
         {view !== "hidden" && (
