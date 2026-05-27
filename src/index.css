@@ -225,29 +225,29 @@
     animation: cod-sheen 5s ease-in-out infinite;
   }
 
-  /* Stała "kałuża" krwi gromadzącej się w dolnej krawędzi — ~200% poprzedniej. */
+  /* Stała "kałuża" krwi gromadzącej się w dolnej krawędzi (+20% wobec poprzedniej). */
   .blood-pool {
     position: absolute;
-    bottom: -3px;
+    bottom: -4px;
     left: 50%;
-    width: 82%;
-    height: 14px;
+    width: 96%;
+    height: 17px;
     transform: translateX(-50%);
     pointer-events: none;
-    background: radial-gradient(ellipse at 50% 0, rgba(209,31,31,0.97), rgba(150,16,16,0.6) 50%, rgba(122,13,13,0.3) 72%, transparent 82%);
+    background: radial-gradient(ellipse at 50% 0, rgba(209,31,31,0.97), rgba(150,16,16,0.62) 50%, rgba(122,13,13,0.32) 72%, transparent 82%);
     filter: blur(0.5px);
   }
 
-  /* Kropla: zbiera się → cięży → grawitacyjnie spada (loop) */
+  /* Kropla: kolor krwi z obramowania, startuje z dolnej krawędzi pierścienia (-4px). */
   .blood-drip {
     position: absolute;
-    bottom: -1px;
+    bottom: -4px;
     width: 6px;
     height: 7px;
     pointer-events: none;
-    background: radial-gradient(circle at 50% 30%, #ff5a5a, #d11f1f 60%, #7a0d0d);
+    background: radial-gradient(circle at 50% 32%, #d11f1f, #961010 55%, #7a0d0d);
     border-radius: 50% 50% 50% 50% / 65% 65% 40% 40%;
-    box-shadow: 0 0 6px rgba(255,42,42,0.55), inset 0 1px 1px rgba(255,255,255,0.3);
+    box-shadow: 0 0 5px rgba(150,16,16,0.6), inset 0 1px 1px rgba(255,255,255,0.22);
     transform-origin: top center;
     animation: blood-drip 3.8s cubic-bezier(0.5, 0, 0.85, 0.3) infinite;
   }
