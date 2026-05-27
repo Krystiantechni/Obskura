@@ -71,8 +71,13 @@ czemu". Spokój przy dalszym rozwoju.
 - **Lepsze polskie głosy narracji** — po wykupieniu planu ElevenLabs wracamy do głosów z Library (mam je zapisane). Teraz głosy darmowe mają lekki angielski akcent.
 - **Różne głosy postaci w pełnych odcinkach** — rozbudowa dialogów (mamy już mechanizm).
 - **Skrót „przejdź do treści"** dla osób korzystających z klawiatury (dostępność).
-- **Faktyczna analityka** — gdy będzie potrzebna: ładować dopiero po `hasAnalyticsConsent()` (mechanizm zgody już gotowy); dodać link „zmień zgodę" w stopce.
-- **Cookie consent i18n** — baner jest po polsku; lokalizacja per język to dodatek.
+- **Cookies / zgoda — następne kroki** (mechanizm `hasConsent(...)` już gotowy):
+  - **Analityka** — najlepiej cookieless (Plausible / Umami / Fathom — bez ciasteczek, mniej formalności); ewentualnie GA4 (`_ga`, `_ga_*`). Ładować dopiero po `hasConsent("analytics")`.
+  - **Marketing** — tylko jeśli ruszą kampanie: Meta Pixel (`_fbp`, `_fbc`), Google Ads (`_gcl_au`), TikTok (`_ttp`). Za `hasConsent("marketing")`.
+  - **Niezbędne** (gdy dojdzie logowanie/backend) — cookie sesji (`httpOnly`, `Secure`, `SameSite`) + token CSRF.
+  - **Dopasowanie** — dorzucić zapamiętywanie głośności, prędkości odtwarzania, motywu.
+  - **Polityka prywatności** — wpisać realne nazwy używanych cookies, gdy któreś dodamy.
+  - **Link „zmień zgodę"** w stopce + **i18n banera** (dziś po polsku).
 - **Animowana scena 3D w hero** — efektowne pierwsze 3 sekundy, ale duży nakład i ryzyko spowolnienia.
 - **Baner „słuchaj dalej"** na stronie głównej — wraca do miejsca, w którym user przerwał (dane już zapisujemy).
 - **Per-trasowe karty OG dla crawlerów** — dziś każdy udostępniony link pokazuje główną kartę OBSKURY (bo crawlery nie wykonują JS, a strona jest SPA). Osobne miniaturki per odcinek wymagałyby prerenderu/SSR (np. vite prerender) — większy nakład.
