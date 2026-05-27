@@ -12,12 +12,14 @@ const Sliders = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="non
 const Chart = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 19V5M4 19h16M8 16l4-5 3 3 4-6"/></svg>);
 const Megaphone = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 10v4h3l9 5V5L7 10H4zM18 9a3 3 0 0 1 0 6"/></svg>);
 const Cookie = ({ size = 18 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <path fill="currentColor" d="M12 2.4c-.5 0-1 .03-1.48.1a3.5 3.5 0 0 1 4.86 4.86 3.5 3.5 0 0 1 4.34 4.34A9.6 9.6 0 1 1 12 2.4z" />
-    <circle cx="8.4" cy="10.6" r="1.25" fill="#3a1212" />
-    <circle cx="12.8" cy="14.6" r="1.25" fill="#3a1212" />
-    <circle cx="15" cy="9.6" r="1.05" fill="#3a1212" />
-    <circle cx="9.3" cy="15.2" r="0.95" fill="#3a1212" />
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
+    <path d="M12 2.6a9.4 9.4 0 1 0 9.4 9.4 3.7 3.7 0 0 1-4.6-4.7A3.7 3.7 0 0 1 12 2.6z" />
+    <circle cx="9.1" cy="9" r="1.05" fill="currentColor" stroke="none" />
+    <circle cx="7.3" cy="13.1" r="1.3" fill="currentColor" stroke="none" />
+    <circle cx="11.6" cy="12.2" r="0.7" fill="currentColor" stroke="none" />
+    <circle cx="12.5" cy="16" r="1.35" fill="currentColor" stroke="none" />
+    <circle cx="9" cy="16.5" r="0.7" fill="currentColor" stroke="none" />
+    <circle cx="15.5" cy="14.8" r="0.7" fill="currentColor" stroke="none" />
   </svg>
 );
 Cookie.propTypes = { size: PropTypes.number };
