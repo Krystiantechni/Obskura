@@ -16,7 +16,7 @@ export default function Login() {
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
       {/* Art */}
       <div className="relative hidden overflow-hidden bg-bg-0 lg:block">
-        <img src="/images/img-hallway.png" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_25%]" style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.85)" }} />
+        <img src="/images/img-hallway.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_25%]" style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.85)" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, transparent 0%, transparent 60%, rgba(5,6,8,0.9) 100%), linear-gradient(180deg, rgba(5,6,8,0.5) 0%, transparent 30%, rgba(5,6,8,0.7) 100%)" }} />
         <div className="absolute left-[60px] top-8 z-[2] flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-eyebrow text-ink-1">
           <span className="h-1.5 w-1.5 animate-obskura-pulse-fast rounded-full bg-red shadow-[0_0_8px_#ff2a2a]" />

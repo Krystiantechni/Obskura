@@ -13,7 +13,7 @@ export default function Hero({ variant = "wide" }) {
   const { t } = useTranslation();
   const { current, playing: globalPlaying, playTrack, toggle } = usePlayer();
   const isWide = variant === "wide";
-  const img = isWide ? "/images/dada.png" : "/images/monster.png";
+  const img = isWide ? "/images/dada.jpg" : "/images/monster.jpg";
 
   const isHero = current?.id === HERO_TRACK.id;
   const playing = isHero && globalPlaying;

@@ -5,14 +5,14 @@ import Eyebrow from "../components/ui/Eyebrow";
 import { SearchIcon, GridIcon, ListViewIcon, Play } from "../components/ui/Icons";
 
 const IMGS = {
-  monster: "/images/monster.png",
-  hallway: "/images/img-hallway.png",
-  orbs: "/images/img-orbs.png",
-  smoke: "/images/img-smoke.png",
-  forest: "/images/img-forest.png",
-  tunnel: "/images/img-tunnel.png",
-  wolf: "/images/img-wolf.png",
-  creature: "/images/img-creature.png",
+  monster: "/images/monster.jpg",
+  hallway: "/images/img-hallway.jpg",
+  orbs: "/images/img-orbs.jpg",
+  smoke: "/images/img-smoke.jpg",
+  forest: "/images/img-forest.jpg",
+  tunnel: "/images/img-tunnel.jpg",
+  wolf: "/images/img-wolf.jpg",
+  creature: "/images/img-creature.jpg",
 };
 
 const STORIES = [

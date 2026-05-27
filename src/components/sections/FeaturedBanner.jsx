@@ -20,7 +20,7 @@ export default function FeaturedBanner() {
           className="absolute inset-0 h-full w-full object-cover"
           style={{ filter: "contrast(1.05) saturate(0.85)" }}
           src="/videos/vid-coolon.mp4"
-          poster="/images/img-smoke.png"
+          poster="/images/img-smoke.jpg"
           autoPlay
           muted
           loop

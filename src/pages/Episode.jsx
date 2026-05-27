@@ -34,7 +34,7 @@ export default function Episode() {
 
         {/* Cinematic header */}
         <div className="relative mt-6 aspect-[21/9] overflow-hidden border border-white/6 bg-bg-0">
-          <video className="absolute inset-0 h-full w-full object-cover" style={{ filter: "contrast(1.05) saturate(0.85)" }} src="/videos/vid-coolon.mp4" poster="/images/monster.png" autoPlay muted loop playsInline preload="metadata" />
+          <video className="absolute inset-0 h-full w-full object-cover" style={{ filter: "contrast(1.05) saturate(0.85)" }} src="/videos/vid-coolon.mp4" poster="/images/monster.jpg" autoPlay muted loop playsInline preload="metadata" />
           <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(5,6,8,0.9) 0%, rgba(5,6,8,0.5) 50%, rgba(5,6,8,0.6) 100%), linear-gradient(180deg, transparent 50%, rgba(5,6,8,0.85) 100%)" }} />
           {["top-4 left-4 border-r-0 border-b-0", "top-4 right-4 border-l-0 border-b-0", "bottom-4 left-4 border-r-0 border-t-0", "bottom-4 right-4 border-l-0 border-t-0"].map((b, i) => (
             <span key={i} className={`absolute z-[3] h-[18px] w-[18px] border border-red ${b}`} />

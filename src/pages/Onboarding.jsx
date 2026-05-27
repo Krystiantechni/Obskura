@@ -7,22 +7,22 @@ import HorrorButton from "../components/ui/HorrorButton";
 import { Play, Arrow } from "../components/ui/Icons";
 
 const STEPS = [
-  { id: "welcome", labelKey: "step_welcome", labelDef: "Witaj", bg: "/images/dada.png" },
-  { id: "genres", labelKey: "step_genres", labelDef: "Gatunki", bg: "/images/img-forest.png" },
-  { id: "when", labelKey: "step_when", labelDef: "Pora", bg: "/images/img-hallway.png" },
-  { id: "audio", labelKey: "step_audio", labelDef: "Audio", bg: "/images/img-tunnel.png" },
-  { id: "first", labelKey: "step_first", labelDef: "Pierwsze odsłuchanie", bg: "/images/img-creature.png" },
+  { id: "welcome", labelKey: "step_welcome", labelDef: "Witaj", bg: "/images/dada.jpg" },
+  { id: "genres", labelKey: "step_genres", labelDef: "Gatunki", bg: "/images/img-forest.jpg" },
+  { id: "when", labelKey: "step_when", labelDef: "Pora", bg: "/images/img-hallway.jpg" },
+  { id: "audio", labelKey: "step_audio", labelDef: "Audio", bg: "/images/img-tunnel.jpg" },
+  { id: "first", labelKey: "step_first", labelDef: "Pierwsze odsłuchanie", bg: "/images/img-creature.jpg" },
 ];
 
 const GENRES = [
-  { id: "psy", nameDef: "Psychologiczny", tagDef: "Manipulacja, lęk", img: "/images/img-hallway.png" },
-  { id: "folk", nameDef: "Folk horror", tagDef: "Rytuały, las", img: "/images/img-forest.png" },
-  { id: "cosmic", nameDef: "Cosmic dread", tagDef: "Niewyobrażalne", img: "/images/img-orbs.png" },
-  { id: "noir", nameDef: "Noir", tagDef: "Detektyw, miasto", img: "/images/img-smoke.png" },
-  { id: "true", nameDef: "True horror", tagDef: "Oparte na faktach", img: "/images/img-creature.png" },
-  { id: "cyber", nameDef: "Cyber horror", tagDef: "Sieć, AI", img: "/images/img-tunnel.png" },
-  { id: "myth", nameDef: "Mitologia", tagDef: "Słowiańska, nordycka", img: "/images/img-wolf.png" },
-  { id: "mar", nameDef: "Maritime", tagDef: "Głębia, mgła", img: "/images/monster.png" },
+  { id: "psy", nameDef: "Psychologiczny", tagDef: "Manipulacja, lęk", img: "/images/img-hallway.jpg" },
+  { id: "folk", nameDef: "Folk horror", tagDef: "Rytuały, las", img: "/images/img-forest.jpg" },
+  { id: "cosmic", nameDef: "Cosmic dread", tagDef: "Niewyobrażalne", img: "/images/img-orbs.jpg" },
+  { id: "noir", nameDef: "Noir", tagDef: "Detektyw, miasto", img: "/images/img-smoke.jpg" },
+  { id: "true", nameDef: "True horror", tagDef: "Oparte na faktach", img: "/images/img-creature.jpg" },
+  { id: "cyber", nameDef: "Cyber horror", tagDef: "Sieć, AI", img: "/images/img-tunnel.jpg" },
+  { id: "myth", nameDef: "Mitologia", tagDef: "Słowiańska, nordycka", img: "/images/img-wolf.jpg" },
+  { id: "mar", nameDef: "Maritime", tagDef: "Głębia, mgła", img: "/images/monster.jpg" },
 ];
 
 const TIMES = [
@@ -296,7 +296,7 @@ export default function Onboarding() {
               </p>
 
               <div className="mx-auto grid max-w-[720px] overflow-hidden border border-line bg-bg-2/60 text-left md:grid-cols-[220px_1fr]">
-                <div className="relative min-h-[180px] bg-cover bg-center" style={{ backgroundImage: "url('/images/img-hallway.png')" }}>
+                <div className="relative min-h-[180px] bg-cover bg-center" style={{ backgroundImage: "url('/images/img-hallway.jpg')" }}>
                   <span aria-hidden className="absolute inset-0 bg-gradient-to-b from-red/10 to-bg-0/50" />
                   <span className="absolute left-4 top-4 bg-black/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-ui text-red">{t("onboarding.first_rec_tag", "// REKOMENDACJA #01")}</span>
                 </div>

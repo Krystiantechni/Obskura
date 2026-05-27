@@ -22,49 +22,49 @@ export default function Tworcy() {
 
   const creators = [
     {
-      img: "/images/img-smoke.png", pos: "center 18%", tag: t("tworcy.c1_tag", "Narratorka"), accent: "red",
+      img: "/images/img-smoke.jpg", pos: "center 18%", tag: t("tworcy.c1_tag", "Narratorka"), accent: "red",
       name: "Katarzyna", nameEm: "Wieczorek", role: t("tworcy.c1_role", "LEAD VOCAL · OD 2023"),
       bio: t("tworcy.c1_bio", "Aktorka teatralna i radiowa. Specjalizuje się w głosach kobiet w sytuacjach granicznych."),
       stats: [{ v: "23", l: t("tworcy.s_ep", "odc.") }, { v: "4.9", l: "★" }, { v: "2.1M", l: t("tworcy.s_plays", "odsłuchów") }],
     },
     {
-      img: "/images/img-hallway.png", pos: "center", tag: t("tworcy.c2_tag", "Reżyseria"), accent: "blue",
+      img: "/images/img-hallway.jpg", pos: "center", tag: t("tworcy.c2_tag", "Reżyseria"), accent: "blue",
       name: "Marta", nameEm: "Sobczak", role: t("tworcy.c2_role", "DYREKTORKA KREATYWNA · OD 2021"),
       bio: t("tworcy.c2_bio", "Współzałożycielka Obskury. Reżyseruje 90% odcinków. Wcześniej Trójka, BBC Sounds."),
       stats: [{ v: "132", l: t("tworcy.s_ep", "odc.") }, { v: "4.8", l: "★" }, { v: "—", l: "" }],
     },
     {
-      img: "/images/img-tunnel.png", pos: "center", tag: t("tworcy.c3_tag", "Dźwięk"), accent: "blue",
+      img: "/images/img-tunnel.jpg", pos: "center", tag: t("tworcy.c3_tag", "Dźwięk"), accent: "blue",
       name: "Piotr", nameEm: "Górski", role: t("tworcy.c3_role", "INŻYNIER DŹWIĘKU · OD 2021"),
       bio: t("tworcy.c3_bio", "Architekt binauralnej przestrzeni. Każdy mix wymaga 40h pracy. Lubi to."),
       stats: [{ v: "147", l: t("tworcy.s_ep", "odc.") }, { v: "4.9", l: "★" }, { v: "FLAC", l: "" }],
     },
     {
-      img: "/images/monster.png", pos: "center 20%", tag: t("tworcy.c4_tag", "Narrator"), accent: "red",
+      img: "/images/monster.jpg", pos: "center 20%", tag: t("tworcy.c4_tag", "Narrator"), accent: "red",
       name: "Adam", nameEm: "Karpiński", role: t("tworcy.c4_role", "NARRATOR · OD 2022"),
       bio: t("tworcy.c4_bio", "Były dziennikarz Gazety Wyborczej. Głos do serii „True Horror” — opartych na faktach."),
       stats: [{ v: "18", l: t("tworcy.s_ep", "odc.") }, { v: "4.8", l: "★" }, { v: "1.6M", l: t("tworcy.s_plays", "odsłuchów") }],
     },
     {
-      img: "/images/img-creature.png", pos: "center 5%", tag: t("tworcy.c5_tag", "Scenariusz"), accent: "red",
+      img: "/images/img-creature.jpg", pos: "center 5%", tag: t("tworcy.c5_tag", "Scenariusz"), accent: "red",
       name: "Jakub", nameEm: "Borek", role: t("tworcy.c5_role", "SCENARZYSTA · OD 2022"),
       bio: t("tworcy.c5_bio", "Pisał dla CD Projekt i Bloober Team. W Obskurze odpowiada za psychologiczne i cosmic."),
       stats: [{ v: "34", l: t("tworcy.s_scen", "scen.") }, { v: "4.7", l: "★" }, { v: "3", l: t("tworcy.s_awards", "nagrody") }],
     },
     {
-      img: "/images/img-forest.png", pos: "center 60%", tag: t("tworcy.c6_tag", "Narratorka"), accent: "red",
+      img: "/images/img-forest.jpg", pos: "center 60%", tag: t("tworcy.c6_tag", "Narratorka"), accent: "red",
       name: "Zofia", nameEm: "Lange", role: t("tworcy.c6_role", "NARRATORKA · OD 2024"),
       bio: t("tworcy.c6_bio", "Lingwistka, mówi czterema językami. Lead w sezonie 2 — gatunki folk horror i mitologia."),
       stats: [{ v: "14", l: t("tworcy.s_ep", "odc.") }, { v: "4.9", l: "★" }, { v: "PL/EN/DE", l: "" }],
     },
     {
-      img: "/images/img-wolf.png", pos: "center 25%", tag: t("tworcy.c7_tag", "Reżyseria"), accent: "blue",
+      img: "/images/img-wolf.jpg", pos: "center 25%", tag: t("tworcy.c7_tag", "Reżyseria"), accent: "blue",
       name: "Tomasz", nameEm: "Reich", role: t("tworcy.c7_role", "REŻYSER · OD 2023"),
       bio: t("tworcy.c7_bio", "Specjalizacja: mitologia słowiańska i nordycka. Konsultuje z etnografami z UJ."),
       stats: [{ v: "12", l: t("tworcy.s_ep", "odc.") }, { v: "4.8", l: "★" }, { v: "—", l: "" }],
     },
     {
-      img: "/images/img-orbs.png", pos: "center 70%", tag: t("tworcy.c8_tag", "Narratorka"), accent: "red",
+      img: "/images/img-orbs.jpg", pos: "center 70%", tag: t("tworcy.c8_tag", "Narratorka"), accent: "red",
       name: "Nadia", nameEm: "O.", role: t("tworcy.c8_role", "NARRATORKA · OD 2025"),
       bio: t("tworcy.c8_bio", "Pseudonim. Anonimowa. Głos do cyber-horror i body horror. Nie udziela wywiadów."),
       stats: [{ v: "7", l: t("tworcy.s_ep", "odc.") }, { v: "5.0", l: "★" }, { v: "—", l: "" }],
@@ -124,7 +124,7 @@ export default function Tworcy() {
         <Eyebrow accent="blue">{t("tworcy.featured_eyebrow", "TWÓRCZYNI MIESIĄCA · MAJ 2026")}</Eyebrow>
         <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-[60px]">
           <div className="relative aspect-[4/5] overflow-hidden bg-bg-1">
-            <img src="/images/img-orbs.png" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_20%]" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
+            <img src="/images/img-orbs.jpg" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_20%]" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
             <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, transparent 50%, rgba(5,6,8,0.4))" }} />
             <span className="absolute left-5 top-5 z-[2] border-l-2 border-red bg-black/60 px-3.5 py-2 font-mono text-[10px] uppercase tracking-eyebrow text-red backdrop-blur-md">
               {t("tworcy.spotlight_tag", "// SPOTLIGHT 05/2026")}

@@ -9,18 +9,11 @@ realnie wniesie, zanim ją wybierzesz.
 **Status:** ⬜ do zrobienia · 🟡 w toku · ✅ zrobione · 💡 pomysł
 **Nakład:** S (szybkie) · M (średnie) · L (duże) — **Wartość:** ⭐–⭐⭐⭐
 
-_Ostatnia aktualizacja: 2026-05-27_
+_Ostatnia aktualizacja: 2026-05-27 (T1 zrobione)_
 
 ---
 
 ## 🔝 Priorytet (rekomendowana kolejność)
-
-### T1 · Lżejsze, szybciej ładujące się obrazy ⭐⭐⭐ · S · ⬜
-**Co to da:** strona wczytuje się wyraźnie szybciej, zwłaszcza na telefonie i wolniejszym
-necie. Zdjęcia (potwór, karty historii) ważą dziś ~36 MB — to najcięższa rzecz na stronie.
-Po zmianie ważyłyby kilka razy mniej, bez widocznej utraty jakości. Mniej „mrugania" przy
-wchodzeniu, lepszy wynik w Google.
-<sub>Tech: konwersja PNG→WebP/AVIF, responsywne `srcset`, lazy poza foldem.</sub>
 
 ### T2 · Ładny podgląd przy udostępnianiu + widoczność w Google ⭐⭐⭐ · S–M · ⬜
 **Co to da:** gdy ktoś wrzuci link do OBSKURY na Facebooka / Discorda / iMessage, pokaże się
@@ -87,6 +80,7 @@ czemu". Spokój przy dalszym rozwoju.
 - **Zgoda na ciasteczka / analityka** — gdy strona pójdzie na produkcję.
 - **Animowana scena 3D w hero** — efektowne pierwsze 3 sekundy, ale duży nakład i ryzyko spowolnienia.
 - **Baner „słuchaj dalej"** na stronie głównej — wraca do miejsca, w którym user przerwał (dane już zapisujemy).
+- **Jeszcze lżejsze obrazy (WebP/AVIF)** — JPEG dał już 36→6 MB; WebP/AVIF urwałby kolejne ~25–30%, ale wymaga doinstalowania narzędzia (np. `sharp`), bo lokalny ffmpeg/sips nie mają enkodera WebP.
 
 ---
 
@@ -98,3 +92,4 @@ czemu". Spokój przy dalszym rozwoju.
 - **Globalny odtwarzacz** — pasek na dole grający bez przerwy przy zmianie stron, kolejka, wznawianie po odświeżeniu, sleep timer, ulubione.
 - **Przyspieszenie ładowania** — strona wczytuje tylko to, co potrzebne (główna paczka 724→398 KB).
 - **Narracja głosowa (ElevenLabs)** — 7 odcinków, finał (ep-12) z kilkoma głosami w dialogu.
+- **T1 · Lżejsze obrazy** — PNG→JPEG (q82, max 2400 px): **36 MB → 6 MB** (6× mniej), bez widocznej utraty jakości. Szybsze ładowanie, lepszy Lighthouse.
