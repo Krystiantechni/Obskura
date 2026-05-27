@@ -134,7 +134,7 @@ export default function Player() {
         {/* bg */}
         <div className="absolute inset-0">
           <img
-            src="/images/monster.jpg"
+            src="/images/monster.webp"
             alt=""
             decoding="async"
             className="h-full w-full animate-scale-pulse object-cover object-[center_35%] [filter:contrast(1.1)_saturate(0.9)_brightness(0.7)]"

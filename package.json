@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "i18n:check": "node scripts/i18n-check.cjs",
     "narration": "node scripts/generate-narration.mjs",
-    "og": "node scripts/og-image.mjs"
+    "og": "node scripts/og-image.mjs",
+    "images:webp": "node scripts/images-to-webp.mjs"
   },
   "engines": {
     "node": ">=20.19.0"

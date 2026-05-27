@@ -304,11 +304,11 @@ export default function Konto() {
                 </button>
               </div>
 
-              <HistoryRow thumb="/images/monster.jpg" thumbPos="center 20%" epn="S03 · E12 · ROZDZIAŁ 04" ttl="Mgła nad" ttlEm="Wisłoujściem" when="21:08 WCZORAJ" progress="19:43 / 47:12 · 42%" />
-              <HistoryRow thumb="/images/img-hallway.jpg" epn="S03 · E11 · UKOŃCZONE" ttl="Ostatnie" ttlEm="Światło" when="23:42 PIĄTEK" progress="52:08 / 52:08 · ✓" done icon="↻" />
-              <HistoryRow thumb="/images/img-forest.jpg" epn="S03 · E10 · UKOŃCZONE" ttl="Coś patrzy" ttlEm="z lasu" when="02:14 WTOREK" progress="01:14:33 · ✓" done icon="↻" />
-              <HistoryRow thumb="/images/img-creature.jpg" thumbPos="center 15%" epn="S03 · E04 · UKOŃCZONE 3×" ttl="Dom przy" ttlEm="ul. Cisowej 7" when="15.05.2026" progress="38:21 · ✓ ✓ ✓" done icon="↻" />
-              <HistoryRow thumb="/images/img-orbs.jpg" thumbPos="center 20%" epn="S03 · E08 · PORZUCONE" ttl="Sygnał z" ttlEm="orbity" when="04.05.2026" progress="12:08 / 01:02:47 · 19%" />
+              <HistoryRow thumb="/images/monster.webp" thumbPos="center 20%" epn="S03 · E12 · ROZDZIAŁ 04" ttl="Mgła nad" ttlEm="Wisłoujściem" when="21:08 WCZORAJ" progress="19:43 / 47:12 · 42%" />
+              <HistoryRow thumb="/images/img-hallway.webp" epn="S03 · E11 · UKOŃCZONE" ttl="Ostatnie" ttlEm="Światło" when="23:42 PIĄTEK" progress="52:08 / 52:08 · ✓" done icon="↻" />
+              <HistoryRow thumb="/images/img-forest.webp" epn="S03 · E10 · UKOŃCZONE" ttl="Coś patrzy" ttlEm="z lasu" when="02:14 WTOREK" progress="01:14:33 · ✓" done icon="↻" />
+              <HistoryRow thumb="/images/img-creature.webp" thumbPos="center 15%" epn="S03 · E04 · UKOŃCZONE 3×" ttl="Dom przy" ttlEm="ul. Cisowej 7" when="15.05.2026" progress="38:21 · ✓ ✓ ✓" done icon="↻" />
+              <HistoryRow thumb="/images/img-orbs.webp" thumbPos="center 20%" epn="S03 · E08 · PORZUCONE" ttl="Sygnał z" ttlEm="orbity" when="04.05.2026" progress="12:08 / 01:02:47 · 19%" />
 
               <div className="mt-6 text-center font-mono text-[11px] uppercase tracking-mono text-ink-2">
                 {t("konto.history_shown", "POKAZANO 5 Z 147 ·")} <button type="button" className="text-red">{t("konto.history_more", "POKAŻ WIĘCEJ →")}</button>
@@ -335,9 +335,9 @@ export default function Konto() {
                 />
               </div>
 
-              <HistoryRow thumb="/images/img-wolf.jpg" thumbPos="center 28%" epn="S03 · E06 · ★ ULUBIONE" ttl="Łańcuch" ttlEm="Fenrira" when="DODANE 12.04" progress="01:22:55 · ✓" done />
-              <HistoryRow thumb="/images/img-creature.jpg" thumbPos="center 15%" epn="S03 · E04 · ★ ULUBIONE · 5/5" ttl="Dom przy" ttlEm="ul. Cisowej 7" when="DODANE 22.03" progress="38:21 · ✓ ✓ ✓" done icon="↻" />
-              <HistoryRow thumb="/images/img-hallway.jpg" epn="S03 · E11 · ★ ULUBIONE" ttl="Ostatnie" ttlEm="Światło" when="DODANE 18.05" progress="52:08 · ✓" done icon="↻" />
+              <HistoryRow thumb="/images/img-wolf.webp" thumbPos="center 28%" epn="S03 · E06 · ★ ULUBIONE" ttl="Łańcuch" ttlEm="Fenrira" when="DODANE 12.04" progress="01:22:55 · ✓" done />
+              <HistoryRow thumb="/images/img-creature.webp" thumbPos="center 15%" epn="S03 · E04 · ★ ULUBIONE · 5/5" ttl="Dom przy" ttlEm="ul. Cisowej 7" when="DODANE 22.03" progress="38:21 · ✓ ✓ ✓" done icon="↻" />
+              <HistoryRow thumb="/images/img-hallway.webp" epn="S03 · E11 · ★ ULUBIONE" ttl="Ostatnie" ttlEm="Światło" when="DODANE 18.05" progress="52:08 · ✓" done icon="↻" />
             </>
           )}
 

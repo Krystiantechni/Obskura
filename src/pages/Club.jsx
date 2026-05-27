@@ -75,10 +75,10 @@ export default function Club() {
   ];
 
   const extras = [
-    { tag: t("club.extra1_tag"), p1: t("club.extra1_h_p1"), em: t("club.extra1_h_em"), desc: t("club.extra1_desc"), img: "/images/img-tunnel.jpg" },
-    { tag: t("club.extra2_tag"), p1: t("club.extra2_h_p1"), em: t("club.extra2_h_em"), desc: t("club.extra2_desc"), img: "/images/img-creature.jpg" },
-    { tag: t("club.extra3_tag"), p1: t("club.extra3_h_p1"), em: t("club.extra3_h_em"), desc: t("club.extra3_desc"), img: "/images/img-forest.jpg" },
-    { tag: t("club.extra4_tag"), p1: t("club.extra4_h_p1"), em: t("club.extra4_h_em"), desc: t("club.extra4_desc"), img: "/images/img-hallway.jpg" },
+    { tag: t("club.extra1_tag"), p1: t("club.extra1_h_p1"), em: t("club.extra1_h_em"), desc: t("club.extra1_desc"), img: "/images/img-tunnel.webp" },
+    { tag: t("club.extra2_tag"), p1: t("club.extra2_h_p1"), em: t("club.extra2_h_em"), desc: t("club.extra2_desc"), img: "/images/img-creature.webp" },
+    { tag: t("club.extra3_tag"), p1: t("club.extra3_h_p1"), em: t("club.extra3_h_em"), desc: t("club.extra3_desc"), img: "/images/img-forest.webp" },
+    { tag: t("club.extra4_tag"), p1: t("club.extra4_h_p1"), em: t("club.extra4_h_em"), desc: t("club.extra4_desc"), img: "/images/img-hallway.webp" },
   ];
 
   return (
@@ -86,7 +86,7 @@ export default function Club() {
       {/* Hero */}
       <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-16 pt-40 lg:px-12">
         <div className="absolute inset-0 z-0">
-          <img src="/images/img-wolf.jpg" alt="" className="h-full w-full object-cover object-[center_25%]" style={{ filter: "contrast(1.05) saturate(0.9) brightness(0.6)" }} />
+          <img src="/images/img-wolf.webp" alt="" className="h-full w-full object-cover object-[center_25%]" style={{ filter: "contrast(1.05) saturate(0.9) brightness(0.6)" }} />
           <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 60%, rgba(255,42,42,0.12), transparent 70%), linear-gradient(180deg, rgba(5,6,8,0.5) 0%, transparent 30%, rgba(5,6,8,0.9) 100%)" }} />
         </div>
         <div className="relative z-[2] mx-auto w-full max-w-[1400px]">

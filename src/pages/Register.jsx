@@ -227,7 +227,7 @@ export default function Register() {
 
       {/* Art (order-2) */}
       <div className="relative order-1 hidden overflow-hidden bg-bg-0 lg:order-2 lg:block">
-        <img src="/images/img-orbs.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.85)" }} />
+        <img src="/images/img-orbs.webp" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.85)" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(270deg, transparent 0%, transparent 60%, rgba(5,6,8,0.95) 100%), linear-gradient(180deg, rgba(5,6,8,0.4) 0%, transparent 30%, rgba(5,6,8,0.7) 100%)" }} />
         <div className="absolute right-[60px] top-8 z-[2] flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-eyebrow text-ink-1">
           <span className="h-1.5 w-1.5 animate-obskura-pulse-fast rounded-full bg-blue shadow-[0_0_8px_#5fa8ff]" />

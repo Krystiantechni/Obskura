@@ -74,7 +74,6 @@ czemu". Spokój przy dalszym rozwoju.
 - **Zgoda na ciasteczka / analityka** — gdy strona pójdzie na produkcję.
 - **Animowana scena 3D w hero** — efektowne pierwsze 3 sekundy, ale duży nakład i ryzyko spowolnienia.
 - **Baner „słuchaj dalej"** na stronie głównej — wraca do miejsca, w którym user przerwał (dane już zapisujemy).
-- **Jeszcze lżejsze obrazy (WebP/AVIF)** — JPEG dał już 36→6 MB; WebP/AVIF urwałby kolejne ~25–30%, ale wymaga doinstalowania narzędzia (np. `sharp`), bo lokalny ffmpeg/sips nie mają enkodera WebP.
 - **Per-trasowe karty OG dla crawlerów** — dziś każdy udostępniony link pokazuje główną kartę OBSKURY (bo crawlery nie wykonują JS, a strona jest SPA). Osobne miniaturki per odcinek wymagałyby prerenderu/SSR (np. vite prerender) — większy nakład.
 - **SEO w wielu językach** — tytuły/opisy są po polsku; lokalizacja per język to dodatek.
 
@@ -92,3 +91,4 @@ czemu". Spokój przy dalszym rozwoju.
 - **T2 · SEO + podgląd przy udostępnianiu** — statyczne OG/Twitter w index.html + obrazek OG 1200×630 (key-art), per-trasowe tytuły/opisy, nowy favicon (czerwona kropka marki), theme-color.
 - **Favicon** — zmieniony z resztki szablonu na markę OBSKURY (czerwona kropka w obrysie).
 - **Karta OG z nagłówkiem + CTA** — `npm run og` (sharp) wypala na key-arcie nagłówek „Słuchaj, czego inni nie słyszą" + przycisk „Słuchaj teraz"; dłuższy tytuł (58) i opis (160) pod zalecenia walidatorów.
+- **Obrazy → WebP** — `npm run images:webp` (sharp). Po JPEG (6 MB) WebP zbił do **1.4 MB** — łącznie od oryginału **36 MB → 1.4 MB** (25×).

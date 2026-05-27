@@ -145,7 +145,7 @@ export default function Newsletter() {
       <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-20 pt-[140px] lg:px-12">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/img-forest.jpg"
+            src="/images/img-forest.webp"
             alt=""
             className="h-full w-full object-cover object-[center_60%]"
             style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.7)" }}
@@ -254,7 +254,7 @@ export default function Newsletter() {
             <div className="my-6 flex items-center gap-4 border-y border-line py-5">
               <div
                 className="h-[60px] w-[60px] flex-shrink-0 bg-cover bg-[center_20%]"
-                style={{ backgroundImage: "url('/images/img-creature.jpg')" }}
+                style={{ backgroundImage: "url('/images/img-creature.webp')" }}
               />
               <div>
                 <div className="mb-1 font-mono text-[10px] tracking-ui text-red">{t("newsletter.preview_ep_num", "S03 · E12 · TWÓJ EKSKLUZYWNY LINK")}</div>

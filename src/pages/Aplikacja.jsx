@@ -40,13 +40,13 @@ IosListRow.propTypes = {
 // ── Ekran iOS: Słuchaj / Home ──────────────────────────────────
 function IosHomeScreen() {
   const rows = [
-    { img: "/images/monster.jpg", pos: "center 20%", ep: "S03 · E12 · 19:43 / 47:12", t1: "Mgła nad", t2: "Wisłoujściem", d: "42% · WCZORAJ" },
-    { img: "/images/img-orbs.jpg", pos: "center 25%", ep: "S03 · E08 · 12:08 / 01:02:47", t1: "Sygnał z", t2: "orbity", d: "19% · PORZUCONE" },
+    { img: "/images/monster.webp", pos: "center 20%", ep: "S03 · E12 · 19:43 / 47:12", t1: "Mgła nad", t2: "Wisłoujściem", d: "42% · WCZORAJ" },
+    { img: "/images/img-orbs.webp", pos: "center 25%", ep: "S03 · E08 · 12:08 / 01:02:47", t1: "Sygnał z", t2: "orbity", d: "19% · PORZUCONE" },
   ];
   const recos = [
-    { img: "/images/img-hallway.jpg", pos: "center", ep: "S03 · E11 · PSYCHOLOGICAL", t1: "Ostatnie", t2: "Światło", d: "52:08 · ★ 4.9" },
-    { img: "/images/img-creature.jpg", pos: "center 15%", ep: "S03 · E04 · TRUE HORROR", t1: "Dom przy", t2: "ul. Cisowej 7", d: "38:21 · ★ 4.9" },
-    { img: "/images/img-wolf.jpg", pos: "center 28%", ep: "S03 · E06 · MYTHOLOGY", t1: "Łańcuch", t2: "Fenrira", d: "01:22:55 · ★ 5.0" },
+    { img: "/images/img-hallway.webp", pos: "center", ep: "S03 · E11 · PSYCHOLOGICAL", t1: "Ostatnie", t2: "Światło", d: "52:08 · ★ 4.9" },
+    { img: "/images/img-creature.webp", pos: "center 15%", ep: "S03 · E04 · TRUE HORROR", t1: "Dom przy", t2: "ul. Cisowej 7", d: "38:21 · ★ 4.9" },
+    { img: "/images/img-wolf.webp", pos: "center 28%", ep: "S03 · E06 · MYTHOLOGY", t1: "Łańcuch", t2: "Fenrira", d: "01:22:55 · ★ 5.0" },
   ];
   const tabs = ["Słuchaj", "Szukaj", "Archiwum", "Ulubione", "Konto"];
 
@@ -54,7 +54,7 @@ function IosHomeScreen() {
     <div className="h-full overflow-y-auto bg-bg-0 pb-24 text-ink-0">
       {/* hero card */}
       <div className="relative h-[300px] overflow-hidden">
-        <img src="/images/dada.jpg" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+        <img src="/images/dada.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(5,6,8,0.95))]" />
         <span className="absolute left-5 top-14 z-[2] border-l-2 border-red bg-black/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-mono text-red backdrop-blur">
           // NOWE · DZIŚ
@@ -104,7 +104,7 @@ function IosPlayerScreen() {
   return (
     <div className="relative h-full overflow-hidden">
       <div className="absolute inset-0">
-        <img src="/images/monster.jpg" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover brightness-50" />
+        <img src="/images/monster.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover brightness-50" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,6,8,0.4)_0%,transparent_30%,rgba(5,6,8,0.85)_70%)]" />
       </div>
       <div className="relative z-[2] flex min-h-full flex-col px-6 pb-10 pt-14">
@@ -159,10 +159,10 @@ function IosPlayerScreen() {
 function AndroidBrowseScreen() {
   const chips = ["Wszystkie", "Psychologiczne", "Cosmic", "True Horror", "Folk", "Mitologia"];
   const cards = [
-    { img: "/images/img-hallway.jpg", t1: "Ostatnie", t2: "Światło" },
-    { img: "/images/img-forest.jpg", t1: "Coś patrzy", t2: "z lasu" },
-    { img: "/images/img-tunnel.jpg", t1: "Pod", t2: "betonem" },
-    { img: "/images/img-wolf.jpg", t1: "Łańcuch", t2: "Fenrira" },
+    { img: "/images/img-hallway.webp", t1: "Ostatnie", t2: "Światło" },
+    { img: "/images/img-forest.webp", t1: "Coś patrzy", t2: "z lasu" },
+    { img: "/images/img-tunnel.webp", t1: "Pod", t2: "betonem" },
+    { img: "/images/img-wolf.webp", t1: "Łańcuch", t2: "Fenrira" },
   ];
   return (
     <div className="h-full overflow-y-auto bg-bg-0 pb-20 text-ink-0">
@@ -186,7 +186,7 @@ function AndroidBrowseScreen() {
       </div>
 
       <div className="relative mx-4 mb-6 aspect-[16/11] overflow-hidden rounded-2xl bg-bg-1">
-        <img src="/images/img-creature.jpg" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_15%]" />
+        <img src="/images/img-creature.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_15%]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,rgba(5,6,8,0.95))]" />
         <div className="absolute inset-x-4 bottom-4 z-[2]">
           <div className="mb-1.5 font-mono text-[9px] tracking-mono text-red">// PREMIERA · DZIŚ</div>
@@ -212,7 +212,7 @@ function AndroidBrowseScreen() {
 
       {/* mini player */}
       <div className="absolute inset-x-0 bottom-6 z-30 grid grid-cols-[44px_1fr_auto] items-center gap-3 border-t border-red/30 bg-bg-2/95 px-3 py-2.5 backdrop-blur-xl before:absolute before:left-0 before:top-0 before:h-0.5 before:w-[47%] before:bg-red before:shadow-[0_0_8px_rgba(255,42,42,0.5)] before:content-['']">
-        <span className="h-11 w-11 bg-cover" style={{ backgroundImage: "url('/images/monster.jpg')", backgroundPosition: "center 20%" }} />
+        <span className="h-11 w-11 bg-cover" style={{ backgroundImage: "url('/images/monster.webp')", backgroundPosition: "center 20%" }} />
         <span className="overflow-hidden">
           <span className="mb-0.5 block font-mono text-[8px] tracking-mono text-red">S03 · E12 · MGŁA</span>
           <span className="block truncate font-serif text-[15px] leading-tight">

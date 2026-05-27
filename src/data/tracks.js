@@ -1,13 +1,13 @@
 // Kanoniczna lista ścieżek dla globalnego playera.
 // Audio generowane przez ElevenLabs do /public/audio/ep-{id}.mp3 (npm run narration).
 export const TRACKS = [
-  { id: "12", num: "12", title: "Mgła nad", em: "Wisłoujściem", meta: "S03 · E12 · Finał", cover: "/images/monster.jpg", src: "/audio/ep-12.mp3" },
-  { id: "2", num: "02", title: "Ostatnie", em: "światło", meta: "Psychological · 52:08", cover: "/images/img-hallway.jpg", src: "/audio/ep-2.mp3" },
-  { id: "3", num: "03", title: "Coś patrzy", em: "z lasu", meta: "Folk horror · 1:14:33", cover: "/images/img-forest.jpg", src: "/audio/ep-3.mp3" },
-  { id: "4", num: "04", title: "Dom przy ul.", em: "Cisowej 7", meta: "True horror · 38:21", cover: "/images/img-creature.jpg", src: "/audio/ep-4.mp3" },
-  { id: "5", num: "05", title: "Sygnał", em: "z orbity", meta: "Cosmic dread · 1:02:47", cover: "/images/img-orbs.jpg", src: "/audio/ep-5.mp3" },
-  { id: "6", num: "06", title: "Pod", em: "betonem", meta: "Cyber horror · 58:02", cover: "/images/img-tunnel.jpg", src: "/audio/ep-6.mp3" },
-  { id: "7", num: "07", title: "Fenrir", em: "", meta: "Mitologia · 1:22:55", cover: "/images/img-wolf.jpg", src: "/audio/ep-7.mp3" },
+  { id: "12", num: "12", title: "Mgła nad", em: "Wisłoujściem", meta: "S03 · E12 · Finał", cover: "/images/monster.webp", src: "/audio/ep-12.mp3" },
+  { id: "2", num: "02", title: "Ostatnie", em: "światło", meta: "Psychological · 52:08", cover: "/images/img-hallway.webp", src: "/audio/ep-2.mp3" },
+  { id: "3", num: "03", title: "Coś patrzy", em: "z lasu", meta: "Folk horror · 1:14:33", cover: "/images/img-forest.webp", src: "/audio/ep-3.mp3" },
+  { id: "4", num: "04", title: "Dom przy ul.", em: "Cisowej 7", meta: "True horror · 38:21", cover: "/images/img-creature.webp", src: "/audio/ep-4.mp3" },
+  { id: "5", num: "05", title: "Sygnał", em: "z orbity", meta: "Cosmic dread · 1:02:47", cover: "/images/img-orbs.webp", src: "/audio/ep-5.mp3" },
+  { id: "6", num: "06", title: "Pod", em: "betonem", meta: "Cyber horror · 58:02", cover: "/images/img-tunnel.webp", src: "/audio/ep-6.mp3" },
+  { id: "7", num: "07", title: "Fenrir", em: "", meta: "Mitologia · 1:22:55", cover: "/images/img-wolf.webp", src: "/audio/ep-7.mp3" },
 ];
 
 // Ścieżka wiodąca (hero / featured).

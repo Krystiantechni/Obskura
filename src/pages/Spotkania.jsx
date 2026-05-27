@@ -141,7 +141,7 @@ export default function Spotkania() {
       <section className="mx-auto mt-16 max-w-[1400px] px-5 lg:px-12">
         <Eyebrow accent="blue">{t("spotkania.feat_eyebrow", "NAJBLIŻSZE · 02 CZERWCA 2026")}</Eyebrow>
         <div className="mt-8 grid items-stretch overflow-hidden border border-line bg-bg-1/60 lg:grid-cols-[380px_1fr]">
-          <div className="relative min-h-[220px] bg-cover bg-center lg:min-h-[360px]" style={{ backgroundImage: "url('/images/img-tunnel.jpg')" }}>
+          <div className="relative min-h-[220px] bg-cover bg-center lg:min-h-[360px]" style={{ backgroundImage: "url('/images/img-tunnel.webp')" }}>
             <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(5,6,8,0.3), rgba(5,6,8,0.7))" }} />
             <div className="absolute left-5 top-5 z-[2] flex items-center gap-2 bg-red px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow text-white shadow-neon-red">
               <span className="h-1.5 w-1.5 animate-obskura-pulse-fast rounded-full bg-white" />

@@ -14,7 +14,7 @@ import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const SRC = join(ROOT, "public", "images", "dada.jpg");
+const SRC = join(ROOT, "public", "images", "dada.webp");
 const OUT = join(ROOT, "public", "og-cover.jpg");
 
 const W = 1200;

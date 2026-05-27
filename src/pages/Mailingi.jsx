@@ -114,14 +114,14 @@ function MailBody({ tpl }) {
       {tpl === "welcome" && (
         <>
           <div className="relative h-[200px] overflow-hidden after:absolute after:inset-0 after:bg-[linear-gradient(180deg,transparent_60%,rgba(10,13,18,0.95))]">
-            <img src="/images/dada.jpg" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+            <img src="/images/dada.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </div>
           <div className="px-9 pb-12 pt-9">
             <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Pierwszy mail · konto aktywne</div>
             <MailH1>Witaj w <em className="italic text-[#c9c4b8]">Obskurze</em>, Nokturn_47.</MailH1>
             <MailP drop>Trafiłeś w dobre miejsce. Tutaj nagrywamy historie, które słucha się na słuchawkach, w nocy, w ciszy mieszkania. 147 odcinków czeka. Pierwszy ci wybraliśmy.</MailP>
             <MailP>Konto <strong className="font-medium text-[#f4f1ea]">aktywne</strong>. Pierwsze 30 dni planu Solo — gratis. Po tym czasie automatycznie przedłużamy do roku za 288 zł — ale możesz anulować w każdej chwili.</MailP>
-            <MailCard img="/images/img-hallway.jpg" pos="center" ep="S03 · E11 · Wybrane dla ciebie" t1="Ostatnie" em="Światło" meta="52:08 · ★ 4.9 · Psychological" />
+            <MailCard img="/images/img-hallway.webp" pos="center" ep="S03 · E11 · Wybrane dla ciebie" t1="Ostatnie" em="Światło" meta="52:08 · ★ 4.9 · Psychological" />
             <MailCta>Posłuchaj pierwszego odcinka →</MailCta>
             <MailH2>Co dalej?</MailH2>
             <ul className="mb-4 list-disc pl-5">
@@ -139,7 +139,7 @@ function MailBody({ tpl }) {
           <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Wydanie #183 · czwartek 23:00</div>
           <MailH1>Coś <em className="italic text-[#c9c4b8]">chce wrócić</em>.</MailH1>
           <MailP drop>W zeszłą środę zamknęliśmy się w studiu z Katarzyną Wieczorek na sześć godzin. Nie wyszliśmy zadowoleni. Dziś rano wyszliśmy z czymś, co działa. Słuchasz tego pierwszy — link wygasa za 71 godzin.</MailP>
-          <MailCard img="/images/monster.jpg" pos="center 25%" ep="S03 · E12 · Wygasa w 71h" t1="Mgła nad" em="Wisłoujściem" meta="47:12 · Binaural · K. Wieczorek" />
+          <MailCard img="/images/monster.webp" pos="center 25%" ep="S03 · E12 · Wygasa w 71h" t1="Mgła nad" em="Wisłoujściem" meta="47:12 · Binaural · K. Wieczorek" />
           <MailCta>Słuchaj 72 godziny wcześniej →</MailCta>
           <MailH2>Z <em className="italic text-[#c9c4b8]">notatek reżyserskich</em></MailH2>
           <MailP>Wycięliśmy z S03E12 całą scenę w piwnicy. Marta opisała dlaczego — to wstrząsające 700 słów o tym, dlaczego cisza wygrywa z każdym efektem.</MailP>
@@ -154,13 +154,13 @@ function MailBody({ tpl }) {
       {tpl === "premiere" && (
         <>
           <div className="relative h-[200px] overflow-hidden after:absolute after:inset-0 after:bg-[linear-gradient(180deg,transparent_60%,rgba(10,13,18,0.95))]">
-            <img src="/images/monster.jpg" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_25%]" />
+            <img src="/images/monster.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_25%]" />
           </div>
           <div className="px-9 pb-12 pt-9">
             <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Premiera · dziś 23:00 · tylko twój</div>
             <MailH1>Nowy odcinek <em className="italic text-[#c9c4b8]">czeka</em>.</MailH1>
             <MailP>Trzeci sezon dobiega końca finałem nagrywanym przez nas <strong className="font-medium text-[#f4f1ea]">14 miesięcy</strong>. Premiera dla Klubu Solo — 72 godziny przed publicznym wydaniem.</MailP>
-            <MailCard img="/images/dada.jpg" pos="center 30%" ep="S03 · E12 · Finał sezonu" t1="Mgła nad" em="Wisłoujściem" meta="47:12 · Cosmic dread · 18+ · Binaural 3D" />
+            <MailCard img="/images/dada.webp" pos="center 30%" ep="S03 · E12 · Finał sezonu" t1="Mgła nad" em="Wisłoujściem" meta="47:12 · Cosmic dread · 18+ · Binaural 3D" />
             <MailCta>▶ Słuchaj teraz</MailCta>
             <MailH2>O <em className="italic text-[#c9c4b8]">czym jest</em></MailH2>
             <MailP>Reporterka wraca do rodzinnego portu po 23 latach. Plan: napisać reportaż o zaginięciach z 1968 roku. Zostaje na jedną noc. Tej jednej nocy wystarczy.</MailP>

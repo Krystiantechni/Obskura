@@ -155,9 +155,9 @@ function Offline() {
           <span>// Pobrane lokalnie</span>
           <span className="text-[#00ff88]">12 odcinków · 4.8 GB · ✓ aktualne</span>
         </div>
-        <OfflineRow img="/images/monster.jpg" pos="center 20%" ep="S03 · E12" t1="Mgła nad" em="Wisłoujściem" size="412 MB" />
-        <OfflineRow img="/images/img-hallway.jpg" pos="center" ep="S03 · E11" t1="Ostatnie" em="Światło" size="487 MB" />
-        <OfflineRow img="/images/img-creature.jpg" pos="center 15%" ep="S03 · E04" t1="Dom przy" em="ul. Cisowej 7" size="356 MB" />
+        <OfflineRow img="/images/monster.webp" pos="center 20%" ep="S03 · E12" t1="Mgła nad" em="Wisłoujściem" size="412 MB" />
+        <OfflineRow img="/images/img-hallway.webp" pos="center" ep="S03 · E11" t1="Ostatnie" em="Światło" size="487 MB" />
+        <OfflineRow img="/images/img-creature.webp" pos="center 15%" ep="S03 · E04" t1="Dom przy" em="ul. Cisowej 7" size="356 MB" />
       </div>
 
       <div className="mt-6 font-mono text-[10px] uppercase tracking-mono text-ink-2">
