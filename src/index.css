@@ -193,4 +193,59 @@
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
   }
+
+  /* FAB cookie — holograficzne obramowanie + ściekająca krew */
+  .cookie-fab { overflow: visible; }
+
+  .cookie-fab-ring {
+    position: absolute;
+    inset: -2px;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: conic-gradient(from 0deg, #ff2a2a, #5fa8ff, #f4f1ea, #ff2a2a, #b81d1d, #ff2a2a);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2.5px));
+    animation: holo-rotate 4.5s linear infinite;
+  }
+
+  /* Stała "kałuża" krwi gromadzącej się w dolnej krawędzi */
+  .blood-pool {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 62%;
+    height: 7px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0, rgba(209,31,31,0.95), rgba(122,13,13,0.45) 55%, transparent 75%);
+    filter: blur(0.4px);
+  }
+
+  /* Kropla: zbiera się → cięży → grawitacyjnie spada (loop) */
+  .blood-drip {
+    position: absolute;
+    bottom: -1px;
+    width: 6px;
+    height: 7px;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 30%, #ff5a5a, #d11f1f 60%, #7a0d0d);
+    border-radius: 50% 50% 50% 50% / 65% 65% 40% 40%;
+    box-shadow: 0 0 6px rgba(255,42,42,0.55), inset 0 1px 1px rgba(255,255,255,0.3);
+    transform-origin: top center;
+    animation: blood-drip 3.8s cubic-bezier(0.5, 0, 0.85, 0.3) infinite;
+  }
+
+  @keyframes holo-rotate {
+    to { transform: rotate(1turn); }
+  }
+
+  /* slow at start (gromadzi się), accelerates (spada) dzięki cubic-bezier wyżej */
+  @keyframes blood-drip {
+    0%, 6%  { transform: translateY(0) scaleY(0.3);  opacity: 0; }
+    16%     { transform: translateY(0) scaleY(0.55); opacity: 0.9; }
+    40%     { transform: translateY(1px) scaleY(0.95); opacity: 1; }
+    56%     { transform: translateY(4px) scaleY(1.35); opacity: 1; }
+    64%     { transform: translateY(7px) scaleY(1.6);  opacity: 1; }
+    100%    { transform: translateY(32px) scaleY(2.6); opacity: 0; }
+  }
 }

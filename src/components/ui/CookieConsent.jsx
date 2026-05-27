@@ -76,15 +76,20 @@ export default function CookieConsent() {
 
   return (
     <>
-      {/* Pływająca ikona — wycofaj/zmień zgodę */}
+      {/* Pływająca ikona — wycofaj/zmień zgodę (prawy dół, obok panelu A/B) */}
       {view === "hidden" && (
         <button
           type="button"
           onClick={reopen}
           aria-label="Ustawienia plików cookie"
-          className="fixed bottom-4 left-4 z-[85] grid h-11 w-11 place-items-center rounded-full border border-white/12 bg-[rgba(10,13,18,0.92)] text-ink-2 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-colors hover:border-red hover:text-red"
+          className="cookie-fab fixed bottom-6 right-[84px] z-[85] grid h-11 w-11 place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-1 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
         >
-          <Cookie />
+          <span className="cookie-fab-ring" aria-hidden />
+          <span className="relative z-[1]"><Cookie /></span>
+          <span className="blood-pool" aria-hidden />
+          <span className="blood-drip" style={{ left: "12px", animationDelay: "0s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "22px", animationDelay: "1.4s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "31px", animationDelay: "2.7s" }} aria-hidden />
         </button>
       )}
 
