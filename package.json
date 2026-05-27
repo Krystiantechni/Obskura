@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "i18n:check": "node scripts/i18n-check.cjs"
+    "i18n:check": "node scripts/i18n-check.cjs",
+    "narration": "node scripts/generate-narration.mjs"
   },
   "engines": {
     "node": ">=20.19.0"
