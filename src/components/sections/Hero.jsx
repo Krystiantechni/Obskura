@@ -5,12 +5,19 @@ import HorrorButton from "../ui/HorrorButton";
 import FloatingMetaCard from "../ui/FloatingMetaCard";
 import SciFiText from "../ui/SciFiText";
 import { Play, Pause, Arrow } from "../ui/Icons";
+import { usePlayer } from "../../context/PlayerContext";
+import { HERO_TRACK } from "../../data/tracks";
 
 // Hero full-bleed. variant: "wide" (dada.png 16:9, default) | "portrait" (monster.png 9:16).
-export default function Hero({ variant = "wide", playing, onToggle }) {
+export default function Hero({ variant = "wide" }) {
   const { t } = useTranslation();
+  const { current, playing: globalPlaying, playTrack, toggle } = usePlayer();
   const isWide = variant === "wide";
   const img = isWide ? "/images/dada.png" : "/images/monster.png";
+
+  const isHero = current?.id === HERO_TRACK.id;
+  const playing = isHero && globalPlaying;
+  const onToggle = () => (isHero ? toggle() : playTrack(HERO_TRACK));
 
   return (
     <section className="relative min-h-screen overflow-hidden px-5 pb-16 pt-[140px] lg:px-12">
@@ -112,6 +119,4 @@ export default function Hero({ variant = "wide", playing, onToggle }) {
 
 Hero.propTypes = {
   variant: PropTypes.oneOf(["wide", "portrait"]),
-  playing: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired,
 };

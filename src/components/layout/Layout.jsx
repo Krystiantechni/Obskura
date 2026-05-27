@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import ScrollProgressBar from "../ui/ScrollProgressBar";
+import MiniPlayer from "../ui/MiniPlayer";
 
 // Zamraża bieżący outlet w momencie montażu, żeby podczas exit-animacji
 // stara trasa nie podmieniła się na nową (wymóg data routera dla AnimatePresence).
@@ -58,6 +59,7 @@ export default function Layout() {
         </AnimatePresence>
       </main>
       <Footer />
+      <MiniPlayer />
     </>
   );
 }

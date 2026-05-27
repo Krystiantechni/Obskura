@@ -1,11 +1,27 @@
 import PropTypes from "prop-types";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Play } from "./Icons";
+import { Play, Pause } from "./Icons";
+import { usePlayer } from "../../context/PlayerContext";
+import { TRACKS, getTrack } from "../../data/tracks";
 
 // Karta historii 3:4 — obraz z grayscale→kolor na hover, wideo (opcjonalne) play na mouseenter.
 export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm, duration, rating, image, video, to = "/odcinek/1" }) {
   const videoRef = useRef(null);
+  const { current, playing, playQueue, toggle } = usePlayer();
+
+  const id = to.split("/").pop();
+  const track = getTrack(id);
+  const isCurrent = track && current?.id === track.id;
+  const isPlaying = isCurrent && playing;
+
+  const onPlay = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!track) return;
+    if (isCurrent) toggle();
+    else playQueue(TRACKS, track.id);
+  };
 
   const onEnter = () => {
     const v = videoRef.current;
@@ -63,10 +79,21 @@ export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm,
         </span>
       )}
 
-      {/* Play hover */}
-      <span className="absolute right-4 top-4 z-[3] grid h-10 w-10 translate-y-[-4px] place-items-center border border-white/15 bg-black/60 text-ink-0 opacity-0 backdrop-blur-sm transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-hover:bg-red group-hover:border-red">
-        <Play size={10} />
-      </span>
+      {/* Play — realne sterowanie globalnym playerem */}
+      {track && (
+        <button
+          type="button"
+          onClick={onPlay}
+          aria-label={isPlaying ? `Pauza: ${title}` : `Odtwórz: ${title}`}
+          className={`absolute right-4 top-4 z-[5] grid h-10 w-10 place-items-center border backdrop-blur-sm transition-all duration-200 ${
+            isCurrent
+              ? "border-red bg-red text-white opacity-100"
+              : "translate-y-[-4px] border-white/15 bg-black/60 text-ink-0 opacity-0 hover:!bg-red hover:!border-red group-hover:translate-y-0 group-hover:opacity-100"
+          }`}
+        >
+          {isPlaying ? <Pause size={10} /> : <Play size={10} />}
+        </button>
+      )}
 
       {/* Content */}
       <div className="absolute inset-x-0 bottom-0 z-[3] p-6">
