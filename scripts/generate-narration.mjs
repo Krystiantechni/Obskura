@@ -57,8 +57,8 @@ function die(msg) {
 }
 
 if (!API_KEY) die("Brak ELEVENLABS_API_KEY w .env (skopiuj .env.example → .env).");
-if (!DEFAULT_VOICE) die("Brak ELEVENLABS_VOICE_ID w .env (wklej id głosu z panelu ElevenLabs).");
 if (!targets.length) die(`Nie znaleziono odcinków dla id: ${ids.join(", ")}`);
+// ELEVENLABS_VOICE_ID jest opcjonalny — to tylko fallback dla ról bez wpisanego voiceId.
 
 let hasFfmpeg = false;
 try {
@@ -68,10 +68,11 @@ try {
   hasFfmpeg = false;
 }
 
-// nazwa roli → voiceId; pusta rola lub brak → domyślny głos; nieznana nazwa → traktuj jak surowy voiceId
+// nazwa roli → voiceId; pusta rola lub brak → domyślny głos (.env); nieznana nazwa → surowy voiceId.
+// Zwraca null gdy nie da się rozwiązać (pusta rola i brak fallbacku) — wołający rzuca czytelny błąd.
 function resolveVoice(ref) {
-  if (!ref) return DEFAULT_VOICE;
-  if (ref in VOICES) return VOICES[ref] || DEFAULT_VOICE;
+  if (!ref) return DEFAULT_VOICE || null;
+  if (ref in VOICES) return VOICES[ref] || DEFAULT_VOICE || null;
   return ref;
 }
 
@@ -122,7 +123,9 @@ async function generate(ep) {
       const files = [];
       for (let i = 0; i < ep.segments.length; i++) {
         const seg = ep.segments[i];
-        const buf = await tts(seg.text, resolveVoice(seg.voice));
+        const vid = resolveVoice(seg.voice);
+        if (!vid) throw new Error(`brak voiceId dla roli "${seg.voice}" (wpisz w voices.mjs lub ustaw ELEVENLABS_VOICE_ID)`);
+        const buf = await tts(seg.text, vid);
         const f = join(tmp, `seg-${i}.mp3`);
         writeFileSync(f, buf);
         files.push(f);
@@ -136,8 +139,10 @@ async function generate(ep) {
   }
 
   // POJEDYNCZY głos
+  const vid = resolveVoice(ep.voice);
+  if (!vid) throw new Error(`brak voiceId dla roli "${ep.voice || "(domyślna)"}" (wpisz w voices.mjs lub ustaw ELEVENLABS_VOICE_ID)`);
   process.stdout.write(`• ep-${ep.id}  „${ep.title}" → generuję… `);
-  const buf = await tts(ep.text, resolveVoice(ep.voice));
+  const buf = await tts(ep.text, vid);
   writeFileSync(outFile, buf);
   console.log(`ok (${(buf.length / 1024).toFixed(0)} KB)`);
   return {};
