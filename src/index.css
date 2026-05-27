@@ -224,6 +224,28 @@
     pointer-events: none;
   }
 
+  /* Spadająca kropla — od ciastka aż do podłogi, widoczna przez cały spadek (grawitacja) */
+  .falling-drop {
+    position: fixed;
+    z-index: 84;
+    width: 5px;
+    height: 7px;
+    margin-left: -2.5px;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 30%, rgba(220,40,40,0.95), rgba(150,16,16,0.86) 55%, rgba(120,13,13,0.72));
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 0 0 4px rgba(150,16,16,0.5);
+    transform-origin: top center;
+    will-change: transform, opacity;
+  }
+
+  @keyframes drop-fall {
+    0%   { transform: translateY(0) scaleY(0.7); opacity: 0; }
+    10%  { opacity: 1; }
+    92%  { transform: translateY(calc(var(--dist, 200px) * 0.92)) scaleY(1.5); opacity: 1; }
+    100% { transform: translateY(var(--dist, 200px)) scaleY(1.7); opacity: 0.85; }
+  }
+
   /* Kałuże krwi na podłodze ekranu — zostają tam, gdzie krople spadły (ślad za ciastkiem) */
   .floor-puddle {
     position: fixed;

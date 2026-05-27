@@ -17,7 +17,7 @@ export default function BloodSim() {
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = SIZE * dpr;
     canvas.height = SIZE * dpr;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     ctx.scale(dpr, dpr);
 
     const R = SIZE / 2;
@@ -36,9 +36,11 @@ export default function BloodSim() {
     sprite.width = SS;
     sprite.height = SS;
     const sc = sprite.getContext("2d");
+    // pełniejszy bump → po metaballu (blur+contrast) scala się w jednolitą ciecz z ostrą krawędzią
     const grd = sc.createRadialGradient(SS / 2, SS / 2, 0, SS / 2, SS / 2, SS / 2);
-    grd.addColorStop(0, "rgba(232,48,48,0.95)");
-    grd.addColorStop(0.5, "rgba(176,20,20,0.85)");
+    grd.addColorStop(0, "rgba(210,30,30,1)");
+    grd.addColorStop(0.45, "rgba(180,22,22,1)");
+    grd.addColorStop(0.7, "rgba(150,16,16,0.85)");
     grd.addColorStop(1, "rgba(120,13,13,0)");
     sc.fillStyle = grd;
     sc.fillRect(0, 0, SS, SS);
@@ -50,9 +52,27 @@ export default function BloodSim() {
       ps.push({ x, y, px: x, py: y });
     }
 
+    const W = canvas.width;
+    const H = canvas.height;
+    const T = 90; // próg alfy — scala blobsy w jednolitą ciecz z ostrą krawędzią (metaball)
     const draw = () => {
       ctx.clearRect(0, 0, SIZE, SIZE);
       for (let i = 0; i < N; i++) ctx.drawImage(sprite, ps[i].x - PR * 2, ps[i].y - PR * 2, PR * 4, PR * 4);
+      const img = ctx.getImageData(0, 0, W, H);
+      const d = img.data;
+      for (let k = 3; k < d.length; k += 4) {
+        const a = d[k];
+        if (a > T) {
+          const s = a > 255 ? 1 : (a - T) / (255 - T); // cieniowanie: jaśniejszy rdzeń, ciemniejsza krawędź
+          d[k - 3] = 150 + s * 78;
+          d[k - 2] = 16 + s * 26;
+          d[k - 1] = 16 + s * 26;
+          d[k] = 236;
+        } else {
+          d[k] = 0;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
     };
 
     const constrain = () => {

@@ -66,7 +66,8 @@ export default function CookieConsent() {
   // Ikona: przeciągalna (zapis pozycji) + krew o stałej objętości przechylająca się przy scrollu/drag.
   const { ref: fabRef, style: fabStyle, onPointerDown, onPointerMove, onPointerUp, shouldIgnoreClick } = useCookieFab();
 
-  // Kałuże na podłodze — krople spadają pionowo i zostają tam, gdzie spadły (ślad za ciastkiem).
+  // Krople spadają od ciastka aż do podłogi (widoczne całą drogę); kałuża powstaje gdy kropla wyląduje.
+  const [drops, setDrops] = useState([]);
   const [puddles, setPuddles] = useState([]);
   useEffect(() => {
     if (view !== "hidden") return undefined;
@@ -75,19 +76,26 @@ export default function CookieConsent() {
       if (!el) return;
       const r = el.getBoundingClientRect();
       const x = Math.round(r.left + r.width / 2);
-      setPuddles((list) => {
-        const i = list.findIndex((p) => Math.abs(p.x - x) < 26);
-        if (i >= 0) {
-          const next = list.slice();
-          next[i] = { ...next[i], grow: Math.min(1, next[i].grow + 0.16) };
-          return next;
-        }
-        const np = [...list, { id: Date.now() + Math.random(), x, grow: 0.25 }];
-        return np.length > 14 ? np.slice(np.length - 14) : np;
-      });
+      const startY = Math.round(r.bottom - 4);
+      const dist = Math.max(40, Math.round(window.innerHeight - startY));
+      setDrops((list) => [...list.slice(-6), { id: Date.now() + Math.random(), x, startY, dist }]);
     }, 1300);
     return () => clearInterval(id);
   }, [view, fabRef]);
+
+  const onDropLand = (dropId, x) => {
+    setDrops((list) => list.filter((d) => d.id !== dropId));
+    setPuddles((list) => {
+      const i = list.findIndex((p) => Math.abs(p.x - x) < 26);
+      if (i >= 0) {
+        const next = list.slice();
+        next[i] = { ...next[i], grow: Math.min(1, next[i].grow + 0.16) };
+        return next;
+      }
+      const np = [...list, { id: Date.now() + Math.random(), x, grow: 0.25 }];
+      return np.length > 14 ? np.slice(np.length - 14) : np;
+    });
+  };
 
   const close = (choice) => {
     setConsent(choice);
@@ -122,12 +130,19 @@ export default function CookieConsent() {
           <span className="cookie-fab-ring" aria-hidden />
           <span className="cookie-fab-sheen" aria-hidden />
           <span className="relative z-[2]"><Cookie size={26} /></span>
-          {/* krople przeciekające z dołu koła — środkowa większa, boczne mniejsze */}
-          <span className="blood-drip" style={{ left: "16px", width: "2.8px", height: "3.5px", animationDelay: "0.6s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "28px", width: "5.6px", height: "7px", animationDelay: "1.8s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "40px", width: "2.8px", height: "3.5px", animationDelay: "3.1s" }} aria-hidden />
         </button>
       )}
+
+      {/* Spadające krople — od ciastka do podłogi, widoczne przez cały spadek */}
+      {view === "hidden" && drops.map((d) => (
+        <span
+          key={d.id}
+          className="falling-drop"
+          style={{ left: `${d.x}px`, top: `${d.startY}px`, "--dist": `${d.dist}px`, animation: `drop-fall ${Math.min(1.5, 0.5 + d.dist / 900).toFixed(2)}s cubic-bezier(0.55,0,0.85,0.5) forwards` }}
+          onAnimationEnd={() => onDropLand(d.id, d.x)}
+          aria-hidden
+        />
+      ))}
       {/* Kałuże krwi na podłodze — zostają w miejscach, gdzie krople spadły */}
       {view === "hidden" && puddles.map((p) => (
         <span
