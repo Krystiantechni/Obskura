@@ -215,7 +215,7 @@
   /* FAB cookie — holograficzne obramowanie + krew jako ciecz WEWNĄTRZ koła */
   .cookie-fab { overflow: visible; }
 
-  /* Pojemnik cieczy — przycięty do koła (w środku, pod pierścieniem) */
+  /* Pojemnik cieczy — przycięty do koła (canvas z setkami cząstek krwi w środku) */
   .cookie-blood {
     position: absolute;
     inset: 2px;
@@ -224,16 +224,19 @@
     pointer-events: none;
   }
 
-  /* Poziom krwi — wypełnia od dołu do --blood-fill, z lekko falistą powierzchnią */
-  .cookie-blood-fill {
-    position: absolute;
-    left: -12%;
-    right: -12%;
-    bottom: -2px;
-    height: var(--blood-fill, 20%);
-    background: linear-gradient(to top, rgba(150,16,16,0.92), rgba(209,31,31,0.6));
-    border-radius: 46% 46% 0 0 / 14% 14% 0 0;
-    box-shadow: inset 0 2px 4px rgba(255,90,90,0.25);
+  /* Kałuża krwi zebrana na dole ekranu pod ikoną — narasta i resetuje się (loop) */
+  .blood-puddle {
+    position: fixed;
+    bottom: 0;
+    right: 53px;
+    z-index: 84;
+    width: 0;
+    height: 4px;
+    pointer-events: none;
+    transform: translateX(50%);
+    background: radial-gradient(ellipse at 50% 100%, rgba(220,30,30,0.92), rgba(122,13,13,0.5) 55%, transparent 78%);
+    filter: blur(0.6px);
+    animation: blood-puddle 11s ease-in-out infinite;
   }
 
   /* Pierścień: pomieszany hologram ~75% czerwień / ~20% biel / ~5% szarość. NIE krąży. */
@@ -284,6 +287,14 @@
     22%  { transform: rotate(340deg); opacity: 1; }
     30%  { opacity: 0; }
     100% { transform: rotate(340deg); opacity: 0; }
+  }
+
+  @keyframes blood-puddle {
+    0%   { width: 0;    height: 3px;  opacity: 0; }
+    15%  { opacity: 0.85; }
+    72%  { width: 80px; height: 10px; opacity: 1; }
+    90%  { width: 92px; height: 12px; opacity: 0.9; }
+    100% { width: 96px; height: 12px; opacity: 0; }
   }
 
   /* slow at start (gromadzi się), accelerates (spada) dzięki cubic-bezier wyżej */

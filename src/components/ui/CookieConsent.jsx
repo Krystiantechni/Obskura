@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { getConsent, setConsent } from "../../lib/consent";
-import useScrollBlood from "../../hooks/useScrollBlood";
+import useCookieFab from "../../hooks/useCookieFab";
+import BloodSim from "./BloodSim";
 
 // Ikonki kategorii
 const Shield = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>);
@@ -62,12 +63,9 @@ export default function CookieConsent() {
   const [prefs, setPrefs] = useState(saved?.preferences ?? true);
   const [analytics, setAnalytics] = useState(saved?.analytics ?? false);
   const [marketing, setMarketing] = useState(saved?.marketing ?? false);
-  const bannerRef = useRef(null);
-  const fabRef = useRef(null);
-
-  // Bezwładna ciecz o stałej objętości, chlupiąca przy scrollu — ikona (w kole) i baner (obramowanie).
-  useScrollBlood(bannerRef, view !== "hidden", { base: 16 });
-  useScrollBlood(fabRef, view === "hidden", { base: 32 });
+  // Ikona: przeciągalna (zapis pozycji) + krew o stałej objętości przechylająca się przy scrollu/drag.
+  const { ref: fabRef, pos, style: fabStyle, onPointerDown, onPointerMove, onPointerUp, shouldIgnoreClick } = useCookieFab();
+  const puddleStyle = pos ? { left: `${pos.x + 29}px`, right: "auto", transform: "translateX(-50%)" } : undefined;
 
   const close = (choice) => {
     setConsent(choice);
@@ -89,12 +87,16 @@ export default function CookieConsent() {
         <button
           ref={fabRef}
           type="button"
-          onClick={reopen}
-          aria-label="Ustawienia plików cookie"
-          className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
+          onClick={() => { if (!shouldIgnoreClick()) reopen(); }}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          style={fabStyle}
+          aria-label="Ustawienia plików cookie (przeciągnij, by przenieść)"
+          className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] cursor-grab touch-none place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red active:cursor-grabbing"
         >
-          {/* Krew jako ciecz w środku koła (poziom = --blood-fill, bezwładny chlupot) */}
-          <span className="cookie-blood" aria-hidden><span className="cookie-blood-fill" /></span>
+          {/* Setki cząstek krwi (canvas) w środku koła — chlupią przy ruchu/scrollu */}
+          <span className="cookie-blood" aria-hidden><BloodSim /></span>
           <span className="cookie-fab-ring" aria-hidden />
           <span className="cookie-fab-sheen" aria-hidden />
           <span className="relative z-[2]"><Cookie size={26} /></span>
@@ -104,11 +106,12 @@ export default function CookieConsent() {
           <span className="blood-drip" style={{ left: "40px", width: "2.8px", height: "3.5px", animationDelay: "3.1s" }} aria-hidden />
         </button>
       )}
+      {/* Kałuża krwi na dole ekranu pod ikoną */}
+      {view === "hidden" && <span className="blood-puddle" style={puddleStyle} aria-hidden />}
 
       <AnimatePresence>
         {view !== "hidden" && (
           <motion.div
-            ref={bannerRef}
             initial={{ y: 48, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 48, opacity: 0 }}
