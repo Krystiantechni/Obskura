@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import ScrollProgressBar from "../ui/ScrollProgressBar";
 import MiniPlayer from "../ui/MiniPlayer";
 import PageFallback from "../ui/PageFallback";
+import { applySeo } from "../../seo";
 
 // Zamraża bieżący outlet w momencie montażu, żeby podczas exit-animacji
 // stara trasa nie podmieniła się na nową (wymóg data routera dla AnimatePresence).
@@ -39,6 +40,7 @@ export default function Layout() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    applySeo(pathname);
   }, [pathname]);
 
   return (

@@ -9,17 +9,11 @@ realnie wniesie, zanim ją wybierzesz.
 **Status:** ⬜ do zrobienia · 🟡 w toku · ✅ zrobione · 💡 pomysł
 **Nakład:** S (szybkie) · M (średnie) · L (duże) — **Wartość:** ⭐–⭐⭐⭐
 
-_Ostatnia aktualizacja: 2026-05-27 (T1 zrobione)_
+_Ostatnia aktualizacja: 2026-05-27 (T1, T2 zrobione)_
 
 ---
 
 ## 🔝 Priorytet (rekomendowana kolejność)
-
-### T2 · Ładny podgląd przy udostępnianiu + widoczność w Google ⭐⭐⭐ · S–M · ⬜
-**Co to da:** gdy ktoś wrzuci link do OBSKURY na Facebooka / Discorda / iMessage, pokaże się
-key-art potwora z tytułem i opisem zamiast gołego linka. Każda podstrona dostaje własny tytuł
-i opis — lepiej wygląda w wyszukiwarce i kusi do kliknięcia.
-<sub>Tech: per-route `<title>`/`<meta>`/Open Graph + obrazek OG.</sub>
 
 ### T3 · Strona się nie „wykłada" po aktualizacji ⭐⭐ · S · ⬜
 **Co to da:** dziś, jeśli ktoś ma otwartą starą kartę i wgramy nową wersję, kliknięcie w inną
@@ -81,6 +75,8 @@ czemu". Spokój przy dalszym rozwoju.
 - **Animowana scena 3D w hero** — efektowne pierwsze 3 sekundy, ale duży nakład i ryzyko spowolnienia.
 - **Baner „słuchaj dalej"** na stronie głównej — wraca do miejsca, w którym user przerwał (dane już zapisujemy).
 - **Jeszcze lżejsze obrazy (WebP/AVIF)** — JPEG dał już 36→6 MB; WebP/AVIF urwałby kolejne ~25–30%, ale wymaga doinstalowania narzędzia (np. `sharp`), bo lokalny ffmpeg/sips nie mają enkodera WebP.
+- **Per-trasowe karty OG dla crawlerów** — dziś każdy udostępniony link pokazuje główną kartę OBSKURY (bo crawlery nie wykonują JS, a strona jest SPA). Osobne miniaturki per odcinek wymagałyby prerenderu/SSR (np. vite prerender) — większy nakład.
+- **SEO w wielu językach** — tytuły/opisy są po polsku; lokalizacja per język to dodatek.
 
 ---
 
@@ -93,3 +89,5 @@ czemu". Spokój przy dalszym rozwoju.
 - **Przyspieszenie ładowania** — strona wczytuje tylko to, co potrzebne (główna paczka 724→398 KB).
 - **Narracja głosowa (ElevenLabs)** — 7 odcinków, finał (ep-12) z kilkoma głosami w dialogu.
 - **T1 · Lżejsze obrazy** — PNG→JPEG (q82, max 2400 px): **36 MB → 6 MB** (6× mniej), bez widocznej utraty jakości. Szybsze ładowanie, lepszy Lighthouse.
+- **T2 · SEO + podgląd przy udostępnianiu** — statyczne OG/Twitter w index.html + obrazek OG 1200×630 (key-art), per-trasowe tytuły/opisy, nowy favicon (czerwona kropka marki), theme-color.
+- **Favicon** — zmieniony z resztki szablonu na markę OBSKURY (czerwona kropka w obrysie).
