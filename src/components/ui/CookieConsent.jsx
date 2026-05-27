@@ -83,14 +83,16 @@ export default function CookieConsent() {
           type="button"
           onClick={reopen}
           aria-label="Ustawienia plików cookie"
-          className="cookie-fab fixed bottom-6 right-[84px] z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
+          className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
         >
           <span className="cookie-fab-ring" aria-hidden />
+          <span className="cookie-fab-sheen" aria-hidden />
           <span className="relative z-[1]"><Cookie size={26} /></span>
           <span className="blood-pool" aria-hidden />
-          <span className="blood-drip" style={{ left: "16px", animationDelay: "0s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "29px", animationDelay: "1.4s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "42px", animationDelay: "2.7s" }} aria-hidden />
+          {/* krople boczne mniejsze, środkowa główna większa */}
+          <span className="blood-drip" style={{ left: "15px", width: "4px", height: "5px", animationDelay: "0.6s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "27px", width: "8px", height: "10px", animationDelay: "1.8s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "41px", width: "4px", height: "5px", animationDelay: "3.1s" }} aria-hidden />
         </button>
       )}
       {/* Krew zebrana na dole ekranu pod ikoną */}
