@@ -1,39 +1,50 @@
 import { useEffect } from "react";
 import { getLenis } from "../lib/lenisRef";
 
-// Ustawia CSS var --blood-fill (poziom krwi 0–100%) na elemencie ref, sterowany
-// prędkością scrolla: szybki scroll w dół wbija krew w górę (peak-hold),
-// grawitacja ściąga ją z powrotem do `base`. Respektuje prefers-reduced-motion.
-export function useScrollBlood(ref, active, { base = 14, gain = 2.4 } = {}) {
+// Ustawia CSS var --blood-fill na elemencie ref jako BEZWŁADNĄ ciecz o stałej objętości:
+// poziom spoczynkowy = `base`, a scroll wprawia ciecz w chlupot (sprężyna-tłumik napędzany
+// PRZYSPIESZENIEM scrolla). Szybki scroll → chlupie w górę i wraca do `base` (objętość stała).
+// Respektuje prefers-reduced-motion.
+export function useScrollBlood(ref, active, { base = 24, gain = 0.7, spring = 0.07, damp = 0.87, swing = 40 } = {}) {
   useEffect(() => {
     if (!active) return undefined;
     const el = ref.current;
     if (!el) return undefined;
 
-    const MAX = 100;
+    // Zakres chlupotu wokół stałego poziomu — objętość zostaje ~ta sama, tylko się przelewa.
+    const MIN = Math.max(0, base - swing * 0.45);
+    const MAX = Math.min(100, base + swing);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.style.setProperty("--blood-fill", `${base}%`);
       return undefined;
     }
 
     let lastY = window.scrollY;
-    let target = base;
+    let prevV = 0;
     let level = base;
+    let vel = 0;
     let raf;
     const tick = () => {
       const lenis = getLenis();
       const y = window.scrollY;
-      const d = lenis && typeof lenis.velocity === "number" ? lenis.velocity : y - lastY;
+      const v = lenis && typeof lenis.velocity === "number" ? lenis.velocity : y - lastY;
       lastY = y;
-      if (d > 0.5) target = Math.max(target, Math.min(MAX, base + d * gain));
-      target += (base - target) * 0.045; // grawitacja
-      level += (target - level) * 0.2; // wygładzenie
+      const accel = v - prevV; // przyspieszenie scrolla = bezwładność cieczy
+      prevV = v;
+
+      vel += accel * gain; // impuls od przyspieszenia
+      vel += (base - level) * spring; // sprężyna do poziomu spoczynkowego (stała objętość)
+      vel *= damp; // tłumienie
+      level += vel;
+      if (level < MIN) { level = MIN; vel *= -0.35; } // miękkie odbicie od dna
+      if (level > MAX) { level = MAX; vel *= -0.35; } // i od góry
+
       el.style.setProperty("--blood-fill", `${level.toFixed(2)}%`);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [ref, active, base, gain]);
+  }, [ref, active, base, gain, spring, damp]);
 }
 
 export default useScrollBlood;

@@ -65,9 +65,9 @@ export default function CookieConsent() {
   const bannerRef = useRef(null);
   const fabRef = useRef(null);
 
-  // Krew reaguje na prędkość scrolla — baner (obramowanie) i ikona (ciecz w środku koła).
-  useScrollBlood(bannerRef, view !== "hidden", { base: 14 });
-  useScrollBlood(fabRef, view === "hidden", { base: 22 });
+  // Bezwładna ciecz o stałej objętości, chlupiąca przy scrollu — ikona (w kole) i baner (obramowanie).
+  useScrollBlood(bannerRef, view !== "hidden", { base: 16 });
+  useScrollBlood(fabRef, view === "hidden", { base: 32 });
 
   const close = (choice) => {
     setConsent(choice);
@@ -93,11 +93,15 @@ export default function CookieConsent() {
           aria-label="Ustawienia plików cookie"
           className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red"
         >
-          {/* Krew jako ciecz w środku koła (poziom = --blood-fill, sterowany scrollem) */}
+          {/* Krew jako ciecz w środku koła (poziom = --blood-fill, bezwładny chlupot) */}
           <span className="cookie-blood" aria-hidden><span className="cookie-blood-fill" /></span>
           <span className="cookie-fab-ring" aria-hidden />
           <span className="cookie-fab-sheen" aria-hidden />
           <span className="relative z-[2]"><Cookie size={26} /></span>
+          {/* krople przeciekające z dołu koła — środkowa większa, boczne mniejsze */}
+          <span className="blood-drip" style={{ left: "16px", width: "2.8px", height: "3.5px", animationDelay: "0.6s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "28px", width: "5.6px", height: "7px", animationDelay: "1.8s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "40px", width: "2.8px", height: "3.5px", animationDelay: "3.1s" }} aria-hidden />
         </button>
       )}
 
