@@ -30,19 +30,19 @@ Toggle.propTypes = { checked: PropTypes.bool.isRequired, onChange: PropTypes.fun
 
 function Category({ icon, title, desc, always, checked, onChange }) {
   return (
-    <div className="border border-white/8 bg-white/[0.02] p-4">
-      <div className="mb-1.5 flex items-center justify-between gap-3">
+    <div className="border border-white/8 bg-white/[0.02] p-3">
+      <div className="mb-1 flex items-center justify-between gap-2.5">
         <div className="flex items-center gap-2 text-ink-0">
           <span className="text-red">{icon}</span>
-          <span className="text-[13px] font-medium">{title}</span>
+          <span className="text-[12px] font-medium">{title}</span>
         </div>
         {always ? (
-          <span className="shrink-0 border border-white/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-mono text-ink-2">Zawsze aktywne</span>
+          <span className="shrink-0 border border-white/10 px-2 py-0.5 font-mono text-[8px] uppercase tracking-mono text-ink-2">Zawsze aktywne</span>
         ) : (
           <Toggle checked={checked} onChange={onChange} label={title} />
         )}
       </div>
-      <p className="text-[11.5px] font-light leading-relaxed text-ink-2">{desc}</p>
+      <p className="text-[10.5px] font-light leading-snug text-ink-2">{desc}</p>
     </div>
   );
 }
@@ -52,7 +52,7 @@ Category.propTypes = {
 };
 
 const DESC =
-  "Korzystamy z plików cookie i podobnych technologii. Niezbędne są wymagane do działania serwisu. Pozostałe (dopasowanie, analityka, marketing) uruchamiamy wyłącznie po Twojej dobrowolnej zgodzie. Zgodę zmienisz w każdej chwili ikoną ciasteczka w rogu strony.";
+  "Używamy plików cookie. Niezbędne są wymagane do działania serwisu — pozostałe uruchamiamy wyłącznie za Twoją zgodą.";
 
 // Baner zgody na cookies — schemat: collapsed → szczegóły (4 kategorie) → reopen ikoną.
 export default function CookieConsent() {
@@ -72,7 +72,7 @@ export default function CookieConsent() {
   const reopen = () => {
     const c = getConsent();
     setPrefs(c?.preferences ?? true); setAnalytics(c?.analytics ?? false); setMarketing(c?.marketing ?? false);
-    setView("details");
+    setView("banner"); // zawsze otwiera się zwinięty
   };
 
   return (
@@ -105,20 +105,20 @@ export default function CookieConsent() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 48, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className={`fixed bottom-4 left-4 right-4 z-[95] mx-auto w-auto border border-white/10 bg-[rgba(10,13,18,0.97)] p-5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:p-6 ${view === "details" ? "max-w-3xl" : "max-w-2xl"}`}
+            className="fixed bottom-8 left-4 right-4 z-[95] mx-auto w-auto max-w-lg border border-white/10 bg-[rgba(10,13,18,0.97)] p-4 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] backdrop-blur-xl"
             role="dialog"
             aria-label="Ustawienia plików cookie"
             aria-live="polite"
           >
             <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,42,42,0.5),transparent)]" />
 
-            <div className="mb-3 flex items-start gap-3">
-              <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full border border-red/40 text-red shadow-[0_0_12px_rgba(255,42,42,0.25)]"><Cookie /></span>
+            <div className="mb-2.5 flex items-start gap-2.5">
+              <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-red/40 text-red shadow-[0_0_12px_rgba(255,42,42,0.25)]"><Cookie size={14} /></span>
               <div>
-                <h2 className="mb-1.5 font-serif text-xl font-medium text-ink-0">Ustawienia plików cookie</h2>
-                <p className="text-[13px] font-light leading-relaxed text-ink-1">
-                  {DESC.replace("ikoną ciasteczka w rogu strony.", "")}
-                  <Link to="/prawne" className="ml-1 whitespace-nowrap text-ink-0 underline decoration-red/50 underline-offset-2 transition-colors hover:decoration-red">Polityka prywatności</Link>
+                <h2 className="mb-1 font-serif text-[15px] font-medium text-ink-0">Ustawienia plików cookie</h2>
+                <p className="text-[11.5px] font-light leading-snug text-ink-1">
+                  {DESC}{" "}
+                  <Link to="/prawne" className="whitespace-nowrap text-ink-0 underline decoration-red/50 underline-offset-2 transition-colors hover:decoration-red">Polityka prywatności</Link>
                 </p>
               </div>
             </div>
@@ -127,9 +127,9 @@ export default function CookieConsent() {
             <button
               type="button"
               onClick={() => setView(view === "details" ? "banner" : "details")}
-              className="mb-4 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-mono text-ink-2 transition-colors hover:text-ink-0"
+              className="mb-3 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-mono text-ink-2 transition-colors hover:text-ink-0"
             >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" className={`transition-transform ${view === "details" ? "rotate-180" : ""}`}><path d="M3 4.5 6 7.5 9 4.5"/></svg>
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" className={`transition-transform ${view === "details" ? "rotate-180" : ""}`}><path d="M3 4.5 6 7.5 9 4.5"/></svg>
               {view === "details" ? "Ukryj szczegóły" : "Pokaż szczegóły"}
             </button>
 
@@ -142,44 +142,50 @@ export default function CookieConsent() {
                   transition={{ duration: 0.28 }}
                   className="overflow-hidden"
                 >
-                  <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="mb-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                     <Category icon={<Shield />} title="Niezbędne do działania" always
-                      desc="Zapamiętanie Twojej zgody i podstawowe działanie serwisu (w przyszłości także sesja logowania i bezpieczeństwo). Bez nich serwis nie zadziała — nie można ich wyłączyć. Przechowywanie: localStorage / sesja." />
+                      desc="Zapamiętanie zgody i podstawowe działanie serwisu (w przyszłości też logowanie). Bez nich serwis nie zadziała." />
                     <Category icon={<Sliders />} title="Dopasowanie strony do Ciebie" checked={prefs} onChange={setPrefs}
-                      desc="Zapamiętują Twój język, ulubione odcinki, postęp odsłuchu i wybrany wariant strony — byś nie ustawiał ich od nowa. First-party, brak danych osobowych. Przechowywanie: do 1 roku." />
+                      desc="Język, ulubione, postęp odsłuchu i wariant strony — byś nie ustawiał ich od nowa. Brak danych osobowych." />
                     <Category icon={<Chart />} title="Analiza i ulepszanie serwisu" checked={analytics} onChange={setAnalytics}
-                      desc="Anonimowe statystyki użycia (które sekcje odwiedzasz, gdzie napotykasz błędy), by ulepszać OBSKURĘ. Obecnie nie zbieramy żadnych — uruchomią się wyłącznie po Twojej zgodzie. Nie służą do profilowania." />
+                      desc="Anonimowe statystyki użycia, by ulepszać OBSKURĘ. Obecnie nie zbieramy żadnych — tylko za Twoją zgodą." />
                     <Category icon={<Megaphone />} title="Reklamy spersonalizowane" checked={marketing} onChange={setMarketing}
-                      desc="Personalizacja reklam i pomiar ich skuteczności. Obecnie nie używamy żadnych pikseli ani skryptów reklamowych — jeśli to się zmieni, nie uruchomią się przed Twoją zgodą." />
+                      desc="Personalizacja reklam. Obecnie nie używamy żadnych pikseli — nie uruchomią się bez Twojej zgody." />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* Akcje */}
-            <div className="flex flex-col gap-2.5 sm:flex-row">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <button type="button" onClick={acceptAll}
-                className="flex-1 bg-red px-4 py-3 font-mono text-[11px] font-bold uppercase tracking-ui text-white transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">
+                className="flex-1 bg-red px-3.5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-ui text-white transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">
                 {view === "details" ? "Akceptuj wszystkie" : "W porządku"}
               </button>
               {view === "details" ? (
                 <>
                   <button type="button" onClick={rejectAll}
-                    className="flex-1 border border-white/15 px-4 py-3 font-mono text-[11px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
+                    className="flex-1 border border-white/15 px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
                     Odrzuć wszystkie
                   </button>
                   <button type="button" onClick={savePrefs}
-                    className="flex-1 border border-white/15 px-4 py-3 font-mono text-[11px] uppercase tracking-ui text-ink-1 transition-colors hover:border-red hover:text-red">
+                    className="flex-1 border border-white/15 px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-red hover:text-red">
                     Zapisz preferencje
                   </button>
                 </>
               ) : (
                 <button type="button" onClick={() => setView("details")}
-                  className="border border-white/15 px-6 py-3 font-mono text-[11px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
+                  className="border border-white/15 px-5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
                   Ustawienia
                 </button>
               )}
             </div>
+
+            {/* krople krwi z dolnej krawędzi banera */}
+            <span className="blood-drip" style={{ left: "14%", width: "3px", height: "4px", animationDelay: "0.5s" }} aria-hidden />
+            <span className="blood-drip" style={{ left: "37%", width: "5px", height: "6.5px", animationDelay: "2.2s" }} aria-hidden />
+            <span className="blood-drip" style={{ left: "61%", width: "3.4px", height: "4.4px", animationDelay: "1.2s" }} aria-hidden />
+            <span className="blood-drip" style={{ left: "85%", width: "4.4px", height: "5.8px", animationDelay: "3.0s" }} aria-hidden />
           </motion.div>
         )}
       </AnimatePresence>
