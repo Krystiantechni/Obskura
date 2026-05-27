@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { getConsent, setConsent } from "../../lib/consent";
+import { getLenis } from "../../lib/lenisRef";
 
 // Ikonki kategorii
 const Shield = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>);
@@ -61,6 +62,39 @@ export default function CookieConsent() {
   const [prefs, setPrefs] = useState(saved?.preferences ?? true);
   const [analytics, setAnalytics] = useState(saved?.analytics ?? false);
   const [marketing, setMarketing] = useState(saved?.marketing ?? false);
+  const bannerRef = useRef(null);
+
+  // Krew w obramowaniu reaguje na prędkość scrolla: w dół → wjeżdża w górę, grawitacja ściąga ją z powrotem.
+  useEffect(() => {
+    if (view === "hidden") return undefined;
+    const el = bannerRef.current;
+    if (!el) return undefined;
+    const BASE = 14;
+    const MAX = 100;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.style.setProperty("--blood-fill", `${BASE}%`);
+      return undefined;
+    }
+    let lastY = window.scrollY;
+    let target = BASE;
+    let level = BASE;
+    let raf;
+    const tick = () => {
+      // Prędkość scrolla: preferuj Lenis (lepiej oddaje siłę flicka), fallback do delty scrollY.
+      const lenis = getLenis();
+      const y = window.scrollY;
+      const d = lenis && typeof lenis.velocity === "number" ? lenis.velocity : y - lastY;
+      lastY = y;
+      // szybki scroll w dół wbija krew aż na górę (peak-hold); slow = niżej
+      if (d > 0.5) target = Math.max(target, Math.min(MAX, BASE + d * 2.4));
+      target += (BASE - target) * 0.045; // grawitacja — powrót na dół
+      level += (target - level) * 0.2; // wygładzenie
+      el.style.setProperty("--blood-fill", `${level.toFixed(2)}%`);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [view]);
 
   const close = (choice) => {
     setConsent(choice);
@@ -101,6 +135,7 @@ export default function CookieConsent() {
       <AnimatePresence>
         {view !== "hidden" && (
           <motion.div
+            ref={bannerRef}
             initial={{ y: 48, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 48, opacity: 0 }}
@@ -110,7 +145,8 @@ export default function CookieConsent() {
             aria-label="Ustawienia plików cookie"
             aria-live="polite"
           >
-            <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,42,42,0.5),transparent)]" />
+            {/* Krwawe obramowanie reagujące na scroll */}
+            <span className="banner-blood" aria-hidden />
 
             <div className="mb-2.5 flex items-start gap-2.5">
               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-red/40 text-red shadow-[0_0_12px_rgba(255,42,42,0.25)]"><Cookie size={14} /></span>

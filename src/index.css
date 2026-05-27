@@ -194,6 +194,24 @@
     50% { opacity: 1; }
   }
 
+  /* Krwawe obramowanie banera cookie — poziom krwi sterowany prędkością scrolla (--blood-fill).
+     Rest: krew na dole. Szybki scroll w dół → krew wjeżdża w górę aż na górę ramki. */
+  .banner-blood {
+    position: absolute;
+    inset: 0;
+    padding: 3px;
+    pointer-events: none;
+    background: linear-gradient(to top,
+      rgba(160,18,18,0.96) 0%,
+      rgba(209,31,31,0.72) var(--blood-fill, 14%),
+      rgba(209,31,31,0) calc(var(--blood-fill, 14%) + 8%));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    filter: drop-shadow(0 0 4px rgba(209,31,31,0.4));
+  }
+
   /* FAB cookie — holograficzne obramowanie + ściekająca krew */
   .cookie-fab { overflow: visible; }
 

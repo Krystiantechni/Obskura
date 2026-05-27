@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+import { setLenis } from "../lib/lenisRef";
 
 // Smooth-scroll global (Lenis). Dodaj raz na poziomie App.
 // lerp: factor 0.05-0.15 — im wyżej tym bardziej responsywne, im niżej tym gładsze.
@@ -15,6 +16,7 @@ export function useLenisScroll({ lerp = 0.08 } = {}) {
       touchMultiplier: 1.5,
       syncTouch: true,
     });
+    setLenis(lenis);
 
     let rafId;
     function raf(time) {
@@ -26,6 +28,7 @@ export function useLenisScroll({ lerp = 0.08 } = {}) {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      setLenis(null);
     };
   }, [lerp]);
 }
