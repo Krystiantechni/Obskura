@@ -23,7 +23,7 @@ export default function BloodSim() {
     const R = SIZE / 2;
     const cx = R;
     const cy = R;
-    const N = reduce ? 42 : 85; // o połowę mniej cząstek
+    const N = reduce ? 60 : 105; // pełniejsza, dobrze widoczna pula
     const PR = 2.2;
     const MIN = 3.1;
     const MAXR = R - 1;
@@ -54,7 +54,7 @@ export default function BloodSim() {
 
     const W = canvas.width;
     const H = canvas.height;
-    const T = 90; // próg alfy — scala blobsy w jednolitą ciecz z ostrą krawędzią (metaball)
+    const T = 55; // próg alfy — scala blobsy w jednolitą ciecz z ostrą krawędzią (metaball)
     const draw = () => {
       ctx.clearRect(0, 0, SIZE, SIZE);
       for (let i = 0; i < N; i++) ctx.drawImage(sprite, ps[i].x - PR * 2, ps[i].y - PR * 2, PR * 4, PR * 4);
@@ -64,10 +64,10 @@ export default function BloodSim() {
         const a = d[k];
         if (a > T) {
           const s = a > 255 ? 1 : (a - T) / (255 - T); // cieniowanie: jaśniejszy rdzeń, ciemniejsza krawędź
-          d[k - 3] = 150 + s * 78;
-          d[k - 2] = 16 + s * 26;
-          d[k - 1] = 16 + s * 26;
-          d[k] = 236;
+          d[k - 3] = 172 + s * 80; // jaśniejsza, wyraźna czerwień
+          d[k - 2] = 20 + s * 30;
+          d[k - 1] = 20 + s * 30;
+          d[k] = 242;
         } else {
           d[k] = 0;
         }
@@ -167,5 +167,5 @@ export default function BloodSim() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  return <canvas ref={canvasRef} aria-hidden style={{ width: "100%", height: "100%", display: "block" }} />;
+  return <canvas ref={canvasRef} aria-hidden style={{ width: "100%", height: "100%", display: "block", filter: "drop-shadow(0 0 2px rgba(255,40,40,0.55))" }} />;
 }

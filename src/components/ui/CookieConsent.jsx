@@ -11,7 +11,15 @@ const Shield = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none
 const Sliders = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg>);
 const Chart = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 19V5M4 19h16M8 16l4-5 3 3 4-6"/></svg>);
 const Megaphone = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 10v4h3l9 5V5L7 10H4zM18 9a3 3 0 0 1 0 6"/></svg>);
-const Cookie = ({ size = 18 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3a9 9 0 1 0 9 9 3.5 3.5 0 0 1-4-4 3.5 3.5 0 0 1-5-5z"/><circle cx="9" cy="11" r="1" fill="currentColor"/><circle cx="14" cy="14" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>);
+const Cookie = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <path fill="currentColor" d="M12 2.4c-.5 0-1 .03-1.48.1a3.5 3.5 0 0 1 4.86 4.86 3.5 3.5 0 0 1 4.34 4.34A9.6 9.6 0 1 1 12 2.4z" />
+    <circle cx="8.4" cy="10.6" r="1.25" fill="#3a1212" />
+    <circle cx="12.8" cy="14.6" r="1.25" fill="#3a1212" />
+    <circle cx="15" cy="9.6" r="1.05" fill="#3a1212" />
+    <circle cx="9.3" cy="15.2" r="0.95" fill="#3a1212" />
+  </svg>
+);
 Cookie.propTypes = { size: PropTypes.number };
 
 function Toggle({ checked, onChange, label }) {
