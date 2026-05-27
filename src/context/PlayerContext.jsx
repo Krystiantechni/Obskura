@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { hasConsent } from "../lib/consent";
 
 const FAV_KEY = "obskura_favorites";
 const STATE_KEY = "obskura_player_state";
@@ -62,9 +63,9 @@ export function PlayerProvider({ children }) {
   const hasNext = currentIndex >= 0 && currentIndex < queue.length - 1;
   const hasPrev = currentIndex > 0;
 
-  // Persist ulubionych.
+  // Persist ulubionych (tylko za zgodą na preferencje).
   useEffect(() => {
-    localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
+    if (hasConsent("preferences")) localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
   }, [favorites]);
 
   // Załaduj nowe źródło gdy zmienia się ścieżka.
@@ -99,6 +100,7 @@ export function PlayerProvider({ children }) {
       return undefined;
     }
     const save = () => {
+      if (!hasConsent("preferences")) return;
       localStorage.setItem(
         STATE_KEY,
         JSON.stringify({ queue, currentId, currentTime: audioRef.current?.currentTime || 0 }),

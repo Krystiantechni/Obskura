@@ -93,4 +93,4 @@ czemu". Spokój przy dalszym rozwoju.
 - **Favicon** — zmieniony z resztki szablonu na markę OBSKURY (czerwona kropka w obrysie).
 - **Karta OG z nagłówkiem + CTA** — `npm run og` (sharp) wypala na key-arcie nagłówek „Słuchaj, czego inni nie słyszą" + przycisk „Słuchaj teraz"; dłuższy tytuł (58) i opis (160) pod zalecenia walidatorów.
 - **Obrazy → WebP** — `npm run images:webp` (sharp). Po JPEG (6 MB) WebP zbił do **1.4 MB** — łącznie od oryginału **36 MB → 1.4 MB** (25×).
-- **Cookie consent** — baner zgody (niezbędne zawsze + analityka opcjonalna), wybór w localStorage, gotowy mechanizm `hasAnalyticsConsent()` pod przyszłą analitykę.
+- **Cookie consent** — baner zgody w schemacie collapsed→szczegóły z 4 kategoriami (Niezbędne / Dopasowanie / Analiza / Reklamy), „Akceptuj/Odrzuć/Zapisz preferencje", pływająca ikona do zmiany zgody. Zapis preferencji (ulubione/resume/wariant hero) gated na zgodę; analityka/marketing przez `hasConsent()`.

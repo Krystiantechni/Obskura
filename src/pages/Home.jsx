@@ -4,6 +4,7 @@ import AudioPlayerSection from "../components/sections/AudioPlayerSection";
 import FeaturedBanner from "../components/sections/FeaturedBanner";
 import StoriesGrid from "../components/sections/StoriesGrid";
 import TweaksPanel from "../components/ui/TweaksPanel";
+import { hasConsent } from "../lib/consent";
 
 const STORAGE_KEY = "obskura_hero_variant";
 
@@ -12,7 +13,7 @@ export default function Home() {
 
   const changeVariant = (v) => {
     setVariant(v);
-    localStorage.setItem(STORAGE_KEY, v);
+    if (hasConsent("preferences")) localStorage.setItem(STORAGE_KEY, v);
   };
 
   return (

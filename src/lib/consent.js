@@ -1,10 +1,15 @@
-// Zgoda na cookies / przechowywanie danych.
-// Kategoria "necessary" jest zawsze włączona (język, ulubione, stan playera — funkcjonalne,
-// nie wymagają zgody wg RODO). "analytics" jest opcjonalne i domyślnie wyłączone — pod
-// przyszłą analitykę: przed jej załadowaniem sprawdź hasAnalyticsConsent().
+// Zgoda na cookies / przechowywanie danych — kategorie.
+//
+// necessary  — zawsze aktywne (zapamiętanie zgody, podstawy serwisu; w przyszłości sesja/CSRF).
+// preferences — funkcjonalne: język, ulubione, postęp odsłuchu, wariant hero (gated, patrz hasConsent).
+// analytics  — opcjonalne, obecnie NIEUŻYWANE (grunt pod przyszłą anonimową analitykę).
+// marketing  — opcjonalne, obecnie NIEUŻYWANE (grunt pod przyszłe piksele reklamowe).
+//
+// Przed uruchomieniem czegokolwiek opcjonalnego sprawdź hasConsent("analytics"/"marketing"),
+// a przed zapisem preferencji — hasConsent("preferences").
 
 const KEY = "obskura_cookie_consent";
-const VERSION = 1;
+const VERSION = 2;
 
 export function getConsent() {
   try {
@@ -16,14 +21,30 @@ export function getConsent() {
   return null;
 }
 
-export function setConsent({ analytics }) {
-  const payload = { v: VERSION, necessary: true, analytics: !!analytics, ts: Date.now() };
+export function setConsent({ preferences = false, analytics = false, marketing = false }) {
+  const payload = {
+    v: VERSION,
+    necessary: true,
+    preferences: !!preferences,
+    analytics: !!analytics,
+    marketing: !!marketing,
+    ts: Date.now(),
+  };
   localStorage.setItem(KEY, JSON.stringify(payload));
-  // powiadom resztę aplikacji (np. przyszły loader analityki) o zmianie
   window.dispatchEvent(new CustomEvent("obskura:consent", { detail: payload }));
   return payload;
 }
 
+// Czy dana kategoria jest dozwolona. "necessary" zawsze true.
+// Przed pierwszym wyborem: necessary + preferences = true (funkcjonalne nie psują UX),
+// analytics/marketing = false (nie ruszają bez wyraźnej zgody).
+export function hasConsent(category) {
+  if (category === "necessary") return true;
+  const c = getConsent();
+  if (!c) return category === "preferences";
+  return c[category] === true;
+}
+
 export function hasAnalyticsConsent() {
-  return getConsent()?.analytics === true;
+  return hasConsent("analytics");
 }
