@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePlayer } from "../../context/PlayerContext";
 import WaveformBar from "./WaveformBar";
-import { Play, Pause, Prev, Next, Heart, HeartFill, Volume } from "./Icons";
+import QueuePanel from "./QueuePanel";
+import { Play, Pause, Prev, Next, Heart, HeartFill, Volume, List } from "./Icons";
 
 function fmt(sec) {
   if (!Number.isFinite(sec)) return "00:00";
@@ -11,15 +13,20 @@ function fmt(sec) {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
+const SLEEP_OPTIONS = [15, 30, 45, 60];
+
 // Trwały mini-player na dole — gra nieprzerwanie przy zmianie tras.
 export default function MiniPlayer() {
   const {
     current, playing, progress, currentTime, duration,
-    volume, hasNext, hasPrev,
-    toggle, next, prev, seek, setVolume, stop, toggleFavorite, isFavorite,
+    volume, hasNext, hasPrev, sleepRemaining, sleepActive,
+    toggle, next, prev, seek, setVolume, setSleepTimer, stop, toggleFavorite, isFavorite,
   } = usePlayer();
 
+  const [panel, setPanel] = useState(null); // "queue" | "sleep" | null
   const liked = current ? isFavorite(current.id) : false;
+
+  const togglePanel = (name) => setPanel((p) => (p === name ? null : name));
 
   return (
     <AnimatePresence>
@@ -136,6 +143,41 @@ export default function MiniPlayer() {
                 />
               </div>
 
+              {/* Kolejka */}
+              <button
+                type="button"
+                onClick={() => togglePanel("queue")}
+                aria-label="Kolejka odtwarzania"
+                aria-expanded={panel === "queue"}
+                className={`hidden h-9 w-9 place-items-center border transition-colors sm:grid ${
+                  panel === "queue" ? "border-red text-red" : "border-white/10 text-ink-1 hover:border-red hover:text-red"
+                }`}
+              >
+                <List />
+              </button>
+
+              {/* Sleep timer */}
+              <div className="relative hidden sm:block">
+                <button
+                  type="button"
+                  onClick={() => togglePanel("sleep")}
+                  aria-label="Wyłącznik czasowy"
+                  aria-expanded={panel === "sleep"}
+                  className={`grid h-9 w-9 place-items-center border transition-colors ${
+                    sleepActive || panel === "sleep" ? "border-red text-red" : "border-white/10 text-ink-1 hover:border-red hover:text-red"
+                  }`}
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
+                    <path d="M13.5 9.5A5.5 5.5 0 1 1 6.5 2.5a4.5 4.5 0 0 0 7 7Z" />
+                  </svg>
+                </button>
+                {sleepActive && (
+                  <span className="pointer-events-none absolute -right-1.5 -top-2 rounded-sm bg-red px-1 font-mono text-[8px] leading-[1.5] text-white">
+                    {fmt(sleepRemaining)}
+                  </span>
+                )}
+              </div>
+
               <Link
                 to="/player"
                 aria-label="Otwórz pełny odtwarzacz"
@@ -158,6 +200,49 @@ export default function MiniPlayer() {
               </button>
             </div>
           </div>
+
+          {/* Panel kolejki */}
+          <QueuePanel open={panel === "queue"} onClose={() => setPanel(null)} />
+
+          {/* Popover sleep timer */}
+          <AnimatePresence>
+            {panel === "sleep" && (
+              <motion.div
+                key="sleep-menu"
+                initial={{ y: 12, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 12, opacity: 0 }}
+                transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                className="fixed bottom-[80px] right-3 z-[81] w-[200px] border border-white/10 bg-[rgba(10,13,18,0.97)] p-3 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.9)] backdrop-blur-xl lg:right-12"
+                role="dialog"
+                aria-label="Wyłącznik czasowy"
+              >
+                <div className="mb-2.5 px-1 font-mono text-[10px] uppercase tracking-mono text-ink-2">
+                  Wyłącz po
+                </div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {SLEEP_OPTIONS.map((m) => (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => { setSleepTimer(m); setPanel(null); }}
+                      className="border border-white/10 bg-black/30 py-2 font-mono text-[11px] tracking-ui text-ink-1 transition-colors hover:border-red hover:text-red"
+                    >
+                      {m} min
+                    </button>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { setSleepTimer(0); setPanel(null); }}
+                  disabled={!sleepActive}
+                  className="mt-1.5 w-full border border-white/10 py-2 font-mono text-[10px] uppercase tracking-mono text-ink-2 transition-colors enabled:hover:border-red enabled:hover:text-red disabled:opacity-40"
+                >
+                  {sleepActive ? `Wyłącz (${fmt(sleepRemaining)})` : "Timer nieaktywny"}
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>
