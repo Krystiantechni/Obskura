@@ -89,10 +89,10 @@ export default function CookieConsent() {
           <span className="cookie-fab-sheen" aria-hidden />
           <span className="relative z-[1]"><Cookie size={26} /></span>
           <span className="blood-pool" aria-hidden />
-          {/* krople boczne mniejsze, środkowa główna większa */}
-          <span className="blood-drip" style={{ left: "15px", width: "4px", height: "5px", animationDelay: "0.6s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "27px", width: "8px", height: "10px", animationDelay: "1.8s" }} aria-hidden />
-          <span className="blood-drip" style={{ left: "41px", width: "4px", height: "5px", animationDelay: "3.1s" }} aria-hidden />
+          {/* krople boczne mniejsze, środkowa główna większa (-30% wobec poprzednich) */}
+          <span className="blood-drip" style={{ left: "16px", width: "2.8px", height: "3.5px", animationDelay: "0.6s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "28px", width: "5.6px", height: "7px", animationDelay: "1.8s" }} aria-hidden />
+          <span className="blood-drip" style={{ left: "40px", width: "2.8px", height: "3.5px", animationDelay: "3.1s" }} aria-hidden />
         </button>
       )}
       {/* Krew zebrana na dole ekranu pod ikoną */}
