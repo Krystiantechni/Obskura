@@ -71,7 +71,8 @@ czemu". Spokój przy dalszym rozwoju.
 - **Lepsze polskie głosy narracji** — po wykupieniu planu ElevenLabs wracamy do głosów z Library (mam je zapisane). Teraz głosy darmowe mają lekki angielski akcent.
 - **Różne głosy postaci w pełnych odcinkach** — rozbudowa dialogów (mamy już mechanizm).
 - **Skrót „przejdź do treści"** dla osób korzystających z klawiatury (dostępność).
-- **Zgoda na ciasteczka / analityka** — gdy strona pójdzie na produkcję.
+- **Faktyczna analityka** — gdy będzie potrzebna: ładować dopiero po `hasAnalyticsConsent()` (mechanizm zgody już gotowy); dodać link „zmień zgodę" w stopce.
+- **Cookie consent i18n** — baner jest po polsku; lokalizacja per język to dodatek.
 - **Animowana scena 3D w hero** — efektowne pierwsze 3 sekundy, ale duży nakład i ryzyko spowolnienia.
 - **Baner „słuchaj dalej"** na stronie głównej — wraca do miejsca, w którym user przerwał (dane już zapisujemy).
 - **Per-trasowe karty OG dla crawlerów** — dziś każdy udostępniony link pokazuje główną kartę OBSKURY (bo crawlery nie wykonują JS, a strona jest SPA). Osobne miniaturki per odcinek wymagałyby prerenderu/SSR (np. vite prerender) — większy nakład.
@@ -92,3 +93,4 @@ czemu". Spokój przy dalszym rozwoju.
 - **Favicon** — zmieniony z resztki szablonu na markę OBSKURY (czerwona kropka w obrysie).
 - **Karta OG z nagłówkiem + CTA** — `npm run og` (sharp) wypala na key-arcie nagłówek „Słuchaj, czego inni nie słyszą" + przycisk „Słuchaj teraz"; dłuższy tytuł (58) i opis (160) pod zalecenia walidatorów.
 - **Obrazy → WebP** — `npm run images:webp` (sharp). Po JPEG (6 MB) WebP zbił do **1.4 MB** — łącznie od oryginału **36 MB → 1.4 MB** (25×).
+- **Cookie consent** — baner zgody (niezbędne zawsze + analityka opcjonalna), wybór w localStorage, gotowy mechanizm `hasAnalyticsConsent()` pod przyszłą analitykę.

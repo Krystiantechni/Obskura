@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import ScrollProgressBar from "../ui/ScrollProgressBar";
 import MiniPlayer from "../ui/MiniPlayer";
 import PageFallback from "../ui/PageFallback";
+import CookieConsent from "../ui/CookieConsent";
 import { applySeo } from "../../seo";
 
 // Zamraża bieżący outlet w momencie montażu, żeby podczas exit-animacji
@@ -65,6 +66,7 @@ export default function Layout() {
       </main>
       <Footer />
       <MiniPlayer />
+      <CookieConsent />
     </>
   );
 }
