@@ -164,7 +164,7 @@ export default function CookieConsent() {
             {/* Akcje */}
             <div className="flex flex-col gap-2 sm:flex-row">
               <button type="button" onClick={acceptAll}
-                className="flex-1 bg-red px-3.5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-ui text-white transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">
+                className="flex-1 bg-red px-3.5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-ui text-black transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">
                 {view === "details" ? t("cookie.accept_all", "Akceptuj wszystkie") : t("cookie.ok", "W porządku")}
               </button>
               {view === "details" ? (

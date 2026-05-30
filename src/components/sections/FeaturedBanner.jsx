@@ -64,9 +64,9 @@ export default function FeaturedBanner() {
         <div className="absolute inset-0 z-[2] flex items-center p-8 lg:p-16">
           <div className="max-w-lg">
             <Eyebrow className="mb-6">{t("featured.kicker")}</Eyebrow>
-            <h3 className="mb-4 font-serif text-[clamp(32px,4vw,56px)] font-medium leading-none tracking-[-0.015em] text-ink-0">
+            <h2 className="mb-4 font-serif text-[clamp(32px,4vw,56px)] font-medium leading-none tracking-[-0.015em] text-ink-0">
               {t("featured.title_line1")} <em className="italic text-ink-1">{t("featured.title_line2")}</em>
-            </h3>
+            </h2>
             <p className="mb-6 max-w-md text-sm font-light leading-relaxed text-ink-1">{t("featured.desc")}</p>
             <div className="flex flex-wrap items-center gap-3.5">
               <button className="inline-flex items-center gap-3 border border-white/15 bg-white/[0.06] px-6 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.15em] text-ink-0 backdrop-blur-md transition-all hover:border-red hover:bg-red hover:shadow-[0_0_30px_rgba(255,42,42,0.4)]">

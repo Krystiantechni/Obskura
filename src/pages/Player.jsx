@@ -4,15 +4,24 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import WaveformBar from "../components/ui/WaveformBar";
 import { Play, Pause, Prev, Next, Heart, Share, List, Arrow } from "../components/ui/Icons";
+import { usePlayer } from "../context/PlayerContext";
 
-const TOTAL = 47 * 60 + 12;
+// Fallback długość, gdy żadna ścieżka nie jest jeszcze załadowana w PlayerContext
+// (np. wejście na /player bez wcześniejszego playTrack). Pozwala UI nie pęknąć
+// — i tak `seek` w kontekście wymaga realnego `duration`, więc bez ścieżki kliknięcia
+// są no-opem (zgodnie z implementacją kontekstu).
+const FALLBACK_TOTAL = 47 * 60 + 12;
 
 function fmt(sec) {
-  const m = Math.floor(sec / 60);
-  const s = Math.floor(sec % 60);
-  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  const s = Number.isFinite(sec) ? Math.max(0, sec) : 0;
+  const m = Math.floor(s / 60);
+  const r = Math.floor(s % 60);
+  return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
 }
 
+// TODO: real transcript data — chapters/transcript powinny przyjść z metadanych
+// ścieżki (np. current.chapters, current.transcript). Na razie mock dopasowany
+// do oryginalnego scenariusza odcinka 12.
 const CHAPTERS = [
   { n: 1, key: "ch1", t: "Powrót po 23 latach", time: "00:00", sec: 0 },
   { n: 2, key: "ch2", t: "Listy ojca", time: "04:18", sec: 258 },
@@ -25,6 +34,7 @@ const CHAPTERS = [
   { n: 9, key: "ch9", t: "Co zostaje rano", time: "44:30", sec: 2670 },
 ];
 
+// TODO: real transcript data
 const TRANSCRIPT = [
   { key: "t1", sec: 1145, speaker: "narratorka", text: "Wisłoujście, sierpień 1907 roku. Mgła wchodzi do portu o czwartej po południu." },
   { key: "t2", sec: 1158, speaker: "narratorka", text: "Rybacy wracają wcześniej niż zwykle. Nikt nie tłumaczy dlaczego." },
@@ -78,26 +88,38 @@ Visualizer.propTypes = {
 
 export default function Player() {
   const { t } = useTranslation();
-  const [playing, setPlaying] = useState(true);
-  const [seconds, setSeconds] = useState(1247);
+  const {
+    playing,
+    toggle,
+    currentTime,
+    duration,
+    seek,
+  } = usePlayer();
+
   const [tab, setTab] = useState("transcript");
   const [speed, setSpeed] = useState(1);
   const [frame, setFrame] = useState(0);
   const panelRef = useRef(null);
 
-  useEffect(() => {
-    if (!playing) return undefined;
-    const id = setInterval(() => setSeconds((s) => Math.min(TOTAL, s + speed)), 1000);
-    return () => clearInterval(id);
-  }, [playing, speed]);
+  // Realna długość odcinka — jeśli kontekst zna duration (audio załadowane),
+  // używamy go; w przeciwnym razie fallback dla layoutu.
+  const total = duration > 0 ? duration : FALLBACK_TOTAL;
+  const seconds = currentTime;
+  const progress = total > 0 ? Math.min(1, Math.max(0, seconds / total)) : 0;
 
+  // Pomocnik: skok do konkretnej sekundy przez seek(frac) z PlayerContext.
+  // Działa tylko gdy duration > 0 (kontekst odrzuca seek bez załadowanego audio).
+  const seekToSeconds = (sec) => {
+    if (!total) return;
+    seek(Math.min(1, Math.max(0, sec / total)));
+  };
+
+  // Visualizer frame loop — pozostaje lokalny (czysto dekoracyjny).
   useEffect(() => {
     if (!playing) return undefined;
     const id = setInterval(() => setFrame((f) => f + 1), 80);
     return () => clearInterval(id);
   }, [playing]);
-
-  const progress = seconds / TOTAL;
 
   const currentLineIdx = useMemo(() => {
     let idx = -1;
@@ -189,9 +211,9 @@ export default function Player() {
 
           <div className="mb-6 flex items-center gap-4">
             <span className="min-w-[56px] font-mono text-[13px] tracking-ui text-red">{fmt(seconds)}</span>
-            <WaveformBar progress={progress} onSeek={(p) => setSeconds(Math.floor(p * TOTAL))} className="flex-1" />
+            <WaveformBar progress={progress} onSeek={(p) => seek(p)} className="flex-1" />
             <span className="min-w-[56px] text-right font-mono text-[13px] tracking-ui text-ink-1">
-              {fmt(TOTAL - seconds)}
+              {fmt(Math.max(0, total - seconds))}
             </span>
           </div>
 
@@ -200,8 +222,8 @@ export default function Player() {
               type="button"
               aria-label={t("playerpage.prev_chapter", "Poprzedni rozdział")}
               onClick={() => {
-                const prev = [...CHAPTERS].reverse().find((c) => c.sec < seconds - 5);
-                if (prev) setSeconds(prev.sec);
+                const prevCh = [...CHAPTERS].reverse().find((c) => c.sec < seconds - 5);
+                if (prevCh) seekToSeconds(prevCh.sec);
               }}
               className="grid place-items-center p-2 text-ink-1 transition-colors hover:text-ink-0"
             >
@@ -210,7 +232,7 @@ export default function Player() {
             <button
               type="button"
               aria-label={t("playerpage.back15", "Cofnij 15 sekund")}
-              onClick={() => setSeconds((s) => Math.max(0, s - 15))}
+              onClick={() => seekToSeconds(Math.max(0, seconds - 15))}
               className="grid place-items-center p-2 font-mono text-[11px] font-semibold tracking-ui text-ink-1 transition-colors hover:text-ink-0"
             >
               −15
@@ -218,7 +240,7 @@ export default function Player() {
             <button
               type="button"
               aria-label={playing ? t("playerpage.pause", "Pauza") : t("playerpage.play", "Odtwórz")}
-              onClick={() => setPlaying((p) => !p)}
+              onClick={() => toggle()}
               className="grid h-[72px] w-[72px] place-items-center rounded-full bg-ink-0 text-bg-0 shadow-[0_0_0_1px_rgba(255,255,255,0.2)] transition-all hover:scale-105 hover:bg-red hover:text-white hover:shadow-[0_0_0_1px_rgba(255,42,42,0.4),0_0_32px_rgba(255,42,42,0.4)]"
             >
               {playing ? <Pause size={22} /> : <Play size={22} />}
@@ -226,7 +248,7 @@ export default function Player() {
             <button
               type="button"
               aria-label={t("playerpage.fwd30", "Do przodu 30 sekund")}
-              onClick={() => setSeconds((s) => Math.min(TOTAL, s + 30))}
+              onClick={() => seekToSeconds(Math.min(total, seconds + 30))}
               className="grid place-items-center p-2 font-mono text-[11px] font-semibold tracking-ui text-ink-1 transition-colors hover:text-ink-0"
             >
               +30
@@ -235,8 +257,8 @@ export default function Player() {
               type="button"
               aria-label={t("playerpage.next_chapter", "Następny rozdział")}
               onClick={() => {
-                const next = CHAPTERS.find((c) => c.sec > seconds);
-                if (next) setSeconds(next.sec);
+                const nextCh = CHAPTERS.find((c) => c.sec > seconds);
+                if (nextCh) seekToSeconds(nextCh.sec);
               }}
               className="grid place-items-center p-2 text-ink-1 transition-colors hover:text-ink-0"
             >
@@ -314,7 +336,7 @@ export default function Player() {
                   key={line.key}
                   type="button"
                   data-idx={i}
-                  onClick={() => setSeconds(line.sec)}
+                  onClick={() => seekToSeconds(line.sec)}
                   className={`mb-[22px] grid w-full grid-cols-[56px_1fr] gap-4 text-left transition-opacity hover:opacity-100 ${
                     current || past ? "opacity-100" : "opacity-40"
                   }`}
@@ -348,7 +370,7 @@ export default function Player() {
                 <button
                   key={c.n}
                   type="button"
-                  onClick={() => setSeconds(c.sec)}
+                  onClick={() => seekToSeconds(c.sec)}
                   className={`grid grid-cols-[1fr_auto] items-center gap-2.5 border px-4 py-3.5 text-left transition-colors ${
                     currentCh.n === c.n
                       ? "border-red bg-red/[0.06]"

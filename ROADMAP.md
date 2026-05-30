@@ -9,22 +9,25 @@ realnie wniesie, zanim ją wybierzesz.
 **Status:** ⬜ do zrobienia · 🟡 w toku · ✅ zrobione · 💡 pomysł
 **Nakład:** S (szybkie) · M (średnie) · L (duże) — **Wartość:** ⭐–⭐⭐⭐
 
-_Ostatnia aktualizacja: 2026-05-27 (T1, T2 zrobione)_
+_Ostatnia aktualizacja: 2026-05-31 (T3, T4 zrobione; performance scroll 60fps, hero ghul, git-crypt, cookie i18n, SEO basics)_
 
 ---
 
 ## 🔝 Priorytet (rekomendowana kolejność)
 
-### T3 · Strona się nie „wykłada" po aktualizacji ⭐⭐ · S · ⬜
-**Co to da:** dziś, jeśli ktoś ma otwartą starą kartę i wgramy nową wersję, kliknięcie w inną
-podstronę może pokazać białą/pustą stronę. Po zmianie zobaczy zamiast tego czytelny komunikat
-„coś poszło nie tak — spróbuj ponownie" z przyciskiem odświeżenia. Mniej zgubionych userów.
-<sub>Tech: ErrorBoundary wokół lazy-tras z retry.</sub>
+### T11 · StoryCard `bg-image` → `<img loading="lazy">` ⭐⭐ · S · 🟡
+**Co to da:** karty historii ładują obrazy tła nawet poza ekranem (CSS `background-image` nie
+respektuje natywnego lazy-loadingu). Po zmianie obrazy wczytują się dopiero gdy karta zbliża
+się do viewportu — mobile Performance z 63 powinien skoczyć do 85+. Wynik Lighthouse desktop:
+P 94, A 95, BP 100, SEO 100; mobile: P 63 (to do), A 95, BP 100, SEO 100.
+<sub>Tech: zamienić `style={{ backgroundImage }}` na `<img>` z `loading="lazy"` + `decoding="async"`, position absolute z obj-cover.</sub>
 
-### T4 · Player nie zasłania stopki ⭐ · S · ⬜
-**Co to da:** odtwarzacz na dole obecnie nachodzi na ostatni kawałek treści/stopki. Drobny
-fix, ale strona wygląda dopracowanie — nic nie jest „przykryte" paskiem gracza.
-<sub>Tech: dolny padding treści, gdy ścieżka aktywna.</sub>
+### T10 (part 1) · Vitest + RTL setup ⭐⭐ · M · 🟡
+**Co to da:** fundament pod testy automatyczne — zanim zaczniemy pisać testy, musi działać
+runner. Dodajemy devDeps (vitest, @testing-library/react, jsdom), `vite.config.js` z `test`
+blokiem, pierwszy smoke test na `PlayerContext` (czy się montuje, czy `play()` nie crashuje).
+Reszta T10 (testy tras, kolejki, sleep timer) — w kolejnych krokach.
+<sub>Tech: `pnpm add -D vitest @testing-library/react @testing-library/jest-dom jsdom`; `npm run test`.</sub>
 
 ### T5 · Pełny odtwarzacz pokazuje prawdziwy postęp nagrania ⭐⭐ · M · ⬜
 **Co to da:** strona `/player` (ta duża, immersyjna z transkryptem) działa teraz „na niby" —
@@ -99,3 +102,12 @@ czemu". Spokój przy dalszym rozwoju.
 - **Karta OG z nagłówkiem + CTA** — `npm run og` (sharp) wypala na key-arcie nagłówek „Słuchaj, czego inni nie słyszą" + przycisk „Słuchaj teraz"; dłuższy tytuł (58) i opis (160) pod zalecenia walidatorów.
 - **Obrazy → WebP** — `npm run images:webp` (sharp). Po JPEG (6 MB) WebP zbił do **1.4 MB** — łącznie od oryginału **36 MB → 1.4 MB** (25×).
 - **Cookie consent** — baner zgody w schemacie collapsed→szczegóły z 4 kategoriami (Niezbędne / Dopasowanie / Analiza / Reklamy), „Akceptuj/Odrzuć/Zapisz preferencje", pływająca ikona do zmiany zgody. Zapis preferencji (ulubione/resume/wariant hero) gated na zgodę; analityka/marketing przez `hasConsent()`.
+- **T3 · ErrorBoundary wokół lazy-tras** — łapie `ChunkLoadError` (stary tab + nowy deploy) i zwykłe render errors. Zamiast białej strony pokazuje „Nowa wersja dostępna — odśwież stronę" z przyciskiem reloadu. `src/components/ui/ErrorBoundary.jsx` + zawijka w `Layout`.
+- **T4 · Player nie zasłania stopki** — spacer 78 px (mobile) / 88 px (desktop) pod Footerem, gdy ścieżka aktywna. Już nic nie jest przykryte paskiem gracza.
+- **Performance scroll 60 fps** — `content-visibility: auto` na sekcjach poza hero, Lenis wyłączony na mobile (≤1023 px, native scroll), `preload="none"` na 6 lazy wideo, `contain: layout style paint` na StoryCard, mocniejszy color grading hero. Realnie: scroll FPS 30 → 60 (vsync floor), max stall 965 ms → 17.7 ms, mobile dostaje `monster.webp` zamiast wideo.
+- **Hero ghul + cinematic polish** — nowe wideo `hero-ghul.mp4` (2560×1440 lanczos, crf 26, 6.1 MB, 0.7× playbackRate, loop), mocniejszy color grading (contrast 1.2, saturate 0.65, brightness 0.82, hue-rotate −8 deg, blur 0.3 px), wzmocniony vignette, ken-burns slow zoom (14 s alternate), pulsujący red glow (4.5 s), `monster.webp` fallback na mobile.
+- **Git-crypt** — szyfrowanie `scripts/narration/episodes.mjs` (autorskie IP), klucze w `.git-crypt-key` (gitignored) + backup `~/Desktop/obskura-media/`. Historia przepisana przez `git-filter-repo` + force-push (orphan commits ~90 dni do GC). Dokumentacja w `CLAUDE.md`.
+- **Cookie banner i18n** — 16 kluczy `cookie.*` w PL master (`public/locales/pl/translation.json`), `CookieConsent.jsx` przeszedł na `t(klucz, polski default)`. Pozostałe 38 języków dostają PL fallback (do batch translation translator agentem).
+- **SEO basics** — `public/robots.txt` (z blokadą AI scraperów: GPTBot, ClaudeBot, CCBot, PerplexityBot, Google-Extended) + `public/sitemap.xml` (17 ścieżek). Lighthouse SEO 91 → 100.
+- **Lighthouse desktop** — Performance 94, Accessibility 95, Best Practices 100, SEO 100. Mobile: P 63 (do naprawy w T11), A 95, BP 100, SEO 100.
+- **TweaksPanel removed** — usunięty wraz z localStorage hero variant switcher. Decyzja: hero zawsze wide z monsterem na mobile.

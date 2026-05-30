@@ -309,6 +309,12 @@
     "coming_soon_desc": "Pełny widok pojawi się wkrótce. Wszystkie linki działają, layout jest gotowy — copy i komponenty trafiają tutaj iteracyjnie.",
     "coming_soon_cta": "Wróć na stronę główną →"
   },
+  "language_switcher": {
+    "label_with_code": "Język: {{code}}, kliknij aby zmienić",
+    "search_placeholder": "Szukaj języka…",
+    "clear_search": "Wyczyść wyszukiwanie",
+    "no_match": "Brak języków spełniających kryteria."
+  },
   "cookie": {
     "fab_aria": "Ustawienia plików cookie",
     "dialog_aria": "Ustawienia plików cookie",

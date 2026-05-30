@@ -49,9 +49,12 @@ export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm,
       className="group relative block aspect-[3/4] overflow-hidden bg-bg-1 transition-transform duration-300 hover:-translate-y-1"
     >
       {/* Obraz */}
-      <div
-        className="absolute inset-0 bg-cover bg-center brightness-[0.8] grayscale-[0.4] transition-all duration-500 group-hover:scale-105 group-hover:brightness-100 group-hover:grayscale-0"
-        style={{ backgroundImage: `url(${image})` }}
+      <img
+        src={image}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover object-center brightness-[0.8] grayscale-[0.4] transition-all duration-500 group-hover:scale-105 group-hover:brightness-100 group-hover:grayscale-0"
       />
       {/* Wideo */}
       {video && (

@@ -57,7 +57,7 @@ export default function LanguageSwitcher({ className = "" }) {
         type="button"
         onClick={() => setOpen((o) => !o)}
         className="inline-flex items-center gap-2 border border-line bg-bg-1/70 px-3 py-2 font-mono text-[11px] uppercase tracking-mono text-ink-0 backdrop-blur-md transition-colors hover:border-red hover:text-red focus-visible:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-0"
-        aria-label={t("language_switcher.label", "Choose language")}
+        aria-label={t("language_switcher.label_with_code", "Język: {{code}}, kliknij aby zmienić", { code: current.code.toUpperCase() })}
       >
         <span className="text-base leading-none">{current.flag}</span>
         <span>{current.code.toUpperCase()}</span>

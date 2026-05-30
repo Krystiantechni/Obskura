@@ -10,6 +10,7 @@ import CookieConsent from "../ui/CookieConsent";
 import ErrorBoundary from "../ui/ErrorBoundary";
 import { applySeo } from "../../seo";
 import { usePlayer } from "../../context/PlayerContext";
+import { initAnalytics } from "../../lib/analytics";
 
 // Zamraża bieżący outlet w momencie montażu, żeby podczas exit-animacji
 // stara trasa nie podmieniła się na nową (wymóg data routera dla AnimatePresence).
@@ -47,6 +48,12 @@ export default function Layout() {
     window.scrollTo(0, 0);
     applySeo(pathname);
   }, [pathname]);
+
+  // Plausible: cookieless analytics, ładowane tylko po zgodzie "analytics".
+  // initAnalytics sam pilnuje idempotencji i nasłuchu na event "obskura:consent".
+  useEffect(() => {
+    initAnalytics();
+  }, []);
 
   return (
     <>
