@@ -1,10 +1,27 @@
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import Eyebrow from "../ui/Eyebrow";
 import { Play } from "../ui/Icons";
 
 // 21:9 cinematic banner — autoplay loop video, overlay gradient, corner brackets.
+// Wideo gra tylko gdy w viewport (IntersectionObserver) — oszczędza dekoder/GPU.
 export default function FeaturedBanner() {
   const { t } = useTranslation();
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
 
   const brackets = [
     "top-4 left-4 border-r-0 border-b-0",
@@ -17,11 +34,11 @@ export default function FeaturedBanner() {
     <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
       <div className="group relative aspect-[4/5] cursor-pointer overflow-hidden border border-white/6 bg-bg-0 sm:aspect-[21/9]">
         <video
+          ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ filter: "contrast(1.05) saturate(0.85)" }}
           src="/videos/vid-coolon.mp4"
           poster="/images/img-smoke.webp"
-          autoPlay
           muted
           loop
           playsInline

@@ -37,7 +37,7 @@ export default function MiniPlayer() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 96, opacity: 0 }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-x-0 bottom-0 z-[80] border-t border-white/10 bg-[rgba(10,13,18,0.92)] backdrop-blur-xl"
+          className="fixed inset-x-0 bottom-0 z-[80] border-t border-white/10 bg-[rgba(10,13,18,0.96)] backdrop-blur-md"
           role="region"
           aria-label="Odtwarzacz"
         >
@@ -213,7 +213,7 @@ export default function MiniPlayer() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 12, opacity: 0 }}
                 transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-                className="fixed bottom-[80px] right-3 z-[81] w-[200px] border border-white/10 bg-[rgba(10,13,18,0.97)] p-3 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.9)] backdrop-blur-xl lg:right-12"
+                className="fixed bottom-[80px] right-3 z-[81] w-[200px] border border-white/10 bg-[rgba(10,13,18,0.98)] p-3 shadow-[0_24px_60px_-18px_rgba(0,0,0,0.9)] backdrop-blur-md lg:right-12"
                 role="dialog"
                 aria-label="Wyłącznik czasowy"
               >

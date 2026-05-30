@@ -37,28 +37,27 @@
     min-height: 100vh;
   }
 
-  /* Film grain overlay — globalny */
+  /* Film grain overlay — globalny.
+     mix-blend-mode na full-screen fixed = kosztowne (re-composit całego ekranu co klatkę).
+     Zamiast tego: zwykła półprzezroczysta warstwa szumu, bez blend-mode. */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
-    opacity: 0.10;
-    mix-blend-mode: overlay;
+    opacity: 0.06;
     z-index: 9999;
   }
 
-  /* CRT scanlines — globalne */
+  /* CRT scanlines — globalne (bez mix-blend, zwykły alpha overlay). */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, 0.3) 3px, transparent 4px);
-    opacity: 0.12;
+    background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, 0.08) 3px, transparent 4px);
     z-index: 9998;
-    mix-blend-mode: multiply;
   }
 
   ::selection {
@@ -143,7 +142,8 @@
     text-shadow: 0 0 6px rgba(255, 42, 42, 0.65), 0 0 18px rgba(255, 42, 42, 0.4), 0 0 45px rgba(255, 42, 42, 0.18);
   }
 
-  /* Sheen — holograficzny przejazd światła w poprzek wyrazu */
+  /* Sheen — usunięty z DOM w SciFiText (mix-blend + animacja background-position było ciężkie).
+     Definicja zostaje na wypadek użycia w przyszłości bez blend-mode. */
   .sci-fi-sheen {
     background: linear-gradient(
       105deg,
@@ -154,7 +154,6 @@
       transparent 58%
     );
     background-size: 280% 100%;
-    mix-blend-mode: screen;
     animation: sci-fi-sheen-move 5.5s ease-in-out infinite;
   }
 
@@ -194,69 +193,8 @@
     50% { opacity: 1; }
   }
 
-  /* Krwawe obramowanie banera cookie — poziom krwi sterowany prędkością scrolla (--blood-fill).
-     Rest: krew na dole. Szybki scroll w dół → krew wjeżdża w górę aż na górę ramki. */
-  .banner-blood {
-    position: absolute;
-    inset: 0;
-    padding: 3px;
-    pointer-events: none;
-    background: linear-gradient(to top,
-      rgba(160,18,18,0.96) 0%,
-      rgba(209,31,31,0.72) var(--blood-fill, 14%),
-      rgba(209,31,31,0) calc(var(--blood-fill, 14%) + 8%));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    filter: drop-shadow(0 0 4px rgba(209,31,31,0.4));
-  }
-
-  /* FAB cookie — holograficzne obramowanie + krew jako ciecz WEWNĄTRZ koła */
+  /* FAB cookie — holograficzne obramowanie */
   .cookie-fab { overflow: visible; }
-
-  /* Pojemnik cieczy — przycięty do koła (canvas z setkami cząstek krwi w środku) */
-  .cookie-blood {
-    position: absolute;
-    inset: 2px;
-    border-radius: 9999px;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  /* Spadająca kropla — od ciastka aż do podłogi, widoczna przez cały spadek (grawitacja) */
-  .falling-drop {
-    position: fixed;
-    z-index: 84;
-    width: 5px;
-    height: 7px;
-    margin-left: -2.5px;
-    pointer-events: none;
-    background: radial-gradient(circle at 50% 30%, rgba(220,40,40,0.95), rgba(150,16,16,0.86) 55%, rgba(120,13,13,0.72));
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    box-shadow: 0 0 4px rgba(150,16,16,0.5);
-    transform-origin: top center;
-    will-change: transform, opacity;
-  }
-
-  @keyframes drop-fall {
-    0%   { transform: translateY(0) scaleY(0.7); opacity: 0; }
-    10%  { opacity: 1; }
-    92%  { transform: translateY(calc(var(--dist, 200px) * 0.92)) scaleY(1.5); opacity: 1; }
-    100% { transform: translateY(var(--dist, 200px)) scaleY(1.7); opacity: 0.85; }
-  }
-
-  /* Kałuże krwi na podłodze ekranu — zostają tam, gdzie krople spadły (ślad za ciastkiem) */
-  .floor-puddle {
-    position: fixed;
-    bottom: 0;
-    z-index: 84;
-    pointer-events: none;
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse at 50% 100%, rgba(209,31,31,0.9), rgba(150,16,16,0.55) 52%, rgba(122,13,13,0.25) 72%, transparent 80%);
-    filter: blur(0.5px);
-    transition: width 0.5s ease, height 0.5s ease, opacity 0.6s ease;
-  }
 
   /* Pierścień: pomieszany hologram ~75% czerwień / ~20% biel / ~5% szarość. NIE krąży. */
   .cookie-fab-ring {
@@ -286,20 +224,6 @@
     animation: cod-sheen 5s ease-in-out infinite;
   }
 
-  /* Kropla krwi (krople banera) — kolor krwi, start z dolnej krawędzi. */
-  .blood-drip {
-    position: absolute;
-    bottom: -4px;
-    width: 6px;
-    height: 7px;
-    pointer-events: none;
-    background: radial-gradient(circle at 50% 32%, rgba(209,31,31,0.86), rgba(150,16,16,0.78) 55%, rgba(122,13,13,0.66));
-    border-radius: 50% 50% 50% 50% / 65% 65% 40% 40%;
-    box-shadow: 0 0 5px rgba(150,16,16,0.45), inset 0 1px 1px rgba(255,255,255,0.18);
-    transform-origin: top center;
-    animation: blood-drip 3.8s cubic-bezier(0.5, 0, 0.85, 0.3) infinite;
-  }
-
   @keyframes cod-sheen {
     0%   { transform: rotate(-20deg); opacity: 0; }
     5%   { opacity: 1; }
@@ -308,13 +232,4 @@
     100% { transform: rotate(340deg); opacity: 0; }
   }
 
-  /* slow at start (gromadzi się), accelerates (spada) dzięki cubic-bezier wyżej */
-  @keyframes blood-drip {
-    0%, 6%  { transform: translateY(0) scaleY(0.3);  opacity: 0; }
-    16%     { transform: translateY(0) scaleY(0.55); opacity: 0.9; }
-    40%     { transform: translateY(1px) scaleY(0.95); opacity: 1; }
-    56%     { transform: translateY(4px) scaleY(1.35); opacity: 1; }
-    64%     { transform: translateY(7px) scaleY(1.6);  opacity: 1; }
-    100%    { transform: translateY(32px) scaleY(2.6); opacity: 0; }
-  }
 }

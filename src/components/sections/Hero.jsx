@@ -30,25 +30,25 @@ export default function Hero({ variant = "wide" }) {
             fetchpriority="high"
             className={`absolute inset-0 h-full w-full object-cover ${isWide ? "mask-hero-wide object-[center_40%]" : "mask-hero-portrait"}`}
           />
-          {/* Red rim glow */}
+          {/* Red rim glow — bez animacji oddechu i mix-blend (oba kosztowne na 380x200 z blur 20px). */}
           <div
-            className="pointer-events-none absolute left-1/2 z-[2] -translate-x-1/2 animate-red-breath mix-blend-screen blur-[20px]"
+            className="pointer-events-none absolute left-1/2 z-[2] -translate-x-1/2"
             style={
               isWide
-                ? { top: "28%", width: 380, height: 200, background: "radial-gradient(ellipse, rgba(255,42,42,0.28), transparent 65%)" }
-                : { top: "18%", width: 280, height: 280, background: "radial-gradient(circle, rgba(255,42,42,0.35), transparent 60%)" }
+                ? { top: "28%", width: 380, height: 200, background: "radial-gradient(ellipse, rgba(255,42,42,0.5), transparent 65%)" }
+                : { top: "18%", width: 280, height: 280, background: "radial-gradient(circle, rgba(255,42,42,0.55), transparent 60%)" }
             }
           />
-          {/* Blue water glow */}
+          {/* Blue water glow — radial gradient (sam radial robi miękkie krawędzie, blur 40px niepotrzebny). */}
           <div
-            className="pointer-events-none absolute left-1/2 z-[2] w-4/5 -translate-x-1/2 mix-blend-screen blur-[40px]"
-            style={{ bottom: isWide ? "-5%" : "-10%", height: isWide ? "50%" : "40%", background: "radial-gradient(ellipse, rgba(95,168,255,0.25), transparent 70%)" }}
+            className="pointer-events-none absolute left-1/2 z-[2] w-4/5 -translate-x-1/2"
+            style={{ bottom: isWide ? "-5%" : "-10%", height: isWide ? "50%" : "40%", background: "radial-gradient(ellipse, rgba(95,168,255,0.42), transparent 70%)" }}
           />
         </div>
       </div>
 
-      {/* Atmospheric overlays */}
-      <div className="pointer-events-none absolute inset-0 z-[3] animate-fog-drift bg-fog-drift opacity-40 mix-blend-screen" />
+      {/* Atmospheric fog overlay — static (animowane bg-position na SVG turbulence z mix-blend było ciężkie). */}
+      <div className="pointer-events-none absolute inset-0 z-[3] bg-fog-drift opacity-25" />
       <div className="pointer-events-none absolute inset-0 z-[3]" style={{ background: "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 20%, rgba(5,6,8,0.55) 70%, #050608)" }} />
       <div className="pointer-events-none absolute inset-0 z-[3]" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(5,6,8,0.6) 70%, #050608 95%)" }} />
 

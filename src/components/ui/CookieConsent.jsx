@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { getConsent, setConsent } from "../../lib/consent";
-import useCookieFab from "../../hooks/useCookieFab";
-import BloodSim from "./BloodSim";
 
 // Ikonki kategorii
 const Shield = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>);
@@ -73,39 +71,6 @@ export default function CookieConsent() {
   const [prefs, setPrefs] = useState(saved?.preferences ?? true);
   const [analytics, setAnalytics] = useState(saved?.analytics ?? false);
   const [marketing, setMarketing] = useState(saved?.marketing ?? false);
-  // Ikona: przeciągalna (zapis pozycji) + krew o stałej objętości przechylająca się przy scrollu/drag.
-  const { ref: fabRef, style: fabStyle, onPointerDown, onPointerMove, onPointerUp, shouldIgnoreClick } = useCookieFab();
-
-  // Krople spadają od ciastka aż do podłogi (widoczne całą drogę); kałuża powstaje gdy kropla wyląduje.
-  const [drops, setDrops] = useState([]);
-  const [puddles, setPuddles] = useState([]);
-  useEffect(() => {
-    if (view !== "hidden") return undefined;
-    const id = setInterval(() => {
-      const el = fabRef.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const x = Math.round(r.left + r.width / 2);
-      const startY = Math.round(r.bottom - 4);
-      const dist = Math.max(40, Math.round(window.innerHeight - startY));
-      setDrops((list) => [...list.slice(-6), { id: Date.now() + Math.random(), x, startY, dist }]);
-    }, 1300);
-    return () => clearInterval(id);
-  }, [view, fabRef]);
-
-  const onDropLand = (dropId, x) => {
-    setDrops((list) => list.filter((d) => d.id !== dropId));
-    setPuddles((list) => {
-      const i = list.findIndex((p) => Math.abs(p.x - x) < 26);
-      if (i >= 0) {
-        const next = list.slice();
-        next[i] = { ...next[i], grow: Math.min(1, next[i].grow + 0.16) };
-        return next;
-      }
-      const np = [...list, { id: Date.now() + Math.random(), x, grow: 0.25 }];
-      return np.length > 14 ? np.slice(np.length - 14) : np;
-    });
-  };
 
   const close = (choice) => {
     setConsent(choice);
@@ -122,46 +87,19 @@ export default function CookieConsent() {
 
   return (
     <>
-      {/* Pływająca ikona — wycofaj/zmień zgodę (prawy dół, obok panelu A/B) */}
+      {/* Pływająca ikona — wycofaj/zmień zgodę (prawy dół, obok panelu A/B). Statyczna pozycja. */}
       {view === "hidden" && (
         <button
-          ref={fabRef}
           type="button"
-          onClick={() => { if (!shouldIgnoreClick()) reopen(); }}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          style={fabStyle}
-          aria-label="Ustawienia plików cookie (przeciągnij, by przenieść)"
-          className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] cursor-grab touch-none place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl transition-colors hover:text-red active:cursor-grabbing"
+          onClick={reopen}
+          aria-label="Ustawienia plików cookie"
+          className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] transition-colors hover:text-red"
         >
-          {/* Setki cząstek krwi (canvas) w środku koła — chlupią przy ruchu/scrollu */}
-          <span className="cookie-blood" aria-hidden><BloodSim /></span>
           <span className="cookie-fab-ring" aria-hidden />
           <span className="cookie-fab-sheen" aria-hidden />
           <span className="relative z-[2]"><Cookie size={26} /></span>
         </button>
       )}
-
-      {/* Spadające krople — od ciastka do podłogi, widoczne przez cały spadek */}
-      {view === "hidden" && drops.map((d) => (
-        <span
-          key={d.id}
-          className="falling-drop"
-          style={{ left: `${d.x}px`, top: `${d.startY}px`, "--dist": `${d.dist}px`, animation: `drop-fall ${Math.min(1.5, 0.5 + d.dist / 900).toFixed(2)}s cubic-bezier(0.55,0,0.85,0.5) forwards` }}
-          onAnimationEnd={() => onDropLand(d.id, d.x)}
-          aria-hidden
-        />
-      ))}
-      {/* Kałuże krwi na podłodze — zostają w miejscach, gdzie krople spadły */}
-      {view === "hidden" && puddles.map((p) => (
-        <span
-          key={p.id}
-          className="floor-puddle"
-          style={{ left: `${p.x}px`, width: `${24 + p.grow * 72}px`, height: `${5 + p.grow * 9}px`, opacity: 0.4 + p.grow * 0.5 }}
-          aria-hidden
-        />
-      ))}
 
       <AnimatePresence>
         {view !== "hidden" && (
@@ -170,14 +108,11 @@ export default function CookieConsent() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 48, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-8 left-4 right-4 z-[95] mx-auto w-auto max-w-lg border border-white/10 bg-[rgba(10,13,18,0.97)] p-4 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] backdrop-blur-xl"
+            className="fixed bottom-8 left-4 right-4 z-[95] mx-auto w-auto max-w-lg border border-white/10 bg-[rgba(10,13,18,0.98)] p-4 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] backdrop-blur-md"
             role="dialog"
             aria-label="Ustawienia plików cookie"
             aria-live="polite"
           >
-            {/* Krwawe obramowanie reagujące na scroll */}
-            <span className="banner-blood" aria-hidden />
-
             <div className="mb-2.5 flex items-start gap-2.5">
               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-red/40 text-red shadow-[0_0_12px_rgba(255,42,42,0.25)]"><Cookie size={14} /></span>
               <div>
@@ -246,12 +181,6 @@ export default function CookieConsent() {
                 </button>
               )}
             </div>
-
-            {/* krople krwi z dolnej krawędzi banera */}
-            <span className="blood-drip" style={{ left: "14%", width: "3px", height: "4px", animationDelay: "0.5s" }} aria-hidden />
-            <span className="blood-drip" style={{ left: "37%", width: "5px", height: "6.5px", animationDelay: "2.2s" }} aria-hidden />
-            <span className="blood-drip" style={{ left: "61%", width: "3.4px", height: "4.4px", animationDelay: "1.2s" }} aria-hidden />
-            <span className="blood-drip" style={{ left: "85%", width: "4.4px", height: "5.8px", animationDelay: "3.0s" }} aria-hidden />
           </motion.div>
         )}
       </AnimatePresence>

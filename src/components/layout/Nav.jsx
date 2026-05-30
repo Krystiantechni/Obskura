@@ -28,7 +28,7 @@ export default function Nav() {
     ].join(" ");
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-[100] flex items-center justify-between border-b border-line/50 bg-[linear-gradient(180deg,rgba(5,6,8,0.85),rgba(5,6,8,0.4))] px-5 py-4 backdrop-blur-xl lg:px-12 lg:py-[22px]">
+    <nav className="fixed inset-x-0 top-0 z-[100] flex items-center justify-between border-b border-line/50 bg-[linear-gradient(180deg,rgba(5,6,8,0.92),rgba(5,6,8,0.7))] px-5 py-4 backdrop-blur-md lg:px-12 lg:py-[22px]">
       <Brand />
 
       {/* Desktop links */}
