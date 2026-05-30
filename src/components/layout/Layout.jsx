@@ -7,7 +7,9 @@ import ScrollProgressBar from "../ui/ScrollProgressBar";
 import MiniPlayer from "../ui/MiniPlayer";
 import PageFallback from "../ui/PageFallback";
 import CookieConsent from "../ui/CookieConsent";
+import ErrorBoundary from "../ui/ErrorBoundary";
 import { applySeo } from "../../seo";
+import { usePlayer } from "../../context/PlayerContext";
 
 // Zamraża bieżący outlet w momencie montażu, żeby podczas exit-animacji
 // stara trasa nie podmieniła się na nową (wymóg data routera dla AnimatePresence).
@@ -35,9 +37,11 @@ const pageVariants = {
 
 // Wspólny shell: scroll progress + fixed nav + treść strony + footer.
 // Cinematic przejścia między trasami (AnimatePresence) + scroll-to-top.
+// Spacer pod Footerem gdy player aktywny — żeby fixed MiniPlayer nie zasłaniał stopki.
 export default function Layout() {
   const { pathname } = useLocation();
   const reduce = useReducedMotion();
+  const { current } = usePlayer();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,13 +62,16 @@ export default function Layout() {
             exit={reduce ? undefined : "exit"}
             style={{ willChange: reduce ? undefined : "opacity, transform, filter" }}
           >
-            <Suspense fallback={<PageFallback />}>
-              <FrozenOutlet />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<PageFallback />}>
+                <FrozenOutlet />
+              </Suspense>
+            </ErrorBoundary>
           </motion.div>
         </AnimatePresence>
       </main>
       <Footer />
+      {current && <div aria-hidden className="h-[78px] lg:h-[88px]" />}
       <MiniPlayer />
       <CookieConsent />
     </>

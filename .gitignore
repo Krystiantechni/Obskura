@@ -66,6 +66,11 @@ coverage/
 test-results/
 playwright-report/
 playwright/.cache/
+# Ad-hoc screenshoty/PNG w roocie (np. z manualnego puppeteer/playwright debugu).
+# public/ ma własną listę — root-level PNG zawsze ignorowane.
+/*.png
+/*.jpg
+/*.jpeg
 
 # --- Claude Code (not part of app, kept local only) ---
 .claude/

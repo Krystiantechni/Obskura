@@ -2,6 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { getConsent, setConsent } from "../../lib/consent";
 
 // Ikonki kategorii
@@ -39,6 +40,7 @@ function Toggle({ checked, onChange, label }) {
 Toggle.propTypes = { checked: PropTypes.bool.isRequired, onChange: PropTypes.func.isRequired, label: PropTypes.string.isRequired };
 
 function Category({ icon, title, desc, always, checked, onChange }) {
+  const { t } = useTranslation();
   return (
     <div className="border border-white/8 bg-white/[0.02] p-3">
       <div className="mb-1 flex items-center justify-between gap-2.5">
@@ -47,7 +49,7 @@ function Category({ icon, title, desc, always, checked, onChange }) {
           <span className="text-[12px] font-medium">{title}</span>
         </div>
         {always ? (
-          <span className="shrink-0 border border-white/10 px-2 py-0.5 font-mono text-[8px] uppercase tracking-mono text-ink-2">Zawsze aktywne</span>
+          <span className="shrink-0 border border-white/10 px-2 py-0.5 font-mono text-[8px] uppercase tracking-mono text-ink-2">{t("cookie.always_on", "Zawsze aktywne")}</span>
         ) : (
           <Toggle checked={checked} onChange={onChange} label={title} />
         )}
@@ -61,11 +63,9 @@ Category.propTypes = {
   always: PropTypes.bool, checked: PropTypes.bool, onChange: PropTypes.func,
 };
 
-const DESC =
-  "Używamy plików cookie. Niezbędne są wymagane do działania serwisu — pozostałe uruchamiamy wyłącznie za Twoją zgodą.";
-
 // Baner zgody na cookies — schemat: collapsed → szczegóły (4 kategorie) → reopen ikoną.
 export default function CookieConsent() {
+  const { t } = useTranslation();
   const saved = getConsent();
   const [view, setView] = useState(saved ? "hidden" : "banner"); // "banner" | "details" | "hidden"
   const [prefs, setPrefs] = useState(saved?.preferences ?? true);
@@ -92,7 +92,7 @@ export default function CookieConsent() {
         <button
           type="button"
           onClick={reopen}
-          aria-label="Ustawienia plików cookie"
+          aria-label={t("cookie.fab_aria", "Ustawienia plików cookie")}
           className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] transition-colors hover:text-red"
         >
           <span className="cookie-fab-ring" aria-hidden />
@@ -110,16 +110,16 @@ export default function CookieConsent() {
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="fixed bottom-8 left-4 right-4 z-[95] mx-auto w-auto max-w-lg border border-white/10 bg-[rgba(10,13,18,0.98)] p-4 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] backdrop-blur-md"
             role="dialog"
-            aria-label="Ustawienia plików cookie"
+            aria-label={t("cookie.dialog_aria", "Ustawienia plików cookie")}
             aria-live="polite"
           >
             <div className="mb-2.5 flex items-start gap-2.5">
               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-red/40 text-red shadow-[0_0_12px_rgba(255,42,42,0.25)]"><Cookie size={14} /></span>
               <div>
-                <h2 className="mb-1 font-serif text-[15px] font-medium text-ink-0">Ustawienia plików cookie</h2>
+                <h2 className="mb-1 font-serif text-[15px] font-medium text-ink-0">{t("cookie.title", "Ustawienia plików cookie")}</h2>
                 <p className="text-[11.5px] font-light leading-snug text-ink-1">
-                  {DESC}{" "}
-                  <Link to="/prawne" className="whitespace-nowrap text-ink-0 underline decoration-red/50 underline-offset-2 transition-colors hover:decoration-red">Polityka prywatności</Link>
+                  {t("cookie.desc", "Używamy plików cookie. Niezbędne są wymagane do działania serwisu — pozostałe uruchamiamy wyłącznie za Twoją zgodą.")}{" "}
+                  <Link to="/prawne" className="whitespace-nowrap text-ink-0 underline decoration-red/50 underline-offset-2 transition-colors hover:decoration-red">{t("cookie.privacy_link", "Polityka prywatności")}</Link>
                 </p>
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function CookieConsent() {
               className="mb-3 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-mono text-ink-2 transition-colors hover:text-ink-0"
             >
               <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" className={`transition-transform ${view === "details" ? "rotate-180" : ""}`}><path d="M3 4.5 6 7.5 9 4.5"/></svg>
-              {view === "details" ? "Ukryj szczegóły" : "Pokaż szczegóły"}
+              {view === "details" ? t("cookie.hide_details", "Ukryj szczegóły") : t("cookie.show_details", "Pokaż szczegóły")}
             </button>
 
             <AnimatePresence initial={false}>
@@ -144,14 +144,18 @@ export default function CookieConsent() {
                   className="overflow-hidden"
                 >
                   <div className="mb-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                    <Category icon={<Shield />} title="Niezbędne do działania" always
-                      desc="Zapamiętanie zgody i podstawowe działanie serwisu (w przyszłości też logowanie). Bez nich serwis nie zadziała." />
-                    <Category icon={<Sliders />} title="Dopasowanie strony do Ciebie" checked={prefs} onChange={setPrefs}
-                      desc="Język, ulubione, postęp odsłuchu i wariant strony — byś nie ustawiał ich od nowa. Brak danych osobowych." />
-                    <Category icon={<Chart />} title="Analiza i ulepszanie serwisu" checked={analytics} onChange={setAnalytics}
-                      desc="Anonimowe statystyki użycia, by ulepszać OBSKURĘ. Obecnie nie zbieramy żadnych — tylko za Twoją zgodą." />
-                    <Category icon={<Megaphone />} title="Reklamy spersonalizowane" checked={marketing} onChange={setMarketing}
-                      desc="Personalizacja reklam. Obecnie nie używamy żadnych pikseli — nie uruchomią się bez Twojej zgody." />
+                    <Category icon={<Shield />} always
+                      title={t("cookie.cat_necessary_title", "Niezbędne do działania")}
+                      desc={t("cookie.cat_necessary_desc", "Zapamiętanie zgody i podstawowe działanie serwisu (w przyszłości też logowanie). Bez nich serwis nie zadziała.")} />
+                    <Category icon={<Sliders />} checked={prefs} onChange={setPrefs}
+                      title={t("cookie.cat_preferences_title", "Dopasowanie strony do Ciebie")}
+                      desc={t("cookie.cat_preferences_desc", "Język, ulubione, postęp odsłuchu i wariant strony — byś nie ustawiał ich od nowa. Brak danych osobowych.")} />
+                    <Category icon={<Chart />} checked={analytics} onChange={setAnalytics}
+                      title={t("cookie.cat_analytics_title", "Analiza i ulepszanie serwisu")}
+                      desc={t("cookie.cat_analytics_desc", "Anonimowe statystyki użycia, by ulepszać OBSKURĘ. Obecnie nie zbieramy żadnych — tylko za Twoją zgodą.")} />
+                    <Category icon={<Megaphone />} checked={marketing} onChange={setMarketing}
+                      title={t("cookie.cat_marketing_title", "Reklamy spersonalizowane")}
+                      desc={t("cookie.cat_marketing_desc", "Personalizacja reklam. Obecnie nie używamy żadnych pikseli — nie uruchomią się bez Twojej zgody.")} />
                   </div>
                 </motion.div>
               )}
@@ -161,23 +165,23 @@ export default function CookieConsent() {
             <div className="flex flex-col gap-2 sm:flex-row">
               <button type="button" onClick={acceptAll}
                 className="flex-1 bg-red px-3.5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-ui text-white transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">
-                {view === "details" ? "Akceptuj wszystkie" : "W porządku"}
+                {view === "details" ? t("cookie.accept_all", "Akceptuj wszystkie") : t("cookie.ok", "W porządku")}
               </button>
               {view === "details" ? (
                 <>
                   <button type="button" onClick={rejectAll}
                     className="flex-1 border border-white/15 px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
-                    Odrzuć wszystkie
+                    {t("cookie.reject_all", "Odrzuć wszystkie")}
                   </button>
                   <button type="button" onClick={savePrefs}
                     className="flex-1 border border-white/15 px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-red hover:text-red">
-                    Zapisz preferencje
+                    {t("cookie.save_prefs", "Zapisz preferencje")}
                   </button>
                 </>
               ) : (
                 <button type="button" onClick={() => setView("details")}
                   className="border border-white/15 px-5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
-                  Ustawienia
+                  {t("cookie.settings", "Ustawienia")}
                 </button>
               )}
             </div>
