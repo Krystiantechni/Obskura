@@ -1,0 +1,3 @@
+# git-crypt — szyfrowanie autorskich tekstów scenariuszy odcinków.
+# Klucz w .git-crypt-key (gitignored). Bez klucza plik jest binarny.
+scripts/narration/episodes.mjs filter=git-crypt diff=git-crypt

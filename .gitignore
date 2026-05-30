@@ -16,6 +16,10 @@ build/
 *.local
 .mcp.local.json
 
+# --- git-crypt key (NEVER commit) ---
+.git-crypt-key
+*.git-crypt-key
+
 # --- Deployment ---
 .vercel/
 .netlify/
