@@ -19,9 +19,9 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
-  // Pliki konfiguracyjne Node (vite/postcss/tailwind) — globalne __dirname/process
+  // Pliki konfiguracyjne Node (vite/postcss/tailwind) + Vercel serverless functions w api/*.
   {
-    files: ['*.config.js', 'scripts/**/*.{js,cjs}'],
+    files: ['*.config.js', 'scripts/**/*.{js,cjs}', 'api/**/*.js'],
     languageOptions: { globals: { ...globals.node } },
   },
   // Hooki fundamentu (useReveal/useTypewriter) świadomie synchronizują stan w efekcie

@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
 import { Arrow } from "../components/ui/Icons";
+import { login } from "../lib/apiClient";
+import { loginSchema, flattenErrors } from "../lib/formSchemas";
 
 const FIELD =
   "border border-line bg-white/[0.02] px-4 py-3.5 text-[15px] text-ink-0 transition-colors placeholder:text-ink-3 focus:border-red focus:bg-red/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70";
@@ -11,6 +13,26 @@ const FIELD =
 export default function Login() {
   const { t } = useTranslation();
   const [showPw, setShowPw] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({}); setServerError("");
+    const parsed = loginSchema.safeParse({ email, password });
+    if (!parsed.success) { setErrors(flattenErrors(parsed.error)); return; }
+    setLoading(true);
+    try {
+      await login(parsed.data);
+    } catch (err) {
+      setServerError(err.message || "Logowanie nieudane.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
@@ -37,7 +59,7 @@ export default function Login() {
           {t("login.back")}
         </Link>
 
-        <form className="w-full max-w-[420px]" onSubmit={(e) => e.preventDefault()}>
+        <form className="w-full max-w-[420px]" onSubmit={onSubmit} noValidate>
           <Eyebrow className="mb-6">{t("login.eyebrow")}</Eyebrow>
           <h1 className="mb-3 font-serif text-5xl font-medium leading-none tracking-[-0.02em]">
             {t("login.h1_p1")} <em className="italic text-ink-1">{t("login.h1_p2")}</em>.
@@ -57,19 +79,27 @@ export default function Login() {
           </div>
 
           <div className="mb-5 flex flex-col gap-2">
-            <label className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("login.email_label")}</label>
-            <input type="email" placeholder={t("login.email_placeholder")} className={FIELD} autoComplete="email" />
+            <label htmlFor="lg-email" className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("login.email_label")}</label>
+            <input id="lg-email" type="email" autoComplete="email" placeholder={t("login.email_placeholder")}
+              value={email} onChange={(e) => setEmail(e.target.value)}
+              className={`${FIELD} ${errors.email ? "border-red" : ""}`} />
+            {errors.email && <p className="font-mono text-[10px] text-red">{errors.email}</p>}
           </div>
 
           <div className="mb-5 flex flex-col gap-2">
-            <label className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("login.password_label")}</label>
+            <label htmlFor="lg-pw" className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("login.password_label")}</label>
             <div className="relative">
-              <input type={showPw ? "text" : "password"} placeholder="••••••••" className={`${FIELD} w-full pr-[70px]`} autoComplete="current-password" />
+              <input id="lg-pw" type={showPw ? "text" : "password"} autoComplete="current-password" placeholder="••••••••"
+                value={password} onChange={(e) => setPassword(e.target.value)}
+                className={`${FIELD} w-full pr-[70px] ${errors.password ? "border-red" : ""}`} />
               <button type="button" onClick={() => setShowPw((s) => !s)} className="absolute right-3.5 top-1/2 -translate-y-1/2 font-mono text-[10px] tracking-ui text-ink-2 hover:text-ink-0">
                 {showPw ? t("login.hide") : t("login.show")}
               </button>
             </div>
+            {errors.password && <p className="font-mono text-[10px] text-red">{errors.password}</p>}
           </div>
+
+          {serverError && <p className="mb-4 border border-red/40 bg-red/[0.06] p-2.5 font-mono text-[11px] text-red" role="alert">{serverError}</p>}
 
           <div className="mb-7 flex items-center justify-between">
             <label className="flex cursor-pointer items-center gap-2.5 text-xs text-ink-1">
@@ -79,8 +109,8 @@ export default function Login() {
             <a href="#" className="font-mono text-[11px] uppercase tracking-ui text-ink-1 hover:text-red">{t("login.forgot")}</a>
           </div>
 
-          <HorrorButton type="submit" block>
-            {t("login.submit")} <Arrow />
+          <HorrorButton type="submit" block disabled={loading}>
+            {loading ? t("login.submit_loading", "Logowanie…") : t("login.submit")} <Arrow />
           </HorrorButton>
 
           <div className="mt-8 text-center text-[13px] text-ink-1">

@@ -4,6 +4,8 @@ import { ChevronDown } from "lucide-react";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
 import { Arrow } from "../components/ui/Icons";
+import { submitContact } from "../lib/apiClient";
+import { contactSchema, flattenErrors } from "../lib/formSchemas";
 
 const FIELD =
   "border border-line bg-white/[0.02] px-4 py-3.5 text-[15px] text-ink-0 transition-colors placeholder:text-ink-3 focus:border-red focus:bg-red/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70";
@@ -153,12 +155,29 @@ export default function Wsparcie() {
   const [cat, setCat] = useState("all");
   const [open, setOpen] = useState(0);
   const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", category: "Problem techniczny — odtwarzanie", message: "" });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const updField = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const list = cat === "all" ? faqs : faqs.filter((f) => f.cat === cat);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
+    setErrors({});
+    setServerError("");
+    const parsed = contactSchema.safeParse(form);
+    if (!parsed.success) { setErrors(flattenErrors(parsed.error)); return; }
+    setLoading(true);
+    try {
+      await submitContact(parsed.data);
+      setSent(true);
+    } catch (err) {
+      setServerError(err.message || "Nie udało się wysłać. Spróbuj ponownie.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -320,18 +339,24 @@ export default function Wsparcie() {
 
             <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-2">
-                <label className={LABEL}>{t("wsparcie.form_name", "Imię / pseudonim")}</label>
-                <input type="text" required placeholder="np. Eliza" className={FIELD} />
+                <label className={LABEL} htmlFor="ws-name">{t("wsparcie.form_name", "Imię / pseudonim")}</label>
+                <input id="ws-name" type="text" required placeholder="np. Eliza"
+                  className={`${FIELD} ${errors.name ? "border-red" : ""}`}
+                  value={form.name} onChange={(e) => updField("name", e.target.value)} />
+                {errors.name && <p className="font-mono text-[10px] text-red">{errors.name}</p>}
               </div>
               <div className="flex flex-col gap-2">
-                <label className={LABEL}>{t("wsparcie.form_email", "E-mail")}</label>
-                <input type="email" required placeholder="twoj@email.com" className={FIELD} />
+                <label className={LABEL} htmlFor="ws-email">{t("wsparcie.form_email", "E-mail")}</label>
+                <input id="ws-email" type="email" required placeholder="twoj@email.com"
+                  className={`${FIELD} ${errors.email ? "border-red" : ""}`}
+                  value={form.email} onChange={(e) => updField("email", e.target.value)} />
+                {errors.email && <p className="font-mono text-[10px] text-red">{errors.email}</p>}
               </div>
             </div>
 
             <div className="mb-5 flex flex-col gap-2">
-              <label className={LABEL}>{t("wsparcie.form_category", "Kategoria")}</label>
-              <select className={FIELD}>
+              <label className={LABEL} htmlFor="ws-cat">{t("wsparcie.form_category", "Kategoria")}</label>
+              <select id="ws-cat" className={FIELD} value={form.category} onChange={(e) => updField("category", e.target.value)}>
                 <option>{t("wsparcie.form_cat1", "Problem techniczny — odtwarzanie")}</option>
                 <option>{t("wsparcie.form_cat2", "Problem techniczny — aplikacja mobilna")}</option>
                 <option>{t("wsparcie.form_cat3", "Płatności i subskrypcja")}</option>
@@ -343,12 +368,16 @@ export default function Wsparcie() {
             </div>
 
             <div className="mb-5 flex flex-col gap-2">
-              <label className={LABEL}>{t("wsparcie.form_message", "Opisz problem")}</label>
+              <label className={LABEL} htmlFor="ws-msg">{t("wsparcie.form_message", "Opisz problem")}</label>
               <textarea
+                id="ws-msg"
                 required
                 placeholder={t("wsparcie.form_message_ph", "Im więcej szczegółów, tym szybciej pomożemy. Numer odcinka, system, godzina, screenshot...")}
-                className={`${FIELD} min-h-[140px] resize-y font-sans`}
+                className={`${FIELD} min-h-[140px] resize-y font-sans ${errors.message ? "border-red" : ""}`}
+                value={form.message}
+                onChange={(e) => updField("message", e.target.value)}
               />
+              {errors.message && <p className="font-mono text-[10px] text-red">{errors.message}</p>}
             </div>
 
             <label className="mb-5 flex cursor-pointer items-start gap-2.5 text-[13px] leading-snug text-ink-1">
@@ -356,8 +385,14 @@ export default function Wsparcie() {
               <span>{t("wsparcie.form_urgent", "Sprawa pilna — w 3 sekundach krzyk, nie wiem co robić")}</span>
             </label>
 
-            <HorrorButton type="submit" block disabled={sent}>
-              {sent ? t("wsparcie.form_sent", "✓ Wysłane — odpowiemy w 4h") : <>{t("wsparcie.form_submit", "Wyślij zgłoszenie")} <Arrow /></>}
+            {serverError && <p className="mb-4 border border-red/40 bg-red/[0.06] p-2.5 font-mono text-[11px] text-red" role="alert">{serverError}</p>}
+
+            <HorrorButton type="submit" block disabled={sent || loading}>
+              {sent
+                ? t("wsparcie.form_sent", "✓ Wysłane — odpowiemy w 4h")
+                : loading
+                  ? t("wsparcie.form_loading", "Wysyłanie…")
+                  : <>{t("wsparcie.form_submit", "Wyślij zgłoszenie")} <Arrow /></>}
             </HorrorButton>
           </form>
         </div>

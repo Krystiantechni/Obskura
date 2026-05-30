@@ -4,6 +4,8 @@ import { Check } from "lucide-react";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
 import { Arrow } from "../components/ui/Icons";
+import { subscribeNewsletter } from "../lib/apiClient";
+import { newsletterSchema, flattenErrors } from "../lib/formSchemas";
 
 const FIELD =
   "border border-line bg-white/[0.02] px-4 py-3.5 text-[15px] text-ink-0 transition-colors placeholder:text-ink-3 focus:border-red focus:bg-red/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70";
@@ -18,8 +20,28 @@ function NewsletterSubscribeCard() {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [freq, setFreq] = useState("week");
+  const [consent, setConsent] = useState(true);
   const [subscribed, setSubscribed] = useState(false);
-  const valid = email.includes("@");
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState("");
+
+  const onSubmit = async (e) => {
+    e?.preventDefault?.();
+    setErrors({});
+    setServerError("");
+    const parsed = newsletterSchema.safeParse({ email, freq, consent });
+    if (!parsed.success) { setErrors(flattenErrors(parsed.error)); return; }
+    setLoading(true);
+    try {
+      await subscribeNewsletter(parsed.data);
+      setSubscribed(true);
+    } catch (err) {
+      setServerError(err.message || "Nie udało się zapisać. Spróbuj ponownie.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (subscribed) {
     return (
@@ -49,7 +71,7 @@ function NewsletterSubscribeCard() {
   }
 
   return (
-    <div className="relative border border-line bg-bg-1/85 p-7 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl sm:p-10">
+    <form onSubmit={onSubmit} className="relative border border-line bg-bg-1/85 p-7 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl sm:p-10" noValidate>
       <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red/50 to-transparent" />
       <div className="mb-4 font-mono text-[10px] uppercase tracking-eyebrow text-red">
         {t("newsletter.card_tag", "// FORMULARZ SUBSKRYPCJI")}
@@ -62,17 +84,21 @@ function NewsletterSubscribeCard() {
       </p>
 
       <div className="mb-6 flex flex-col gap-2">
-        <label className="font-mono text-[10px] uppercase tracking-mono text-ink-2">
+        <label className="font-mono text-[10px] uppercase tracking-mono text-ink-2" htmlFor="nl-email">
           {t("newsletter.email_label", "Twój adres e-mail")}
         </label>
         <input
+          id="nl-email"
           type="email"
           required
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "nl-email-err" : undefined}
           placeholder={t("newsletter.email_placeholder", "twoj@email.com")}
-          className={FIELD}
+          className={`${FIELD} ${errors.email ? "border-red" : ""}`}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+        {errors.email && <p id="nl-email-err" className="font-mono text-[10px] text-red">{errors.email}</p>}
       </div>
 
       <div className="mb-3 font-mono text-[10px] uppercase tracking-mono text-ink-2">
@@ -102,19 +128,26 @@ function NewsletterSubscribeCard() {
         })}
       </div>
 
-      <label className="mb-6 flex cursor-pointer items-start gap-2.5 text-[13px] leading-snug text-ink-1">
-        <input type="checkbox" defaultChecked className="mt-0.5 h-4 w-4 flex-shrink-0 accent-red" />
+      <label className="mb-2 flex cursor-pointer items-start gap-2.5 text-[13px] leading-snug text-ink-1">
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 h-4 w-4 flex-shrink-0 accent-red"
+        />
         <span>{t("newsletter.consent", "Zgadzam się na otrzymywanie wiadomości od OBSKURY. Mogę zrezygnować w każdej chwili.")}</span>
       </label>
+      {errors.consent && <p className="mb-4 font-mono text-[10px] text-red">{errors.consent}</p>}
+      {serverError && <p className="mb-4 border border-red/40 bg-red/[0.06] p-2.5 font-mono text-[11px] text-red" role="alert">{serverError}</p>}
 
-      <HorrorButton block disabled={!valid} onClick={() => valid && setSubscribed(true)}>
-        {t("newsletter.submit", "Zapisz się")} <Arrow />
+      <HorrorButton block disabled={loading} type="submit">
+        {loading ? t("newsletter.submit_loading", "Zapisywanie…") : t("newsletter.submit", "Zapisz się")} <Arrow />
       </HorrorButton>
 
       <div className="mt-5 text-center font-mono text-[9px] uppercase tracking-mono text-ink-3">
         {t("newsletter.trust_line", "47 800 OSÓB JUŻ SŁUCHA · 0% SPAMU · GDPR")}
       </div>
-    </div>
+    </form>
   );
 }
 

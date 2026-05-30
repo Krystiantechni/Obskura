@@ -47,11 +47,16 @@ wysyła. Po zmianie dane faktycznie gdzieś trafiają (mail/baza), z walidacją 
 Niezbędne, jeśli strona ma kiedyś ruszyć na żywo.
 <sub>Tech: funkcje serverless na Vercelu (`api/*`) + walidacja.</sub>
 
-### T8 · Dźwięki tła i muzyka pod narrację ⭐⭐ · M · ⬜
+### T8 · Dźwięki tła i muzyka pod narrację ⭐⭐ · M · ⬜ · **BLOCKED**
 **Co to da:** zamiast samego głosu lektora — pełna atmosfera: cichy ambient w tle, efekty
 (mgła, plusk, oddech, infradźwięk) w konkretnych momentach. To właśnie to, co robi „ciarki"
 na platformie audio-horror. Generowane i miksowane automatycznie w jeden plik.
-<sub>Tech: generator SFX/muzyki (jak narracja) + mix warstw ffmpegiem; wymaga scope'ów na kluczu ElevenLabs.</sub>
+
+**Wymagane przed startem:** plan **Pro** lub wyższy na ElevenLabs (Free/Starter nie ma
+endpointu `/sound-generation`). API key musi mieć scope SFX. Po dodaniu klucza do `.env`
+mogę napisać `scripts/generate-sfx.mjs` (per odcinek: marker → 5-15s SFX clip), reżysera
+miksu w `scripts/mix-narration.mjs` (ffmpeg `amix` z duckingiem narracji vs ambient).
+<sub>Tech: ElevenLabs sound-generation + ffmpeg amix/sidechain.</sub>
 
 ### T9 · Strony prawne tłumaczą się na inne języki ⭐⭐ · M · ⬜
 **Co to da:** masz 40 języków, ale Regulamin / Stany / Mailingi są zapisane na sztywno po

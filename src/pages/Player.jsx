@@ -19,37 +19,6 @@ function fmt(sec) {
   return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
 }
 
-// TODO: real transcript data — chapters/transcript powinny przyjść z metadanych
-// ścieżki (np. current.chapters, current.transcript). Na razie mock dopasowany
-// do oryginalnego scenariusza odcinka 12.
-const CHAPTERS = [
-  { n: 1, key: "ch1", t: "Powrót po 23 latach", time: "00:00", sec: 0 },
-  { n: 2, key: "ch2", t: "Listy ojca", time: "04:18", sec: 258 },
-  { n: 3, key: "ch3", t: "Wywiad z Marią P.", time: "11:02", sec: 662 },
-  { n: 4, key: "ch4", t: "Pierwszy raz przy molo nocą", time: "19:43", sec: 1183 },
-  { n: 5, key: "ch5", t: "Mgła wchodzi do miasta", time: "27:14", sec: 1634 },
-  { n: 6, key: "ch6", t: "Oddech pod wodą", time: "31:48", sec: 1908 },
-  { n: 7, key: "ch7", t: "Co naprawdę widział ojciec", time: "36:22", sec: 2182 },
-  { n: 8, key: "ch8", t: "Decyzja Elizy", time: "41:05", sec: 2465 },
-  { n: 9, key: "ch9", t: "Co zostaje rano", time: "44:30", sec: 2670 },
-];
-
-// TODO: real transcript data
-const TRANSCRIPT = [
-  { key: "t1", sec: 1145, speaker: "narratorka", text: "Wisłoujście, sierpień 1907 roku. Mgła wchodzi do portu o czwartej po południu." },
-  { key: "t2", sec: 1158, speaker: "narratorka", text: "Rybacy wracają wcześniej niż zwykle. Nikt nie tłumaczy dlaczego." },
-  { key: "m1", marker: "sfx", text: "SFX · Foghorn w oddali · Plusk wody o pal" },
-  { key: "t3", sec: 1183, speaker: "archiwum", text: "„Tego dnia mój dziadek wrócił o trzeciej, choć siatki były puste. Powiedział żonie tylko: nie wychodź dziś z dziećmi nad wodę. Nigdy więcej nic nie wyjaśnił.”" },
-  { key: "t4", sec: 1208, speaker: "narratorka", text: "Eliza wraca do Wisłoujścia po dwudziestu trzech latach. Ostatni raz była tu, gdy umarł jej ojciec. Zostawiła wtedy klucze do domu pod kamieniem przy bramie. Jeszcze tam są." },
-  { key: "m2", marker: "chapter", text: "// CHAPTER 04 · Pierwszy raz przy molo nocą" },
-  { key: "t5", sec: 1247, speaker: "narratorka", text: "Molo o północy. Latarnia portowa pulsuje co cztery sekundy. Eliza naciska record." },
-  { key: "t6", sec: 1263, speaker: "eliza", text: "...test, raz, dwa. Jest dwudziesta trzecia czterdzieści siedem. Jestem na molo zachodnim w Wisłoujściu. Wiatr czternaście węzłów z północy. Mgła gęstnieje." },
-  { key: "t7", sec: 1289, speaker: "eliza", text: "Słyszę... coś. Nie jestem pewna co. Jakby... oddech. Ale to chyba moja wyobraźnia." },
-  { key: "m3", marker: "sfx", text: "SFX · Niski dźwięk infradźwięku (17.8 Hz) · Słychać tylko na słuchawkach" },
-  { key: "t8", sec: 1322, speaker: "narratorka", text: "O tym, że na nagraniu jest jeszcze jeden głos, dowie się dopiero w domu, gdy odsłucha plik na komputerze. Głos, który nie należy do niej." },
-  { key: "t9", sec: 1348, speaker: "narratorka", text: "I nie należy do nikogo żywego." },
-];
-
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
 function Visualizer({ playing, frame }) {
@@ -89,6 +58,7 @@ Visualizer.propTypes = {
 export default function Player() {
   const { t } = useTranslation();
   const {
+    current,
     playing,
     toggle,
     currentTime,
@@ -100,6 +70,12 @@ export default function Player() {
   const [speed, setSpeed] = useState(1);
   const [frame, setFrame] = useState(0);
   const panelRef = useRef(null);
+
+  // Chapters i transcript pochodzą z metadata aktualnej ścieżki (src/data/tracks.js).
+  // Tracki bez tych pól pokazują fallback "Transkrypt wkrótce" / brak listy rozdziałów.
+  // useMemo żeby empty-array fallback miał stabilną referencję (deps innych useMemo).
+  const CHAPTERS = useMemo(() => current?.chapters ?? [], [current]);
+  const TRANSCRIPT = useMemo(() => current?.transcript ?? [], [current]);
 
   // Realna długość odcinka — jeśli kontekst zna duration (audio załadowane),
   // używamy go; w przeciwnym razie fallback dla layoutu.
@@ -127,15 +103,16 @@ export default function Player() {
       if (line.sec !== undefined && line.sec <= seconds) idx = i;
     });
     return idx;
-  }, [seconds]);
+  }, [seconds, TRANSCRIPT]);
 
   const currentCh = useMemo(() => {
+    if (CHAPTERS.length === 0) return null;
     let c = CHAPTERS[0];
     CHAPTERS.forEach((ch) => {
       if (ch.sec <= seconds) c = ch;
     });
     return c;
-  }, [seconds]);
+  }, [seconds, CHAPTERS]);
 
   useEffect(() => {
     if (tab !== "transcript" || !panelRef.current) return;
@@ -197,12 +174,14 @@ export default function Player() {
           <h1 className="mb-4 font-serif text-[clamp(40px,5vw,80px)] font-medium leading-[0.95] tracking-[-0.02em]">
             {t("playerpage.title_p1", "Mgła nad")} <em className="italic text-ink-1">{t("playerpage.title_em", "Wisłoujściem")}</em>
           </h1>
-          <div className="mt-8 font-serif text-[22px] italic text-ink-1">
-            <span className="mr-3 font-mono text-[11px] not-italic uppercase tracking-mono text-red">
-              {`// CHAPTER 0${currentCh.n} ·`}
-            </span>
-            {t(`playerpage.${currentCh.key}`, currentCh.t)}
-          </div>
+          {currentCh && (
+            <div className="mt-8 font-serif text-[22px] italic text-ink-1">
+              <span className="mr-3 font-mono text-[11px] not-italic uppercase tracking-mono text-red">
+                {`// CHAPTER ${String(currentCh.n).padStart(2, "0")} ·`}
+              </span>
+              {t(`playerpage.${currentCh.key}`, currentCh.t)}
+            </div>
+          )}
         </div>
 
         {/* bottom */}
@@ -314,6 +293,13 @@ export default function Player() {
         </div>
 
         <div ref={panelRef} className="flex-1 overflow-y-auto px-6 py-7 lg:px-8">
+          {tab === "transcript" && TRANSCRIPT.length === 0 && (
+            <div className="border border-dashed border-line bg-black/20 px-6 py-12 text-center">
+              <p className="font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                {t("playerpage.transcript_empty", "Transkrypt dla tego odcinka pojawi się wkrótce.")}
+              </p>
+            </div>
+          )}
           {tab === "transcript" &&
             TRANSCRIPT.map((line, i) => {
               if (line.marker) {
@@ -364,30 +350,40 @@ export default function Player() {
               );
             })}
 
-          {tab === "chapters" && (
+          {tab === "chapters" && CHAPTERS.length === 0 && (
+            <div className="border border-dashed border-line bg-black/20 px-6 py-12 text-center">
+              <p className="font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                {t("playerpage.chapters_empty", "Rozdziały dla tego odcinka pojawią się wkrótce.")}
+              </p>
+            </div>
+          )}
+          {tab === "chapters" && CHAPTERS.length > 0 && (
             <div className="flex flex-col gap-1.5">
-              {CHAPTERS.map((c) => (
-                <button
-                  key={c.n}
-                  type="button"
-                  onClick={() => seekToSeconds(c.sec)}
-                  className={`grid grid-cols-[1fr_auto] items-center gap-2.5 border px-4 py-3.5 text-left transition-colors ${
-                    currentCh.n === c.n
-                      ? "border-red bg-red/[0.06]"
-                      : "border-line bg-bg-2/50 hover:border-red/30 hover:bg-bg-2/80"
-                  }`}
-                >
-                  <span>
-                    <span className={`mb-1 block font-mono text-[10px] tracking-mono ${currentCh.n === c.n ? "text-red" : "text-ink-2"}`}>
-                      {`// CHAPTER ${String(c.n).padStart(2, "0")}`}
+              {CHAPTERS.map((c) => {
+                const isActive = currentCh?.n === c.n;
+                return (
+                  <button
+                    key={c.n}
+                    type="button"
+                    onClick={() => seekToSeconds(c.sec)}
+                    className={`grid grid-cols-[1fr_auto] items-center gap-2.5 border px-4 py-3.5 text-left transition-colors ${
+                      isActive
+                        ? "border-red bg-red/[0.06]"
+                        : "border-line bg-bg-2/50 hover:border-red/30 hover:bg-bg-2/80"
+                    }`}
+                  >
+                    <span>
+                      <span className={`mb-1 block font-mono text-[10px] tracking-mono ${isActive ? "text-red" : "text-ink-2"}`}>
+                        {`// CHAPTER ${String(c.n).padStart(2, "0")}`}
+                      </span>
+                      <span className="block font-serif text-[17px] italic leading-tight text-ink-0">
+                        {t(`playerpage.${c.key}`, c.t)}
+                      </span>
                     </span>
-                    <span className="block font-serif text-[17px] italic leading-tight text-ink-0">
-                      {t(`playerpage.${c.key}`, c.t)}
-                    </span>
-                  </span>
-                  <span className="font-mono text-[11px] text-ink-1">{c.time}</span>
-                </button>
-              ))}
+                    <span className="font-mono text-[11px] text-ink-1">{c.time}</span>
+                  </button>
+                );
+              })}
             </div>
           )}
 
