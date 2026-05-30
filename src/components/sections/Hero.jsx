@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Eyebrow from "../ui/Eyebrow";
 import HorrorButton from "../ui/HorrorButton";
@@ -8,12 +9,38 @@ import { Play, Pause, Arrow } from "../ui/Icons";
 import { usePlayer } from "../../context/PlayerContext";
 import { HERO_TRACK } from "../../data/tracks";
 
-// Hero full-bleed. variant: "wide" (dada.png 16:9, default) | "portrait" (monster.png 9:16).
+const MOBILE_MQ = "(max-width: 1023px)";
+
+// Hero full-bleed. variant: "wide" (hero-ghul.mp4 16:9 1440p, default) | "portrait" (monster.png 9:16).
+// Na mobile (< lg) wariant wide pokazuje monster.webp zamiast wideo (oszczędność dekoder/transfer).
 export default function Hero({ variant = "wide" }) {
   const { t } = useTranslation();
   const { current, playing: globalPlaying, playTrack, toggle } = usePlayer();
   const isWide = variant === "wide";
-  const img = isWide ? "/images/dada.webp" : "/images/monster.webp";
+  const videoRef = useRef(null);
+
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia(MOBILE_MQ).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_MQ);
+    const fn = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", fn);
+    return () => mq.removeEventListener("change", fn);
+  }, []);
+
+  const showVideo = isWide && !isMobile;
+
+  // Pauza wideo gdy hero poza viewportem (oszczędza dekoder/GPU). Spowolnienie do 0.7x (cinematic).
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return undefined;
+    v.playbackRate = 0.7;
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) v.play().catch(() => {}); else v.pause(); },
+      { threshold: 0.1 },
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, [showVideo]);
 
   const isHero = current?.id === HERO_TRACK.id;
   const playing = isHero && globalPlaying;
@@ -23,16 +50,29 @@ export default function Hero({ variant = "wide" }) {
     <section className="relative min-h-screen overflow-hidden px-5 pb-16 pt-[140px] lg:px-12">
       {/* Monster stage */}
       <div className="pointer-events-none absolute inset-0 z-[1] flex justify-center" style={{ alignItems: isWide ? "stretch" : "flex-end" }}>
-        <div className={isWide ? "relative h-full w-full" : "relative mb-[-8%] aspect-[816/1456] h-[110%]"} style={{ filter: "contrast(1.05) saturate(0.88)" }}>
-          <img
-            src={img}
-            alt=""
-            fetchpriority="high"
-            className={`absolute inset-0 h-full w-full object-cover ${isWide ? "mask-hero-wide object-[center_40%]" : "mask-hero-portrait"}`}
-          />
-          {/* Red rim glow — bez animacji oddechu i mix-blend (oba kosztowne na 380x200 z blur 20px). */}
+        <div className={isWide ? "relative h-full w-full" : "relative mb-[-8%] aspect-[816/1456] h-[110%]"} style={{ filter: "contrast(1.2) saturate(0.65) brightness(0.82) hue-rotate(-8deg) blur(0.3px)" }}>
+          {showVideo ? (
+            <video
+              ref={videoRef}
+              src="/videos/hero-ghul.mp4"
+              poster="/images/dada.webp"
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="animate-hero-zoom absolute inset-0 h-full w-full object-cover mask-hero-wide object-[center_40%]"
+            />
+          ) : (
+            <img
+              src="/images/monster.webp"
+              alt=""
+              fetchpriority="high"
+              className={`absolute inset-0 h-full w-full object-cover ${isWide ? "mask-hero-wide object-[center_25%]" : "mask-hero-portrait"}`}
+            />
+          )}
+          {/* Red rim glow z wolnym pulsem (synchronizuje rytm ze świecącymi oczami stwora). */}
           <div
-            className="pointer-events-none absolute left-1/2 z-[2] -translate-x-1/2"
+            className="animate-red-pulse-slow pointer-events-none absolute left-1/2 z-[2] -translate-x-1/2"
             style={
               isWide
                 ? { top: "28%", width: 380, height: 200, background: "radial-gradient(ellipse, rgba(255,42,42,0.5), transparent 65%)" }
@@ -49,7 +89,8 @@ export default function Hero({ variant = "wide" }) {
 
       {/* Atmospheric fog overlay — static (animowane bg-position na SVG turbulence z mix-blend było ciężkie). */}
       <div className="pointer-events-none absolute inset-0 z-[3] bg-fog-drift opacity-25" />
-      <div className="pointer-events-none absolute inset-0 z-[3]" style={{ background: "radial-gradient(ellipse 110% 100% at 50% 50%, transparent 20%, rgba(5,6,8,0.55) 70%, #050608)" }} />
+      {/* Mocniejszy vignette — brzegi kadru ciemne, focus na stworze (cinematic horror). */}
+      <div className="pointer-events-none absolute inset-0 z-[3]" style={{ background: "radial-gradient(ellipse 80% 70% at 50% 45%, transparent 30%, rgba(5,6,8,0.85) 85%, #050608)" }} />
       <div className="pointer-events-none absolute inset-0 z-[3]" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(5,6,8,0.6) 70%, #050608 95%)" }} />
 
       {/* Content */}

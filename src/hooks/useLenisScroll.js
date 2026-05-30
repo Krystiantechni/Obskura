@@ -9,6 +9,10 @@ import { setLenis } from "../lib/lenisRef";
 // powoduje że szybkie zmiany kierunku scrolla wyglądają jak skok.
 export function useLenisScroll({ lerp = 0.08 } = {}) {
   useEffect(() => {
+    // Mobile (touch) ma natywny inertial scroll — Lenis tylko marnuje CPU i pogarsza UX.
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 1023px)").matches) {
+      return undefined;
+    }
     const lenis = new Lenis({
       lerp,
       smoothWheel: true,

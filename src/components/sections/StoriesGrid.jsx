@@ -14,7 +14,7 @@ export default function StoriesGrid() {
   ];
 
   return (
-    <section className="mx-auto mt-20 max-w-[1400px] px-5 pb-32 lg:px-12">
+    <section className="cv-auto mx-auto mt-20 max-w-[1400px] px-5 pb-32 lg:px-12">
       <div className="mb-12 flex flex-col items-start justify-between gap-3 border-b border-white/8 pb-6 sm:flex-row sm:items-end">
         <h2 className="font-serif text-[clamp(36px,5vw,52px)] font-medium leading-none tracking-[-0.02em] text-ink-0">
           {t("stories.section_title")} <em className="italic text-ink-2">{t("stories.section_title_em")}</em>

@@ -31,7 +31,7 @@ export default function FeaturedBanner() {
   ];
 
   return (
-    <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
+    <section className="cv-auto mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
       <div className="group relative aspect-[4/5] cursor-pointer overflow-hidden border border-white/6 bg-bg-0 sm:aspect-[21/9]">
         <video
           ref={videoRef}
@@ -42,7 +42,7 @@ export default function FeaturedBanner() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
         />
         <div
           className="pointer-events-none absolute inset-0"

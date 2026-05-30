@@ -83,3 +83,4 @@ src/assets/
 _frag_*.json
 _tmp_*.json
 .tmp_i18n/
+.playwright-mcp/

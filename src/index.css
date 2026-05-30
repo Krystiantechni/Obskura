@@ -90,6 +90,34 @@
 }
 
 @layer utilities {
+  /* Pomija render off-screen sekcji (browser nie layoutuje/paintuje sekcji poza viewport).
+     Aplikuj na sekcje POZA hero — hero musi być widoczny od razu. contain-intrinsic-size
+     daje przybliżoną wysokość żeby scrollbar nie skakał. */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+  }
+
+  /* Ken Burns na hero video — wolne zbliżanie (slow burn horror). 14s = pełen loop wideo @ 0.7x. */
+  .animate-hero-zoom {
+    animation: hero-zoom 14s ease-in-out infinite alternate;
+    transform-origin: 50% 45%;
+    will-change: transform;
+  }
+  @keyframes hero-zoom {
+    from { transform: scale(1); }
+    to   { transform: scale(1.08); }
+  }
+
+  /* Pulsujący red glow w hero — wolny puls synchronizowany z rytmem loop (czerwone oczy). */
+  .animate-red-pulse-slow {
+    animation: red-pulse-slow 4.5s ease-in-out infinite;
+  }
+  @keyframes red-pulse-slow {
+    0%, 100% { opacity: 0.55; }
+    50%      { opacity: 1; }
+  }
+
   /* Drifting blue fog — SVG turbulence, do hero */
   .bg-fog-drift {
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><filter id='f'><feTurbulence baseFrequency='0.012' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.55  0 0 0 0 0.8  0 0 0 0.25 0'/></filter><rect width='400' height='400' filter='url(%23f)'/></svg>");

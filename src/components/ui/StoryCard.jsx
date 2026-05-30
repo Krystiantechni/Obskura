@@ -45,6 +45,7 @@ export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm,
       to={to}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
+      style={{ contain: "layout style paint" }}
       className="group relative block aspect-[3/4] overflow-hidden bg-bg-1 transition-transform duration-300 hover:-translate-y-1"
     >
       {/* Obraz */}
@@ -60,7 +61,7 @@ export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm,
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           className="absolute inset-0 z-[1] h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         />
       )}
