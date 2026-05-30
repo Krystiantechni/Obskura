@@ -1,9 +1,11 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Upload, AlertTriangle, X } from "lucide-react";
+import { Upload, AlertTriangle, X, Play, Pause, Heart } from "lucide-react";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
+import { usePlayer } from "../context/PlayerContext";
+import { getTrack, TRACKS } from "../data/tracks";
 
 const FIELD =
   "border border-line bg-white/[0.02] px-4 py-3.5 text-[15px] text-ink-0 transition-colors placeholder:text-ink-3 focus:border-red focus:bg-red/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70";
@@ -109,6 +111,62 @@ function HistoryRow({ thumb, thumbPos = "center", epn, ttl, ttlEm, when, progres
     </div>
   );
 }
+// Wiersz ulubionego odcinka — spięty z realnym globalnym playerem (PlayerContext).
+// Cały wiersz klikalny → odpala/pauzuje odtwarzanie. Heart toggle = usuń z ulubionych.
+function FavoriteRow({ track }) {
+  const { current, playing, playTrack, toggle, toggleFavorite } = usePlayer();
+  const isCurrent = current?.id === track.id;
+  const isPlaying = isCurrent && playing;
+  const onPlay = () => (isCurrent ? toggle() : playTrack(track));
+  const onRemove = (e) => { e.stopPropagation(); toggleFavorite(track.id); };
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onPlay}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onPlay(); } }}
+      className={`mb-1.5 grid cursor-pointer grid-cols-[56px_1fr_auto] items-center gap-3 border bg-black/20 p-3.5 transition-colors hover:border-red/40 ${isCurrent ? "border-red/60 bg-red/[0.04]" : "border-line"} lg:grid-cols-[56px_1fr_140px_auto]`}
+    >
+      <div className="relative h-14 w-14 bg-cover bg-center" style={{ backgroundImage: `url('${track.cover}')` }}>
+        {isPlaying && <span className="absolute bottom-1 left-1 h-1.5 w-1.5 animate-obskura-pulse-fast rounded-full bg-red shadow-[0_0_6px_#ff2a2a]" />}
+      </div>
+      <div>
+        <div className="mb-1 font-mono text-[10px] tracking-mono text-red">★ S03 · E{track.num}{isCurrent ? " · TERAZ" : ""}</div>
+        <div className="font-serif text-[17px] leading-tight">
+          {track.title} {track.em && <em className="italic text-ink-1">{track.em}</em>}
+        </div>
+      </div>
+      <div className="hidden font-mono text-[11px] uppercase tracking-ui text-ink-2 lg:block">{track.meta}</div>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onPlay(); }}
+          aria-label={isPlaying ? `Pauza ${track.title}` : `Odtwórz ${track.title}`}
+          className="grid h-9 w-9 place-items-center border border-line bg-white/[0.02] text-ink-1 transition-colors hover:border-red hover:text-red"
+        >
+          {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+        </button>
+        <button
+          type="button"
+          onClick={onRemove}
+          aria-label={`Usuń ${track.title} z ulubionych`}
+          className="grid h-9 w-9 place-items-center border border-red/40 bg-red/[0.06] text-red transition-colors hover:bg-red hover:text-white"
+        >
+          <Heart size={14} fill="currentColor" />
+        </button>
+      </div>
+    </div>
+  );
+}
+FavoriteRow.propTypes = {
+  track: PropTypes.shape({
+    id: PropTypes.string.isRequired, num: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired, em: PropTypes.string, meta: PropTypes.string,
+    cover: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
 HistoryRow.propTypes = {
   thumb: PropTypes.string.isRequired,
   thumbPos: PropTypes.string,
@@ -124,6 +182,9 @@ HistoryRow.propTypes = {
 export default function Konto() {
   const { t } = useTranslation();
   const [section, setSection] = useState("profile");
+  // Realne ulubione z globalnego playera (zapisane w localStorage). Filtrujemy nulle (usunięte ID).
+  const { favorites } = usePlayer();
+  const favTracks = favorites.map((id) => getTrack(id)).filter(Boolean);
   const [tw, setTw] = useState({
     spatial: true,
     autoplay: true,
@@ -196,6 +257,8 @@ export default function Konto() {
           <h5 className="px-5 pb-2 pt-[18px] font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.menu", "// MENU")}</h5>
           {SECTIONS.map((s) => {
             const act = section === s.id;
+            // Badge dla favs jest dynamiczny (realna długość listy), reszta z hard-coded SECTIONS.
+            const badge = s.id === "favs" ? (favTracks.length ? String(favTracks.length) : "") : s.badge;
             return (
               <button
                 key={s.id}
@@ -207,7 +270,7 @@ export default function Konto() {
                 ].join(" ")}
               >
                 <span>{t(`konto.section_${s.id}`, s.labelDef)}</span>
-                {s.badge && <span className={`font-mono text-[9px] tracking-ui ${s.badge === "!" || act ? "text-red" : "text-ink-3"}`}>{s.badge}</span>}
+                {badge && <span className={`font-mono text-[9px] tracking-ui ${badge === "!" || act ? "text-red" : "text-ink-3"}`}>{badge}</span>}
               </button>
             );
           })}
@@ -319,25 +382,48 @@ export default function Konto() {
           {section === "favs" && (
             <>
               <PanelHead
-                eyebrow={t("konto.favs_eyebrow", "// ULUBIONE · 38 ODCINKÓW")}
+                eyebrow={t("konto.favs_eyebrow_dyn", `// ULUBIONE · ${favTracks.length} ${favTracks.length === 1 ? "ODCINEK" : "ODCINKÓW"}`)}
                 title={t("konto.favs_h2_p1", "Twoja")}
                 em={t("konto.favs_h2_em", "kolekcja")}
                 desc={t("konto.favs_desc", "Polubione, dodane do biblioteki, oznaczone do ponownego odsłuchania.")}
               />
-              <div className="mb-5">
-                <Segment
-                  value="liked"
-                  options={[
-                    { value: "liked", label: t("konto.favs_filter_liked", "Polubione (38)") },
-                    { value: "library", label: t("konto.favs_filter_library", "Biblioteka (12)") },
-                    { value: "rewatch", label: t("konto.favs_filter_rewatch", "Do ponownego (7)") },
-                  ]}
-                />
-              </div>
 
-              <HistoryRow thumb="/images/img-wolf.webp" thumbPos="center 28%" epn="S03 · E06 · ★ ULUBIONE" ttl="Łańcuch" ttlEm="Fenrira" when="DODANE 12.04" progress="01:22:55 · ✓" done />
-              <HistoryRow thumb="/images/img-creature.webp" thumbPos="center 15%" epn="S03 · E04 · ★ ULUBIONE · 5/5" ttl="Dom przy" ttlEm="ul. Cisowej 7" when="DODANE 22.03" progress="38:21 · ✓ ✓ ✓" done icon="↻" />
-              <HistoryRow thumb="/images/img-hallway.webp" epn="S03 · E11 · ★ ULUBIONE" ttl="Ostatnie" ttlEm="Światło" when="DODANE 18.05" progress="52:08 · ✓" done icon="↻" />
+              {favTracks.length === 0 ? (
+                // Pusty stan — kieruje użytkownika do archiwum żeby coś polubić.
+                <div className="border border-dashed border-line bg-black/20 px-6 py-12 text-center">
+                  <Heart size={28} className="mx-auto mb-4 text-ink-3" />
+                  <h3 className="mb-2 font-serif text-2xl font-medium text-ink-0">
+                    {t("konto.favs_empty_h", "Brak ulubionych")} <em className="italic text-ink-1">{t("konto.favs_empty_h_em", "jeszcze")}</em>
+                  </h3>
+                  <p className="mx-auto mb-6 max-w-md text-sm font-light leading-relaxed text-ink-1">
+                    {t("konto.favs_empty_desc", "Kliknij ♥ na karcie odcinka — zostanie zapamiętany tutaj. Polubione zsynchronizują się po zalogowaniu.")}
+                  </p>
+                  <HorrorButton to="/archiwum">{t("konto.favs_empty_cta", "Przeglądaj archiwum")} →</HorrorButton>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-5">
+                    <Segment
+                      value="liked"
+                      options={[
+                        { value: "liked", label: t("konto.favs_filter_liked_dyn", `Polubione (${favTracks.length})`) },
+                        { value: "library", label: t("konto.favs_filter_library", "Biblioteka"), dim: true },
+                        { value: "rewatch", label: t("konto.favs_filter_rewatch", "Do ponownego"), dim: true },
+                      ]}
+                    />
+                  </div>
+
+                  {favTracks.map((track) => (
+                    <FavoriteRow key={track.id} track={track} />
+                  ))}
+
+                  {favTracks.length < TRACKS.length && (
+                    <p className="mt-5 text-center font-mono text-[10px] uppercase tracking-mono text-ink-3">
+                      {t("konto.favs_more", `Dostępne jeszcze ${TRACKS.length - favTracks.length} odcinków w archiwum`)}
+                    </p>
+                  )}
+                </>
+              )}
             </>
           )}
 
