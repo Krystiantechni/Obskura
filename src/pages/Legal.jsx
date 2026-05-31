@@ -7,7 +7,7 @@ import HorrorButton from "../components/ui/HorrorButton";
 // Wspólne style typografii dokumentu — czytelne, serif nagłówki.
 function DocHeading({ sec, children }) {
   return (
-    <h2 className="mb-4 mt-12 border-b border-line pb-3 font-serif text-2xl font-medium leading-tight first:mt-0 sm:text-3xl">
+    <h2 className="mb-4 mt-10 border-b border-line pb-3 font-serif text-2xl font-medium leading-tight first:mt-0 sm:mt-12 sm:text-3xl">
       <span className="mb-2 block font-mono text-[11px] uppercase tracking-eyebrow text-red">{sec}</span>
       {children}
     </h2>
@@ -16,24 +16,24 @@ function DocHeading({ sec, children }) {
 DocHeading.propTypes = { sec: PropTypes.string.isRequired, children: PropTypes.node.isRequired };
 
 function SubHeading({ children }) {
-  return <h3 className="mb-3 mt-7 font-serif text-xl font-medium italic text-ink-0">{children}</h3>;
+  return <h3 className="mb-3 mt-6 font-serif text-lg font-medium italic text-ink-0 sm:mt-7 sm:text-xl">{children}</h3>;
 }
 SubHeading.propTypes = { children: PropTypes.node.isRequired };
 
 function P({ children }) {
-  return <p className="mb-3.5 max-w-prose text-[15px] font-light leading-relaxed text-ink-1">{children}</p>;
+  return <p className="mb-3.5 w-full max-w-prose text-[15px] font-light leading-[1.7] text-ink-1">{children}</p>;
 }
 P.propTypes = { children: PropTypes.node.isRequired };
 
 function Code({ children }) {
-  return <code className="bg-black/40 px-2 py-0.5 font-mono text-[13px] text-red">{children}</code>;
+  return <code className="break-all bg-black/40 px-2 py-0.5 font-mono text-[13px] text-red">{children}</code>;
 }
 Code.propTypes = { children: PropTypes.node.isRequired };
 
 function Bullets({ items, ordered = false }) {
   const Tag = ordered ? "ol" : "ul";
   return (
-    <Tag className={`mb-4 mt-3 max-w-prose space-y-2 pl-6 ${ordered ? "list-decimal" : "list-disc"} marker:text-red`}>
+    <Tag className={`mb-4 mt-3 w-full max-w-prose space-y-2 pl-5 sm:pl-6 ${ordered ? "list-decimal" : "list-disc"} marker:text-red`}>
       {items.map((it, i) => (
         <li key={i} className="text-sm font-light leading-relaxed text-ink-1">{it}</li>
       ))}
@@ -44,7 +44,7 @@ Bullets.propTypes = { items: PropTypes.array.isRequired, ordered: PropTypes.bool
 
 function Tldr({ tldrLabel, children }) {
   return (
-    <div className="mb-10 border-l-2 border-red bg-red/5 p-6">
+    <div className="mb-8 border-l-2 border-red bg-red/5 p-4 sm:mb-10 sm:p-6">
       <h4 className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-red">{tldrLabel}</h4>
       <p className="text-[15px] font-light leading-relaxed text-ink-0">{children}</p>
     </div>
@@ -54,12 +54,12 @@ Tldr.propTypes = { tldrLabel: PropTypes.string.isRequired, children: PropTypes.n
 
 function DataTable({ head, rows }) {
   return (
-    <div className="my-5 overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
+    <div className="-mx-5 my-5 overflow-x-auto sm:mx-0">
+      <table className="min-w-[480px] w-full border-collapse text-sm sm:min-w-0">
         <thead>
           <tr>
             {head.map((h) => (
-              <th key={h} className="border-b border-red bg-black/30 px-4 py-3.5 text-left font-mono text-[10px] uppercase tracking-mono text-ink-2">{h}</th>
+              <th key={h} className="border-b border-red bg-black/30 px-3 py-3 text-left font-mono text-[10px] uppercase tracking-mono text-ink-2 sm:px-4 sm:py-3.5">{h}</th>
             ))}
           </tr>
         </thead>
@@ -67,7 +67,7 @@ function DataTable({ head, rows }) {
           {rows.map((r, i) => (
             <tr key={i}>
               {r.map((c, j) => (
-                <td key={j} className="border-b border-line px-4 py-3.5 font-light text-ink-1">{c}</td>
+                <td key={j} className="border-b border-line px-3 py-3 font-light text-ink-1 sm:px-4 sm:py-3.5">{c}</td>
               ))}
             </tr>
           ))}
@@ -80,9 +80,9 @@ DataTable.propTypes = { head: PropTypes.array.isRequired, rows: PropTypes.array.
 
 function ToggleRow({ title, desc, on, required = false, onToggle }) {
   return (
-    <div className={`mb-2 flex items-center justify-between gap-4 border border-line bg-bg-2/50 px-5 py-4 ${required ? "opacity-60" : ""}`}>
-      <div>
-        <h5 className="mb-1 font-serif text-lg font-medium">{title}</h5>
+    <div className={`mb-2 flex items-center justify-between gap-3 border border-line bg-bg-2/50 px-4 py-4 sm:gap-4 sm:px-5 ${required ? "opacity-60" : ""}`}>
+      <div className="min-w-0 flex-1">
+        <h5 className="mb-1 font-serif text-base font-medium sm:text-lg">{title}</h5>
         <p className="text-xs text-ink-2">{desc}</p>
       </div>
       <button
@@ -92,7 +92,7 @@ function ToggleRow({ title, desc, on, required = false, onToggle }) {
         aria-label={title}
         disabled={required}
         onClick={onToggle}
-        className={`-my-3 flex min-h-[44px] flex-shrink-0 items-center py-3`}
+        className="flex min-h-[44px] min-w-[44px] flex-shrink-0 items-center justify-center"
       >
         <span
           className={`relative h-[22px] w-10 rounded-full transition-colors duration-200 ${
@@ -184,11 +184,11 @@ export default function Legal() {
   return (
     <>
       {/* Header */}
-      <header className="border-b border-line px-5 pb-9 pt-[130px] lg:px-12">
+      <header className="border-b border-line px-5 pb-7 pt-[110px] sm:pb-9 sm:pt-[130px] lg:px-12">
         <div className="mx-auto max-w-[1100px]">
           <Eyebrow>{`${t("prawne.eyebrow_prefix", "// Dokument nr")} ${docNums[tab]} ${t("prawne.eyebrow_suffix", "· Obowiązuje od 15.04.2026")}`}</Eyebrow>
-          <h1 className="my-4 font-serif text-[clamp(40px,5vw,72px)] font-medium leading-[0.95] tracking-[-0.02em]">{titles[tab]}</h1>
-          <div className="mt-6 flex flex-wrap gap-7 border-t border-line pt-4 font-mono text-[11px] uppercase tracking-mono text-ink-2">
+          <h1 className="my-4 font-serif text-[clamp(32px,5vw,72px)] font-medium leading-[0.95] tracking-[-0.02em] sm:text-[clamp(40px,5vw,72px)]">{titles[tab]}</h1>
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-line pt-4 font-mono text-[11px] uppercase tracking-mono text-ink-2 sm:mt-6 sm:gap-7">
             <span>{t("prawne.meta_last_update", "Ostatnia aktualizacja")} · <strong className="text-ink-0">15.04.2026</strong></span>
             <span>{t("prawne.meta_language", "Język")} · <strong className="text-ink-0">{t("prawne.meta_language_val", "Polski")}</strong></span>
             <span>{t("prawne.meta_version", "Wersja")} · <strong className="text-ink-0">4.2.1</strong></span>
@@ -198,34 +198,34 @@ export default function Legal() {
       </header>
 
       {/* Tab bar */}
-      <div className="sticky top-[68px] z-40 border-b border-line bg-bg-1/70 px-5 backdrop-blur-lg lg:px-12">
+      <div className="sticky top-[58px] z-40 border-b border-line bg-bg-1/70 px-5 backdrop-blur-lg sm:top-[68px] lg:px-12">
         <div className="relative">
-        <div className="mx-auto flex max-w-[1100px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {TABS.map((x, i) => (
-            <button
-              key={x.id}
-              type="button"
-              onClick={() => switchTab(x.id)}
-              className={`whitespace-nowrap border-b-2 px-5 py-5 font-mono text-[11px] uppercase tracking-eyebrow transition-colors sm:px-7 ${
-                tab === x.id ? "border-red text-red" : "border-transparent text-ink-2 hover:text-ink-0"
-              }`}
-            >
-              <span className={`mr-2 ${tab === x.id ? "text-red/60" : "text-ink-3"}`}>// {String(i + 1).padStart(2, "0")}</span>
-              {x.label}
-            </button>
-          ))}
-        </div>
-        {/* Fade-mask: scroll indicator on mobile */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-bg-1 to-transparent lg:hidden" aria-hidden="true" />
+          <div className="mx-auto flex max-w-[1100px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {TABS.map((x, i) => (
+              <button
+                key={x.id}
+                type="button"
+                onClick={() => switchTab(x.id)}
+                className={`min-h-[44px] whitespace-nowrap border-b-2 px-4 py-3.5 font-mono text-[11px] uppercase tracking-eyebrow transition-colors sm:px-7 sm:py-5 ${
+                  tab === x.id ? "border-red text-red" : "border-transparent text-ink-2 hover:text-ink-0"
+                }`}
+              >
+                <span className={`mr-1.5 sm:mr-2 ${tab === x.id ? "text-red/60" : "text-ink-3"}`}>// {String(i + 1).padStart(2, "0")}</span>
+                {x.label}
+              </button>
+            ))}
+          </div>
+          {/* Fade-mask: scroll indicator on mobile */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-bg-1 to-transparent lg:hidden" aria-hidden="true" />
         </div>
       </div>
 
       {/* Document */}
-      <main className="mx-auto mt-10 grid max-w-[1100px] grid-cols-1 items-start gap-8 px-5 pb-24 lg:mt-16 lg:grid-cols-[220px_1fr] lg:gap-16 lg:px-12">
+      <main className="mx-auto mt-8 grid max-w-[1100px] grid-cols-1 items-start gap-8 px-5 pb-16 sm:mt-10 sm:pb-24 lg:mt-16 lg:grid-cols-[220px_1fr] lg:gap-16 lg:px-12">
         {/* TOC — below article on mobile, sticky sidebar on desktop */}
         <aside className="order-2 lg:order-1 lg:sticky lg:top-36">
-          <h5 className="mb-4 border-b border-line pb-2.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("prawne.toc_label", "// Spis treści")}</h5>
-          <ol className="space-y-2">
+          <h5 className="mb-3 border-b border-line pb-2.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("prawne.toc_label", "// Spis treści")}</h5>
+          <ol className="grid grid-cols-2 gap-x-4 gap-y-0.5 sm:grid-cols-3 lg:block lg:space-y-2">
             {TOC[tab].map((s, i) => (
               <li key={s.id} className="text-[13px]">
                 <span className="mr-1 font-mono text-[10px] text-ink-3">{String(i + 1).padStart(2, "0")} ·</span>
@@ -236,7 +236,7 @@ export default function Legal() {
         </aside>
 
         {/* Body */}
-        <article className="order-1 lg:order-2 text-ink-1">
+        <article className="order-1 min-w-0 lg:order-2 text-ink-1">
           {tab === "prywatnosc" && (
             <>
               <Tldr tldrLabel={tldrLabel}>
@@ -351,7 +351,7 @@ export default function Legal() {
               <P>{t("prawne.tos_p4b", "Wszystkie ceny zawierają VAT. Faktury wystawiane automatycznie po każdej płatności.")}</P>
 
               <DocHeading sec={t("prawne.tos_section_5", "// § 5")}><span id="r5" />{t("prawne.tos_h5", "Odstąpienie i zwroty")}.</DocHeading>
-              <blockquote className="my-6 border-l-2 border-red bg-red/5 px-5 py-4 font-serif text-lg italic leading-snug text-ink-0">
+              <blockquote className="my-5 border-l-2 border-red bg-red/5 px-4 py-4 font-serif text-base italic leading-snug text-ink-0 sm:my-6 sm:px-5 sm:text-lg">
                 {t("prawne.tos_quote_p1", "W ciągu")} <strong className="font-medium">{t("prawne.tos_quote_strong", "30 dni od pierwszej płatności")}</strong> {t("prawne.tos_quote_p2", "— pełen zwrot, bez pytań i tłumaczenia.")}
               </blockquote>
               <P>{t("prawne.tos_p5", "To więcej niż wymaga ustawa o prawach konsumenta (14 dni).")}</P>
@@ -413,7 +413,7 @@ export default function Legal() {
                 <ToggleRow title={t("prawne.cookies_toggle_analytics_t", "Analityka anonimowa (Plausible)")} desc={t("prawne.cookies_toggle_analytics_d", "Liczymy ile osób odwiedza strony — bez identyfikacji ciebie. Hosted w EU.")} on={cookiePrefs.analytics} onToggle={() => setCookiePrefs((p) => ({ ...p, analytics: !p.analytics }))} />
                 <ToggleRow title={t("prawne.cookies_toggle_marketing_t", "Marketing")} desc={t("prawne.cookies_toggle_marketing_d", "Nie używamy żadnych cookies marketingowych. Ten toggle jest tu, żeby było widać, że nie używamy.")} on={cookiePrefs.marketing} onToggle={() => setCookiePrefs((p) => ({ ...p, marketing: !p.marketing }))} />
               </div>
-              <div className="mt-7 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap">
                 <HorrorButton type="button" onClick={() => setCookiePrefs((p) => p)}>{t("prawne.cookies_btn_save", "Zapisz preferencje")}</HorrorButton>
                 <HorrorButton type="button" variant="ghost" onClick={() => setCookiePrefs({ analytics: false, performance: false, marketing: false })}>{t("prawne.cookies_btn_reject", "Odrzuć wszystkie opcjonalne")}</HorrorButton>
               </div>
