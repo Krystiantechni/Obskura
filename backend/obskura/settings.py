@@ -107,9 +107,8 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "anon": "60/min",
         "user": "1000/day",
-        # Scoped rates for auth endpoints — real limits set in Task 5.
-        "register": None,
-        "login": None,
+        "register": "10/hour",
+        "login": "10/min",
     },
 }
 
