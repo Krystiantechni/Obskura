@@ -309,6 +309,35 @@
     "coming_soon_desc": "完整视图即将上线。所有链接都可用，布局已就绪——文案和组件正逐步加入。",
     "coming_soon_cta": "返回首页 →"
   },
+  "language_switcher": {
+    "label_with_code": "语言：{{code}}，点击更改",
+    "search_placeholder": "搜索语言…",
+    "clear_search": "清除搜索",
+    "no_match": "没有匹配的语言。"
+  },
+  "cookie": {
+    "fab_aria": "Cookie 设置",
+    "dialog_aria": "Cookie 设置",
+    "title": "Cookie 设置",
+    "desc": "我们使用 cookie。必要的用于网站基本运行 — 其他仅在您同意后启用。",
+    "privacy_link": "隐私政策",
+    "show_details": "显示详情",
+    "hide_details": "隐藏详情",
+    "always_on": "始终启用",
+    "cat_necessary_title": "必要 cookie",
+    "cat_necessary_desc": "记住您的同意和基本网站功能（未来包含登录）。没有它们网站无法运行。",
+    "cat_preferences_title": "为您定制网站",
+    "cat_preferences_desc": "语言、收藏、收听进度和页面版本 — 无需重新设置。不含个人数据。",
+    "cat_analytics_title": "分析与改进",
+    "cat_analytics_desc": "用于改进 OBSKURA 的匿名使用统计。目前未收集 — 仅在您同意后启用。",
+    "cat_marketing_title": "个性化广告",
+    "cat_marketing_desc": "广告个性化。目前未使用任何像素 — 未经同意不会启动。",
+    "accept_all": "全部接受",
+    "ok": "好的",
+    "reject_all": "全部拒绝",
+    "save_prefs": "保存偏好",
+    "settings": "设置"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "下载平台",

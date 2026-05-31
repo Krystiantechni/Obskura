@@ -309,6 +309,35 @@
     "coming_soon_desc": "전체 화면이 곧 공개됩니다. 모든 링크가 작동하고 레이아웃이 준비됨 — 텍스트와 컴포넌트가 점진적으로 추가됩니다.",
     "coming_soon_cta": "홈으로 돌아가기 →"
   },
+  "language_switcher": {
+    "label_with_code": "언어: {{code}}, 변경하려면 클릭",
+    "search_placeholder": "언어 검색…",
+    "clear_search": "검색 지우기",
+    "no_match": "일치하는 언어가 없습니다."
+  },
+  "cookie": {
+    "fab_aria": "쿠키 설정",
+    "dialog_aria": "쿠키 설정",
+    "title": "쿠키 설정",
+    "desc": "쿠키를 사용합니다. 필수 쿠키는 사이트 작동에 필요하며 — 나머지는 동의한 경우에만 실행됩니다.",
+    "privacy_link": "개인정보 처리방침",
+    "show_details": "자세히 보기",
+    "hide_details": "자세히 숨기기",
+    "always_on": "항상 활성",
+    "cat_necessary_title": "작동에 필수",
+    "cat_necessary_desc": "동의 저장 및 기본 기능(추후 로그인 포함). 없으면 사이트가 작동하지 않습니다.",
+    "cat_preferences_title": "사이트를 당신에게 맞춤화",
+    "cat_preferences_desc": "언어, 즐겨찾기, 청취 진행 상태, 페이지 버전 — 재설정 불필요. 개인정보 없음.",
+    "cat_analytics_title": "분석과 개선",
+    "cat_analytics_desc": "OBSKURA 개선용 익명 통계. 현재 아무것도 수집하지 않습니다 — 동의 시에만.",
+    "cat_marketing_title": "맞춤형 광고",
+    "cat_marketing_desc": "광고 개인화. 현재 픽셀을 사용하지 않습니다 — 동의 없이는 실행되지 않습니다.",
+    "accept_all": "모두 동의",
+    "ok": "확인",
+    "reject_all": "모두 거부",
+    "save_prefs": "설정 저장",
+    "settings": "설정"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "다운로드",

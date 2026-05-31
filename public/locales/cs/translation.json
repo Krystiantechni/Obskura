@@ -309,6 +309,35 @@
     "coming_soon_desc": "Plné zobrazení se objeví brzy. Všechny odkazy fungují, layout je hotový — texty a komponenty přibývají postupně.",
     "coming_soon_cta": "Zpět na hlavní stránku →"
   },
+  "language_switcher": {
+    "label_with_code": "Jazyk: {{code}}, klikněte pro změnu",
+    "search_placeholder": "Hledat jazyk…",
+    "clear_search": "Smazat hledání",
+    "no_match": "Žádný jazyk neodpovídá."
+  },
+  "cookie": {
+    "fab_aria": "Nastavení cookies",
+    "dialog_aria": "Nastavení cookies",
+    "title": "Nastavení cookies",
+    "desc": "Používáme cookies. Nezbytné jsou potřebné pro chod stránky — ostatní se spouštějí pouze s vaším souhlasem.",
+    "privacy_link": "Zásady ochrany soukromí",
+    "show_details": "Zobrazit detaily",
+    "hide_details": "Skrýt detaily",
+    "always_on": "Vždy aktivní",
+    "cat_necessary_title": "Nezbytné pro fungování",
+    "cat_necessary_desc": "Zapamatování souhlasu a základní fungování (v budoucnu i přihlášení). Bez nich web nefunguje.",
+    "cat_preferences_title": "Přizpůsobení stránky vám",
+    "cat_preferences_desc": "Jazyk, oblíbené, postup poslechu a varianta stránky — abyste je nenastavovali znovu. Žádné osobní údaje.",
+    "cat_analytics_title": "Analýza a vylepšení",
+    "cat_analytics_desc": "Anonymní statistiky pro vylepšení OBSKURY. Aktuálně nesbíráme žádné — pouze s vaším souhlasem.",
+    "cat_marketing_title": "Personalizované reklamy",
+    "cat_marketing_desc": "Personalizace reklamy. Žádné pixely nepoužíváme — bez souhlasu se nespustí.",
+    "accept_all": "Přijmout vše",
+    "ok": "OK",
+    "reject_all": "Odmítnout vše",
+    "save_prefs": "Uložit předvolby",
+    "settings": "Nastavení"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "STÁHNOUT PRO",

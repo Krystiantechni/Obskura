@@ -33,12 +33,18 @@ const ROUTES = {
   "/rejestracja": { title: "Rejestracja", description: "Załóż konto OBSKURA i zacznij słuchać." },
 };
 
+function routeKey(pathname) {
+  if (pathname === "/") return "home";
+  if (pathname.startsWith("/odcinek/")) return "episode";
+  return pathname.slice(1).replace(/\//g, "_");
+}
+
 function metaFor(pathname) {
-  if (ROUTES[pathname]) return ROUTES[pathname];
+  if (ROUTES[pathname]) return { ...ROUTES[pathname], key: routeKey(pathname) };
   if (pathname.startsWith("/odcinek/")) {
-    return { title: "Odcinek", description: "Posłuchaj odcinka grozy w binauralnym dźwięku 3D na OBSKURZE." };
+    return { title: "Odcinek", description: "Posłuchaj odcinka grozy w binauralnym dźwięku 3D na OBSKURZE.", key: "episode" };
   }
-  return DEFAULT;
+  return { ...DEFAULT, key: "home" };
 }
 
 function setMeta(attr, key, content) {
@@ -52,14 +58,19 @@ function setMeta(attr, key, content) {
 }
 
 // Ustawia <title> i meta (description + OG/Twitter) dla danej ścieżki.
-export function applySeo(pathname) {
-  const { title, description } = metaFor(pathname);
-  const fullTitle = pathname === "/" ? title : `${title} · ${SITE}`;
+// Opcjonalne `t` z react-i18next — jeśli przekazany, tytuły/opisy tłumaczone przez
+// klucze seo.{routeKey}_title / seo.{routeKey}_desc. Bez `t` — fallback PL.
+// <html lang> jest aktualizowane przez i18n module osobno (src/i18n/index.js).
+export function applySeo(pathname, t = null) {
+  const { title, description, key } = metaFor(pathname);
+  const trTitle = t ? t(`seo.${key}_title`, title) : title;
+  const trDesc = t ? t(`seo.${key}_desc`, description) : description;
+  const fullTitle = pathname === "/" ? trTitle : `${trTitle} · ${SITE}`;
 
   document.title = fullTitle;
-  setMeta("name", "description", description);
+  setMeta("name", "description", trDesc);
   setMeta("property", "og:title", fullTitle);
-  setMeta("property", "og:description", description);
+  setMeta("property", "og:description", trDesc);
   setMeta("name", "twitter:title", fullTitle);
-  setMeta("name", "twitter:description", description);
+  setMeta("name", "twitter:description", trDesc);
 }

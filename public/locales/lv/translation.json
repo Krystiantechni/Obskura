@@ -309,6 +309,35 @@
     "coming_soon_desc": "Pilns skats parādīsies drīz. Visas saites darbojas, izkārtojums ir gatavs — teksti un komponenti tiek pievienoti pakāpeniski.",
     "coming_soon_cta": "Atpakaļ uz sākumu →"
   },
+  "language_switcher": {
+    "label_with_code": "Valoda: {{code}}, noklikšķiniet, lai mainītu",
+    "search_placeholder": "Meklēt valodu…",
+    "clear_search": "Notīrīt meklēšanu",
+    "no_match": "Neviena valoda neatbilst."
+  },
+  "cookie": {
+    "fab_aria": "Sīkdatņu iestatījumi",
+    "dialog_aria": "Sīkdatņu iestatījumi",
+    "title": "Sīkdatņu iestatījumi",
+    "desc": "Mēs izmantojam sīkdatnes. Nepieciešamās ir obligātas vietnes darbībai — pārējās tiek palaistas tikai ar jūsu piekrišanu.",
+    "privacy_link": "Privātuma politika",
+    "show_details": "Rādīt detaļas",
+    "hide_details": "Slēpt detaļas",
+    "always_on": "Vienmēr aktīvas",
+    "cat_necessary_title": "Nepieciešamas darbībai",
+    "cat_necessary_desc": "Piekrišanas atcerēšanās un pamatfunkcijas (nākotnē arī pieteikšanās). Bez tām vietne nestrādās.",
+    "cat_preferences_title": "Vietnes pielāgošana jums",
+    "cat_preferences_desc": "Valoda, izlase, klausīšanās progress un lapas variants — lai nebūtu jāiestata atkārtoti. Bez personas datiem.",
+    "cat_analytics_title": "Analīze un uzlabojumi",
+    "cat_analytics_desc": "Anonīma lietojuma statistika OBSKURA uzlabošanai. Pašlaik neapkopojam neko — tikai ar jūsu piekrišanu.",
+    "cat_marketing_title": "Personalizētas reklāmas",
+    "cat_marketing_desc": "Reklāmu personalizēšana. Pašlaik neizmantojam pikseļus — bez piekrišanas tie nesāks darboties.",
+    "accept_all": "Pieņemt visas",
+    "ok": "Labi",
+    "reject_all": "Noraidīt visas",
+    "save_prefs": "Saglabāt iestatījumus",
+    "settings": "Iestatījumi"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "LEJUPIELĀDĒT",

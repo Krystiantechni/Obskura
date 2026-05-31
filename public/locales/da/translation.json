@@ -309,6 +309,35 @@
     "coming_soon_desc": "Den fulde visning kommer snart. Alle links virker, layoutet er klart — tekst og komponenter lander her løbende.",
     "coming_soon_cta": "Tilbage til forsiden →"
   },
+  "language_switcher": {
+    "label_with_code": "Sprog: {{code}}, klik for at ændre",
+    "search_placeholder": "Søg sprog…",
+    "clear_search": "Ryd søgning",
+    "no_match": "Ingen sprog matcher."
+  },
+  "cookie": {
+    "fab_aria": "Cookie-indstillinger",
+    "dialog_aria": "Cookie-indstillinger",
+    "title": "Cookie-indstillinger",
+    "desc": "Vi bruger cookies. Nødvendige er påkrævet for at sitet fungerer — resten kører kun med dit samtykke.",
+    "privacy_link": "Privatlivspolitik",
+    "show_details": "Vis detaljer",
+    "hide_details": "Skjul detaljer",
+    "always_on": "Altid aktive",
+    "cat_necessary_title": "Nødvendige for drift",
+    "cat_necessary_desc": "Husker samtykke og grundfunktioner (login senere). Uden dem virker sitet ikke.",
+    "cat_preferences_title": "Tilpas sitet til dig",
+    "cat_preferences_desc": "Sprog, favoritter, lytteposition og sidevariant — så du ikke skal indstille igen. Ingen persondata.",
+    "cat_analytics_title": "Analyse og forbedring",
+    "cat_analytics_desc": "Anonym brugsstatistik for at forbedre OBSKURA. Vi indsamler intet lige nu — kun med dit samtykke.",
+    "cat_marketing_title": "Personlige annoncer",
+    "cat_marketing_desc": "Annoncepersonalisering. Vi bruger ingen pixels lige nu — uden samtykke starter de ikke.",
+    "accept_all": "Accepter alle",
+    "ok": "OK",
+    "reject_all": "Afvis alle",
+    "save_prefs": "Gem præferencer",
+    "settings": "Indstillinger"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "HENT TIL",

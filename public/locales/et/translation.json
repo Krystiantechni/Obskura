@@ -309,6 +309,35 @@
     "coming_soon_desc": "Täisvaade ilmub varsti. Kõik lingid töötavad, paigutus on valmis — tekstid ja komponendid lisanduvad järk-järgult.",
     "coming_soon_cta": "Tagasi avalehele →"
   },
+  "language_switcher": {
+    "label_with_code": "Keel: {{code}}, muutmiseks klõpsake",
+    "search_placeholder": "Otsi keelt…",
+    "clear_search": "Tühjenda otsing",
+    "no_match": "Ükski keel ei vasta."
+  },
+  "cookie": {
+    "fab_aria": "Küpsiste seaded",
+    "dialog_aria": "Küpsiste seaded",
+    "title": "Küpsiste seaded",
+    "desc": "Kasutame küpsiseid. Vajalikud on saidi tööks kohustuslikud — ülejäänud käivituvad ainult teie nõusolekul.",
+    "privacy_link": "Privaatsuspoliitika",
+    "show_details": "Näita üksikasju",
+    "hide_details": "Peida üksikasjad",
+    "always_on": "Alati sees",
+    "cat_necessary_title": "Vajalikud tööks",
+    "cat_necessary_desc": "Nõusoleku meelespidamine ja põhifunktsioonid (edaspidi ka sisselogimine). Ilma nendeta sait ei tööta.",
+    "cat_preferences_title": "Saidi kohandamine",
+    "cat_preferences_desc": "Keel, lemmikud, kuulamise edenemine ja lehe variant — et te ei peaks uuesti seadistama. Isikuandmeid pole.",
+    "cat_analytics_title": "Analüüs ja parendamine",
+    "cat_analytics_desc": "Anonüümne kasutusstatistika OBSKURA parendamiseks. Hetkel ei kogu midagi — ainult teie nõusolekul.",
+    "cat_marketing_title": "Isikupärased reklaamid",
+    "cat_marketing_desc": "Reklaami isikupärastamine. Hetkel ei kasuta piksleid — ilma nõusolekuta need ei käivitu.",
+    "accept_all": "Nõustu kõigiga",
+    "ok": "OK",
+    "reject_all": "Keeldu kõigist",
+    "save_prefs": "Salvesta eelistused",
+    "settings": "Seaded"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "LAE ALLA",

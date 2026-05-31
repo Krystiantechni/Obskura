@@ -309,6 +309,35 @@
     "coming_soon_desc": "De volledige weergave komt binnenkort. Alle links werken, de lay-out is klaar — teksten en componenten komen iteratief hierheen.",
     "coming_soon_cta": "Terug naar home →"
   },
+  "language_switcher": {
+    "label_with_code": "Taal: {{code}}, klik om te wijzigen",
+    "search_placeholder": "Zoek een taal…",
+    "clear_search": "Zoekopdracht wissen",
+    "no_match": "Geen overeenkomende talen."
+  },
+  "cookie": {
+    "fab_aria": "Cookie-instellingen",
+    "dialog_aria": "Cookie-instellingen",
+    "title": "Cookie-instellingen",
+    "desc": "We gebruiken cookies. Noodzakelijke zijn vereist voor de werking — de rest draait alleen met jouw toestemming.",
+    "privacy_link": "Privacybeleid",
+    "show_details": "Details tonen",
+    "hide_details": "Details verbergen",
+    "always_on": "Altijd aan",
+    "cat_necessary_title": "Noodzakelijk voor de werking",
+    "cat_necessary_desc": "Toestemming onthouden en basisfuncties (later ook inloggen). Zonder werkt de site niet.",
+    "cat_preferences_title": "Site op jou afstemmen",
+    "cat_preferences_desc": "Taal, favorieten, luistervoortgang en pagina-variant — zodat je niets opnieuw hoeft in te stellen. Geen persoonsgegevens.",
+    "cat_analytics_title": "Analyse en verbetering",
+    "cat_analytics_desc": "Anonieme gebruiksstatistieken om OBSKURA te verbeteren. Momenteel verzamelen we niets — alleen met jouw toestemming.",
+    "cat_marketing_title": "Gepersonaliseerde advertenties",
+    "cat_marketing_desc": "Advertentie-personalisatie. We gebruiken nu geen pixels — zonder toestemming draaien ze niet.",
+    "accept_all": "Alles accepteren",
+    "ok": "OK",
+    "reject_all": "Alles weigeren",
+    "save_prefs": "Voorkeuren opslaan",
+    "settings": "Instellingen"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "DOWNLOAD VOOR",

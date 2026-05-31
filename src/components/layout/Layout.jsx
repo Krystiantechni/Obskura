@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { Outlet, useOutlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import ScrollProgressBar from "../ui/ScrollProgressBar";
@@ -43,11 +44,13 @@ export default function Layout() {
   const { pathname } = useLocation();
   const reduce = useReducedMotion();
   const { current } = usePlayer();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    applySeo(pathname);
-  }, [pathname]);
+    applySeo(pathname, t);
+    // Reaktywne na zmianę języka: re-apply meta po zmianie i18n.language.
+  }, [pathname, t, i18n.language]);
 
   // Plausible: cookieless analytics, ładowane tylko po zgodzie "analytics".
   // initAnalytics sam pilnuje idempotencji i nasłuchu na event "obskura:consent".
@@ -57,9 +60,16 @@ export default function Layout() {
 
   return (
     <>
+      {/* Skip-link a11y — Tab z górki strony przeskakuje całe nav prosto do main. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[1000] focus:bg-red focus:px-4 focus:py-2 focus:font-mono focus:text-[11px] focus:font-bold focus:uppercase focus:tracking-ui focus:text-black focus:shadow-[0_0_24px_rgba(255,42,42,0.45)]"
+      >
+        Przejdź do treści
+      </a>
       <ScrollProgressBar />
       <Nav />
-      <main className="relative">
+      <main id="main" className="relative">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={pathname}

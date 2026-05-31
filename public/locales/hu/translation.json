@@ -309,6 +309,35 @@
     "coming_soon_desc": "A teljes nézet hamarosan megjelenik. Minden link működik, a felépítés kész — a szövegek és komponensek fokozatosan kerülnek ide.",
     "coming_soon_cta": "Vissza a főoldalra →"
   },
+  "language_switcher": {
+    "label_with_code": "Nyelv: {{code}}, kattints a váltáshoz",
+    "search_placeholder": "Nyelv keresése…",
+    "clear_search": "Keresés törlése",
+    "no_match": "Nincs megfelelő nyelv."
+  },
+  "cookie": {
+    "fab_aria": "Süti-beállítások",
+    "dialog_aria": "Süti-beállítások",
+    "title": "Süti-beállítások",
+    "desc": "Sütiket használunk. A szükségesek a működéshez kellenek — a többi csak a hozzájárulásoddal indul.",
+    "privacy_link": "Adatvédelmi szabályzat",
+    "show_details": "Részletek",
+    "hide_details": "Részletek elrejtése",
+    "always_on": "Mindig aktív",
+    "cat_necessary_title": "Működéshez szükségesek",
+    "cat_necessary_desc": "Hozzájárulás megjegyzése és alapfunkciók (később bejelentkezés is). Nélkülük nem működik az oldal.",
+    "cat_preferences_title": "Oldal testreszabása",
+    "cat_preferences_desc": "Nyelv, kedvencek, hallgatási előrehaladás és oldalváltozat — ne kelljen újra beállítani. Nincs személyes adat.",
+    "cat_analytics_title": "Elemzés és fejlesztés",
+    "cat_analytics_desc": "Anonim használati statisztikák az OBSKURA fejlesztéséhez. Jelenleg semmit nem gyűjtünk — csak hozzájárulással.",
+    "cat_marketing_title": "Személyre szabott hirdetések",
+    "cat_marketing_desc": "Hirdetés-személyre szabás. Jelenleg nem használunk pixeleket — hozzájárulás nélkül nem indulnak.",
+    "accept_all": "Mindet elfogadom",
+    "ok": "Rendben",
+    "reject_all": "Mindet elutasítom",
+    "save_prefs": "Beállítások mentése",
+    "settings": "Beállítások"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "TÖLTSD LE",

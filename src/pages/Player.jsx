@@ -188,10 +188,10 @@ export default function Player() {
         <div className="absolute inset-x-0 bottom-0 z-10 bg-[linear-gradient(0deg,rgba(5,6,8,0.92),transparent)] px-5 pb-8 pt-20 lg:px-10 lg:pb-10">
           <Visualizer playing={playing} frame={frame} />
 
-          <div className="mb-6 flex items-center gap-4">
-            <span className="min-w-[56px] font-mono text-[13px] tracking-ui text-red">{fmt(seconds)}</span>
-            <WaveformBar progress={progress} onSeek={(p) => seek(p)} className="flex-1" />
-            <span className="min-w-[56px] text-right font-mono text-[13px] tracking-ui text-ink-1">
+          <div className="mb-6 flex items-center gap-2 sm:gap-4">
+            <span className="min-w-[44px] font-mono text-[12px] tracking-ui text-red sm:min-w-[56px] sm:text-[13px]">{fmt(seconds)}</span>
+            <WaveformBar progress={progress} onSeek={(p) => seek(p)} className="min-w-0 flex-1" />
+            <span className="min-w-[44px] text-right font-mono text-[12px] tracking-ui text-ink-1 sm:min-w-[56px] sm:text-[13px]">
               {fmt(Math.max(0, total - seconds))}
             </span>
           </div>
@@ -253,7 +253,7 @@ export default function Player() {
                   type="button"
                   onClick={() => setSpeed(s)}
                   className={`border px-3.5 py-2 font-mono text-[11px] tracking-ui transition-colors ${
-                    speed === s ? "border-red bg-red text-white" : "border-line bg-black/40 text-ink-1 hover:border-red hover:text-red"
+                    speed === s ? "border-red bg-red text-black" : "border-line bg-black/40 text-ink-1 hover:border-red hover:text-red"
                   }`}
                 >
                   {s}×

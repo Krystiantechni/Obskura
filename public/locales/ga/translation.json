@@ -309,6 +309,35 @@
     "coming_soon_desc": "Tiocfaidh an t-amharc iomlán go luath. Oibríonn gach nasc, tá an leagan amach réidh — tagann téacs agus comhpháirteanna anseo de réir a chéile.",
     "coming_soon_cta": "Ar ais go dtí an baile →"
   },
+  "language_switcher": {
+    "label_with_code": "Teanga: {{code}}, cliceáil chun athrú",
+    "search_placeholder": "Cuardaigh teanga…",
+    "clear_search": "Glan cuardach",
+    "no_match": "Níl aon teanga ag teacht leis."
+  },
+  "cookie": {
+    "fab_aria": "Socruithe fianán",
+    "dialog_aria": "Socruithe fianán",
+    "title": "Socruithe fianán",
+    "desc": "Úsáidimid fianáin. Tá na cinn riachtanacha ag teastáil don suíomh — ní ritheann an chuid eile ach le do thoiliú.",
+    "privacy_link": "Polasaí príobháideachais",
+    "show_details": "Taispeáin sonraí",
+    "hide_details": "Folaigh sonraí",
+    "always_on": "I gcónaí ar siúl",
+    "cat_necessary_title": "Riachtanach don oibriú",
+    "cat_necessary_desc": "Toiliú a chuimhneamh agus feidhmeanna bunúsacha (logáil isteach amach anseo). Gan iad ní oibríonn an suíomh.",
+    "cat_preferences_title": "Suíomh a oiriúnú duitse",
+    "cat_preferences_desc": "Teanga, ceanáin, dul chun cinn éisteachta agus leagan leathanaigh — gan iad a athshocrú. Gan sonraí pearsanta.",
+    "cat_analytics_title": "Anailís agus feabhsú",
+    "cat_analytics_desc": "Staitisticí gan ainm chun OBSKURA a fheabhsú. Ní bhailímid aon cheann faoi láthair — le do thoiliú amháin.",
+    "cat_marketing_title": "Fógraí pearsantaithe",
+    "cat_marketing_desc": "Pearsantú fógraí. Ní úsáidimid aon picteilíní faoi láthair — gan do thoiliú ní ritheann siad.",
+    "accept_all": "Glac le gach ceann",
+    "ok": "OK",
+    "reject_all": "Diúltaigh dóibh go léir",
+    "save_prefs": "Sábháil sainroghanna",
+    "settings": "Socruithe"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "ÍOSLÓDÁIL DO",

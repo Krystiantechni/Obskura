@@ -309,6 +309,35 @@
     "coming_soon_desc": "完全な表示はまもなく。すべてのリンクは機能し、レイアウトは完成——テキストとコンポーネントは順次追加中。",
     "coming_soon_cta": "ホームへ戻る →"
   },
+  "language_switcher": {
+    "label_with_code": "言語：{{code}}、クリックで変更",
+    "search_placeholder": "言語を検索…",
+    "clear_search": "検索をクリア",
+    "no_match": "一致する言語がありません。"
+  },
+  "cookie": {
+    "fab_aria": "Cookie 設定",
+    "dialog_aria": "Cookie 設定",
+    "title": "Cookie 設定",
+    "desc": "Cookie を使用しています。必須のものはサイトの動作に必要 — その他はあなたの同意がある場合のみ作動します。",
+    "privacy_link": "プライバシーポリシー",
+    "show_details": "詳細を表示",
+    "hide_details": "詳細を隠す",
+    "always_on": "常に有効",
+    "cat_necessary_title": "動作に必須",
+    "cat_necessary_desc": "同意の記憶と基本機能（将来的にはログインも）。これがないとサイトは動きません。",
+    "cat_preferences_title": "サイトをあなたに合わせる",
+    "cat_preferences_desc": "言語、お気に入り、再生位置、ページバリアント — 再設定不要に。個人データなし。",
+    "cat_analytics_title": "分析と改善",
+    "cat_analytics_desc": "OBSKURA 改善のための匿名統計。現在は何も収集していません — 同意がある場合のみ。",
+    "cat_marketing_title": "パーソナライズ広告",
+    "cat_marketing_desc": "広告のパーソナライズ。現在ピクセルは未使用 — 同意なしでは作動しません。",
+    "accept_all": "すべて許可",
+    "ok": "OK",
+    "reject_all": "すべて拒否",
+    "save_prefs": "設定を保存",
+    "settings": "設定"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "ダウンロード",

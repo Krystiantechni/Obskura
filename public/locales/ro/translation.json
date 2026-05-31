@@ -309,6 +309,35 @@
     "coming_soon_desc": "Vederea completă apare în curând. Toate linkurile funcționează, layout-ul e gata — textele și componentele ajung aici în mod iterativ.",
     "coming_soon_cta": "Înapoi la pagina principală →"
   },
+  "language_switcher": {
+    "label_with_code": "Limba: {{code}}, click pentru a schimba",
+    "search_placeholder": "Caută o limbă…",
+    "clear_search": "Șterge căutarea",
+    "no_match": "Nicio limbă nu corespunde."
+  },
+  "cookie": {
+    "fab_aria": "Setări cookie",
+    "dialog_aria": "Setări cookie",
+    "title": "Setări cookie",
+    "desc": "Folosim cookie-uri. Cele necesare sunt obligatorii pentru funcționarea site-ului — restul rulează doar cu acordul tău.",
+    "privacy_link": "Politica de confidențialitate",
+    "show_details": "Arată detalii",
+    "hide_details": "Ascunde detalii",
+    "always_on": "Mereu active",
+    "cat_necessary_title": "Necesare pentru funcționare",
+    "cat_necessary_desc": "Memorarea consimțământului și funcții de bază (pe viitor și autentificare). Fără ele site-ul nu funcționează.",
+    "cat_preferences_title": "Personalizarea site-ului",
+    "cat_preferences_desc": "Limbă, favorite, progres de ascultare și varianta paginii — ca să nu reconfigurezi. Fără date personale.",
+    "cat_analytics_title": "Analiză și îmbunătățiri",
+    "cat_analytics_desc": "Statistici anonime pentru îmbunătățirea OBSKURA. Momentan nu colectăm nimic — doar cu consimțământul tău.",
+    "cat_marketing_title": "Reclame personalizate",
+    "cat_marketing_desc": "Personalizarea reclamelor. În prezent nu folosim pixeli — nu pornesc fără consimțământul tău.",
+    "accept_all": "Acceptă toate",
+    "ok": "OK",
+    "reject_all": "Respinge toate",
+    "save_prefs": "Salvează preferințele",
+    "settings": "Setări"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "DESCARCĂ PE",

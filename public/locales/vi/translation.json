@@ -309,6 +309,35 @@
     "coming_soon_desc": "Giao diện đầy đủ sắp ra mắt. Mọi liên kết hoạt động, bố cục đã sẵn sàng — văn bản và thành phần được thêm dần.",
     "coming_soon_cta": "Về trang chủ →"
   },
+  "language_switcher": {
+    "label_with_code": "Ngôn ngữ: {{code}}, nhấp để thay đổi",
+    "search_placeholder": "Tìm ngôn ngữ…",
+    "clear_search": "Xóa tìm kiếm",
+    "no_match": "Không có ngôn ngữ nào khớp."
+  },
+  "cookie": {
+    "fab_aria": "Cài đặt cookie",
+    "dialog_aria": "Cài đặt cookie",
+    "title": "Cài đặt cookie",
+    "desc": "Chúng tôi sử dụng cookie. Cookie cần thiết là bắt buộc cho hoạt động của trang — phần còn lại chỉ chạy với sự đồng ý của bạn.",
+    "privacy_link": "Chính sách bảo mật",
+    "show_details": "Hiện chi tiết",
+    "hide_details": "Ẩn chi tiết",
+    "always_on": "Luôn bật",
+    "cat_necessary_title": "Cần thiết cho hoạt động",
+    "cat_necessary_desc": "Ghi nhớ đồng ý và chức năng cơ bản (đăng nhập trong tương lai). Không có chúng trang sẽ không hoạt động.",
+    "cat_preferences_title": "Tùy chỉnh trang cho bạn",
+    "cat_preferences_desc": "Ngôn ngữ, yêu thích, tiến độ nghe và biến thể trang — để bạn không cần cài lại. Không có dữ liệu cá nhân.",
+    "cat_analytics_title": "Phân tích và cải tiến",
+    "cat_analytics_desc": "Thống kê sử dụng ẩn danh để cải thiện OBSKURA. Hiện tại chúng tôi không thu thập gì — chỉ với sự đồng ý của bạn.",
+    "cat_marketing_title": "Quảng cáo cá nhân hóa",
+    "cat_marketing_desc": "Cá nhân hóa quảng cáo. Hiện tại không sử dụng pixel nào — sẽ không chạy nếu không có sự đồng ý.",
+    "accept_all": "Chấp nhận tất cả",
+    "ok": "OK",
+    "reject_all": "Từ chối tất cả",
+    "save_prefs": "Lưu tùy chọn",
+    "settings": "Cài đặt"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "TẢI VỀ TRÊN",

@@ -309,6 +309,35 @@
     "coming_soon_desc": "Darating na ang buong view. Gumagana ang lahat ng link, handa na ang layout — unti-unting idinadagdag ang text at mga component.",
     "coming_soon_cta": "Balik sa home →"
   },
+  "language_switcher": {
+    "label_with_code": "Wika: {{code}}, i-click para baguhin",
+    "search_placeholder": "Maghanap ng wika…",
+    "clear_search": "I-clear ang paghahanap",
+    "no_match": "Walang tumutugmang wika."
+  },
+  "cookie": {
+    "fab_aria": "Mga setting ng cookie",
+    "dialog_aria": "Mga setting ng cookie",
+    "title": "Mga setting ng cookie",
+    "desc": "Gumagamit kami ng cookies. Ang mga kailangang-kailangan ay kinakailangan para gumana ang site — ang iba ay tatakbo lamang kapag pumayag ka.",
+    "privacy_link": "Patakaran sa privacy",
+    "show_details": "Ipakita ang detalye",
+    "hide_details": "Itago ang detalye",
+    "always_on": "Laging aktibo",
+    "cat_necessary_title": "Kailangan para sa operasyon",
+    "cat_necessary_desc": "Pag-alala sa pahintulot at mga pangunahing function (kasama ang login sa hinaharap). Kung wala, hindi gagana ang site.",
+    "cat_preferences_title": "I-customize ang site para sa iyo",
+    "cat_preferences_desc": "Wika, paborito, progreso ng pakikinig at variant ng pahina — para hindi mo na muling i-set. Walang personal na data.",
+    "cat_analytics_title": "Pagsusuri at pagpapabuti",
+    "cat_analytics_desc": "Hindi nakikilalang estadistika ng paggamit para mapabuti ang OBSKURA. Sa ngayon, wala kaming kinokolekta — kapag pumayag ka lang.",
+    "cat_marketing_title": "Personalized na advertisement",
+    "cat_marketing_desc": "Personalization ng ad. Sa ngayon hindi kami gumagamit ng pixels — hindi tatakbo kung wala kang pahintulot.",
+    "accept_all": "Tanggapin lahat",
+    "ok": "OK",
+    "reject_all": "Tanggihan lahat",
+    "save_prefs": "I-save ang mga kagustuhan",
+    "settings": "Mga setting"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "I-DOWNLOAD SA",

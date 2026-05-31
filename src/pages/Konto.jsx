@@ -44,7 +44,7 @@ function Segment({ options, value, onChange }) {
           key={o.value}
           type="button"
           onClick={() => onChange?.(o.value)}
-          className={`px-3.5 py-2 font-mono text-[10px] uppercase tracking-ui transition-all ${value === o.value ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"} ${o.dim ? "opacity-50" : ""}`}
+          className={`px-3.5 py-2 font-mono text-[10px] uppercase tracking-ui transition-all ${value === o.value ? "bg-red text-black" : "text-ink-2 hover:text-ink-0"} ${o.dim ? "opacity-50" : ""}`}
         >
           {o.label}
         </button>
@@ -66,7 +66,7 @@ SettingRow.propTypes = { children: PropTypes.node.isRequired };
 function SettingInfo({ children, desc }) {
   return (
     <div className="info">
-      <h5 className="mb-1 font-serif text-lg font-medium">{children}</h5>
+      <h3 className="mb-1 font-serif text-lg font-medium">{children}</h3>
       <p className="max-w-[480px] text-xs font-light leading-relaxed text-ink-1">{desc}</p>
     </div>
   );
@@ -254,7 +254,7 @@ export default function Konto() {
       <main className="mx-auto my-10 grid max-w-[1400px] items-start gap-10 px-5 lg:my-16 lg:grid-cols-[260px_1fr] lg:px-12">
         {/* Side nav */}
         <nav className="flex flex-col border border-line bg-bg-2/40 lg:sticky lg:top-[100px]">
-          <h5 className="px-5 pb-2 pt-[18px] font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.menu", "// MENU")}</h5>
+          <h3 className="px-5 pb-2 pt-[18px] font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.menu", "// MENU")}</h3>
           {SECTIONS.map((s) => {
             const act = section === s.id;
             // Badge dla favs jest dynamiczny (realna długość listy), reszta z hard-coded SECTIONS.
@@ -477,7 +477,7 @@ export default function Konto() {
               </SettingRow>
 
               <div className="mt-7 border border-line bg-black/30 p-5">
-                <h5 className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.plan_payments_title", "// HISTORIA PŁATNOŚCI · OSTATNIE 6")}</h5>
+                <h3 className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.plan_payments_title", "// HISTORIA PŁATNOŚCI · OSTATNIE 6")}</h3>
                 {[
                   { d: "14.08.2025 · Subskrypcja roczna", a: "288,00 PLN" },
                   { d: "14.08.2024 · Subskrypcja roczna", a: "288,00 PLN" },
@@ -621,7 +621,7 @@ export default function Konto() {
               </SettingRow>
 
               <div className="mt-8 border border-line bg-black/30 p-6">
-                <h5 className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.privacy_export_title", "// EKSPORT I USUWANIE · RODO ART. 15-22")}</h5>
+                <h3 className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.privacy_export_title", "// EKSPORT I USUWANIE · RODO ART. 15-22")}</h3>
                 <div className="mb-4 flex flex-wrap gap-3">
                   {[
                     t("konto.privacy_export_all", "↓ Eksport wszystkich danych (ZIP)"),
@@ -683,7 +683,7 @@ export default function Konto() {
               </SettingRow>
 
               <div className="mt-7">
-                <h5 className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.security_sessions_title", "// AKTYWNE SESJE · 4")}</h5>
+                <h3 className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.security_sessions_title", "// AKTYWNE SESJE · 4")}</h3>
                 {SESSIONS.map((s, i) => (
                   <div
                     key={i}

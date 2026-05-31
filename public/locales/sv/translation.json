@@ -309,6 +309,35 @@
     "coming_soon_desc": "Den fullständiga vyn kommer snart. Alla länkar fungerar, layouten är klar — text och komponenter landar här iterativt.",
     "coming_soon_cta": "Tillbaka till startsidan →"
   },
+  "language_switcher": {
+    "label_with_code": "Språk: {{code}}, klicka för att ändra",
+    "search_placeholder": "Sök språk…",
+    "clear_search": "Rensa sökning",
+    "no_match": "Inga språk matchar."
+  },
+  "cookie": {
+    "fab_aria": "Cookieinställningar",
+    "dialog_aria": "Cookieinställningar",
+    "title": "Cookieinställningar",
+    "desc": "Vi använder cookies. Nödvändiga krävs för att webbplatsen ska fungera — övriga aktiveras endast med ditt samtycke.",
+    "privacy_link": "Integritetspolicy",
+    "show_details": "Visa detaljer",
+    "hide_details": "Dölj detaljer",
+    "always_on": "Alltid på",
+    "cat_necessary_title": "Nödvändiga för drift",
+    "cat_necessary_desc": "Spara samtycke och grundfunktioner (även inloggning i framtiden). Utan dem fungerar inte webbplatsen.",
+    "cat_preferences_title": "Anpassa sidan efter dig",
+    "cat_preferences_desc": "Språk, favoriter, lyssningsläge och sidvariant — så du slipper ställa in igen. Inga personuppgifter.",
+    "cat_analytics_title": "Analys och förbättring",
+    "cat_analytics_desc": "Anonym användarstatistik för att förbättra OBSKURA. Vi samlar för närvarande inga — bara med ditt samtycke.",
+    "cat_marketing_title": "Personliga annonser",
+    "cat_marketing_desc": "Annonspersonalisering. Vi använder för närvarande inga pixlar — de startar inte utan ditt samtycke.",
+    "accept_all": "Acceptera alla",
+    "ok": "OK",
+    "reject_all": "Avvisa alla",
+    "save_prefs": "Spara inställningar",
+    "settings": "Inställningar"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "HÄMTA TILL",

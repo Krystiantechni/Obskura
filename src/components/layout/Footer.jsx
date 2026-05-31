@@ -47,13 +47,19 @@ export default function Footer() {
           <Brand />
           <p className="my-5 max-w-xs text-[13px] leading-relaxed text-ink-2">{t("footer.tagline")}</p>
           <div className="flex gap-3">
-            {["SPOTIFY", "APPLE", "RSS"].map((s) => (
+            {[
+              { label: "SPOTIFY", href: "https://open.spotify.com/search/obskura" },
+              { label: "APPLE", href: "https://podcasts.apple.com/search?term=obskura" },
+              { label: "RSS", href: "/rss.xml" },
+            ].map((s) => (
               <a
-                key={s}
-                href="#"
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="border border-white/10 px-3 py-2 font-sans text-[11px] font-semibold uppercase tracking-ui text-ink-0 transition-colors hover:border-red hover:text-red"
               >
-                {s}
+                {s.label}
               </a>
             ))}
           </div>
@@ -62,7 +68,7 @@ export default function Footer() {
         {/* Link cols */}
         {cols.map((col) => (
           <div key={col.head}>
-            <h5 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t(col.head)}</h5>
+            <h3 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t(col.head)}</h3>
             <ul className="flex flex-col gap-3">
               {col.links.map((l, i) => (
                 <li key={i}>
@@ -77,7 +83,7 @@ export default function Footer() {
 
         {/* Newsletter */}
         <div className="col-span-2 lg:col-span-1">
-          <h5 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("footer.newsletter")}</h5>
+          <h3 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("footer.newsletter")}</h3>
           <p className="mb-3.5 text-[13px] leading-snug text-ink-1">{t("footer.newsletter_desc")}</p>
           <form onSubmit={(e) => e.preventDefault()}>
             <input
@@ -87,7 +93,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="w-full bg-red px-3 py-3 font-sans text-[11px] font-semibold uppercase tracking-ui text-white shadow-cta-red transition-colors hover:bg-red-soft"
+              className="w-full bg-red px-3 py-3 font-sans text-[11px] font-semibold uppercase tracking-ui text-black shadow-cta-red transition-colors hover:bg-red-soft"
             >
               {t("footer.newsletter_cta")}
             </button>

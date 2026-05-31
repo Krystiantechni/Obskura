@@ -309,6 +309,35 @@
     "coming_soon_desc": "Il-veduta sħiħa tasal dalwaqt. Il-links kollha jaħdmu, il-layout lest — it-testi u l-komponenti jaslu hawn b'mod gradwali.",
     "coming_soon_cta": "Lura għad-dar →"
   },
+  "language_switcher": {
+    "label_with_code": "Lingwa: {{code}}, ikklikkja biex tibdel",
+    "search_placeholder": "Fittex lingwa…",
+    "clear_search": "Naddaf it-tfittxija",
+    "no_match": "L-ebda lingwa ma taqbel."
+  },
+  "cookie": {
+    "fab_aria": "Settings tal-cookies",
+    "dialog_aria": "Settings tal-cookies",
+    "title": "Settings tal-cookies",
+    "desc": "Nużaw il-cookies. Dawk meħtieġa huma neċessarji għall-funzjonament — l-oħrajn jaħdmu biss bil-kunsens tiegħek.",
+    "privacy_link": "Politika tal-privatezza",
+    "show_details": "Uri d-dettalji",
+    "hide_details": "Aħbi d-dettalji",
+    "always_on": "Dejjem attivi",
+    "cat_necessary_title": "Meħtieġa għall-operat",
+    "cat_necessary_desc": "Iżżomm kunsens u funzjonijiet bażiċi (login fil-futur). Mingħajrhom is-sit ma jaħdimx.",
+    "cat_preferences_title": "Tfassil tas-sit għalik",
+    "cat_preferences_desc": "Lingwa, favoriti, progress tas-smigħ u verżjoni tal-paġna — biex ma terġax tissettja. L-ebda data personali.",
+    "cat_analytics_title": "Analiżi u titjib",
+    "cat_analytics_desc": "Statistika anonima biex intejbu lil OBSKURA. Bħalissa ma niġbru xejn — biss bil-kunsens tiegħek.",
+    "cat_marketing_title": "Reklami personalizzati",
+    "cat_marketing_desc": "Personalizzazzjoni tar-reklami. Bħalissa ma nużawx pixels — mingħajr kunsens ma jaħdmux.",
+    "accept_all": "Aċċetta kollox",
+    "ok": "OK",
+    "reject_all": "Irrifjuta kollox",
+    "save_prefs": "Issejvja l-preferenzi",
+    "settings": "Settings"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "NIŻŻEL FUQ",

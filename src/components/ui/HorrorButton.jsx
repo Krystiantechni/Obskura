@@ -17,7 +17,7 @@ export default function HorrorButton({
     "group relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red";
   const variants = {
     primary:
-      "bg-red text-white shadow-cta-red hover:bg-red-soft hover:shadow-cta-red-hover hover:-translate-y-px",
+      "bg-red text-black shadow-cta-red hover:bg-red-soft hover:shadow-cta-red-hover hover:-translate-y-px",
     ghost:
       "border border-white/10 text-ink-0 hover:border-red hover:text-red",
   };

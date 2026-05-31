@@ -309,6 +309,35 @@
     "coming_soon_desc": "Mwonekano kamili unakuja hivi karibuni. Viungo vyote vinafanya kazi, muundo uko tayari — maandishi na vipengele vinaongezwa hatua kwa hatua.",
     "coming_soon_cta": "Rudi nyumbani →"
   },
+  "language_switcher": {
+    "label_with_code": "Lugha: {{code}}, bofya kubadilisha",
+    "search_placeholder": "Tafuta lugha…",
+    "clear_search": "Futa utafutaji",
+    "no_match": "Hakuna lugha inayolingana."
+  },
+  "cookie": {
+    "fab_aria": "Mipangilio ya cookie",
+    "dialog_aria": "Mipangilio ya cookie",
+    "title": "Mipangilio ya cookie",
+    "desc": "Tunatumia cookies. Zile muhimu zinahitajika ili tovuti ifanye kazi — zingine huwashwa tu ukikubali.",
+    "privacy_link": "Sera ya faragha",
+    "show_details": "Onyesha maelezo",
+    "hide_details": "Ficha maelezo",
+    "always_on": "Daima zimewashwa",
+    "cat_necessary_title": "Muhimu kwa uendeshaji",
+    "cat_necessary_desc": "Kukumbuka idhini na utendaji wa msingi (kuingia katika siku zijazo pia). Bila hizi tovuti haitafanya kazi.",
+    "cat_preferences_title": "Kuwekea tovuti kwako",
+    "cat_preferences_desc": "Lugha, vipendwa, maendeleo ya kusikiliza na toleo la ukurasa — usilete tena. Hakuna data binafsi.",
+    "cat_analytics_title": "Uchambuzi na uboreshaji",
+    "cat_analytics_desc": "Takwimu zisizojulikana za matumizi kuboresha OBSKURA. Sasa hivi hatukusanyi chochote — tu kwa idhini yako.",
+    "cat_marketing_title": "Matangazo yaliyobinafsishwa",
+    "cat_marketing_desc": "Ubinafsishaji wa matangazo. Kwa sasa hatutumii pixels — bila idhini hayatafanya kazi.",
+    "accept_all": "Kubali zote",
+    "ok": "Sawa",
+    "reject_all": "Kataa zote",
+    "save_prefs": "Hifadhi mapendeleo",
+    "settings": "Mipangilio"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "PAKUA KWENYE",

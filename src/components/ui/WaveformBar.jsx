@@ -26,7 +26,7 @@ export default function WaveformBar({ progress, onSeek, className = "" }) {
 
   return (
     <div
-      className={`flex h-9 cursor-pointer items-center gap-[2px] ${className}`}
+      className={`flex h-9 cursor-pointer items-center gap-px sm:gap-[2px] ${className}`}
       onClick={handleClick}
     >
       {bars.map((h, i) => {
@@ -36,7 +36,7 @@ export default function WaveformBar({ progress, onSeek, className = "" }) {
           <div
             key={i}
             className={[
-              "min-w-[2px] flex-1 transition-all duration-300",
+              "min-w-px flex-1 transition-all duration-300 sm:min-w-[2px]",
               current
                 ? "bg-ink-0 shadow-[0_0_8px_rgba(255,255,255,0.5)]"
                 : played

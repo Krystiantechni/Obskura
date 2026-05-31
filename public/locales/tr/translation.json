@@ -309,6 +309,35 @@
     "coming_soon_desc": "Tam görünüm yakında geliyor. Tüm bağlantılar çalışıyor, düzen hazır — metinler ve bileşenler kademeli olarak buraya geliyor.",
     "coming_soon_cta": "Ana sayfaya dön →"
   },
+  "language_switcher": {
+    "label_with_code": "Dil: {{code}}, değiştirmek için tıklayın",
+    "search_placeholder": "Dil ara…",
+    "clear_search": "Aramayı temizle",
+    "no_match": "Eşleşen dil yok."
+  },
+  "cookie": {
+    "fab_aria": "Çerez ayarları",
+    "dialog_aria": "Çerez ayarları",
+    "title": "Çerez ayarları",
+    "desc": "Çerez kullanıyoruz. Gerekli olanlar sitenin çalışması için zorunlu — diğerleri yalnızca onayınızla devreye girer.",
+    "privacy_link": "Gizlilik politikası",
+    "show_details": "Detayları göster",
+    "hide_details": "Detayları gizle",
+    "always_on": "Her zaman açık",
+    "cat_necessary_title": "Çalışma için gerekli",
+    "cat_necessary_desc": "Onayın hatırlanması ve temel işlevler (ileride giriş de). Bunlar olmadan site çalışmaz.",
+    "cat_preferences_title": "Siteyi size özelleştirme",
+    "cat_preferences_desc": "Dil, favoriler, dinleme ilerlemesi ve sayfa varyantı — tekrar ayarlamayın diye. Kişisel veri yok.",
+    "cat_analytics_title": "Analiz ve geliştirme",
+    "cat_analytics_desc": "OBSKURA'yı geliştirmek için anonim istatistikler. Şu an hiçbir şey toplamıyoruz — yalnızca onayınızla.",
+    "cat_marketing_title": "Kişiselleştirilmiş reklamlar",
+    "cat_marketing_desc": "Reklam kişiselleştirme. Şu anda hiçbir piksel kullanmıyoruz — onay olmadan başlamazlar.",
+    "accept_all": "Tümünü kabul et",
+    "ok": "Tamam",
+    "reject_all": "Tümünü reddet",
+    "save_prefs": "Tercihleri kaydet",
+    "settings": "Ayarlar"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "İNDİR",

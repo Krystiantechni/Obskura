@@ -309,6 +309,35 @@
     "coming_soon_desc": "La vista completa llegará pronto. Todos los enlaces funcionan, el diseño está listo — textos y componentes llegan de forma iterativa.",
     "coming_soon_cta": "Volver al inicio →"
   },
+  "language_switcher": {
+    "label_with_code": "Idioma: {{code}}, haz clic para cambiar",
+    "search_placeholder": "Buscar idioma…",
+    "clear_search": "Borrar búsqueda",
+    "no_match": "Ningún idioma coincide."
+  },
+  "cookie": {
+    "fab_aria": "Ajustes de cookies",
+    "dialog_aria": "Ajustes de cookies",
+    "title": "Ajustes de cookies",
+    "desc": "Usamos cookies. Las necesarias son imprescindibles para el funcionamiento — el resto solo se activa con tu consentimiento.",
+    "privacy_link": "Política de privacidad",
+    "show_details": "Mostrar detalles",
+    "hide_details": "Ocultar detalles",
+    "always_on": "Siempre activas",
+    "cat_necessary_title": "Necesarias para el funcionamiento",
+    "cat_necessary_desc": "Recordar el consentimiento y funciones básicas (en el futuro también el inicio de sesión). Sin ellas, el sitio no funciona.",
+    "cat_preferences_title": "Personalizar el sitio para ti",
+    "cat_preferences_desc": "Idioma, favoritos, progreso de escucha y variante de página — para que no las vuelvas a configurar. Sin datos personales.",
+    "cat_analytics_title": "Análisis y mejora",
+    "cat_analytics_desc": "Estadísticas anónimas para mejorar OBSKURA. Actualmente no recopilamos ninguna — solo con tu consentimiento.",
+    "cat_marketing_title": "Anuncios personalizados",
+    "cat_marketing_desc": "Personalización publicitaria. Ahora no usamos ningún píxel — no se activarán sin tu consentimiento.",
+    "accept_all": "Aceptar todas",
+    "ok": "Vale",
+    "reject_all": "Rechazar todas",
+    "save_prefs": "Guardar preferencias",
+    "settings": "Ajustes"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "DESCARGA EN",

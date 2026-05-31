@@ -309,6 +309,35 @@
     "coming_soon_desc": "Täysi näkymä tulee pian. Kaikki linkit toimivat, asettelu on valmis — tekstit ja komponentit saapuvat tänne vaiheittain.",
     "coming_soon_cta": "Takaisin etusivulle →"
   },
+  "language_switcher": {
+    "label_with_code": "Kieli: {{code}}, klikkaa vaihtaaksesi",
+    "search_placeholder": "Etsi kieltä…",
+    "clear_search": "Tyhjennä haku",
+    "no_match": "Yksikään kieli ei vastaa."
+  },
+  "cookie": {
+    "fab_aria": "Evästeasetukset",
+    "dialog_aria": "Evästeasetukset",
+    "title": "Evästeasetukset",
+    "desc": "Käytämme evästeitä. Välttämättömät tarvitaan sivuston toimintaan — muut käynnistyvät vain suostumuksellasi.",
+    "privacy_link": "Tietosuojakäytäntö",
+    "show_details": "Näytä tiedot",
+    "hide_details": "Piilota tiedot",
+    "always_on": "Aina päällä",
+    "cat_necessary_title": "Välttämättömät toiminnalle",
+    "cat_necessary_desc": "Suostumuksen muistaminen ja perustoiminnot (myöhemmin myös kirjautuminen). Ilman näitä sivusto ei toimi.",
+    "cat_preferences_title": "Räätälöinti sinulle",
+    "cat_preferences_desc": "Kieli, suosikit, kuuntelun edistyminen ja sivuversio — ettei tarvitse asettaa uudelleen. Ei henkilötietoja.",
+    "cat_analytics_title": "Analyysi ja parannus",
+    "cat_analytics_desc": "Anonyymit käyttötilastot OBSKURAn kehittämiseen. Emme kerää nyt mitään — vain suostumuksellasi.",
+    "cat_marketing_title": "Yksilöllinen mainonta",
+    "cat_marketing_desc": "Mainonnan personointi. Emme käytä pikseleitä nyt — ilman suostumusta ne eivät käynnisty.",
+    "accept_all": "Hyväksy kaikki",
+    "ok": "OK",
+    "reject_all": "Hylkää kaikki",
+    "save_prefs": "Tallenna asetukset",
+    "settings": "Asetukset"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "LATAA ALUSTALLE",

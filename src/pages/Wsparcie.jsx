@@ -267,7 +267,7 @@ export default function Wsparcie() {
                 setOpen(-1);
               }}
               className={`border px-4 py-2 font-mono text-[11px] uppercase tracking-eyebrow transition-all duration-200 ${
-                cat === c.id ? "border-red bg-red text-white" : "border-line text-ink-1 hover:border-red/40"
+                cat === c.id ? "border-red bg-red text-black" : "border-line text-ink-1 hover:border-red/40"
               }`}
             >
               {c.label}
@@ -291,7 +291,7 @@ export default function Wsparcie() {
                   <span className="flex-shrink-0 font-mono text-[11px] tracking-mono text-ink-2">// {String(i + 1).padStart(2, "0")}</span>
                   <span className="flex-1">{f.q}</span>
                   <span
-                    className={`grid h-7 w-7 flex-shrink-0 place-items-center border transition-all duration-200 ${isOpen ? "border-red bg-red text-white" : "border-line text-ink-1"}`}
+                    className={`grid h-7 w-7 flex-shrink-0 place-items-center border transition-all duration-200 ${isOpen ? "border-red bg-red text-black" : "border-line text-ink-1"}`}
                   >
                     <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
                   </span>

@@ -309,6 +309,35 @@
     "coming_soon_desc": "Pilnas vaizdas pasirodys greitai. Visos nuorodos veikia, išdėstymas paruoštas — tekstai ir komponentai atkeliauja palaipsniui.",
     "coming_soon_cta": "Atgal į pradžią →"
   },
+  "language_switcher": {
+    "label_with_code": "Kalba: {{code}}, spustelėkite norėdami pakeisti",
+    "search_placeholder": "Ieškoti kalbos…",
+    "clear_search": "Išvalyti paiešką",
+    "no_match": "Jokia kalba neatitinka."
+  },
+  "cookie": {
+    "fab_aria": "Slapukų nustatymai",
+    "dialog_aria": "Slapukų nustatymai",
+    "title": "Slapukų nustatymai",
+    "desc": "Naudojame slapukus. Būtinieji yra reikalingi svetainės veikimui — kiti paleidžiami tik su jūsų sutikimu.",
+    "privacy_link": "Privatumo politika",
+    "show_details": "Rodyti detales",
+    "hide_details": "Slėpti detales",
+    "always_on": "Visada aktyvūs",
+    "cat_necessary_title": "Būtini veikimui",
+    "cat_necessary_desc": "Sutikimo įsiminimas ir pagrindinės funkcijos (ateityje – prisijungimas). Be jų svetainė neveiks.",
+    "cat_preferences_title": "Svetainės pritaikymas jums",
+    "cat_preferences_desc": "Kalba, mėgstami, klausymo progresas ir puslapio variantas — kad nereikėtų nustatyti iš naujo. Be asmens duomenų.",
+    "cat_analytics_title": "Analizė ir tobulinimas",
+    "cat_analytics_desc": "Anoniminė naudojimo statistika OBSKURA tobulinimui. Šiuo metu nieko nerenkame — tik su jūsų sutikimu.",
+    "cat_marketing_title": "Personalizuotos reklamos",
+    "cat_marketing_desc": "Reklamų personalizavimas. Šiuo metu jokių pikselių nenaudojame — be sutikimo jie nepaleisti.",
+    "accept_all": "Priimti visus",
+    "ok": "Gerai",
+    "reject_all": "Atmesti visus",
+    "save_prefs": "Išsaugoti nustatymus",
+    "settings": "Nustatymai"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "ATSISIŲSTI",

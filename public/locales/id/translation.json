@@ -309,6 +309,35 @@
     "coming_soon_desc": "Tampilan penuh segera hadir. Semua tautan berfungsi, layout siap — teks dan komponen ditambahkan secara bertahap.",
     "coming_soon_cta": "Kembali ke beranda →"
   },
+  "language_switcher": {
+    "label_with_code": "Bahasa: {{code}}, klik untuk mengubah",
+    "search_placeholder": "Cari bahasa…",
+    "clear_search": "Hapus pencarian",
+    "no_match": "Tidak ada bahasa yang cocok."
+  },
+  "cookie": {
+    "fab_aria": "Pengaturan cookie",
+    "dialog_aria": "Pengaturan cookie",
+    "title": "Pengaturan cookie",
+    "desc": "Kami menggunakan cookie. Yang diperlukan wajib agar situs berfungsi — sisanya hanya berjalan dengan persetujuan Anda.",
+    "privacy_link": "Kebijakan privasi",
+    "show_details": "Tampilkan detail",
+    "hide_details": "Sembunyikan detail",
+    "always_on": "Selalu aktif",
+    "cat_necessary_title": "Diperlukan untuk operasi",
+    "cat_necessary_desc": "Mengingat persetujuan dan fungsi dasar (login di masa depan juga). Tanpa ini situs tidak berfungsi.",
+    "cat_preferences_title": "Menyesuaikan situs untuk Anda",
+    "cat_preferences_desc": "Bahasa, favorit, progres mendengar dan varian halaman — agar tidak perlu mengatur ulang. Tanpa data pribadi.",
+    "cat_analytics_title": "Analisis dan peningkatan",
+    "cat_analytics_desc": "Statistik penggunaan anonim untuk meningkatkan OBSKURA. Saat ini kami tidak mengumpulkan apa pun — hanya dengan persetujuan Anda.",
+    "cat_marketing_title": "Iklan yang dipersonalisasi",
+    "cat_marketing_desc": "Personalisasi iklan. Saat ini kami tidak menggunakan pixel — tanpa persetujuan tidak akan berjalan.",
+    "accept_all": "Terima semua",
+    "ok": "OK",
+    "reject_all": "Tolak semua",
+    "save_prefs": "Simpan preferensi",
+    "settings": "Pengaturan"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "UNDUH DI",

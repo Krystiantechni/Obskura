@@ -59,7 +59,7 @@ export default class ErrorBoundary extends Component {
           <button
             type="button"
             onClick={this.hardReload}
-            className="inline-flex items-center justify-center gap-2 bg-red px-7 py-3.5 font-sans text-[13px] font-bold uppercase tracking-[0.2em] text-white transition-shadow hover:shadow-[0_0_30px_rgba(255,42,42,0.45)]"
+            className="inline-flex items-center justify-center gap-2 bg-red px-7 py-3.5 font-sans text-[13px] font-bold uppercase tracking-[0.2em] text-black transition-shadow hover:shadow-[0_0_30px_rgba(255,42,42,0.45)]"
           >
             Odśwież stronę
           </button>

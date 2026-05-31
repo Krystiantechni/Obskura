@@ -309,6 +309,35 @@
     "coming_soon_desc": "Celoten pogled bo kmalu na voljo. Vse povezave delujejo, postavitev je pripravljena — besedila in komponente prihajajo postopoma.",
     "coming_soon_cta": "Nazaj na domačo stran →"
   },
+  "language_switcher": {
+    "label_with_code": "Jezik: {{code}}, kliknite za spremembo",
+    "search_placeholder": "Iskanje jezika…",
+    "clear_search": "Počisti iskanje",
+    "no_match": "Noben jezik ne ustreza."
+  },
+  "cookie": {
+    "fab_aria": "Nastavitve piškotkov",
+    "dialog_aria": "Nastavitve piškotkov",
+    "title": "Nastavitve piškotkov",
+    "desc": "Uporabljamo piškotke. Nujni so potrebni za delovanje spletišča — ostali se zaženejo le z vašim soglasjem.",
+    "privacy_link": "Politika zasebnosti",
+    "show_details": "Prikaži podrobnosti",
+    "hide_details": "Skrij podrobnosti",
+    "always_on": "Vedno aktivni",
+    "cat_necessary_title": "Nujni za delovanje",
+    "cat_necessary_desc": "Pomnjenje soglasja in osnovne funkcije (kasneje tudi prijava). Brez njih spletišče ne deluje.",
+    "cat_preferences_title": "Prilagoditev strani",
+    "cat_preferences_desc": "Jezik, priljubljeno, napredek poslušanja in različica strani — da ne nastavljate znova. Brez osebnih podatkov.",
+    "cat_analytics_title": "Analiza in izboljšave",
+    "cat_analytics_desc": "Anonimna statistika za izboljšanje OBSKURE. Trenutno ne zbiramo ničesar — le z vašim soglasjem.",
+    "cat_marketing_title": "Personalizirano oglaševanje",
+    "cat_marketing_desc": "Personalizacija oglasov. Trenutno ne uporabljamo pikslov — brez soglasja se ne zaženejo.",
+    "accept_all": "Sprejmi vse",
+    "ok": "V redu",
+    "reject_all": "Zavrni vse",
+    "save_prefs": "Shrani nastavitve",
+    "settings": "Nastavitve"
+  },
   "placeholder": "Project ready — paste your design",
   "aplikacja": {
     "dl_label": "PRENESI ZA",
