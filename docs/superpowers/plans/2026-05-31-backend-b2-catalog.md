@@ -277,6 +277,7 @@ def test_episode_kind_defaults_fiction():
 - [ ] **Step 3: Episode model** — dopisz do `catalog/models.py`:
 ```python
 from core.models import SoftDeleteModel  # dodaj do importów
+# (pl_slugify jest już importowane w models.py z Task 1: `from core.text import pl_slugify`)
 
 
 class Episode(TimeStampedModel, SoftDeleteModel):
@@ -320,7 +321,7 @@ class Episode(TimeStampedModel, SoftDeleteModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = pl_slugify(self.title)
         super().save(*args, **kwargs)
 
     def __str__(self):
