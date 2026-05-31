@@ -154,23 +154,23 @@ export default function Press() {
     <>
       {/* Hero */}
       <header className="border-b border-line px-5 pb-10 pt-[130px] lg:px-12">
-        <div className="mx-auto grid max-w-[1400px] items-end gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14">
+        <div className="mx-auto grid max-w-[1400px] items-end gap-10 sm:grid-cols-[1.3fr_1fr] sm:gap-12 lg:gap-14">
           <div>
             <Eyebrow>{t("prasa.hero_eyebrow", "// PRASA · MEDIA · WSPÓŁPRACA")}</Eyebrow>
             <h1 className="my-4 font-serif text-[clamp(48px,6vw,88px)] font-medium leading-[0.95] tracking-[-0.02em]">
               {t("prasa.hero_title_p1", "Wszystko, czego potrzebujesz,")} <em className="italic text-ink-1">{t("prasa.hero_title_em", "żeby o nas napisać")}</em>.
             </h1>
-            <p className="max-w-[560px] text-[16px] font-light leading-relaxed text-ink-1">
+            <p className="text-[15px] font-light leading-relaxed text-ink-1 sm:max-w-[560px] sm:text-[16px]">
               {t("prasa.hero_lead", "Logotypy, fakty, kontakty, gotowe cytaty. Jeśli czegoś tu nie ma — napisz, dostarczymy w 24h. Wszystkie materiały dostępne bez licencji do publikacji prasowych i krytyki.")}
             </p>
           </div>
-          <div className="border border-line bg-bg-1/60 p-7">
+          <div className="border border-line bg-bg-1/60 p-5 sm:p-7">
             <h4 className="mb-4 font-mono text-[10px] uppercase tracking-eyebrow text-red">// KONTAKT PRASOWY</h4>
             {quickRows.map((r, i) => (
-              <div key={r.l} className={`flex items-center justify-between py-3 ${i === 0 ? "border-t border-line" : "border-t border-line/50"}`}>
+              <div key={r.l} className={`flex flex-wrap items-center justify-between gap-x-4 py-3 ${i === 0 ? "border-t border-line" : "border-t border-line/50"}`}>
                 <span className="font-mono text-[10px] uppercase tracking-eyebrow text-ink-2">{r.l}</span>
-                <span className="font-serif text-[18px] italic text-ink-0">
-                  {r.link ? <a href={`mailto:${r.v}`} className="inline-flex min-h-[44px] items-center border-b border-red text-ink-0">{r.v}</a> : r.v}
+                <span className="font-serif text-[16px] italic text-ink-0 sm:text-[18px]">
+                  {r.link ? <a href={`mailto:${r.v}`} className="inline-flex min-h-[44px] items-center border-b border-red text-ink-0 break-all">{r.v}</a> : r.v}
                 </span>
               </div>
             ))}
@@ -179,7 +179,7 @@ export default function Press() {
       </header>
 
       {/* About */}
-      <section className="mx-auto mt-20 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-14 max-w-[1400px] px-5 sm:mt-20 lg:px-12">
         <Eyebrow>{t("prasa.about_eyebrow", "O FIRMIE · BOILERPLATE")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("prasa.about_title_p1", "Krótko —")} <em className="italic text-ink-2">{t("prasa.about_title_em", "kim jesteśmy")}</em>.
@@ -197,8 +197,8 @@ export default function Press() {
             </p>
           </div>
           <div>
-            <blockquote className="my-8 border-l-2 border-red px-6 py-5 font-serif text-[28px] italic leading-tight text-ink-0">
-              <span className="text-5xl leading-[0] text-red">&ldquo;</span>{t("prasa.about_quote", "Nie nagrywamy horroru. Nagrywamy ciszę, w której można usłyszeć, że ktoś tam jest.")}
+            <blockquote className="my-6 border-l-2 border-red px-5 py-4 font-serif text-[22px] italic leading-tight text-ink-0 sm:my-8 sm:px-6 sm:py-5 sm:text-[28px]">
+              <span className="text-4xl leading-[0] text-red sm:text-5xl">&ldquo;</span>{t("prasa.about_quote", "Nie nagrywamy horroru. Nagrywamy ciszę, w której można usłyszeć, że ktoś tam jest.")}
             </blockquote>
             <p className="mb-4 text-[15px] font-light leading-relaxed text-ink-1">
               {t("prasa.about_p4a", "Co nas wyróżnia:")} <strong className="font-medium text-ink-0">{t("prasa.about_p4b", "brak kompromisu na dźwięku")}</strong>. {t("prasa.about_p4c", "Każdy odcinek mixowany do binauralnego 3D (8 ścieżek, czasem 16), nagrywany w jednym ujęciu z aktorami w fizycznej przestrzeni, nie w boxie lektorskim.")}
@@ -211,42 +211,42 @@ export default function Press() {
       </section>
 
       {/* Stats */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow accent="blue">{t("prasa.stats_eyebrow", "DANE · STAN NA MAJ 2026")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("prasa.stats_title_p1", "Liczby")} <em className="italic text-ink-2">{t("prasa.stats_title_em", "bez ozdób")}</em>.
         </h2>
-        <div className="mt-8 grid grid-cols-2 gap-3.5 sm:gap-6 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
           {stats.map((s) => (
-            <div key={s.lab} className="border border-line bg-bg-1/50 p-5 sm:p-7">
-              <div className="font-serif text-[36px] font-medium leading-none sm:text-[48px]">
+            <div key={s.lab} className="border border-line bg-bg-1/50 p-4 sm:p-7">
+              <div className="font-serif text-[32px] font-medium leading-none sm:text-[48px]">
                 {s.em ? <em className="not-italic text-red">{s.n}</em> : s.n}
               </div>
-              <div className="my-2 mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2 sm:mt-2">{s.lab}</div>
-              <p className="text-[12px] font-light leading-snug text-ink-1">{s.p}</p>
+              <div className="mb-2.5 mt-1.5 font-mono text-[9px] uppercase tracking-mono text-ink-2 sm:my-2 sm:text-[10px]">{s.lab}</div>
+              <p className="text-[11px] font-light leading-snug text-ink-1 sm:text-[12px]">{s.p}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Downloads */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow>{t("prasa.dl_eyebrow", "PLIKI DO POBRANIA")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("prasa.dl_title_p1", "Zestaw")} <em className="italic text-ink-2">{t("prasa.dl_title_em", "prasowy")}</em>.
         </h2>
-        <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {downloads.map((d, i) => (
             <a
               key={i}
               href="#"
-              className="group relative block border border-line bg-bg-1/50 p-7 transition-all duration-200 hover:border-red/40 hover:bg-red/[0.04]"
+              className="group relative block border border-line bg-bg-1/50 p-5 transition-all duration-200 hover:border-red/40 hover:bg-red/[0.04] sm:p-7"
             >
-              <span className="absolute right-7 top-7 text-ink-3 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-red">
+              <span className="absolute right-5 top-5 text-ink-3 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-red sm:right-7 sm:top-7">
                 <Download size={14} />
               </span>
-              <div className="mb-5 grid h-10 w-10 place-items-center border border-red text-red">{d.icon}</div>
-              <h4 className="mb-2 font-serif text-[22px] font-medium">
+              <div className="mb-4 grid h-10 w-10 place-items-center border border-red text-red sm:mb-5">{d.icon}</div>
+              <h4 className="mb-2 font-serif text-[20px] font-medium sm:text-[22px]">
                 {d.h1} <em className="italic text-ink-1">{d.em}</em>
               </h4>
               <p className="mb-3 text-[13px] font-light leading-snug text-ink-1">{d.p}</p>
@@ -257,20 +257,20 @@ export default function Press() {
       </section>
 
       {/* Brand colors */}
-      <section className="mx-auto mt-16 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-12 max-w-[1400px] px-5 sm:mt-16 lg:px-12">
         <Eyebrow accent="blue">{t("prasa.palette_eyebrow", "PALETA · 5 KOLORÓW")}</Eyebrow>
         <div className="mt-5 grid grid-cols-3 gap-2 border border-line bg-black/30 p-2 sm:gap-3 sm:p-3 lg:grid-cols-5">
           {swatches.map((s) => (
-            <div key={s.name} className="relative min-h-[120px] px-4 py-6" style={{ background: s.bg }}>
-              <span className="font-mono text-[10px] uppercase tracking-mono" style={{ color: s.text }}>{s.name}</span>
-              <span className="absolute bottom-4 left-4 font-mono text-[11px] tracking-[0.1em]" style={{ color: s.hexColor }}>{s.hex}</span>
+            <div key={s.name} className="relative min-h-[100px] px-3 py-5 sm:min-h-[120px] sm:px-4 sm:py-6" style={{ background: s.bg }}>
+              <span className="font-mono text-[9px] uppercase tracking-mono sm:text-[10px]" style={{ color: s.text }}>{s.name}</span>
+              <span className="absolute bottom-3 left-3 font-mono text-[10px] tracking-[0.1em] sm:bottom-4 sm:left-4 sm:text-[11px]" style={{ color: s.hexColor }}>{s.hex}</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* Press releases */}
-      <section className="mx-auto mt-24 max-w-[1100px] px-5 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1100px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow>{t("prasa.releases_eyebrow", "// KOMUNIKATY PRASOWE · 2025–2026")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("prasa.releases_title_p1", "Najnowsze")} <em className="italic text-ink-2">{t("prasa.releases_title_em", "wiadomości")}</em>.
@@ -279,14 +279,14 @@ export default function Press() {
           {releases.map((r, i) => (
             <div
               key={i}
-              className="grid grid-cols-1 items-start gap-3 border-t border-line py-7 last:border-b sm:grid-cols-[120px_1fr_auto] sm:gap-8"
+              className="grid grid-cols-1 items-start gap-2 border-t border-line py-5 last:border-b sm:grid-cols-[120px_1fr_auto] sm:gap-8 sm:py-7"
             >
               <div className="font-mono text-[11px] uppercase tracking-mono text-ink-2">{r.date}</div>
               <div>
-                <h3 className="mb-2 font-serif text-[26px] font-medium leading-tight">
+                <h3 className="mb-2 font-serif text-[22px] font-medium leading-tight sm:text-[26px]">
                   {r.h1} <em className="italic text-ink-1">{r.em}</em> {r.h2}
                 </h3>
-                <p className="text-[14px] font-light leading-snug text-ink-1">{r.p}</p>
+                <p className="text-[13px] font-light leading-snug text-ink-1 sm:text-[14px]">{r.p}</p>
               </div>
               <a href="#" className="inline-flex min-h-[44px] items-center whitespace-nowrap font-mono text-[10px] uppercase tracking-mono text-red transition-colors hover:text-white">
                 {t("prasa.releases_dl", "POBIERZ PDF →")}
@@ -297,16 +297,16 @@ export default function Press() {
       </section>
 
       {/* Coverage */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 pb-24 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 pb-16 sm:mt-24 sm:pb-24 lg:px-12">
         <Eyebrow accent="blue">{t("prasa.coverage_eyebrow", "// MÓWIĄ O NAS")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("prasa.coverage_title_p1", "Krytyka")} <em className="italic text-ink-2">{t("prasa.coverage_title_em", "i recenzje")}</em>.
         </h2>
-        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {coverage.map((c, i) => (
-            <div key={i} className="border border-line bg-bg-1/40 p-7 transition-colors hover:border-red/40">
+            <div key={i} className="border border-line bg-bg-1/40 p-5 transition-colors hover:border-red/40 sm:p-7">
               <div className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-red">{c.src}</div>
-              <div className="mb-4 font-serif text-[20px] italic leading-snug text-ink-0">
+              <div className="mb-4 font-serif text-[18px] italic leading-snug text-ink-0 sm:text-[20px]">
                 <span className="text-red">&ldquo;</span>{c.quote}
               </div>
               <div className="font-mono text-[10px] uppercase tracking-eyebrow text-ink-2">{c.author}</div>
