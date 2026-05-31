@@ -145,7 +145,7 @@ export default function Careers() {
           <p className="max-w-[620px] text-[17px] font-light leading-relaxed text-ink-1">
             {t("kariera.hero_lead", "Nie szukamy 50 osób. Szukamy 3, które naprawdę pasują. Nie mamy darmowych masaży i piłkarzyków — mamy własne studio nagraniowe, świetny sprzęt, 25 dni urlopu i ludzi, którzy nie udają, że cię lubią, jeśli cię nie lubią.")}
           </p>
-          <div className="mt-8 flex flex-wrap gap-x-9 gap-y-3 border-t border-line pt-6">
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-6 lg:gap-x-9">
             <div className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-eyebrow text-ink-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#00ff88] shadow-[0_0_8px_#00ff88] animate-obskura-pulse-fast" />
               <span>{t("kariera.hero_q1", "4 OTWARTE STANOWISKA")}</span>
@@ -171,7 +171,7 @@ export default function Careers() {
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {values.map((v) => (
-            <div key={v.num} className="relative border border-line bg-bg-1/50 p-9 transition-colors hover:border-red/40">
+            <div key={v.num} className="relative border border-line bg-bg-1/50 p-5 transition-colors hover:border-red/40 sm:p-9">
               <div className="mb-4 font-mono text-[10px] tracking-eyebrow text-red">{v.num}</div>
               <h3 className="mb-3 font-serif text-[30px] font-medium leading-tight">
                 {v.h1} <em className="italic text-ink-1">{v.em}</em>.
@@ -200,27 +200,33 @@ export default function Careers() {
         {roles.map((r, i) => (
           <div
             key={i}
-            className="mb-2 grid grid-cols-1 items-center gap-4 border border-line bg-bg-1/40 p-5 transition-all duration-200 hover:-translate-y-px hover:border-red/40 hover:bg-bg-1/70 lg:grid-cols-[1fr_1fr_180px_140px_140px_auto] lg:gap-6 lg:px-6"
+            className="mb-2 border border-line bg-bg-1/40 p-5 transition-all duration-200 hover:-translate-y-px hover:border-red/40 hover:bg-bg-1/70 lg:grid lg:grid-cols-[1fr_1fr_180px_140px_140px_auto] lg:items-center lg:gap-6 lg:px-6"
           >
-            <div>
-              <div className="font-serif text-[24px] font-medium leading-tight">
+            {/* Title + description — stacked on mobile, separate cols on desktop */}
+            <div className="mb-3 lg:mb-0">
+              <div className="font-serif text-[22px] font-medium leading-tight sm:text-[24px]">
                 {r.ttl} <em className="italic text-ink-1">{r.em}</em>
               </div>
             </div>
-            <div className="text-[13px] leading-snug text-ink-1">{r.sub}</div>
-            {r.meta.map((m, j) => (
-              <div key={j} className={`font-mono text-[10px] uppercase tracking-eyebrow ${m.urgent ? "text-red" : "text-ink-2"}`}>
-                {m.l}
-                <strong className={`mt-1 block text-[12px] tracking-ui ${m.urgent ? "text-red" : "text-ink-0"}`}>{m.v}</strong>
-              </div>
-            ))}
-            <HorrorButton to="#" className="!min-h-[44px] !px-[18px] !py-3">
+            <div className="mb-3 text-[13px] leading-snug text-ink-1 lg:mb-0">{r.sub}</div>
+
+            {/* Meta grid: 2-col on mobile/tablet, each item its own col on desktop */}
+            <div className="mb-4 grid grid-cols-2 gap-x-4 gap-y-3 lg:contents">
+              {r.meta.map((m, j) => (
+                <div key={j} className={`font-mono text-[10px] uppercase tracking-eyebrow ${m.urgent ? "text-red" : "text-ink-2"}`}>
+                  {m.l}
+                  <strong className={`mt-1 block text-[12px] tracking-ui ${m.urgent ? "text-red" : "text-ink-0"}`}>{m.v}</strong>
+                </div>
+              ))}
+            </div>
+
+            <HorrorButton to="#" className="w-full !min-h-[44px] !px-[18px] !py-3 sm:w-auto lg:w-auto">
               {t("kariera.roles_apply", "Aplikuj")}
             </HorrorButton>
           </div>
         ))}
 
-        <div className="mt-10 border border-dashed border-line bg-bg-1/30 p-9 text-center">
+        <div className="mt-10 border border-dashed border-line bg-bg-1/30 p-6 text-center sm:p-9">
           <h4 className="mb-2.5 font-serif text-[26px] italic">
             {t("kariera.nofit_h1", "Nie ma")} <em className="text-ink-1">{t("kariera.nofit_em", "twojej roli")}</em>?
           </h4>
@@ -240,7 +246,7 @@ export default function Careers() {
         <p className="mt-4 max-w-[700px] text-[15px] font-light leading-relaxed text-ink-1">
           {t("kariera.process_lead", "Nie używamy ATS, nie sortujemy CV-tek po słowach kluczowych. Czytamy każde zgłoszenie. Odpowiadamy każdemu — nawet jeśli to „nie tym razem”.")}
         </p>
-        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s) => (
             <div key={s.num} className="border-t border-line pt-6">
               <div className="mb-3 font-mono text-[11px] tracking-eyebrow text-red">{s.num}</div>
@@ -260,7 +266,7 @@ export default function Careers() {
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("kariera.perks_title_p1", "Drobiazgi,")} <em className="italic text-ink-2">{t("kariera.perks_title_em", "które się liczą")}</em>.
         </h2>
-        <div className="mt-8 grid grid-cols-1 gap-3.5 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
           {perks.map((p, i) => (
             <div key={i} className="flex items-start gap-3.5 border border-line bg-bg-1/40 p-5 transition-colors hover:border-red/40">
               <div className="grid h-8 w-8 flex-shrink-0 place-items-center border border-red text-red">
