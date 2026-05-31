@@ -99,8 +99,8 @@ export default function Events() {
   const past = [
     {
       date: t("spotkania.past1_date", "04.05.2026 · ONLINE · 217 OSÓB"),
-      h_p1: t("spotkania.past1_h_p1", "AMA z Piotrem"), h_em: t("spotkania.past1_h_em", "Górskim · dźwięk"),
-      p: t("spotkania.past1_p", "Inżynier dźwięku Obskury o tym, dlaczego mixujemy w 7.1, kiedy używamy hydrofonów, i jak nagrać oddech bez oddychania."),
+      h_p1: t("spotkania.past1_h_p1", "AMA z Piotrem"), h_em: t("spotkania.past1_h_em", "Górskim · džwięk"),
+      p: t("spotkania.past1_p", "Inżynier džwięku Obskury o tym, dlaczego miksujemy w 7.1, kiedy używamy hydrofonów, i jak nagrać oddech bez oddychania."),
       stats: ["2h 14min", "4.8 ★", t("spotkania.past1_stat3", "NAGRANIE DLA KLUBU")],
       link: t("spotkania.past_listen", "Posłuchaj nagrania →"),
     },
@@ -123,34 +123,34 @@ export default function Events() {
   return (
     <>
       {/* Hero */}
-      <header className="relative overflow-hidden border-b border-line px-5 pb-10 pt-[130px] lg:px-12">
+      <header className="relative overflow-hidden border-b border-line px-5 pb-8 pt-[100px] sm:pb-10 sm:pt-[130px] lg:px-12">
         <div className="mx-auto max-w-[1400px]">
           <Eyebrow>{t("spotkania.eyebrow", "// SPOTKANIA · LIVE · ONLINE · ARCHIWUM")}</Eyebrow>
-          <h1 className="my-5 font-serif text-[clamp(48px,7vw,104px)] font-medium leading-[0.95] tracking-[-0.02em]">
+          <h1 className="my-4 font-serif text-[clamp(40px,7vw,104px)] font-medium leading-[0.95] tracking-[-0.02em] sm:my-5">
             {t("spotkania.title_p1", "Słuchać")} <em className="italic text-ink-1">{t("spotkania.title_em", "razem")}</em>.
             <br />
             {t("spotkania.title_p2", "Patrzeć w oczy.")}
           </h1>
-          <p className="max-w-[620px] text-[17px] font-light leading-relaxed text-ink-1">
+          <p className="max-w-[620px] text-[15px] font-light leading-relaxed text-ink-1 sm:text-[17px]">
             {t("spotkania.lead", "Raz w miesiącu organizujemy spotkanie — z narratorem, reżyserką, scenarzystą. Czasem w studio, czasem w kinie, czasem online o trzeciej w nocy. Bez wykładów, tylko rozmowa o tym, dlaczego coś się komuś przyśniło.")}
           </p>
         </div>
       </header>
 
       {/* Featured event */}
-      <section className="mx-auto mt-16 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-10 max-w-[1400px] px-5 sm:mt-16 lg:px-12">
         <Eyebrow accent="blue">{t("spotkania.feat_eyebrow", "NAJBLIŻSZE · 02 CZERWCA 2026")}</Eyebrow>
-        <div className="mt-8 grid items-stretch overflow-hidden border border-line bg-bg-1/60 lg:grid-cols-[380px_1fr]">
-          <div className="relative min-h-[220px] bg-cover bg-center lg:min-h-[360px]" style={{ backgroundImage: "url('/images/img-tunnel.webp')" }}>
+        <div className="mt-6 grid items-stretch overflow-hidden border border-line bg-bg-1/60 sm:mt-8 lg:grid-cols-[380px_1fr]">
+          <div className="relative min-h-[200px] bg-cover bg-center sm:min-h-[260px] lg:min-h-[360px]" style={{ backgroundImage: "url('/images/img-tunnel.webp')" }}>
             <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(5,6,8,0.3), rgba(5,6,8,0.7))" }} />
-            <div className="absolute left-5 top-5 z-[2] flex items-center gap-2 bg-red px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow text-white shadow-neon-red">
+            <div className="absolute left-4 top-4 z-[2] flex items-center gap-2 bg-red px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow text-white shadow-neon-red sm:left-5 sm:top-5">
               <span className="h-1.5 w-1.5 animate-obskura-pulse-fast rounded-full bg-white" />
               {t("spotkania.feat_live", "ZAPISY AKTYWNE")}
             </div>
-            <div className="absolute inset-x-6 bottom-6 z-[2] font-serif text-ink-0">
+            <div className="absolute inset-x-4 bottom-4 z-[2] font-serif text-ink-0 sm:inset-x-6 sm:bottom-6">
               <div className="mb-1 font-mono text-[10px] uppercase tracking-eyebrow text-red">{t("spotkania.feat_day", "WTOREK · 23:00 CET")}</div>
-              <div className="text-[48px] italic leading-none">02.06</div>
-              <div className="mt-3 flex gap-3 font-mono text-[11px] uppercase tracking-mono text-ink-1">
+              <div className="text-[40px] italic leading-none sm:text-[48px]">02.06</div>
+              <div className="mt-2 flex gap-3 font-mono text-[11px] uppercase tracking-mono text-ink-1 sm:mt-3">
                 <span><strong className="text-ink-0">{cd.days}</strong>d</span>
                 <span><strong className="text-ink-0">{String(cd.hours).padStart(2, "0")}</strong>h</span>
                 <span><strong className="text-ink-0">{String(cd.mins).padStart(2, "0")}</strong>m</span>
@@ -158,25 +158,25 @@ export default function Events() {
               </div>
             </div>
           </div>
-          <div className="p-6 lg:p-10">
-            <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-red">{t("spotkania.feat_kicker", "AMA · KATARZYNA WIECZOREK · NARRATORKA SEZONU 03")}</div>
-            <h2 className="mb-4 font-serif text-[clamp(28px,4vw,40px)] font-medium leading-tight tracking-[-0.01em]">
+          <div className="p-5 sm:p-6 lg:p-10">
+            <div className="mb-3 font-mono text-[10px] uppercase tracking-eyebrow text-red sm:mb-3.5">{t("spotkania.feat_kicker", "AMA · KATARZYNA WIECZOREK · NARRATORKA SEZONU 03")}</div>
+            <h2 className="mb-3 font-serif text-[clamp(24px,4vw,40px)] font-medium leading-tight tracking-[-0.01em] sm:mb-4">
               {t("spotkania.feat_h_p1", "„Skąd")} <em className="italic text-ink-1">{t("spotkania.feat_h_em", "biorę")}</em> {t("spotkania.feat_h_p2", "ten głos.”")}
             </h2>
             <p className="mb-4 text-sm font-light leading-relaxed text-ink-1">
               {t("spotkania.feat_p", "Otwarte spotkanie z Katarzyną Wieczorek po finale trzeciego sezonu. 90 minut rozmowy — o tym, jak przygotowuje się do sceny, dlaczego pierwszego dnia w studio milczy, co robi gdy nagranie nie wychodzi. Twoje pytania zbieramy do 30 maja w wątku na forum.")}
             </p>
-            <div className="my-6 grid grid-cols-2 gap-4 border-y border-line py-4">
+            <div className="my-5 grid grid-cols-2 gap-3 border-y border-line py-4 sm:my-6 sm:gap-4">
               {featDetails.map((d) => (
                 <div key={d.d} className="font-mono text-[10px] uppercase tracking-[0.15em] text-ink-2">
-                  {d.d}<strong className="mt-1 block text-[13px] tracking-[0.1em] text-ink-0">{d.v}</strong>
+                  {d.d}<strong className="mt-1 block text-[12px] tracking-[0.1em] text-ink-0 sm:text-[13px]">{d.v}</strong>
                 </div>
               ))}
             </div>
-            <div className="mt-6 flex flex-wrap items-center gap-3.5">
+            <div className="mt-5 flex flex-wrap items-center gap-3 sm:mt-6 sm:gap-3.5">
               <HorrorButton to="/register">{t("spotkania.feat_cta1", "Zapisz się (bezpłatne)")}</HorrorButton>
               <HorrorButton to="/forum" variant="ghost">{t("spotkania.feat_cta2", "Wątek z pytaniami")}</HorrorButton>
-              <div className="font-mono text-[11px] uppercase tracking-[0.15em] text-ink-2">
+              <div className="w-full font-mono text-[11px] uppercase tracking-[0.15em] text-ink-2 sm:w-auto">
                 {t("spotkania.feat_seats_p1", "POZOSTAŁO")} <strong className="text-red">134 / 500</strong> {t("spotkania.feat_seats_p2", "MIEJSC")}
               </div>
             </div>
@@ -185,70 +185,81 @@ export default function Events() {
       </section>
 
       {/* Upcoming list */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
-          <div>
-            <Eyebrow>{t("spotkania.up_eyebrow", "NADCHODZĄCE · CZERWIEC–WRZESIEŃ 2026")}</Eyebrow>
-            <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
-              {t("spotkania.up_title_p1", "8")} <em className="italic text-ink-1">{t("spotkania.up_title_em", "spotkań")}</em> {t("spotkania.up_title_p2", "w kalendarzu.")}
-            </h2>
-          </div>
-          <div className="flex flex-wrap gap-6">
-            {upTabs.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`inline-flex min-h-[44px] items-center border-b py-1.5 font-mono text-[11px] uppercase tracking-mono transition-colors ${activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0"}`}
-              >
-                {tab.label}
-              </button>
-            ))}
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
+        <div className="mb-6 border-b border-line pb-5 sm:mb-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <Eyebrow>{t("spotkania.up_eyebrow", "NADCHODZĄCE · CZERWIEC–WRZESIEŃ 2026")}</Eyebrow>
+              <h2 className="mt-3 font-serif text-[clamp(28px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em] sm:mt-4">
+                {t("spotkania.up_title_p1", "8")} <em className="italic text-ink-1">{t("spotkania.up_title_em", "spotkań")}</em> {t("spotkania.up_title_p2", "w kalendarzu.")}
+              </h2>
+            </div>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 sm:gap-6">
+              {upTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  className={"inline-flex min-h-[44px] items-center border-b py-1.5 font-mono text-[11px] uppercase tracking-mono transition-colors " + (activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0")}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="flex flex-col gap-2">
           {filtered.map((e) => (
-            <div key={`${e.day}-${e.month}-${e.title_em}`} className="grid grid-cols-1 items-center gap-3 border border-line bg-bg-1/40 px-5 py-5 transition-colors hover:border-red/30 hover:bg-bg-1/70 lg:grid-cols-[100px_1fr_200px_180px_auto] lg:gap-6 lg:px-6">
-              <div className="flex items-center gap-3 lg:block lg:border-r lg:border-line lg:pr-4 lg:text-center">
-                <div className="font-serif text-4xl leading-none">{e.day}</div>
-                <div className="mt-0.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{e.month}</div>
+            <div key={e.day + "-" + e.month + "-" + e.title_em} className="grid grid-cols-1 gap-0 border border-line bg-bg-1/40 transition-colors hover:border-red/30 hover:bg-bg-1/70 lg:grid-cols-[100px_1fr_200px_180px_auto] lg:items-center lg:gap-6 lg:px-6 lg:py-5">
+              {/* Date strip — mobile: flex row, desktop: centered column */}
+              <div className="flex items-center gap-3 border-b border-line/60 px-4 py-3 lg:block lg:border-b-0 lg:border-r lg:border-line lg:px-0 lg:py-0 lg:pr-4 lg:text-center">
+                <div className="font-serif text-[32px] leading-none lg:text-4xl">{e.day}</div>
+                <div className="font-mono text-[10px] uppercase tracking-mono text-ink-2 lg:mt-0.5">{e.month}</div>
+                <span className={"ml-auto inline-block px-2 py-0.5 font-mono text-[9px] tracking-eyebrow lg:hidden " + (e.tagAccent === "blue" ? "bg-blue/10 text-blue" : "bg-red/10 text-red")}>{e.tag}</span>
               </div>
-              <div>
-                <div className="mb-1 font-serif text-[22px] leading-tight">
-                  <span className={`mr-2.5 inline-block px-2 py-0.5 align-middle font-mono text-[9px] tracking-eyebrow ${e.tagAccent === "blue" ? "bg-blue/10 text-blue" : "bg-red/10 text-red"}`}>{e.tag}</span>
+              {/* Title + subtitle */}
+              <div className="px-4 pb-2 pt-3 lg:px-0 lg:py-0">
+                <div className="mb-1 font-serif text-[19px] leading-tight sm:text-[22px]">
+                  <span className={"mr-2.5 hidden align-middle font-mono text-[9px] tracking-eyebrow lg:inline-block lg:px-2 lg:py-0.5 " + (e.tagAccent === "blue" ? "bg-blue/10 text-blue" : "bg-red/10 text-red")}>{e.tag}</span>
                   {e.title_p1} <em className="italic text-ink-1">{e.title_em}</em>
                 </div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-2"><span className="text-ink-1">{e.sub_strong}</span>{e.sub_rest}</div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2 sm:text-[11px]"><span className="text-ink-1">{e.sub_strong}</span>{e.sub_rest}</div>
               </div>
-              <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-2">
-                {e.metaLabel}<div className="font-serif text-sm italic normal-case tracking-normal text-ink-0">{e.metaVal}</div>
+              {/* Meta + seats: mobile side-by-side row, desktop separate columns */}
+              <div className="flex items-start justify-between gap-3 border-t border-line/60 px-4 py-3 lg:contents">
+                <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2 lg:px-0">
+                  {e.metaLabel}<div className="font-serif text-sm italic normal-case tracking-normal text-ink-0">{e.metaVal}</div>
+                </div>
+                <div className="text-right font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2 lg:text-right">
+                  <span className={"block text-sm " + (e.seatsFull ? "text-ink-3" : "text-ink-0")}>{e.seats}</span>{e.seatsLabel}
+                </div>
               </div>
-              <div className={`text-left font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2 lg:text-right ${e.seatsFull ? "" : ""}`}>
-                <span className={`block text-sm ${e.seatsFull ? "text-ink-3" : "text-ink-0"}`}>{e.seats}</span>{e.seatsLabel}
+              {/* CTA */}
+              <div className="px-4 pb-4 pt-0 lg:px-0 lg:py-0">
+                {e.ctaVariant === "disabled" ? (
+                  <span className="inline-flex min-h-[44px] w-full cursor-not-allowed items-center justify-center border border-line px-5 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.18em] text-ink-3 lg:w-auto">{e.cta}</span>
+                ) : (
+                  <HorrorButton to={e.to} variant={e.ctaVariant} className="w-full lg:w-auto lg:!px-5 lg:!py-3">{e.cta}</HorrorButton>
+                )}
               </div>
-              {e.ctaVariant === "disabled" ? (
-                <span className="inline-flex min-h-[44px] cursor-not-allowed items-center justify-center border border-line px-5 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.18em] text-ink-3">{e.cta}</span>
-              ) : (
-                <HorrorButton to={e.to} variant={e.ctaVariant} className="!px-5 !py-3">{e.cta}</HorrorButton>
-              )}
             </div>
           ))}
         </div>
       </section>
 
       {/* Past events */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow accent="blue">{t("spotkania.past_eyebrow", "// ARCHIWUM · ZAGRANE")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-4 font-serif text-[clamp(28px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("spotkania.past_title_p1", "Co")} <em className="italic text-ink-1">{t("spotkania.past_title_em", "przeszło")}</em>.
         </h2>
-        <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:gap-5 lg:grid-cols-3">
           {past.map((p, i) => (
-            <article key={i} className="border border-line bg-bg-1/40 p-6 transition-colors hover:border-red/30">
+            <article key={i} className="border border-line bg-bg-1/40 p-5 transition-colors hover:border-red/30 sm:p-6">
               <div className="mb-3 font-mono text-[10px] uppercase tracking-mono text-ink-2">{p.date}</div>
-              <h4 className="mb-2 font-serif text-[22px] font-medium leading-tight">{p.h_p1} <em className="italic text-ink-1">{p.h_em}</em></h4>
+              <h4 className="mb-2 font-serif text-[20px] font-medium leading-tight sm:text-[22px]">{p.h_p1} <em className="italic text-ink-1">{p.h_em}</em></h4>
               <p className="mb-3.5 text-[13px] font-light leading-snug text-ink-1">{p.p}</p>
-              <div className="flex gap-4 border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2">
+              <div className="flex flex-wrap gap-3 border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2 sm:gap-4">
                 {p.stats.map((s, j) => (
                   <span key={j} className={j < 2 ? "text-ink-0" : ""}>{s}</span>
                 ))}
@@ -257,12 +268,12 @@ export default function Events() {
             </article>
           ))}
         </div>
-        <div className="mt-10 text-center">
+        <div className="mt-8 text-center sm:mt-10">
           <HorrorButton to="/archive" variant="ghost">{t("spotkania.past_all", "Wszystkie 23 archiwalne nagrania →")}</HorrorButton>
         </div>
       </section>
 
-      <div className="h-32" />
+      <div className="h-24 sm:h-32" />
     </>
   );
 }
