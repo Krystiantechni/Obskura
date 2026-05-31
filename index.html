@@ -26,6 +26,9 @@
     <meta name="twitter:title" content="OBSKURA — oryginalny audio horror w binauralnym dźwięku 3D" />
     <meta name="twitter:description" content="Oryginalne historie grozy w binauralnym dźwięku 3D. Schodzisz do tunelu, a coś już tam na Ciebie czeka — i zostaje z Tobą, gdy zdejmiesz słuchawki." />
     <meta name="twitter:image" content="/og-cover.jpg" />
+
+    <!-- Preload hero image on mobile only (LCP optimization, < lg breakpoint pokazuje monster.webp zamiast wideo) -->
+    <link rel="preload" as="image" href="/images/monster.webp" media="(max-width: 1023px)" fetchpriority="high" />
   </head>
   <body>
     <div id="root"></div>

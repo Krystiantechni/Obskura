@@ -32,6 +32,9 @@ export default defineConfig(({ mode }) => {
               if (id.includes("framer-motion")) return "motion";
               if (id.includes("gsap")) return "gsap";
               if (id.includes("lenis")) return "lenis";
+              if (id.includes("react-i18next") || id.includes("/i18next")) return "i18n";
+              if (id.includes("react-router-dom") || id.includes("react-router") || id.includes("@remix-run/router")) return "router";
+              if (id.includes("/zod/") || id.includes("node_modules/zod")) return "zod";
             }
             return undefined;
           },

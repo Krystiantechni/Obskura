@@ -67,6 +67,7 @@ export default function Hero({ variant = "wide" }) {
               src="/images/monster.webp"
               alt=""
               fetchpriority="high"
+              decoding="async"
               className={`absolute inset-0 h-full w-full object-cover ${isWide ? "mask-hero-wide object-[center_25%]" : "mask-hero-portrait"}`}
             />
           )}
