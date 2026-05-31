@@ -42,7 +42,7 @@ export default function Creators() {
     {
       img: "/images/monster.webp", pos: "center 20%", tag: t("tworcy.c4_tag", "Narrator"), accent: "red",
       name: "Adam", nameEm: "Karpiński", role: t("tworcy.c4_role", "NARRATOR · OD 2022"),
-      bio: t("tworcy.c4_bio", "Były dziennikarz Gazety Wyborczej. Głos do serii „True Horror” — opartych na faktach."),
+      bio: t("tworcy.c4_bio", "Były dziennikarz Gazety Wyborczej. Głos do serii „TRUE HORROR” — opartych na faktach."),
       stats: [{ v: "18", l: t("tworcy.s_ep", "odc.") }, { v: "4.8", l: "★" }, { v: "1.6M", l: t("tworcy.s_plays", "odsłuchów") }],
     },
     {
@@ -94,22 +94,22 @@ export default function Creators() {
   return (
     <>
       {/* Hero */}
-      <header className="relative overflow-hidden border-b border-line px-5 pb-16 pt-[140px] lg:px-12">
-        <div className="mx-auto grid max-w-[1400px] items-end gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-[60px]">
+      <header className="relative overflow-hidden border-b border-line px-5 pb-12 pt-[140px] lg:pb-16 lg:px-12">
+        <div className="mx-auto grid max-w-[1400px] items-end gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-[60px]">
           <div>
             <Eyebrow>{t("tworcy.eyebrow", "// LUDZIE ZA GŁOSAMI · 38 OSÓB · 12 STAŁYCH")}</Eyebrow>
-            <h1 className="my-5 font-serif text-[clamp(48px,7vw,104px)] font-medium leading-[0.95] tracking-[-0.02em]">
+            <h1 className="my-4 font-serif text-[clamp(40px,7vw,104px)] font-medium leading-[0.95] tracking-[-0.02em] lg:my-5">
               {t("tworcy.title_p1", "Ci, którzy")} <em className="italic text-ink-1">{t("tworcy.title_em", "opowiadają")}</em>
               <br />
               {t("tworcy.title_p2", "twoje koszmary.")}
             </h1>
-            <p className="max-w-[540px] text-[17px] font-light leading-relaxed text-ink-1">
+            <p className="text-[15px] font-light leading-relaxed text-ink-1 sm:max-w-[540px] lg:text-[17px]">
               {t("tworcy.lead", "Nie mamy gwiazd, mamy ludzi. Reżyserów, narratorów, autorów i inżynierów dźwięku, którzy spędzają noce nad jednym oddechem między dwoma słowami. Zobacz, kto stoi za każdym odcinkiem, który cię nie pozwala zasnąć.")}
             </p>
           </div>
-          <figure className="relative border-l-2 border-red bg-bg-1/60 p-8">
-            <blockquote className="mb-4 font-serif text-[22px] italic leading-tight text-ink-0">
-              <span aria-hidden className="-mb-2 block text-[60px] leading-none text-red drop-shadow-[0_0_16px_rgba(255,42,42,0.4)]">&ldquo;</span>
+          <figure className="relative mt-2 border-l-2 border-red bg-bg-1/60 p-5 sm:mt-0 sm:p-8">
+            <blockquote className="mb-4 font-serif text-[18px] italic leading-tight text-ink-0 sm:text-[22px]">
+              <span aria-hidden className="-mb-2 block text-[48px] leading-none text-red drop-shadow-[0_0_16px_rgba(255,42,42,0.4)] sm:text-[60px]">&ldquo;</span>
               {t("tworcy.quote", "Najtrudniej jest opowiadać szeptem tak, żeby nie zaszemrać. Tej cierpliwości nas nauczono.")}
             </blockquote>
             <figcaption className="font-mono text-[10px] uppercase tracking-mono text-ink-2">
@@ -120,18 +120,18 @@ export default function Creators() {
       </header>
 
       {/* Featured creator */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow accent="blue">{t("tworcy.featured_eyebrow", "TWÓRCZYNI MIESIĄCA · MAJ 2026")}</Eyebrow>
-        <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-[60px]">
-          <div className="relative aspect-[4/5] overflow-hidden bg-bg-1">
+        <div className="mt-6 grid items-center gap-8 sm:mt-8 sm:grid-cols-[1.1fr_1fr] sm:gap-10 lg:gap-[60px]">
+          <div className="relative aspect-[3/4] overflow-hidden bg-bg-1 sm:aspect-[4/5]">
             <img src="/images/img-orbs.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_20%]" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
             <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, transparent 50%, rgba(5,6,8,0.4))" }} />
-            <span className="absolute left-5 top-5 z-[2] border-l-2 border-red bg-black/60 px-3.5 py-2 font-mono text-[10px] uppercase tracking-eyebrow text-red backdrop-blur-md">
+            <span className="absolute left-4 top-4 z-[2] border-l-2 border-red bg-black/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow text-red backdrop-blur-md sm:left-5 sm:top-5 sm:px-3.5 sm:py-2">
               {t("tworcy.spotlight_tag", "// SPOTLIGHT 05/2026")}
             </span>
-            <div className="absolute inset-x-6 bottom-6 z-[2] flex items-end justify-between">
-              <div className="font-serif text-2xl italic">K. Wieczorek</div>
-              <div className="text-right font-mono text-[10px] uppercase tracking-[0.15em] text-ink-2">
+            <div className="absolute inset-x-4 bottom-4 z-[2] flex items-end justify-between sm:inset-x-6 sm:bottom-6">
+              <div className="font-serif text-xl italic sm:text-2xl">K. Wieczorek</div>
+              <div className="text-right font-mono text-[9px] uppercase tracking-[0.15em] text-ink-2 sm:text-[10px]">
                 {t("tworcy.sig_role", "NARRATOR LEAD")}<br />
                 {t("tworcy.sig_meta", "SEZON 03 · 12/12 ODCINKÓW")}
               </div>
@@ -139,26 +139,26 @@ export default function Creators() {
           </div>
           <div>
             <Eyebrow>{t("tworcy.feat_kicker", "NARRATOR · KATARZYNA WIECZOREK")}</Eyebrow>
-            <h2 className="my-5 font-serif text-[clamp(40px,5vw,64px)] font-medium leading-none tracking-[-0.02em]">
+            <h2 className="my-4 font-serif text-[clamp(32px,5vw,64px)] font-medium leading-none tracking-[-0.02em] sm:my-5 sm:text-[clamp(40px,5vw,64px)]">
               {t("tworcy.feat_h_p1", "Głos, który")} <em className="italic text-ink-1">{t("tworcy.feat_h_em", "ciebie")}</em> {t("tworcy.feat_h_p2", "słyszy.")}
             </h2>
-            <p className="mb-4 text-[15px] font-light leading-relaxed text-ink-1">
+            <p className="mb-4 text-[14px] font-light leading-relaxed text-ink-1 sm:text-[15px]">
               {t("tworcy.feat_p1", "Po dziesięciu latach w teatrze radiowym Trójki, Katarzyna dołączyła do Obskury w 2023 roku z prostą zasadą — nie czyta, opowiada. Każde nagranie zaczyna od godziny ciszy w studiu. Każde kończy rozmową z reżyserką o tym, co poszło źle.")}
             </p>
-            <p className="mb-4 text-[15px] font-light leading-relaxed text-ink-1">
-              {t("tworcy.feat_p2", "„W trzecim sezonie skończyło mi się powietrze w środku piątego odcinka. Zostawiliśmy to nagranie w finalnej wersji. Słychać, że nie kłamię.”")}
+            <p className="mb-4 text-[14px] font-light leading-relaxed text-ink-1 sm:text-[15px]">
+              {t("tworcy.feat_p2", "„W trzecim sezonie skończyło mi się powietrze w środku piątego odcinka. Zostawiłyśmy to nagranie w finalnej wersji. Słychać, że nie kłamię.”")}
             </p>
-            <div className="my-8 grid grid-cols-3 gap-6 border-y border-line py-6">
+            <div className="my-6 grid grid-cols-3 gap-4 border-y border-line py-5 sm:my-8 sm:gap-6 sm:py-6">
               {featStats.map((s) => (
                 <div key={s.l}>
-                  <div className="font-serif text-[clamp(24px,3vw,32px)] font-medium leading-none">{s.n}</div>
+                  <div className="font-serif text-[clamp(20px,3vw,32px)] font-medium leading-none sm:text-[clamp(24px,3vw,32px)]">{s.n}</div>
                   <div className="mt-1.5 font-mono text-[9px] uppercase tracking-mono text-ink-2">{s.l}</div>
                 </div>
               ))}
             </div>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {credits.map((c) => (
-                <span key={c.text} className={`border bg-white/[0.02] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] ${c.lead ? "border-red text-red" : "border-line text-ink-1"}`}>
+                <span key={c.text} className={`border bg-white/[0.02] px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.15em] sm:px-3 sm:text-[10px] ${c.lead ? "border-red text-red" : "border-line text-ink-1"}`}>
                   {c.text}
                 </span>
               ))}
@@ -168,24 +168,26 @@ export default function Creators() {
       </section>
 
       {/* Creators grid */}
-      <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-5 border-b border-line pb-6">
+      <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
+        <div className="mb-8 flex flex-col gap-5 border-b border-line pb-6 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <Eyebrow>{t("tworcy.team_eyebrow", "// ZESPÓŁ STAŁY")}</Eyebrow>
-            <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+            <h2 className="mt-3 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em] sm:mt-4 sm:text-[clamp(36px,4.5vw,56px)]">
               {t("tworcy.team_title_p1", "Wszyscy")} <em className="italic text-ink-1">{t("tworcy.team_title_em", "stali")}</em>.
             </h2>
           </div>
-          <div className="flex flex-wrap gap-6">
-            {roleTabs.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`inline-flex min-h-[44px] items-center border-b py-2 font-mono text-[11px] uppercase tracking-mono transition-colors ${activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0"}`}
-              >
-                {tab.label} <span className="ml-1.5 text-[9px] text-ink-3">{tab.num}</span>
-              </button>
-            ))}
+          <div className="-mx-5 overflow-x-auto px-5 sm:mx-0 sm:overflow-x-visible sm:px-0">
+            <div className="flex gap-4 pb-0.5 sm:flex-wrap sm:gap-6 sm:pb-0">
+              {roleTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`inline-flex min-h-[44px] flex-shrink-0 items-center whitespace-nowrap border-b py-2 font-mono text-[11px] uppercase tracking-mono transition-colors sm:flex-shrink ${activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0"}`}
+                >
+                  {tab.label} <span className="ml-1.5 text-[9px] text-ink-3">{tab.num}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -215,7 +217,7 @@ export default function Creators() {
       </section>
 
       {/* Apply CTA */}
-      <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
         <div className="relative grid items-center gap-10 overflow-hidden border border-line bg-bg-1/60 p-5 sm:p-8 lg:grid-cols-2 lg:gap-[60px] lg:p-[60px]">
           <div className="pointer-events-none absolute -right-24 -top-24 h-[400px] w-[400px]" style={{ background: "radial-gradient(circle, rgba(255,42,42,0.1), transparent 70%)" }} />
           <div className="relative">
@@ -250,7 +252,7 @@ export default function Creators() {
 
             <div className="mb-4 flex flex-col gap-2">
               <label className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("tworcy.f_name_label", "Imię i nazwisko / pseudonim")}</label>
-              <input type="text" required placeholder={t("tworcy.f_name_ph", "np. Adam Karpiński lub „A.”")} className={FIELD} />
+              <input type="text" required placeholder={t("tworcy.f_name_ph", "np. Adam Karpinski lub A.")} className={FIELD} />
             </div>
             <div className="mb-4 flex flex-col gap-2">
               <label className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("tworcy.f_email_label", "E-mail kontaktowy")}</label>
@@ -281,13 +283,13 @@ export default function Creators() {
               <span>{t("tworcy.f_consent", "Zgadzam się na przetwarzanie danych osobowych w celu rekrutacji.")} <a href="#" className="text-red underline">{t("tworcy.f_privacy", "Polityka prywatności")}</a>.</span>
             </label>
             <HorrorButton type="submit" block disabled={submitted}>
-              {submitted ? t("tworcy.f_submitted", "✓ Zgłoszenie przyjęte — odezwiemy się w 4 tygodnie") : <>{t("tworcy.f_submit", "Wyślij zgłoszenie")} <Arrow /></>}
+              {submitted ? t("tworcy.f_submitted", "Zgłoszenie przyjęte — odezwiemy się w 4 tygodnie") : <>{t("tworcy.f_submit", "Wyślij zgłoszenie")} <Arrow /></>}
             </HorrorButton>
           </form>
         </div>
       </section>
 
-      <div className="h-32" />
+      <div className="h-16 sm:h-32" />
     </>
   );
 }
