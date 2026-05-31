@@ -220,7 +220,7 @@ export default function Onboarding() {
 
               <div className="mx-auto max-w-[680px]">
                 <div className="mb-6 border border-line bg-bg-2/60 p-6 sm:p-10">
-                  <div className="mb-8 flex items-center justify-between gap-5 sm:gap-14">
+                  <div className="mb-8 flex flex-col items-center gap-6 sm:flex-row sm:justify-between sm:gap-14">
                     <div className="flex-1 text-center">
                       <div className="mb-4 font-mono text-[11px] uppercase tracking-eyebrow text-ink-2">{t("onboarding.audio_left", "LEWE")}</div>
                       <div className="relative mx-auto h-20 w-20 animate-obskura-pulse rounded-full border-2 border-red shadow-[0_0_0_1px_rgba(255,42,42,0.4),0_0_32px_rgba(255,42,42,0.3)]">
@@ -339,7 +339,7 @@ export default function Onboarding() {
       </div>
 
       {/* Step progress */}
-      <div className="fixed bottom-9 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1.5 border border-line bg-bg-1/70 px-5 py-3.5 backdrop-blur-md">
+      <div className="fixed bottom-9 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-1.5 border border-line bg-bg-1/70 px-5 py-3.5 backdrop-blur-md">
         {STEPS.map((s, i) => (
           <span
             key={s.id}
@@ -349,7 +349,7 @@ export default function Onboarding() {
             ].join(" ")}
           />
         ))}
-        <span className="ml-4 self-center font-mono text-[10px] uppercase tracking-mono text-ink-2">
+        <span className="ml-4 min-w-0 truncate self-center font-mono text-[10px] uppercase tracking-mono text-ink-2">
           {t("onboarding.progress_step", "KROK")} <strong className="text-ink-0">{step + 1}</strong> / {STEPS.length} ·{" "}
           <strong className="text-ink-0">{t(`onboarding.${STEPS[step].labelKey}`, STEPS[step].labelDef).toUpperCase()}</strong>
         </span>

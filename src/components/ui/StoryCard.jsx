@@ -89,7 +89,7 @@ export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm,
           type="button"
           onClick={onPlay}
           aria-label={isPlaying ? `Pauza: ${title}` : `Odtwórz: ${title}`}
-          className={`absolute right-4 top-4 z-[5] grid h-10 w-10 place-items-center border backdrop-blur-sm transition-all duration-200 ${
+          className={`absolute right-4 top-4 z-[5] grid h-11 w-11 place-items-center border backdrop-blur-sm transition-all duration-200 ${
             isCurrent
               ? "border-red bg-red text-white opacity-100"
               : "translate-y-[-4px] border-white/15 bg-black/60 text-ink-0 opacity-0 hover:!bg-red hover:!border-red group-hover:translate-y-0 group-hover:opacity-100"

@@ -84,6 +84,14 @@
   ::-webkit-scrollbar-thumb { background: rgba(255, 42, 42, 0.5); border-radius: 999px; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(255, 42, 42, 0.8); }
 
+  /* Mobile perf: oba full-screen fixed overlaye re-kompozytują się przy każdym scrollu (GPU re-upload
+     tekstury szumu). Na telefonie ścinamy scanlines i przyciszamy grain — oszczędność klatek na słabszym
+     Androidzie, estetyka grain zostaje. */
+  @media (max-width: 767px) {
+    body::before { opacity: 0.04; }
+    body::after { display: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }

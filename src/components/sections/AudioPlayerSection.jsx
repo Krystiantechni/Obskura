@@ -54,7 +54,7 @@ export default function AudioPlayerSection() {
             <span>– {fmt(duration - currentTime)}</span>
           </div>
           <div className="flex items-center justify-center gap-6">
-            <button type="button" onClick={prev} disabled={!hasPrev && currentTime < 3} aria-label="Poprzednia" className="grid place-items-center p-1.5 text-ink-1 transition-colors hover:text-ink-0 disabled:opacity-30"><Prev /></button>
+            <button type="button" onClick={prev} disabled={!hasPrev && currentTime < 3} aria-label="Poprzednia" className="grid min-h-[44px] min-w-[44px] place-items-center text-ink-1 transition-colors hover:text-ink-0 disabled:opacity-30"><Prev /></button>
             <button
               type="button"
               onClick={onPlay}
@@ -63,7 +63,7 @@ export default function AudioPlayerSection() {
             >
               {playing && current?.id === track.id ? <Pause size={14} /> : <Play size={14} />}
             </button>
-            <button type="button" onClick={next} disabled={!hasNext} aria-label="Następna" className="grid place-items-center p-1.5 text-ink-1 transition-colors hover:text-ink-0 disabled:opacity-30"><Next /></button>
+            <button type="button" onClick={next} disabled={!hasNext} aria-label="Następna" className="grid min-h-[44px] min-w-[44px] place-items-center text-ink-1 transition-colors hover:text-ink-0 disabled:opacity-30"><Next /></button>
           </div>
         </div>
 
@@ -74,13 +74,13 @@ export default function AudioPlayerSection() {
             onClick={() => toggleFavorite(track.id)}
             aria-pressed={liked}
             aria-label={liked ? "Usuń z ulubionych" : "Dodaj do ulubionych"}
-            className={`grid h-9 w-9 place-items-center border transition-colors ${liked ? "border-red text-red" : "border-white/10 text-ink-1 hover:border-red hover:text-red"}`}
+            className={`grid h-11 w-11 place-items-center border transition-colors ${liked ? "border-red text-red" : "border-white/10 text-ink-1 hover:border-red hover:text-red"}`}
           >
             {liked ? <HeartFill /> : <Heart />}
           </button>
-          <button type="button" aria-label="Głośność" className="grid h-9 w-9 place-items-center border border-white/10 text-ink-1 transition-colors hover:border-red hover:text-red"><Volume /></button>
-          <button type="button" aria-label="Udostępnij" className="grid h-9 w-9 place-items-center border border-white/10 text-ink-1 transition-colors hover:border-red hover:text-red"><Share /></button>
-          <button type="button" aria-label="Kolejka" className="grid h-9 w-9 place-items-center border border-white/10 text-ink-1 transition-colors hover:border-red hover:text-red"><List /></button>
+          <button type="button" aria-label="Głośność" className="grid h-11 w-11 place-items-center border border-white/10 text-ink-1 transition-colors hover:border-red hover:text-red"><Volume /></button>
+          <button type="button" aria-label="Udostępnij" className="grid h-11 w-11 place-items-center border border-white/10 text-ink-1 transition-colors hover:border-red hover:text-red"><Share /></button>
+          <button type="button" aria-label="Kolejka" className="grid h-11 w-11 place-items-center border border-white/10 text-ink-1 transition-colors hover:border-red hover:text-red"><List /></button>
         </div>
       </div>
     </section>

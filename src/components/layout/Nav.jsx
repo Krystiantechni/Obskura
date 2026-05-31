@@ -52,10 +52,10 @@ export default function Nav() {
         </HorrorButton>
       </div>
 
-      {/* Mobile trigger */}
+      {/* Mobile trigger — h-11 w-11 = 44px tap-area (WCAG 2.5.5), -mr-2.5 utrzymuje ikonę przy krawędzi */}
       <button
         type="button"
-        className="text-ink-0 lg:hidden"
+        className="-mr-2.5 grid h-11 w-11 place-items-center text-ink-0 lg:hidden"
         onClick={() => setMobileOpen((o) => !o)}
         aria-label="Menu"
       >
@@ -80,7 +80,7 @@ export default function Nav() {
           ))}
           <div className="flex items-center justify-between border-t border-line pt-6">
             <LanguageSwitcher />
-            <HorrorButton to="/zaloguj" variant="ghost" className="!px-[18px] !py-2.5" onClick={() => setMobileOpen(false)}>
+            <HorrorButton to="/zaloguj" variant="ghost" className="!px-5 !py-3" onClick={() => setMobileOpen(false)}>
               {t("nav.login")}
             </HorrorButton>
           </div>

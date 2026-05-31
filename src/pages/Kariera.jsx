@@ -214,7 +214,7 @@ export default function Kariera() {
                 <strong className={`mt-1 block text-[12px] tracking-ui ${m.urgent ? "text-red" : "text-ink-0"}`}>{m.v}</strong>
               </div>
             ))}
-            <HorrorButton to="#" className="!px-[18px] !py-2.5">
+            <HorrorButton to="#" className="!min-h-[44px] !px-[18px] !py-3">
               {t("kariera.roles_apply", "Aplikuj")}
             </HorrorButton>
           </div>

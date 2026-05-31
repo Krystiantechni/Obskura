@@ -6,7 +6,7 @@ import Eyebrow from "../components/ui/Eyebrow";
 
 // Bloki ciała maila (dark, branded) — wspólne style.
 function MailH1({ children }) {
-  return <h1 className="mb-4 font-serif text-[36px] font-medium leading-[1.05] tracking-[-0.01em] text-[#f4f1ea]">{children}</h1>;
+  return <h1 className="mb-4 font-serif text-[28px] sm:text-[36px] font-medium leading-[1.05] tracking-[-0.01em] text-[#f4f1ea]">{children}</h1>;
 }
 MailH1.propTypes = { children: PropTypes.node.isRequired };
 
@@ -35,8 +35,8 @@ MailCta.propTypes = { children: PropTypes.node.isRequired };
 
 function MailCard({ img, pos, ep, t1, em, meta }) {
   return (
-    <div className="my-6 grid grid-cols-[80px_1fr] items-center gap-4 border border-red/20 bg-bg-2/60 p-5">
-      <div className="h-20 w-20 bg-cover" style={{ backgroundImage: `url('${img}')`, backgroundPosition: pos }} />
+    <div className="my-6 grid grid-cols-[64px_1fr] sm:grid-cols-[80px_1fr] items-center gap-4 border border-red/20 bg-bg-2/60 p-5">
+      <div className="h-16 w-16 sm:h-20 sm:w-20 bg-cover" style={{ backgroundImage: `url('${img}')`, backgroundPosition: pos }} />
       <div>
         <div className="mb-1 font-mono text-[10px] tracking-mono text-[#ff2a2a]">{ep}</div>
         <div className="mb-1 font-serif text-[22px] leading-tight text-[#f4f1ea]">{t1} <em className="italic text-[#c9c4b8]">{em}</em></div>
@@ -96,7 +96,7 @@ function MailBody({ tpl, t }) {
           <div className="relative h-[200px] overflow-hidden after:absolute after:inset-0 after:bg-[linear-gradient(180deg,transparent_60%,rgba(10,13,18,0.95))]">
             <img src="/images/dada.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </div>
-          <div className="px-9 pb-12 pt-9">
+          <div className="px-5 sm:px-9 pb-12 pt-9">
             <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.welcome_kicker", "// Pierwszy mail · konto aktywne")}</div>
             <MailH1>{t("mailingi.welcome_h1_p1", "Witaj w")} <em className="italic text-[#c9c4b8]">{t("mailingi.welcome_h1_em", "Obskurze")}</em>{t("mailingi.welcome_h1_p2", ", Nokturn_47.")}</MailH1>
             <MailP drop>{t("mailingi.welcome_p1", "Trafiłeś w dobre miejsce. Tutaj nagrywamy historie, które słucha się na słuchawkach, w nocy, w ciszy mieszkania. 147 odcinków czeka. Pierwszy ci wybraliśmy.")}</MailP>
@@ -136,7 +136,7 @@ function MailBody({ tpl, t }) {
           <div className="relative h-[200px] overflow-hidden after:absolute after:inset-0 after:bg-[linear-gradient(180deg,transparent_60%,rgba(10,13,18,0.95))]">
             <img src="/images/monster.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_25%]" />
           </div>
-          <div className="px-9 pb-12 pt-9">
+          <div className="px-5 sm:px-9 pb-12 pt-9">
             <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.premiere_kicker", "// Premiera · dziś 23:00 · tylko twój")}</div>
             <MailH1>{t("mailingi.premiere_h1_p1", "Nowy odcinek")} <em className="italic text-[#c9c4b8]">{t("mailingi.premiere_h1_em", "czeka")}</em>.</MailH1>
             <MailP>{t("mailingi.premiere_p1_p1", "Trzeci sezon dobiega końca finałem nagrywanym przez nas")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.premiere_p1_strong", "14 miesięcy")}</strong>. {t("mailingi.premiere_p1_p2", "Premiera dla Klubu Solo — 72 godziny przed publicznym wydaniem.")}</MailP>
@@ -261,11 +261,11 @@ function Email({ tpl, heads, t }) {
           </div>
           <MailBody tpl={tpl} t={t} />
           <div className="border-t border-white/[0.08] bg-[#050608] px-8 py-7">
-            <div className="mb-3 space-x-4 font-mono text-[10px] tracking-ui">
-              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_subs", "Zarządzaj subskrypcjami")}</a>
-              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_unsub", "Wypisz się")}</a>
-              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_help", "Pomoc")}</a>
-              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_privacy", "Polityka prywatności")}</a>
+            <div className="mb-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] tracking-ui">
+              <a href="#footer" className="inline-block py-2 text-[#c9c4b8]">{t("mailingi.footer_subs", "Zarządzaj subskrypcjami")}</a>
+              <a href="#footer" className="inline-block py-2 text-[#c9c4b8]">{t("mailingi.footer_unsub", "Wypisz się")}</a>
+              <a href="#footer" className="inline-block py-2 text-[#c9c4b8]">{t("mailingi.footer_help", "Pomoc")}</a>
+              <a href="#footer" className="inline-block py-2 text-[#c9c4b8]">{t("mailingi.footer_privacy", "Polityka prywatności")}</a>
             </div>
             <p className="font-mono text-[10px] leading-relaxed tracking-ui text-[#6e6a60]">
               {t("mailingi.footer_company", "OBSKURA Audio sp. z o.o. · NIP 583-321-09-44")}<br />
@@ -371,7 +371,8 @@ export default function Mailingi() {
 
       {/* Tabs */}
       <div className="sticky top-[68px] z-40 border-b border-line bg-bg-1/85 px-5 backdrop-blur-xl lg:px-12">
-        <div className="mx-auto flex max-w-[1400px] overflow-x-auto">
+        <div className="relative mx-auto max-w-[1400px] after:pointer-events-none after:absolute after:right-0 after:top-0 after:h-full after:w-10 after:bg-gradient-to-l after:from-bg-1 after:to-transparent lg:after:hidden">
+        <div className="flex overflow-x-auto">
           {TEMPLATES.map((x, i) => (
             <button
               key={x.id}
@@ -385,6 +386,7 @@ export default function Mailingi() {
               {x.label}
             </button>
           ))}
+        </div>
         </div>
       </div>
 

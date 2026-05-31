@@ -160,11 +160,11 @@ export default function Forum() {
             <HorrorButton block>{t("forum.new_thread", "+ Załóż wątek")}</HorrorButton>
             <p className="mt-2.5 text-center font-mono text-[9px] uppercase tracking-mono text-ink-3">
               {t("forum.requires_account", "WYMAGA KONTA")} ·{" "}
-              <Link to="/zaloguj" className="text-ink-1 hover:text-ink-0">
+              <Link to="/zaloguj" className="inline-flex min-h-[44px] items-center text-ink-1 hover:text-ink-0">
                 {t("forum.login", "ZALOGUJ")}
               </Link>{" "}
               /{" "}
-              <Link to="/rejestracja" className="text-red hover:text-red-soft">
+              <Link to="/rejestracja" className="inline-flex min-h-[44px] items-center text-red hover:text-red-soft">
                 {t("forum.register", "UTWÓRZ")}
               </Link>
             </p>

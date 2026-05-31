@@ -47,7 +47,7 @@ export default function Register() {
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
       {/* Form (order-1) */}
       <div className="relative order-2 flex items-center justify-center px-6 py-20 lg:order-1 lg:px-[60px]">
-        <Link to="/" className="absolute left-6 top-8 font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px]">
+        <Link to="/" className="absolute left-6 top-8 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px]">
           {t("register.back")}
         </Link>
 
@@ -159,7 +159,7 @@ export default function Register() {
               </div>
 
               <div className="flex gap-3">
-                <HorrorButton variant="ghost" onClick={() => setStep(1)}>{t("register.back_step")}</HorrorButton>
+                <HorrorButton variant="ghost" className="flex-1" onClick={() => setStep(1)}>{t("register.back_step")}</HorrorButton>
                 <HorrorButton className="flex-1" disabled={!canStep2} onClick={() => canStep2 && setStep(3)}>{t("register.next")}</HorrorButton>
               </div>
             </>
@@ -198,7 +198,7 @@ export default function Register() {
               </label>
 
               <div className="flex gap-3">
-                <HorrorButton variant="ghost" onClick={() => setStep(2)}>{t("register.back_step")}</HorrorButton>
+                <HorrorButton variant="ghost" className="flex-1" onClick={() => setStep(2)}>{t("register.back_step")}</HorrorButton>
                 <HorrorButton type="submit" className="flex-1" disabled={!canStep3}>{t("register.submit")}</HorrorButton>
               </div>
             </>

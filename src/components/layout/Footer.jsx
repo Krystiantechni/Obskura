@@ -57,7 +57,7 @@ export default function Footer() {
                 href={s.href}
                 target={s.href.startsWith("http") ? "_blank" : undefined}
                 rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="border border-white/10 px-3 py-2 font-sans text-[11px] font-semibold uppercase tracking-ui text-ink-0 transition-colors hover:border-red hover:text-red"
+                className="inline-flex min-h-[44px] items-center border border-white/10 px-3.5 font-sans text-[11px] font-semibold uppercase tracking-ui text-ink-0 transition-colors hover:border-red hover:text-red"
               >
                 {s.label}
               </a>
@@ -72,7 +72,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-3">
               {col.links.map((l, i) => (
                 <li key={i}>
-                  <Link to={l.to} className="text-sm text-ink-1 transition-colors hover:text-red">
+                  <Link to={l.to} className="inline-block py-1.5 text-sm text-ink-1 transition-colors hover:text-red">
                     {t(l.key)}
                   </Link>
                 </li>
@@ -89,11 +89,11 @@ export default function Footer() {
             <input
               type="email"
               placeholder={t("footer.email_placeholder")}
-              className="mb-2.5 w-full border border-line bg-white/[0.03] px-3.5 py-3 text-[13px] text-ink-0 placeholder:text-ink-3 focus:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70"
+              className="mb-2.5 min-h-[44px] w-full border border-line bg-white/[0.03] px-3.5 py-3 text-[13px] text-ink-0 placeholder:text-ink-3 focus:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70"
             />
             <button
               type="submit"
-              className="w-full bg-red px-3 py-3 font-sans text-[11px] font-semibold uppercase tracking-ui text-black shadow-cta-red transition-colors hover:bg-red-soft"
+              className="min-h-[44px] w-full bg-red px-3 py-3 font-sans text-[11px] font-semibold uppercase tracking-ui text-black shadow-cta-red transition-colors hover:bg-red-soft"
             >
               {t("footer.newsletter_cta")}
             </button>
@@ -103,10 +103,10 @@ export default function Footer() {
 
       <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-4 border-t border-line pt-8 font-mono text-[11px] tracking-[0.1em] text-ink-2 sm:flex-row sm:items-center">
         <div>{t("footer.copyright")}</div>
-        <div className="flex gap-6">
-          <Link to="/prawne" className="text-ink-2 hover:text-ink-0">{t("footer.privacy")}</Link>
-          <Link to="/prawne" className="text-ink-2 hover:text-ink-0">{t("footer.terms")}</Link>
-          <Link to="/prawne" className="text-ink-2 hover:text-ink-0">{t("footer.cookies")}</Link>
+        <div className="flex flex-wrap gap-x-6 gap-y-1">
+          <Link to="/prawne" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.privacy")}</Link>
+          <Link to="/prawne" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.terms")}</Link>
+          <Link to="/prawne" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.cookies")}</Link>
         </div>
       </div>
     </footer>

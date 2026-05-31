@@ -104,7 +104,7 @@ function NewsletterSubscribeCard() {
       <div className="mb-3 font-mono text-[10px] uppercase tracking-mono text-ink-2">
         {t("newsletter.freq_label", "Częstotliwość")}
       </div>
-      <div className="mb-5 grid grid-cols-3 gap-2">
+      <div className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
         {FREQ_OPTIONS.map((o) => {
           const sel = freq === o.id;
           return (

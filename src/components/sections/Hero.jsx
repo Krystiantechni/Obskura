@@ -116,7 +116,7 @@ export default function Hero({ variant = "wide" }) {
               </span>
               {playing ? t("hero.cta_pause") : t("hero.cta_listen")}
             </HorrorButton>
-            <button className="inline-flex items-center gap-2.5 border-b border-white/15 pb-1.5 font-sans text-[13px] font-medium uppercase tracking-[0.15em] text-ink-0 transition-colors hover:border-ink-0">
+            <button className="inline-flex min-h-[44px] items-center gap-2.5 border-b border-white/15 pb-1.5 font-sans text-[13px] font-medium uppercase tracking-[0.15em] text-ink-0 transition-colors hover:border-ink-0">
               {t("hero.cta_trailer")} <Arrow />
             </button>
           </div>

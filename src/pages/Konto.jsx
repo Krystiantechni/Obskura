@@ -24,15 +24,17 @@ const SECTIONS = [
 
 function Toggle({ on, onClick }) {
   return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={on}
-      onClick={onClick}
-      className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${on ? "bg-red" : "bg-white/[0.08]"}`}
-    >
-      <span className={`absolute left-[3px] top-[3px] h-[18px] w-[18px] rounded-full bg-ink-0 transition-transform ${on ? "translate-x-5" : ""}`} />
-    </button>
+    <span className="inline-flex py-2 -my-2">
+      <button
+        type="button"
+        role="switch"
+        aria-checked={on}
+        onClick={onClick}
+        className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${on ? "bg-red" : "bg-white/[0.08]"}`}
+      >
+        <span className={`absolute left-[3px] top-[3px] h-[18px] w-[18px] rounded-full bg-ink-0 transition-transform ${on ? "translate-x-5" : ""}`} />
+      </button>
+    </span>
   );
 }
 Toggle.propTypes = { on: PropTypes.bool.isRequired, onClick: PropTypes.func };
@@ -60,7 +62,7 @@ Segment.propTypes = {
 };
 
 function SettingRow({ children }) {
-  return <div className="grid grid-cols-[1fr_auto] items-center gap-6 border-b border-white/[0.04] py-[18px] last:border-b-0">{children}</div>;
+  return <div className="grid grid-cols-1 items-start gap-3 border-b border-white/[0.04] py-[18px] last:border-b-0 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6">{children}</div>;
 }
 SettingRow.propTypes = { children: PropTypes.node.isRequired };
 
@@ -241,7 +243,7 @@ export default function Konto() {
                 <div className="flex-1">
                   <h4 className="mb-1.5 font-serif text-[22px] italic">Nokturn_47</h4>
                   <p className="text-xs text-ink-2">{t("konto.profile_avatar_note", "Awatar generowany z pierwszej litery. Możesz wgrać własny.")}</p>
-                  <button type="button" className="mt-2.5 inline-flex items-center gap-2 border border-white/10 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-ui text-ink-0 transition-colors hover:border-red hover:text-red">
+                  <button type="button" className="mt-2.5 inline-flex min-h-[44px] items-center gap-2 border border-white/10 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-ui text-ink-0 transition-colors hover:border-red hover:text-red">
                     <Upload size={13} /> {t("konto.profile_avatar_btn", "Wgraj awatar")}
                   </button>
                 </div>

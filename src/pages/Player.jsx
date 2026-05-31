@@ -151,7 +151,7 @@ export default function Player() {
         <div className="absolute inset-x-0 top-[72px] z-10 flex items-center justify-between px-5 py-5 lg:top-0 lg:px-10 lg:py-7">
           <Link
             to="/odcinek/12"
-            className="inline-flex items-center gap-3 border border-line bg-black/40 px-3.5 py-2.5 font-mono text-[11px] uppercase tracking-mono text-ink-1 backdrop-blur transition-colors hover:border-red hover:text-ink-0"
+            className="inline-flex min-h-[44px] items-center gap-3 border border-line bg-black/40 px-3.5 py-2.5 font-mono text-[11px] uppercase tracking-mono text-ink-1 backdrop-blur transition-colors hover:border-red hover:text-ink-0"
           >
             <span className="rotate-180">
               <Arrow size={10} />
@@ -204,7 +204,7 @@ export default function Player() {
                 const prevCh = [...CHAPTERS].reverse().find((c) => c.sec < seconds - 5);
                 if (prevCh) seekToSeconds(prevCh.sec);
               }}
-              className="grid place-items-center p-2 text-ink-1 transition-colors hover:text-ink-0"
+              className="grid min-h-[44px] min-w-[44px] place-items-center p-2 text-ink-1 transition-colors hover:text-ink-0"
             >
               <Prev size={20} />
             </button>
@@ -212,7 +212,7 @@ export default function Player() {
               type="button"
               aria-label={t("playerpage.back15", "Cofnij 15 sekund")}
               onClick={() => seekToSeconds(Math.max(0, seconds - 15))}
-              className="grid place-items-center p-2 font-mono text-[11px] font-semibold tracking-ui text-ink-1 transition-colors hover:text-ink-0"
+              className="grid min-h-[44px] min-w-[44px] place-items-center p-2 font-mono text-[11px] font-semibold tracking-ui text-ink-1 transition-colors hover:text-ink-0"
             >
               −15
             </button>
@@ -228,7 +228,7 @@ export default function Player() {
               type="button"
               aria-label={t("playerpage.fwd30", "Do przodu 30 sekund")}
               onClick={() => seekToSeconds(Math.min(total, seconds + 30))}
-              className="grid place-items-center p-2 font-mono text-[11px] font-semibold tracking-ui text-ink-1 transition-colors hover:text-ink-0"
+              className="grid min-h-[44px] min-w-[44px] place-items-center p-2 font-mono text-[11px] font-semibold tracking-ui text-ink-1 transition-colors hover:text-ink-0"
             >
               +30
             </button>
@@ -239,20 +239,20 @@ export default function Player() {
                 const nextCh = CHAPTERS.find((c) => c.sec > seconds);
                 if (nextCh) seekToSeconds(nextCh.sec);
               }}
-              className="grid place-items-center p-2 text-ink-1 transition-colors hover:text-ink-0"
+              className="grid min-h-[44px] min-w-[44px] place-items-center p-2 text-ink-1 transition-colors hover:text-ink-0"
             >
               <Next size={20} />
             </button>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {SPEEDS.map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => setSpeed(s)}
-                  className={`border px-3.5 py-2 font-mono text-[11px] tracking-ui transition-colors ${
+                  className={`inline-flex min-h-[44px] items-center border px-3.5 py-2 font-mono text-[11px] tracking-ui transition-colors ${
                     speed === s ? "border-red bg-red text-black" : "border-line bg-black/40 text-ink-1 hover:border-red hover:text-red"
                   }`}
                 >
@@ -261,10 +261,10 @@ export default function Player() {
               ))}
             </div>
             <div className="flex items-center gap-2.5">
-              <button type="button" aria-label={t("playerpage.save", "Zapisz")} className="grid h-9 w-9 place-items-center border border-line text-ink-1 transition-colors hover:border-red hover:text-red">
+              <button type="button" aria-label={t("playerpage.save", "Zapisz")} className="grid h-11 w-11 place-items-center border border-line text-ink-1 transition-colors hover:border-red hover:text-red">
                 <Heart />
               </button>
-              <button type="button" aria-label={t("playerpage.share", "Udostępnij")} className="grid h-9 w-9 place-items-center border border-line text-ink-1 transition-colors hover:border-red hover:text-red">
+              <button type="button" aria-label={t("playerpage.share", "Udostępnij")} className="grid h-11 w-11 place-items-center border border-line text-ink-1 transition-colors hover:border-red hover:text-red">
                 <Share />
               </button>
               <span className="border border-blue/40 bg-black/40 px-3 py-2 font-mono text-[10px] uppercase tracking-mono text-blue">

@@ -84,7 +84,7 @@ export default function Club() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-16 pt-40 lg:px-12">
+      <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-16 pt-28 sm:pt-40 lg:px-12">
         <div className="absolute inset-0 z-0">
           <img src="/images/img-wolf.webp" alt="" className="h-full w-full object-cover object-[center_25%]" style={{ filter: "contrast(1.05) saturate(0.9) brightness(0.6)" }} />
           <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 60%, rgba(255,42,42,0.12), transparent 70%), linear-gradient(180deg, rgba(5,6,8,0.5) 0%, transparent 30%, rgba(5,6,8,0.9) 100%)" }} />
@@ -103,8 +103,8 @@ export default function Club() {
       {/* Billing toggle */}
       <div className="mx-auto -mt-16 max-w-[1400px] px-5 lg:px-12">
         <div className="relative z-[3] inline-flex items-center border border-line bg-bg-1/70 p-1">
-          <button onClick={() => setYearly(false)} className={`px-6 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors ${!yearly ? "bg-red text-white" : "text-ink-2"}`}>{t("club.billing_monthly")}</button>
-          <button onClick={() => setYearly(true)} className={`px-6 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors ${yearly ? "bg-red text-white" : "text-ink-2"}`}>
+          <button onClick={() => setYearly(false)} className={`inline-flex min-h-[44px] items-center px-6 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors ${!yearly ? "bg-red text-white" : "text-ink-2"}`}>{t("club.billing_monthly")}</button>
+          <button onClick={() => setYearly(true)} className={`inline-flex min-h-[44px] items-center px-6 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors ${yearly ? "bg-red text-white" : "text-ink-2"}`}>
             {t("club.billing_yearly")} <span className="ml-2 text-[9px] text-[#00ff88]">{t("club.billing_save")}</span>
           </button>
         </div>
@@ -118,7 +118,7 @@ export default function Club() {
             const isFree = tier.id === "free";
             const save = (tier.priceMonth - tier.priceYear) * 12;
             return (
-              <div key={tier.id} className={`relative p-10 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 ${tier.featured ? "border border-red bg-[linear-gradient(180deg,rgba(255,42,42,0.06),rgba(15,18,24,0.8))] shadow-[0_0_0_1px_rgba(255,42,42,0.3),0_30px_80px_-20px_rgba(255,42,42,0.2)]" : "border border-line bg-bg-1/60 hover:border-red/30"}`}>
+              <div key={tier.id} className={`relative p-6 sm:p-10 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 ${tier.featured ? "border border-red bg-[linear-gradient(180deg,rgba(255,42,42,0.06),rgba(15,18,24,0.8))] shadow-[0_0_0_1px_rgba(255,42,42,0.3),0_30px_80px_-20px_rgba(255,42,42,0.2)]" : "border border-line bg-bg-1/60 hover:border-red/30"}`}>
                 {tier.featured && <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,42,42,0.8),transparent)]" />}
                 {tier.badge && <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-red px-3 py-1 font-mono text-[9px] uppercase tracking-eyebrow text-white shadow-[0_0_16px_rgba(255,42,42,0.4)]">{tier.badge}</div>}
                 <div className="mb-1 font-serif text-3xl font-medium leading-none tracking-[-0.01em]">{tier.name}</div>
@@ -155,27 +155,29 @@ export default function Club() {
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("club.compare_title_p1")} <em className="italic text-ink-2">{t("club.compare_title_em")}</em>?
         </h2>
-        <div className="mt-10 overflow-hidden border border-line bg-bg-1/40">
-          <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] border-b border-line bg-red/[0.04]">
-            <div className="flex items-center border-r border-line px-3 py-6 font-mono text-[11px] uppercase tracking-mono text-ink-2 sm:px-5">// FUNKCJE</div>
-            {["Próg", "Solo", "Klan"].map((n, i) => (
-              <div key={n} className={`flex items-center border-r border-line px-3 py-6 font-serif text-lg font-medium italic last:border-r-0 sm:px-5 sm:text-2xl ${i === 1 ? "text-red" : ""}`}>{n}</div>
-            ))}
+        <div className="mt-10 overflow-x-auto border border-line bg-bg-1/40">
+          <div className="min-w-[560px]">
+            <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] border-b border-line bg-red/[0.04]">
+              <div className="flex items-center border-r border-line px-3 py-6 font-mono text-[11px] uppercase tracking-mono text-ink-2 sm:px-5">// FUNKCJE</div>
+              {["Próg", "Solo", "Klan"].map((n, i) => (
+                <div key={n} className={`flex items-center border-r border-line px-3 py-6 font-serif text-lg font-medium italic last:border-r-0 sm:px-5 sm:text-2xl ${i === 1 ? "text-red" : ""}`}>{n}</div>
+              ))}
+            </div>
+            {compareRows.map((row, idx) =>
+              row.cat ? (
+                <div key={idx} className="border-b border-line bg-black/40 px-3 py-3.5 font-mono text-[10px] uppercase tracking-mono text-red sm:px-5">{row.cat}</div>
+              ) : (
+                <div key={idx} className="grid grid-cols-[1.6fr_1fr_1fr_1fr] border-b border-line last:border-b-0">
+                  <div className="flex items-center border-r border-line bg-black/20 px-3 py-4 text-xs font-medium text-ink-0 sm:px-5 sm:text-sm">{row.label}</div>
+                  {row.vals.map((v, i) => (
+                    <div key={i} className="flex items-center border-r border-line px-3 py-4 text-xs text-ink-1 last:border-r-0 sm:px-5 sm:text-sm">
+                      {v === "●" || v.includes("Wszystkie") || v.includes("wcześniej") || v.includes("Bez limitu") || v.includes("Pełny") || v.includes("kanał") || v.includes("Kwartalne") || v.includes("Miesięczne") || v.includes("tom") ? <span className="font-bold text-red">{v}</span> : v}
+                    </div>
+                  ))}
+                </div>
+              ),
+            )}
           </div>
-          {compareRows.map((row, idx) =>
-            row.cat ? (
-              <div key={idx} className="border-b border-line bg-black/40 px-3 py-3.5 font-mono text-[10px] uppercase tracking-mono text-red sm:px-5">{row.cat}</div>
-            ) : (
-              <div key={idx} className="grid grid-cols-[1.6fr_1fr_1fr_1fr] border-b border-line last:border-b-0">
-                <div className="flex items-center border-r border-line bg-black/20 px-3 py-4 text-xs font-medium text-ink-0 sm:px-5 sm:text-sm">{row.label}</div>
-                {row.vals.map((v, i) => (
-                  <div key={i} className="flex items-center border-r border-line px-3 py-4 text-xs text-ink-1 last:border-r-0 sm:px-5 sm:text-sm">
-                    {v === "●" || v.includes("Wszystkie") || v.includes("wcześniej") || v.includes("Bez limitu") || v.includes("Pełny") || v.includes("kanał") || v.includes("Kwartalne") || v.includes("Miesięczne") || v.includes("tom") ? <span className="font-bold text-red">{v}</span> : v}
-                  </div>
-                ))}
-              </div>
-            ),
-          )}
         </div>
       </section>
 

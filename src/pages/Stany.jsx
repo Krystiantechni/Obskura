@@ -348,7 +348,7 @@ export default function Stany() {
         </div>
 
         {/* Browser frame */}
-        <div className="relative min-h-[600px] overflow-hidden border border-line bg-bg-0">
+        <div className="relative min-h-[420px] overflow-hidden border border-line bg-bg-0 sm:min-h-[600px]">
           <div className="flex items-center gap-3 border-b border-line bg-bg-2/95 px-4 py-3 font-mono text-[11px] tracking-ui text-ink-2">
             <div className="flex gap-1.5">
               <span className="h-[11px] w-[11px] rounded-full bg-[#ff5f56]" />
@@ -364,7 +364,7 @@ export default function Stany() {
               <span>{m.tech.status}</span>
             </div>
           </div>
-          <div className="relative flex min-h-[540px] flex-col items-center justify-center px-5 py-16 sm:px-10">
+          <div className="relative flex min-h-[360px] flex-col items-center justify-center px-5 py-16 sm:min-h-[540px] sm:px-10">
             <Stage t={t} />
           </div>
         </div>

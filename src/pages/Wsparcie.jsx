@@ -266,7 +266,7 @@ export default function Wsparcie() {
                 setCat(c.id);
                 setOpen(-1);
               }}
-              className={`border px-4 py-2 font-mono text-[11px] uppercase tracking-eyebrow transition-all duration-200 ${
+              className={`inline-flex min-h-[44px] items-center border px-4 py-2 font-mono text-[11px] uppercase tracking-eyebrow transition-all duration-200 ${
                 cat === c.id ? "border-red bg-red text-black" : "border-line text-ink-1 hover:border-red/40"
               }`}
             >
@@ -297,7 +297,7 @@ export default function Wsparcie() {
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-7 pl-[60px] text-[14px] font-light leading-relaxed text-ink-1 sm:px-7 sm:pl-[88px] sm:text-[15px]">
+                  <div className="px-5 pb-7 pl-5 text-[14px] font-light leading-relaxed text-ink-1 sm:px-7 sm:pl-[88px] sm:text-[15px]">
                     {f.a}
                   </div>
                 )}

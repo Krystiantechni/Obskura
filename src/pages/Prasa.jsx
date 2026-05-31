@@ -170,7 +170,7 @@ export default function Prasa() {
               <div key={r.l} className={`flex items-center justify-between py-3 ${i === 0 ? "border-t border-line" : "border-t border-line/50"}`}>
                 <span className="font-mono text-[10px] uppercase tracking-eyebrow text-ink-2">{r.l}</span>
                 <span className="font-serif text-[18px] italic text-ink-0">
-                  {r.link ? <a href={`mailto:${r.v}`} className="border-b border-red text-ink-0">{r.v}</a> : r.v}
+                  {r.link ? <a href={`mailto:${r.v}`} className="inline-flex min-h-[44px] items-center border-b border-red text-ink-0">{r.v}</a> : r.v}
                 </span>
               </div>
             ))}
@@ -259,7 +259,7 @@ export default function Prasa() {
       {/* Brand colors */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 lg:px-12">
         <Eyebrow accent="blue">{t("prasa.palette_eyebrow", "PALETA · 5 KOLORÓW")}</Eyebrow>
-        <div className="mt-5 grid grid-cols-2 gap-2 border border-line bg-black/30 p-2 sm:gap-3 sm:p-3 lg:grid-cols-5">
+        <div className="mt-5 grid grid-cols-3 gap-2 border border-line bg-black/30 p-2 sm:gap-3 sm:p-3 lg:grid-cols-5">
           {swatches.map((s) => (
             <div key={s.name} className="relative min-h-[120px] px-4 py-6" style={{ background: s.bg }}>
               <span className="font-mono text-[10px] uppercase tracking-mono" style={{ color: s.text }}>{s.name}</span>
@@ -288,7 +288,7 @@ export default function Prasa() {
                 </h3>
                 <p className="text-[14px] font-light leading-snug text-ink-1">{r.p}</p>
               </div>
-              <a href="#" className="whitespace-nowrap font-mono text-[10px] uppercase tracking-mono text-red transition-colors hover:text-white">
+              <a href="#" className="inline-flex min-h-[44px] items-center whitespace-nowrap font-mono text-[10px] uppercase tracking-mono text-red transition-colors hover:text-white">
                 {t("prasa.releases_dl", "POBIERZ PDF →")}
               </a>
             </div>

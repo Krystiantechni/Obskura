@@ -134,8 +134,8 @@ export default function Archive() {
             <option value="duration">{t("archive.sort_duration")}</option>
           </select>
           <div className="flex border border-line justify-self-start">
-            <button onClick={() => setView("grid")} className={`grid h-[42px] w-[42px] place-items-center transition-colors ${view === "grid" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><GridIcon /></button>
-            <button onClick={() => setView("list")} className={`grid h-[42px] w-[42px] place-items-center transition-colors ${view === "list" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><ListViewIcon /></button>
+            <button onClick={() => setView("grid")} className={`grid h-11 w-11 place-items-center transition-colors ${view === "grid" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><GridIcon /></button>
+            <button onClick={() => setView("list")} className={`grid h-11 w-11 place-items-center transition-colors ${view === "list" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><ListViewIcon /></button>
           </div>
         </div>
       </div>
@@ -147,7 +147,7 @@ export default function Archive() {
             key={g.id}
             onClick={() => setGenre(g.id)}
             className={[
-              "flex items-center gap-2 border px-4 py-2 font-mono text-[11px] uppercase tracking-ui transition-colors",
+              "flex min-h-[44px] items-center gap-2 border px-4 py-2 font-mono text-[11px] uppercase tracking-ui transition-colors",
               genre === g.id ? "border-red bg-red text-white" : "border-line text-ink-1 hover:border-red/40",
             ].join(" ")}
           >

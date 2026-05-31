@@ -55,7 +55,7 @@ export default function Login() {
 
       {/* Form */}
       <div className="relative flex items-center justify-center px-6 py-20 lg:px-[60px]">
-        <Link to="/" className="absolute left-6 top-8 font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px]">
+        <Link to="/" className="absolute left-6 top-8 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px]">
           {t("login.back")}
         </Link>
 
@@ -92,7 +92,7 @@ export default function Login() {
               <input id="lg-pw" type={showPw ? "text" : "password"} autoComplete="current-password" placeholder="••••••••"
                 value={password} onChange={(e) => setPassword(e.target.value)}
                 className={`${FIELD} w-full pr-[70px] ${errors.password ? "border-red" : ""}`} />
-              <button type="button" onClick={() => setShowPw((s) => !s)} className="absolute right-3.5 top-1/2 -translate-y-1/2 font-mono text-[10px] tracking-ui text-ink-2 hover:text-ink-0">
+              <button type="button" onClick={() => setShowPw((s) => !s)} className="absolute right-3.5 top-1/2 -translate-y-1/2 -m-2 p-2 font-mono text-[10px] tracking-ui text-ink-2 hover:text-ink-0">
                 {showPw ? t("login.hide") : t("login.show")}
               </button>
             </div>
@@ -106,7 +106,7 @@ export default function Login() {
               <input type="checkbox" defaultChecked className="h-4 w-4 accent-red" />
               {t("login.remember")}
             </label>
-            <a href="#" className="font-mono text-[11px] uppercase tracking-ui text-ink-1 hover:text-red">{t("login.forgot")}</a>
+            <a href="#" aria-label={t("login.forgot")} className="inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-ui text-ink-1 hover:text-red">{t("login.forgot")}</a>
           </div>
 
           <HorrorButton type="submit" block disabled={loading}>

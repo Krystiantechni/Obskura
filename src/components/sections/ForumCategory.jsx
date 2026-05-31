@@ -6,13 +6,13 @@ export default function ForumCategory({ category }) {
   return (
     <div className="mb-6 border border-line bg-bg-1/40 transition-colors hover:border-red/40">
       <div className="flex items-center justify-between border-b border-line bg-black/30 px-6 py-4">
-        <span className="flex items-center gap-3 font-serif text-[24px] italic">
+        <span className="flex min-w-0 items-center gap-3 font-serif text-[24px] italic">
           {Icon && (
-            <span className="grid h-9 w-9 place-items-center border border-line text-red">
+            <span className="grid h-9 w-9 shrink-0 place-items-center border border-line text-red">
               <Icon size={16} />
             </span>
           )}
-          {category.name}
+          <span className="min-w-0 truncate">{category.name}</span>
         </span>
         <span className="hidden font-mono text-[10px] uppercase tracking-mono text-ink-2 sm:block">
           {category.info.map((part, i) => (
@@ -28,7 +28,7 @@ export default function ForumCategory({ category }) {
         <button
           key={th.t}
           type="button"
-          className="grid w-full cursor-pointer grid-cols-1 items-center gap-2 border-b border-line-soft px-6 py-4 text-left transition-colors last:border-b-0 hover:bg-red/[0.04] lg:grid-cols-[1fr_80px_80px_160px] lg:gap-4"
+          className="grid w-full cursor-pointer grid-cols-1 items-center gap-2 border-b border-line-soft px-4 py-4 text-left transition-colors last:border-b-0 hover:bg-red/[0.04] sm:px-6 lg:grid-cols-[1fr_80px_80px_160px] lg:gap-4"
         >
           <span className="min-w-0">
             <span className="mb-1 block text-[15px] font-medium leading-snug text-ink-0">

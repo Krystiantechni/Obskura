@@ -10,8 +10,8 @@ const Shield = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none
 const Sliders = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg>);
 const Chart = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 19V5M4 19h16M8 16l4-5 3 3 4-6"/></svg>);
 const Megaphone = () => (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 10v4h3l9 5V5L7 10H4zM18 9a3 3 0 0 1 0 6"/></svg>);
-const Cookie = ({ size = 18 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
+const Cookie = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" className={className}>
     <path d="M12 2.6a9.4 9.4 0 1 0 9.4 9.4 3.7 3.7 0 0 1-4.6-4.7A3.7 3.7 0 0 1 12 2.6z" />
     <circle cx="9.1" cy="9" r="1.05" fill="currentColor" stroke="none" />
     <circle cx="7.3" cy="13.1" r="1.3" fill="currentColor" stroke="none" />
@@ -21,7 +21,7 @@ const Cookie = ({ size = 18 }) => (
     <circle cx="15.5" cy="14.8" r="0.7" fill="currentColor" stroke="none" />
   </svg>
 );
-Cookie.propTypes = { size: PropTypes.number };
+Cookie.propTypes = { size: PropTypes.number, className: PropTypes.string };
 
 function Toggle({ checked, onChange, label }) {
   return (
@@ -164,23 +164,23 @@ export default function CookieConsent() {
             {/* Akcje */}
             <div className="flex flex-col gap-2 sm:flex-row">
               <button type="button" onClick={acceptAll}
-                className="flex-1 bg-red px-3.5 py-2.5 font-mono text-[10px] font-bold uppercase tracking-ui text-black transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">
+                className="flex-1 bg-red px-3.5 inline-flex min-h-[44px] items-center justify-center py-2.5 font-mono text-[11px] font-bold uppercase tracking-ui text-black transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">
                 {view === "details" ? t("cookie.accept_all", "Akceptuj wszystkie") : t("cookie.ok", "W porządku")}
               </button>
               {view === "details" ? (
                 <>
                   <button type="button" onClick={rejectAll}
-                    className="flex-1 border border-white/15 px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
+                    className="flex-1 border border-white/15 px-3.5 inline-flex min-h-[44px] items-center justify-center py-2.5 font-mono text-[11px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
                     {t("cookie.reject_all", "Odrzuć wszystkie")}
                   </button>
                   <button type="button" onClick={savePrefs}
-                    className="flex-1 border border-white/15 px-3.5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-red hover:text-red">
+                    className="flex-1 border border-white/15 px-3.5 inline-flex min-h-[44px] items-center justify-center py-2.5 font-mono text-[11px] uppercase tracking-ui text-ink-1 transition-colors hover:border-red hover:text-red">
                     {t("cookie.save_prefs", "Zapisz preferencje")}
                   </button>
                 </>
               ) : (
                 <button type="button" onClick={() => setView("details")}
-                  className="border border-white/15 px-5 py-2.5 font-mono text-[10px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
+                  className="border border-white/15 px-5 inline-flex min-h-[44px] items-center justify-center py-2.5 font-mono text-[11px] uppercase tracking-ui text-ink-1 transition-colors hover:border-ink-0 hover:text-ink-0">
                   {t("cookie.settings", "Ustawienia")}
                 </button>
               )}

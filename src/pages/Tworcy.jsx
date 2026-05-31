@@ -181,7 +181,7 @@ export default function Tworcy() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`border-b py-2 font-mono text-[11px] uppercase tracking-mono transition-colors ${activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0"}`}
+                className={`inline-flex min-h-[44px] items-center border-b py-2 font-mono text-[11px] uppercase tracking-mono transition-colors ${activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0"}`}
               >
                 {tab.label} <span className="ml-1.5 text-[9px] text-ink-3">{tab.num}</span>
               </button>
@@ -189,7 +189,7 @@ export default function Tworcy() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3.5 lg:grid-cols-4 lg:gap-6">
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {creators.map((c) => (
             <article key={`${c.name}-${c.nameEm}`} className="group cursor-pointer border border-line bg-bg-1/40 transition-all duration-300 hover:-translate-y-1 hover:border-red/30">
               <div className="relative aspect-square overflow-hidden bg-bg-1">
@@ -216,7 +216,7 @@ export default function Tworcy() {
 
       {/* Apply CTA */}
       <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
-        <div className="relative grid items-center gap-10 overflow-hidden border border-line bg-bg-1/60 p-8 lg:grid-cols-2 lg:gap-[60px] lg:p-[60px]">
+        <div className="relative grid items-center gap-10 overflow-hidden border border-line bg-bg-1/60 p-5 sm:p-8 lg:grid-cols-2 lg:gap-[60px] lg:p-[60px]">
           <div className="pointer-events-none absolute -right-24 -top-24 h-[400px] w-[400px]" style={{ background: "radial-gradient(circle, rgba(255,42,42,0.1), transparent 70%)" }} />
           <div className="relative">
             <Eyebrow>{t("tworcy.apply_eyebrow", "// OTWARTE ZGŁOSZENIA")}</Eyebrow>
@@ -239,7 +239,7 @@ export default function Tworcy() {
           </div>
 
           <form
-            className="relative border border-line bg-black/40 p-6 lg:p-9"
+            className="relative border border-line bg-black/40 p-5 sm:p-6 lg:p-9"
             onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
           >
             <h3 className="mb-1.5 font-serif text-2xl font-medium">{t("tworcy.form_h_p1", "Formularz")} <em className="italic text-ink-1">{t("tworcy.form_h_em", "zgłoszeniowy")}</em></h3>

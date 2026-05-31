@@ -92,12 +92,16 @@ function ToggleRow({ title, desc, on, required = false, onToggle }) {
         aria-label={title}
         disabled={required}
         onClick={onToggle}
-        className={`relative h-[22px] w-10 flex-shrink-0 rounded-full transition-colors duration-200 ${
-          required ? "cursor-not-allowed bg-ink-3" : on ? "bg-red" : "bg-white/10"
-        } after:absolute after:left-[3px] after:top-[3px] after:h-4 after:w-4 after:rounded-full after:bg-ink-0 after:transition-transform after:duration-200 ${
-          on ? "after:translate-x-[18px]" : ""
-        }`}
-      />
+        className={`-my-3 flex min-h-[44px] flex-shrink-0 items-center py-3`}
+      >
+        <span
+          className={`relative h-[22px] w-10 rounded-full transition-colors duration-200 ${
+            required ? "cursor-not-allowed bg-ink-3" : on ? "bg-red" : "bg-white/10"
+          } after:absolute after:left-[3px] after:top-[3px] after:h-4 after:w-4 after:rounded-full after:bg-ink-0 after:transition-transform after:duration-200 ${
+            on ? "after:translate-x-[18px]" : ""
+          }`}
+        />
+      </button>
     </div>
   );
 }
@@ -195,7 +199,8 @@ export default function Prawne() {
 
       {/* Tab bar */}
       <div className="sticky top-[68px] z-40 border-b border-line bg-bg-1/70 px-5 backdrop-blur-lg lg:px-12">
-        <div className="mx-auto flex max-w-[1100px] overflow-x-auto">
+        <div className="relative">
+        <div className="mx-auto flex max-w-[1100px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TABS.map((x, i) => (
             <button
               key={x.id}
@@ -210,25 +215,28 @@ export default function Prawne() {
             </button>
           ))}
         </div>
+        {/* Fade-mask: scroll indicator on mobile */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-bg-1 to-transparent lg:hidden" aria-hidden="true" />
+        </div>
       </div>
 
       {/* Document */}
       <main className="mx-auto mt-10 grid max-w-[1100px] grid-cols-1 items-start gap-8 px-5 pb-24 lg:mt-16 lg:grid-cols-[220px_1fr] lg:gap-16 lg:px-12">
-        {/* TOC */}
-        <aside className="lg:sticky lg:top-36">
+        {/* TOC — below article on mobile, sticky sidebar on desktop */}
+        <aside className="order-2 lg:order-1 lg:sticky lg:top-36">
           <h5 className="mb-4 border-b border-line pb-2.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("prawne.toc_label", "// Spis treści")}</h5>
           <ol className="space-y-2">
             {TOC[tab].map((s, i) => (
               <li key={s.id} className="text-[13px]">
                 <span className="mr-1 font-mono text-[10px] text-ink-3">{String(i + 1).padStart(2, "0")} ·</span>
-                <a href={`#${s.id}`} className="text-ink-1 transition-colors hover:text-red">{s.label}</a>
+                <a href={`#${s.id}`} className="inline-block py-1.5 text-ink-1 transition-colors hover:text-red">{s.label}</a>
               </li>
             ))}
           </ol>
         </aside>
 
         {/* Body */}
-        <article className="text-ink-1">
+        <article className="order-1 lg:order-2 text-ink-1">
           {tab === "prywatnosc" && (
             <>
               <Tldr tldrLabel={tldrLabel}>

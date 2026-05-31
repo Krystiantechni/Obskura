@@ -198,7 +198,7 @@ export default function Spotkania() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`border-b py-1.5 font-mono text-[11px] uppercase tracking-mono transition-colors ${activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0"}`}
+                className={`inline-flex min-h-[44px] items-center border-b py-1.5 font-mono text-[11px] uppercase tracking-mono transition-colors ${activeTab === tab.key ? "border-red text-ink-0" : "border-transparent text-ink-2 hover:text-ink-0"}`}
               >
                 {tab.label}
               </button>
@@ -227,7 +227,7 @@ export default function Spotkania() {
                 <span className={`block text-sm ${e.seatsFull ? "text-ink-3" : "text-ink-0"}`}>{e.seats}</span>{e.seatsLabel}
               </div>
               {e.ctaVariant === "disabled" ? (
-                <span className="cursor-not-allowed border border-line px-5 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.18em] text-ink-3">{e.cta}</span>
+                <span className="inline-flex min-h-[44px] cursor-not-allowed items-center justify-center border border-line px-5 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.18em] text-ink-3">{e.cta}</span>
               ) : (
                 <HorrorButton to={e.to} variant={e.ctaVariant} className="!px-5 !py-3">{e.cta}</HorrorButton>
               )}
@@ -253,7 +253,7 @@ export default function Spotkania() {
                   <span key={j} className={j < 2 ? "text-ink-0" : ""}>{s}</span>
                 ))}
               </div>
-              <a href="#" className="mt-3.5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-eyebrow text-red transition-colors hover:text-ink-0">{p.link}</a>
+              <a href="#" className="mt-3.5 inline-flex min-h-[44px] items-center gap-2 font-mono text-[10px] uppercase tracking-eyebrow text-red transition-colors hover:text-ink-0">{p.link}</a>
             </article>
           ))}
         </div>
