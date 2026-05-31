@@ -54,17 +54,17 @@ export default function Login() {
       </div>
 
       {/* Form */}
-      <div className="relative flex items-center justify-center px-6 py-20 lg:px-[60px]">
-        <Link to="/" className="absolute left-6 top-8 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px]">
+      <div className="relative flex items-center justify-center px-5 py-16 sm:px-8 lg:px-[60px]">
+        <Link to="/" className="absolute left-5 top-8 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 sm:left-8 lg:left-[60px]">
           {t("login.back")}
         </Link>
 
         <form className="w-full max-w-[420px]" onSubmit={onSubmit} noValidate>
-          <Eyebrow className="mb-6">{t("login.eyebrow")}</Eyebrow>
-          <h1 className="mb-3 font-serif text-5xl font-medium leading-none tracking-[-0.02em]">
+          <Eyebrow className="mb-5 lg:mb-6">{t("login.eyebrow")}</Eyebrow>
+          <h1 className="mb-3 font-serif text-[clamp(2rem,8vw,3rem)] font-medium leading-none tracking-[-0.02em] lg:text-5xl">
             {t("login.h1_p1")} <em className="italic text-ink-1">{t("login.h1_p2")}</em>.
           </h1>
-          <p className="mb-9 text-sm leading-relaxed text-ink-1">{t("login.sub")}</p>
+          <p className="mb-6 text-sm leading-relaxed text-ink-1 lg:mb-9">{t("login.sub")}</p>
 
           <div className="grid grid-cols-2 gap-2.5">
             {[t("login.oauth_github"), t("login.oauth_google")].map((o) => (
@@ -101,7 +101,7 @@ export default function Login() {
 
           {serverError && <p className="mb-4 border border-red/40 bg-red/[0.06] p-2.5 font-mono text-[11px] text-red" role="alert">{serverError}</p>}
 
-          <div className="mb-7 flex items-center justify-between">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-y-1 lg:mb-7">
             <label className="flex cursor-pointer items-center gap-2.5 text-xs text-ink-1">
               <input type="checkbox" defaultChecked className="h-4 w-4 accent-red" />
               {t("login.remember")}
