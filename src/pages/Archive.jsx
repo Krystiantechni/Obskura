@@ -96,8 +96,8 @@ export default function Archive() {
             <br />
             {t("archive.title_p2")}
           </h1>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-1">{t("archive.lead")}</p>
-          <div className="mt-6 flex flex-wrap gap-9 border-t border-line pt-5">
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink-1 lg:text-base">{t("archive.lead")}</p>
+          <div className="mt-6 grid grid-cols-3 gap-x-5 gap-y-4 border-t border-line pt-5 sm:flex sm:flex-wrap sm:gap-9">
             {[
               { num: "147", lab: t("archive.stat_episodes") },
               { num: "412h", lab: t("archive.stat_total") },
@@ -106,7 +106,7 @@ export default function Archive() {
               { num: "4.8 ★", lab: t("archive.stat_avg") },
             ].map((s, i) => (
               <div key={i}>
-                <div className="font-serif text-4xl font-medium leading-none">{s.num}</div>
+                <div className="font-serif text-3xl font-medium leading-none lg:text-4xl">{s.num}</div>
                 <div className="mt-1.5 font-mono text-[9px] uppercase tracking-mono text-ink-2">{s.lab}</div>
               </div>
             ))}
@@ -115,9 +115,10 @@ export default function Archive() {
       </header>
 
       {/* Toolbar */}
-      <div className="border-b border-line bg-bg-1/70 px-5 py-5 backdrop-blur-md lg:px-12">
-        <div className="mx-auto grid max-w-[1400px] items-center gap-5 lg:grid-cols-[1fr_auto_auto]">
-          <div className="relative">
+      <div className="border-b border-line bg-bg-1/70 px-5 py-4 backdrop-blur-md lg:px-12">
+        <div className="mx-auto max-w-[1400px]">
+          {/* Row 1: search full-width on mobile */}
+          <div className="relative mb-3 lg:hidden">
             <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-2"><SearchIcon /></span>
             <input
               type="search"
@@ -127,21 +128,35 @@ export default function Archive() {
               className="w-full border border-line bg-black/40 py-3 pl-11 pr-4 text-sm text-ink-0 transition-colors focus:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70"
             />
           </div>
-          <select value={sort} onChange={(e) => setSort(e.target.value)} className="cursor-pointer border border-line bg-black/40 px-4 py-3 text-[13px] text-ink-0 transition-colors focus:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70">
-            <option value="new">{t("archive.sort_new")}</option>
-            <option value="old">{t("archive.sort_old")}</option>
-            <option value="rating">{t("archive.sort_rating")}</option>
-            <option value="duration">{t("archive.sort_duration")}</option>
-          </select>
-          <div className="flex border border-line justify-self-start">
-            <button onClick={() => setView("grid")} className={`grid h-11 w-11 place-items-center transition-colors ${view === "grid" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><GridIcon /></button>
-            <button onClick={() => setView("list")} className={`grid h-11 w-11 place-items-center transition-colors ${view === "list" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><ListViewIcon /></button>
+          {/* Row 2: sort + view toggle on mobile; single row on desktop */}
+          <div className="flex items-center gap-3 lg:grid lg:grid-cols-[1fr_auto_auto] lg:gap-5">
+            {/* Search — desktop only (hidden on mobile, shown above) */}
+            <div className="relative hidden lg:block lg:flex-1">
+              <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-2"><SearchIcon /></span>
+              <input
+                type="search"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder={t("archive.search_placeholder")}
+                className="w-full border border-line bg-black/40 py-3 pl-11 pr-4 text-sm text-ink-0 transition-colors focus:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70"
+              />
+            </div>
+            <select value={sort} onChange={(e) => setSort(e.target.value)} className="min-h-[44px] flex-1 cursor-pointer border border-line bg-black/40 px-4 py-3 text-[13px] text-ink-0 transition-colors focus:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70 lg:flex-none">
+              <option value="new">{t("archive.sort_new")}</option>
+              <option value="old">{t("archive.sort_old")}</option>
+              <option value="rating">{t("archive.sort_rating")}</option>
+              <option value="duration">{t("archive.sort_duration")}</option>
+            </select>
+            <div className="flex shrink-0 border border-line">
+              <button onClick={() => setView("grid")} className={`grid h-11 w-11 place-items-center transition-colors ${view === "grid" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><GridIcon /></button>
+              <button onClick={() => setView("list")} className={`grid h-11 w-11 place-items-center transition-colors ${view === "list" ? "bg-red text-white" : "text-ink-2 hover:text-ink-0"}`}><ListViewIcon /></button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Genre chips */}
-      <div className="mx-auto flex max-w-[1400px] flex-wrap gap-2 px-5 py-6 lg:px-12">
+      <div className="mx-auto flex max-w-[1400px] flex-wrap gap-2 px-5 py-5 lg:py-6 lg:px-12">
         {genres.map((g) => (
           <button
             key={g.id}
@@ -158,8 +173,8 @@ export default function Archive() {
       </div>
 
       {/* Grid */}
-      <div className="mx-auto mt-5 max-w-[1400px] px-5 pb-32 lg:px-12">
-        <div className="mb-7 flex items-center justify-between border-b border-line pb-4 font-mono text-[11px] uppercase tracking-ui text-ink-2">
+      <div className="mx-auto mt-4 max-w-[1400px] px-5 pb-20 lg:mt-5 lg:px-12 lg:pb-32">
+        <div className="mb-7 flex flex-wrap items-center justify-between gap-y-1 border-b border-line pb-4 font-mono text-[11px] uppercase tracking-ui text-ink-2">
           <div>
             <span className="text-ink-0">{filtered.length}</span> {filtered.length === 1 ? t("archive.result_one") : t("archive.result_many")}
             {genre !== "all" && ` · ${genreLabel[genre].toUpperCase()}`}
@@ -185,9 +200,9 @@ export default function Archive() {
                   <div className="absolute left-3.5 top-3.5 z-[2] bg-black/50 px-2 py-1 font-mono text-[10px] tracking-mono text-ink-1 backdrop-blur-sm">S{String(s.season).padStart(2, "0")}·E{String(s.num).padStart(2, "0")}</div>
                   {s.isNew && <div className="absolute right-3.5 top-3.5 z-[2] bg-red px-2 py-1 font-mono text-[9px] tracking-mono text-white shadow-[0_0_12px_rgba(255,42,42,0.5)]">{t("archive.new_badge")}</div>}
                   <span className="absolute bottom-[90px] right-4 z-[3] grid h-9 w-9 translate-y-2 place-items-center border border-white/15 bg-black/70 text-ink-0 opacity-0 backdrop-blur-sm transition-all group-hover:translate-y-0 group-hover:opacity-100 group-hover:border-red group-hover:bg-red"><Play size={10} /></span>
-                  <div className="absolute inset-x-0 bottom-0 z-[2] p-5">
-                    <span className={`mb-2.5 inline-block border bg-black/40 px-2 py-[3px] font-mono text-[9px] uppercase tracking-mono ${tagCls}`}>{genreLabel[s.genre]}</span>
-                    <h3 className="mb-1.5 font-serif text-[22px] font-medium leading-tight">{s.title} {s.titleEm && <em className="italic text-ink-1">{s.titleEm}</em>}</h3>
+                  <div className="absolute inset-x-0 bottom-0 z-[2] p-3 sm:p-4 lg:p-5">
+                    <span className={`mb-2 inline-block border bg-black/40 px-2 py-[3px] font-mono text-[9px] uppercase tracking-mono ${tagCls}`}>{genreLabel[s.genre]}</span>
+                    <h3 className="mb-1.5 font-serif text-[16px] font-medium leading-tight sm:text-[18px] lg:text-[22px]">{s.title} {s.titleEm && <em className="italic text-ink-1">{s.titleEm}</em>}</h3>
                     <div className="flex justify-between font-mono text-[9px] uppercase tracking-ui text-ink-2">
                       <span>{fmtDur(s.dur)} · {s.plays}</span>
                       <span className="text-red">★ {s.rating}</span>
@@ -207,7 +222,7 @@ export default function Archive() {
                   <div className="h-[50px] w-16 bg-cover bg-[center_30%] sm:h-20 sm:w-[100px]" style={{ backgroundImage: `url(${IMGS[s.img]})` }} />
                   <div>
                     <span className={`mb-1.5 inline-block border bg-black/40 px-2 py-[3px] font-mono text-[9px] uppercase tracking-mono ${tagCls}`}>{genreLabel[s.genre]}</span>
-                    <h3 className="font-serif text-lg font-medium leading-tight">{s.title} {s.titleEm && <em className="italic text-ink-1">{s.titleEm}</em>}</h3>
+                    <h3 className="font-serif text-base font-medium leading-tight sm:text-lg">{s.title} {s.titleEm && <em className="italic text-ink-1">{s.titleEm}</em>}</h3>
                   </div>
                   <div className="hidden font-mono text-[10px] uppercase tracking-ui text-ink-2 sm:block">{fmtDur(s.dur)} · {s.plays}</div>
                   <div className="font-mono text-[10px] uppercase tracking-ui text-red">★ {s.rating}</div>
