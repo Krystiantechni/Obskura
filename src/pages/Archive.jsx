@@ -86,7 +86,6 @@ export default function Archive() {
 
   return (
     <>
-      {/* Header */}
       <header className="relative overflow-hidden border-b border-line px-5 pb-10 pt-[140px] lg:px-12">
         <div className="pointer-events-none absolute -right-52 top-24 h-[600px] w-[600px]" style={{ background: "radial-gradient(circle, rgba(255,42,42,0.08), transparent 60%)" }} />
         <div className="relative mx-auto max-w-[1400px]">
@@ -114,10 +113,8 @@ export default function Archive() {
         </div>
       </header>
 
-      {/* Toolbar */}
       <div className="border-b border-line bg-bg-1/70 px-5 py-4 backdrop-blur-md lg:px-12">
         <div className="mx-auto max-w-[1400px]">
-          {/* Row 1: search full-width on mobile */}
           <div className="relative mb-3 lg:hidden">
             <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-2"><SearchIcon /></span>
             <input
@@ -128,9 +125,7 @@ export default function Archive() {
               className="w-full border border-line bg-black/40 py-3 pl-11 pr-4 text-sm text-ink-0 transition-colors focus:border-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70"
             />
           </div>
-          {/* Row 2: sort + view toggle on mobile; single row on desktop */}
           <div className="flex items-center gap-3 lg:grid lg:grid-cols-[1fr_auto_auto] lg:gap-5">
-            {/* Search — desktop only (hidden on mobile, shown above) */}
             <div className="relative hidden lg:block lg:flex-1">
               <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-2"><SearchIcon /></span>
               <input
@@ -155,7 +150,6 @@ export default function Archive() {
         </div>
       </div>
 
-      {/* Genre chips */}
       <div className="mx-auto flex max-w-[1400px] flex-wrap gap-2 px-5 py-5 lg:py-6 lg:px-12">
         {genres.map((g) => (
           <button
@@ -172,7 +166,6 @@ export default function Archive() {
         ))}
       </div>
 
-      {/* Grid */}
       <div className="mx-auto mt-4 max-w-[1400px] px-5 pb-20 lg:mt-5 lg:px-12 lg:pb-32">
         <div className="mb-7 flex flex-wrap items-center justify-between gap-y-1 border-b border-line pb-4 font-mono text-[11px] uppercase tracking-ui text-ink-2">
           <div>

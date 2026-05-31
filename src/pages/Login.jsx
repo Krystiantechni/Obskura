@@ -36,7 +36,6 @@ export default function Login() {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
-      {/* Art */}
       <div className="relative hidden overflow-hidden bg-bg-0 lg:block">
         <img src="/images/img-hallway.webp" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_25%]" style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.85)" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, transparent 0%, transparent 60%, rgba(5,6,8,0.9) 100%), linear-gradient(180deg, rgba(5,6,8,0.5) 0%, transparent 30%, rgba(5,6,8,0.7) 100%)" }} />
@@ -53,7 +52,6 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Form */}
       <div className="relative flex items-center justify-center px-5 py-16 sm:px-8 lg:px-[60px]">
         <Link to="/" className="absolute left-5 top-8 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 sm:left-8 lg:left-[60px]">
           {t("login.back")}

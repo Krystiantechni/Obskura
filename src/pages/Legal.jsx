@@ -183,7 +183,6 @@ export default function Legal() {
 
   return (
     <>
-      {/* Header */}
       <header className="border-b border-line px-5 pb-7 pt-[110px] sm:pb-9 sm:pt-[130px] lg:px-12">
         <div className="mx-auto max-w-[1100px]">
           <Eyebrow>{`${t("prawne.eyebrow_prefix", "// Dokument nr")} ${docNums[tab]} ${t("prawne.eyebrow_suffix", "· Obowiązuje od 15.04.2026")}`}</Eyebrow>
@@ -197,7 +196,6 @@ export default function Legal() {
         </div>
       </header>
 
-      {/* Tab bar */}
       <div className="sticky top-[58px] z-40 border-b border-line bg-bg-1/70 px-5 backdrop-blur-lg sm:top-[68px] lg:px-12">
         <div className="relative">
           <div className="mx-auto flex max-w-[1100px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -215,14 +213,11 @@ export default function Legal() {
               </button>
             ))}
           </div>
-          {/* Fade-mask: scroll indicator on mobile */}
           <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-bg-1 to-transparent lg:hidden" aria-hidden="true" />
         </div>
       </div>
 
-      {/* Document */}
       <main className="mx-auto mt-8 grid max-w-[1100px] grid-cols-1 items-start gap-8 px-5 pb-16 sm:mt-10 sm:pb-24 lg:mt-16 lg:grid-cols-[220px_1fr] lg:gap-16 lg:px-12">
-        {/* TOC — below article on mobile, sticky sidebar on desktop */}
         <aside className="order-2 lg:order-1 lg:sticky lg:top-36">
           <h5 className="mb-3 border-b border-line pb-2.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("prawne.toc_label", "// Spis treści")}</h5>
           <ol className="grid grid-cols-2 gap-x-4 gap-y-0.5 sm:grid-cols-3 lg:block lg:space-y-2">
@@ -235,7 +230,6 @@ export default function Legal() {
           </ol>
         </aside>
 
-        {/* Body */}
         <article className="order-1 min-w-0 lg:order-2 text-ink-1">
           {tab === "prywatnosc" && (
             <>

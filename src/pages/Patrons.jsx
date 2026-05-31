@@ -78,7 +78,6 @@ export default function Patrons() {
 
   return (
     <>
-      {/* Hero */}
       <header className="relative overflow-hidden px-5 pb-10 pt-[140px] lg:px-12">
         <div className="pointer-events-none absolute -right-24 top-16 h-[500px] w-[500px]" style={{ background: "radial-gradient(circle, rgba(255,42,42,0.08), transparent 60%)" }} />
         <div className="relative mx-auto max-w-[1400px]">
@@ -102,7 +101,6 @@ export default function Patrons() {
         </div>
       </header>
 
-      {/* Patroni vs Klub */}
       <section className="mx-auto mt-14 max-w-[1400px] px-5 lg:mt-20 lg:px-12">
         <Eyebrow accent="blue">{t("patroni.vs_eyebrow", "JAKA RÓŻNICA")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -122,7 +120,6 @@ export default function Patrons() {
         </div>
       </section>
 
-      {/* Tiers */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 lg:mt-24 lg:px-12">
         <Eyebrow>{t("patroni.tiers_eyebrow", "SEZON 04 · LATO 2026")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -155,7 +152,6 @@ export default function Patrons() {
         </div>
       </section>
 
-      {/* Wall of patrons */}
       <section className="mx-auto mt-20 max-w-[1400px] px-5 lg:mt-32 lg:px-12">
         <div className="mb-8 flex flex-col items-start justify-between gap-3.5 border-b border-line pb-6 lg:flex-row lg:items-end">
           <div>
@@ -187,7 +183,6 @@ export default function Patrons() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="mx-auto mt-20 max-w-[1100px] px-5 lg:mt-32 lg:px-12">
         <Eyebrow>{t("patroni.faq_eyebrow", "CZĘSTE PYTANIA")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">

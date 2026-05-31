@@ -48,7 +48,6 @@ export default function Hero({ variant = "wide" }) {
 
   return (
     <section className="relative min-h-screen overflow-hidden px-5 pb-10 pt-[140px] lg:pb-16 lg:px-12">
-      {/* Monster stage */}
       <div className="pointer-events-none absolute inset-0 z-[1] flex justify-center" style={{ alignItems: isWide ? "stretch" : "flex-end" }}>
         <div className={isWide ? "relative h-full w-full" : "relative mb-[-8%] aspect-[816/1456] h-[110%]"} style={{ filter: "contrast(1.2) saturate(0.65) brightness(0.82) hue-rotate(-8deg) blur(0.3px)" }}>
           {showVideo ? (
@@ -71,7 +70,6 @@ export default function Hero({ variant = "wide" }) {
               className={`absolute inset-0 h-full w-full object-cover ${isWide ? "mask-hero-wide object-[center_25%]" : "mask-hero-portrait"}`}
             />
           )}
-          {/* Red rim glow z wolnym pulsem (synchronizuje rytm ze świecącymi oczami stwora). */}
           <div
             className="animate-red-pulse-slow pointer-events-none absolute left-1/2 z-[2] -translate-x-1/2"
             style={
@@ -80,7 +78,6 @@ export default function Hero({ variant = "wide" }) {
                 : { top: "18%", width: 280, height: 280, background: "radial-gradient(circle, rgba(255,42,42,0.55), transparent 60%)" }
             }
           />
-          {/* Blue water glow — radial gradient (sam radial robi miękkie krawędzie, blur 40px niepotrzebny). */}
           <div
             className="pointer-events-none absolute left-1/2 z-[2] w-4/5 -translate-x-1/2"
             style={{ bottom: isWide ? "-5%" : "-10%", height: isWide ? "50%" : "40%", background: "radial-gradient(ellipse, rgba(95,168,255,0.42), transparent 70%)" }}
@@ -88,13 +85,10 @@ export default function Hero({ variant = "wide" }) {
         </div>
       </div>
 
-      {/* Atmospheric fog overlay — static (animowane bg-position na SVG turbulence z mix-blend było ciężkie). */}
       <div className="pointer-events-none absolute inset-0 z-[3] bg-fog-drift opacity-25" />
-      {/* Mocniejszy vignette — brzegi kadru ciemne, focus na stworze (cinematic horror). */}
       <div className="pointer-events-none absolute inset-0 z-[3]" style={{ background: "radial-gradient(ellipse 80% 70% at 50% 45%, transparent 30%, rgba(5,6,8,0.85) 85%, #050608)" }} />
       <div className="pointer-events-none absolute inset-0 z-[3]" style={{ background: "linear-gradient(180deg, transparent 40%, rgba(5,6,8,0.6) 70%, #050608 95%)" }} />
 
-      {/* Content */}
       <div className={`relative z-10 mx-auto grid min-h-[calc(100vh-200px)] max-w-[1400px] items-center gap-12 ${isWide ? "grid-cols-1" : "lg:grid-cols-2 lg:gap-20"}`}>
         <div className={isWide ? "max-w-3xl bg-[linear-gradient(90deg,rgba(5,6,8,0.85),rgba(5,6,8,0.6)_60%,transparent)] py-6 pr-4 lg:py-9 lg:pr-10 lg:-ml-10 lg:pl-10" : "pt-5"}>
           <Eyebrow className="mb-7">{t("hero.eyebrow")}</Eyebrow>
@@ -137,7 +131,6 @@ export default function Hero({ variant = "wide" }) {
           </div>
         </div>
 
-        {/* Meta cards — pojemnik bez interakcji, karty z pointer-events-auto (hover sci-fi) */}
         <div className="pointer-events-none absolute inset-0 z-[11] hidden lg:block">
           <FloatingMetaCard
             accent="red"

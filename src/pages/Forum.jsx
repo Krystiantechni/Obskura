@@ -77,7 +77,6 @@ export default function Forum() {
 
   return (
     <div className="pt-[88px]">
-      {/* HERO */}
       <header className="border-b border-line px-5 pb-8 pt-8 sm:pb-10 sm:pt-12 lg:px-12">
         <div className="mx-auto max-w-[1400px]">
           <Eyebrow className="mb-4">{t("forum.eyebrow", "// FORUM · MIEJSCE NA NIESPOKOJNE PYTANIA")}</Eyebrow>
@@ -100,7 +99,6 @@ export default function Forum() {
         </div>
       </header>
 
-      {/* MAIN */}
       <main className="mx-auto mt-10 grid max-w-[1400px] grid-cols-1 gap-10 px-5 pb-24 lg:grid-cols-[1fr_320px] lg:px-12">
         <div>
           {CATEGORIES.map((cat) => (
@@ -108,7 +106,6 @@ export default function Forum() {
           ))}
         </div>
 
-        {/* SIDEBAR */}
         <aside>
           <div className="mb-5 border border-line bg-bg-1/40 p-6">
             <h4 className="mb-4 border-b border-line pb-3 font-mono text-[10px] uppercase tracking-mono text-ink-2">

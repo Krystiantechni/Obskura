@@ -128,9 +128,7 @@ export default function Player() {
 
   return (
     <div className="grid min-h-screen grid-cols-1 bg-bg-0 pt-[88px] lg:grid-cols-[1fr_460px] lg:pt-0">
-      {/* STAGE */}
       <div className="relative min-h-[56vh] overflow-hidden bg-bg-1 sm:min-h-[64vh] lg:min-h-screen">
-        {/* bg */}
         <div className="absolute inset-0">
           <img
             src="/images/monster.webp"
@@ -147,7 +145,6 @@ export default function Player() {
           />
         </div>
 
-        {/* topbar */}
         <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-4 sm:px-5 sm:py-5 lg:px-10 lg:py-7">
           <Link
             to="/episode/12"
@@ -166,7 +163,6 @@ export default function Player() {
           </div>
         </div>
 
-        {/* center */}
         <div className="absolute left-1/2 top-1/2 z-[5] w-full -translate-x-1/2 -translate-y-1/2 px-4 text-center sm:px-5 lg:px-10">
           <div className="mb-3 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-mono text-red before:h-px before:w-5 before:bg-red before:shadow-[0_0_6px_#ff2a2a] before:content-[''] after:h-px after:w-5 after:bg-red after:shadow-[0_0_6px_#ff2a2a] after:content-[''] sm:mb-4 sm:gap-3 sm:text-[11px] sm:before:w-8 sm:after:w-8">
             {t("player.ep_num", "Sezon 03 · Odcinek 12 · Finał")}
@@ -184,7 +180,6 @@ export default function Player() {
           )}
         </div>
 
-        {/* bottom */}
         <div className="absolute inset-x-0 bottom-0 z-10 bg-[linear-gradient(0deg,rgba(5,6,8,0.92),transparent)] px-4 pb-6 pt-16 sm:px-5 sm:pb-8 sm:pt-20 lg:px-10 lg:pb-10">
           <Visualizer playing={playing} frame={frame} />
 
@@ -275,7 +270,6 @@ export default function Player() {
         </div>
       </div>
 
-      {/* PANEL */}
       <div className="flex flex-col border-t border-line bg-[rgba(10,13,18,0.95)] backdrop-blur-xl lg:max-h-screen lg:border-l lg:border-t-0">
         <div className="flex border-b border-line">
           {tabs.map((tb) => (

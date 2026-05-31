@@ -162,7 +162,6 @@ export default function Account() {
 
   return (
     <div className="bg-bg-0">
-      {/* HERO */}
       <header className="relative overflow-hidden border-b border-line px-5 pb-8 pt-[80px] lg:px-12 lg:pt-[120px]">
         <span aria-hidden className="pointer-events-none absolute right-[-100px] top-[60px] h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(255,42,42,0.06),transparent_60%)]" />
         <div className="relative mx-auto grid max-w-[1400px] items-end gap-6 lg:gap-10 lg:grid-cols-[1fr_auto]">
@@ -197,9 +196,7 @@ export default function Account() {
         </div>
       </header>
 
-      {/* LAYOUT */}
       <main className="mx-auto my-10 grid max-w-[1400px] items-start gap-10 px-5 lg:my-16 lg:grid-cols-[260px_1fr] lg:px-12">
-        {/* Side nav */}
         <nav className="flex flex-col border border-line bg-bg-2/40 lg:sticky lg:top-[100px]">
           <h3 className="px-5 pb-2 pt-[18px] font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.menu", "// MENU")}</h3>
           {SECTIONS.map((s) => {
@@ -227,7 +224,6 @@ export default function Account() {
           </button>
         </nav>
 
-        {/* Content */}
         <section className="border border-line bg-bg-2/30 p-6 sm:p-10">
           {section === "profile" && (
             <>

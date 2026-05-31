@@ -87,7 +87,6 @@ export default function CookieConsent() {
 
   return (
     <>
-      {/* Pływająca ikona — wycofaj/zmień zgodę (prawy dół, obok panelu A/B). Statyczna pozycja. */}
       {view === "hidden" && (
         <button
           type="button"
@@ -124,7 +123,6 @@ export default function CookieConsent() {
               </div>
             </div>
 
-            {/* Toggle szczegółów */}
             <button
               type="button"
               onClick={() => setView(view === "details" ? "banner" : "details")}
@@ -161,7 +159,6 @@ export default function CookieConsent() {
               )}
             </AnimatePresence>
 
-            {/* Akcje */}
             <div className="flex flex-col gap-2 sm:flex-row">
               <button type="button" onClick={acceptAll}
                 className="flex-1 bg-red px-3.5 inline-flex min-h-[44px] items-center justify-center py-2.5 font-mono text-[11px] font-bold uppercase tracking-ui text-black transition-shadow hover:shadow-[0_0_24px_rgba(255,42,42,0.45)]">

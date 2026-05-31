@@ -24,12 +24,10 @@ export default function FloatingMetaCard({ label, value, accent = "red", classNa
         className,
       ].join(" ")}
     >
-      {/* Skanline — leci w dół, widoczny tylko na hover */}
       <span
         aria-hidden
         className={`pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r ${scanGrad} opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:animate-scan-y`}
       />
-      {/* Świecące narożniki (corner brackets) — pojawiają się na hover */}
       <span aria-hidden className={`pointer-events-none absolute left-0 top-0 h-2.5 w-2.5 border-l border-t ${bracketBorder} opacity-0 transition-opacity duration-200 group-hover:opacity-100`} />
       <span aria-hidden className={`pointer-events-none absolute right-0 top-0 h-2.5 w-2.5 border-r border-t ${bracketBorder} opacity-0 transition-opacity duration-200 group-hover:opacity-100`} />
       <span aria-hidden className={`pointer-events-none absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l ${bracketBorder} opacity-0 transition-opacity duration-200 group-hover:opacity-100`} />

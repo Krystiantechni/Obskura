@@ -32,7 +32,6 @@ export default function Episode() {
       <div className="mx-auto max-w-[1400px]">
         <Link to="/archive" className="inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0">{t("episode.back")}</Link>
 
-        {/* Cinematic header */}
         <div className="relative mt-4 aspect-[3/2] overflow-hidden border border-white/6 bg-bg-0 sm:mt-6 sm:aspect-[21/9]">
           <video className="absolute inset-0 h-full w-full object-cover" style={{ filter: "contrast(1.05) saturate(0.85)" }} src="/videos/vid-coolon.mp4" poster="/images/monster.webp" autoPlay muted loop playsInline preload="metadata" />
           <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(5,6,8,0.9) 0%, rgba(5,6,8,0.5) 50%, rgba(5,6,8,0.6) 100%), linear-gradient(180deg, transparent 50%, rgba(5,6,8,0.85) 100%)" }} />
@@ -50,10 +49,8 @@ export default function Episode() {
           </div>
         </div>
 
-        {/* Body grid */}
         <div className="mt-8 grid grid-cols-1 gap-8 sm:mt-10 lg:mt-12 lg:grid-cols-[1.6fr_1fr] lg:gap-12">
           <div>
-            {/* Player bar */}
             <div className="relative border border-white/8 bg-[linear-gradient(180deg,rgba(15,18,24,0.95),rgba(10,13,18,0.98))] p-4 sm:p-6">
               <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,42,42,0.5),transparent)]" />
               <div className="mb-4 flex flex-wrap items-center gap-3 sm:mb-5 sm:flex-nowrap sm:gap-4">
@@ -79,7 +76,6 @@ export default function Episode() {
 
             <p className="mt-6 text-[15px] font-light leading-relaxed text-ink-1 sm:mt-8 sm:text-[17px]">{t("episode.desc")}</p>
 
-            {/* Transcript lock */}
             <div className="mt-8 sm:mt-10">
               <Eyebrow className="mb-4">{t("episode.transcript_h")}</Eyebrow>
               <div className="relative overflow-hidden border border-line bg-bg-1/40 p-5 sm:p-8">
@@ -98,7 +94,6 @@ export default function Episode() {
             </div>
           </div>
 
-          {/* Sidebar */}
           <aside className="grid grid-cols-2 gap-2 font-mono text-[11px] uppercase tracking-ui sm:grid-cols-3 sm:gap-3 lg:grid-cols-1 lg:space-y-0 lg:gap-3">
             {[
               { lab: t("episode.premiere") },

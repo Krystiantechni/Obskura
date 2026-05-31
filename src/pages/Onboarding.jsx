@@ -60,7 +60,6 @@ export default function Onboarding() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-bg-0 pb-24 pt-20 lg:pb-32 lg:pt-[120px]">
-      {/* Atmospheric backgrounds — fade between steps */}
       {STEPS.map((s, i) => (
         <div key={s.id} className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-[1500ms] ease-in-out" style={{ opacity: i === step ? 1 : 0 }}>
           <img src={s.bg} alt="" className="h-full w-full object-cover" style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.5)" }} />
@@ -82,7 +81,6 @@ export default function Onboarding() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          {/* STEP 0 — Welcome */}
           {step === 0 && (
             <>
               <OnboardingEyebrow>{t("onboarding.welcome_eyebrow", "PIERWSZY KROK · ZAJMIE 2 MINUTY")}</OnboardingEyebrow>
@@ -106,7 +104,6 @@ export default function Onboarding() {
             </>
           )}
 
-          {/* STEP 1 — Genres */}
           {step === 1 && (
             <>
               <OnboardingEyebrow>{t("onboarding.genres_eyebrow", "KROK 02 / 04 · GATUNKI")}</OnboardingEyebrow>
@@ -167,7 +164,6 @@ export default function Onboarding() {
             </>
           )}
 
-          {/* STEP 2 — When */}
           {step === 2 && (
             <>
               <OnboardingEyebrow>{t("onboarding.when_eyebrow", "KROK 03 / 04 · KIEDY")}</OnboardingEyebrow>
@@ -206,7 +202,6 @@ export default function Onboarding() {
             </>
           )}
 
-          {/* STEP 3 — Headphone test */}
           {step === 3 && (
             <>
               <OnboardingEyebrow>{t("onboarding.audio_eyebrow", "KROK 04 / 04 · TEST DŹWIĘKU")}</OnboardingEyebrow>
@@ -281,7 +276,6 @@ export default function Onboarding() {
             </>
           )}
 
-          {/* STEP 4 — First recommendation */}
           {step === 4 && (
             <>
               <OnboardingEyebrow>{t("onboarding.first_eyebrow", "GOTOWE · TWOJE PIERWSZE ODSŁUCHANIE")}</OnboardingEyebrow>
@@ -338,7 +332,6 @@ export default function Onboarding() {
         </motion.div>
       </div>
 
-      {/* Step progress */}
       <div className="fixed bottom-9 left-1/2 z-50 flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-1.5 border border-line bg-bg-1/70 px-5 py-3.5 backdrop-blur-md">
         {STEPS.map((s, i) => (
           <span

@@ -152,7 +152,6 @@ export default function Press() {
 
   return (
     <>
-      {/* Hero */}
       <header className="border-b border-line px-5 pb-10 pt-[130px] lg:px-12">
         <div className="mx-auto grid max-w-[1400px] items-end gap-10 sm:grid-cols-[1.3fr_1fr] sm:gap-12 lg:gap-14">
           <div>
@@ -178,7 +177,6 @@ export default function Press() {
         </div>
       </header>
 
-      {/* About */}
       <section className="mx-auto mt-14 max-w-[1400px] px-5 sm:mt-20 lg:px-12">
         <Eyebrow>{t("prasa.about_eyebrow", "O FIRMIE · BOILERPLATE")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -210,7 +208,6 @@ export default function Press() {
         </div>
       </section>
 
-      {/* Stats */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow accent="blue">{t("prasa.stats_eyebrow", "DANE · STAN NA MAJ 2026")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -229,7 +226,6 @@ export default function Press() {
         </div>
       </section>
 
-      {/* Downloads */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow>{t("prasa.dl_eyebrow", "PLIKI DO POBRANIA")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -256,7 +252,6 @@ export default function Press() {
         </div>
       </section>
 
-      {/* Brand colors */}
       <section className="mx-auto mt-12 max-w-[1400px] px-5 sm:mt-16 lg:px-12">
         <Eyebrow accent="blue">{t("prasa.palette_eyebrow", "PALETA · 5 KOLORÓW")}</Eyebrow>
         <div className="mt-5 grid grid-cols-3 gap-2 border border-line bg-black/30 p-2 sm:gap-3 sm:p-3 lg:grid-cols-5">
@@ -269,7 +264,6 @@ export default function Press() {
         </div>
       </section>
 
-      {/* Press releases */}
       <section className="mx-auto mt-16 max-w-[1100px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow>{t("prasa.releases_eyebrow", "// KOMUNIKATY PRASOWE · 2025–2026")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -296,7 +290,6 @@ export default function Press() {
         </div>
       </section>
 
-      {/* Coverage */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 pb-16 sm:mt-24 sm:pb-24 lg:px-12">
         <Eyebrow accent="blue">{t("prasa.coverage_eyebrow", "// MÓWIĄ O NAS")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">

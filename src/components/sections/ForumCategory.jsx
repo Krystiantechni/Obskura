@@ -30,7 +30,6 @@ export default function ForumCategory({ category }) {
           type="button"
           className="w-full cursor-pointer border-b border-line-soft px-4 py-4 text-left transition-colors last:border-b-0 hover:bg-red/[0.04] sm:px-6 lg:grid lg:grid-cols-[1fr_80px_80px_160px] lg:items-center lg:gap-4"
         >
-          {/* Title + meta row */}
           <span className="block min-w-0">
             <span className="mb-1 block text-[15px] font-medium leading-snug text-ink-0">
               {th.badge === "pin" && <span className="mr-2 text-red">&#128204;</span>}
@@ -40,7 +39,6 @@ export default function ForumCategory({ category }) {
             <span className="block font-mono text-[10px] uppercase tracking-ui text-ink-2">{th.meta}</span>
           </span>
 
-          {/* Mobile footer row: stats + who/when — hidden on lg (each column takes over) */}
           <span className="mt-2 flex items-center gap-4 lg:hidden">
             <span className="font-mono text-[11px] text-ink-1">
               {th.replies}
@@ -57,7 +55,6 @@ export default function ForumCategory({ category }) {
             </span>
           </span>
 
-          {/* Desktop-only stat columns */}
           <span className="hidden font-mono text-[13px] text-ink-1 lg:block lg:text-center">
             {th.replies}
             <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-ui text-ink-3">odp.</span>

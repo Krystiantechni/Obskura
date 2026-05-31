@@ -45,7 +45,6 @@ export default function Register() {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
-      {/* Form (order-1) */}
       <div className="relative order-2 flex items-center justify-center px-5 py-16 lg:order-1 lg:px-[60px] lg:py-20">
         <Link to="/" className="absolute left-5 top-6 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px] lg:top-8">
           {t("register.back")}
@@ -225,7 +224,6 @@ export default function Register() {
         </form>
       </div>
 
-      {/* Art (order-2) */}
       <div className="relative order-1 hidden overflow-hidden bg-bg-0 lg:order-2 lg:block">
         <img src="/images/img-orbs.webp" alt="" className="absolute inset-0 h-full w-full object-cover object-[center_30%]" style={{ filter: "contrast(1.05) saturate(0.85) brightness(0.85)" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(270deg, transparent 0%, transparent 60%, rgba(5,6,8,0.95) 100%), linear-gradient(180deg, rgba(5,6,8,0.4) 0%, transparent 30%, rgba(5,6,8,0.7) 100%)" }} />

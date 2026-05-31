@@ -299,7 +299,6 @@ export default function States() {
 
   return (
     <>
-      {/* Header */}
       <header className="border-b border-line px-5 pb-10 pt-[130px] lg:px-12">
         <div className="mx-auto max-w-[1400px]">
           <Eyebrow>{t("stany.eyebrow", "// Stany UI · 8 ekranów · biblioteka wspólna")}</Eyebrow>
@@ -312,7 +311,6 @@ export default function States() {
         </div>
       </header>
 
-      {/* Tabs */}
       <div className="sticky top-[68px] z-40 border-b border-line bg-bg-1/85 px-0 backdrop-blur-xl lg:px-12">
         <div className="mx-auto flex max-w-[1400px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {STATES.map((s) => (
@@ -332,7 +330,6 @@ export default function States() {
         </div>
       </div>
 
-      {/* Preview */}
       <div className="mx-auto mt-10 max-w-[1400px] px-5 pb-20 lg:px-12">
         <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
           <div>
@@ -353,7 +350,6 @@ export default function States() {
           </div>
         </div>
 
-        {/* Browser frame */}
         <div className="relative min-h-[420px] overflow-hidden border border-line bg-bg-0 sm:min-h-[600px]">
           <div className="flex items-center gap-3 border-b border-line bg-bg-2/95 px-4 py-3 font-mono text-[11px] tracking-ui text-ink-2">
             <div className="flex gap-1.5">

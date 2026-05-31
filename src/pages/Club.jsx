@@ -83,7 +83,6 @@ export default function Club() {
 
   return (
     <>
-      {/* Hero */}
       <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-16 pt-28 sm:pt-40 lg:px-12">
         <div className="absolute inset-0 z-0">
           <img src="/images/img-wolf.webp" alt="" className="h-full w-full object-cover object-[center_25%]" style={{ filter: "contrast(1.05) saturate(0.9) brightness(0.6)" }} />
@@ -100,7 +99,6 @@ export default function Club() {
         </div>
       </section>
 
-      {/* Billing toggle */}
       <div className="mx-auto -mt-16 max-w-[1400px] px-5 lg:px-12">
         <div className="relative z-[3] inline-flex w-full items-center border border-line bg-bg-1/70 p-1 sm:w-auto">
           <button onClick={() => setYearly(false)} className={`inline-flex flex-1 min-h-[44px] items-center justify-center px-5 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors sm:flex-none sm:px-6 ${!yearly ? "bg-red text-white" : "text-ink-2"}`}>{t("club.billing_monthly")}</button>
@@ -110,7 +108,6 @@ export default function Club() {
         </div>
       </div>
 
-      {/* Tiers */}
       <section className="mx-auto mt-10 max-w-[1400px] px-5 lg:px-12">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
           {tiers.map((tier) => {
@@ -149,7 +146,6 @@ export default function Club() {
         <div className="mt-10 text-center font-mono text-[11px] uppercase tracking-mono text-ink-2">{t("club.all_taxes")}</div>
       </section>
 
-      {/* Compare */}
       <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
         <Eyebrow>{t("club.compare_eyebrow")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(28px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -181,7 +177,6 @@ export default function Club() {
         </div>
       </section>
 
-      {/* Extras */}
       <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
         <Eyebrow accent="blue">{t("club.extras_eyebrow")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(28px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -202,7 +197,6 @@ export default function Club() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="mx-auto mb-16 mt-20 max-w-5xl px-5 text-center sm:mb-0 sm:mt-36 lg:px-12">
         <div className="relative overflow-hidden border border-line bg-bg-1/60 px-5 py-14 sm:py-20 lg:px-12">
           <div className="pointer-events-none absolute left-1/2 top-[-50%] h-[300px] w-[600px] -translate-x-1/2" style={{ background: "radial-gradient(ellipse, rgba(255,42,42,0.15), transparent 70%)" }} />

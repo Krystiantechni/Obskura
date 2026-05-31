@@ -122,7 +122,6 @@ export default function Events() {
 
   return (
     <>
-      {/* Hero */}
       <header className="relative overflow-hidden border-b border-line px-5 pb-8 pt-[100px] sm:pb-10 sm:pt-[130px] lg:px-12">
         <div className="mx-auto max-w-[1400px]">
           <Eyebrow>{t("spotkania.eyebrow", "// SPOTKANIA · LIVE · ONLINE · ARCHIWUM")}</Eyebrow>
@@ -137,7 +136,6 @@ export default function Events() {
         </div>
       </header>
 
-      {/* Featured event */}
       <section className="mx-auto mt-10 max-w-[1400px] px-5 sm:mt-16 lg:px-12">
         <Eyebrow accent="blue">{t("spotkania.feat_eyebrow", "NAJBLIŻSZE · 02 CZERWCA 2026")}</Eyebrow>
         <div className="mt-6 grid items-stretch overflow-hidden border border-line bg-bg-1/60 sm:mt-8 lg:grid-cols-[380px_1fr]">
@@ -184,7 +182,6 @@ export default function Events() {
         </div>
       </section>
 
-      {/* Upcoming list */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <div className="mb-6 border-b border-line pb-5 sm:mb-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -211,13 +208,11 @@ export default function Events() {
         <div className="flex flex-col gap-2">
           {filtered.map((e) => (
             <div key={e.day + "-" + e.month + "-" + e.title_em} className="grid grid-cols-1 gap-0 border border-line bg-bg-1/40 transition-colors hover:border-red/30 hover:bg-bg-1/70 lg:grid-cols-[100px_1fr_200px_180px_auto] lg:items-center lg:gap-6 lg:px-6 lg:py-5">
-              {/* Date strip — mobile: flex row, desktop: centered column */}
               <div className="flex items-center gap-3 border-b border-line/60 px-4 py-3 lg:block lg:border-b-0 lg:border-r lg:border-line lg:px-0 lg:py-0 lg:pr-4 lg:text-center">
                 <div className="font-serif text-[32px] leading-none lg:text-4xl">{e.day}</div>
                 <div className="font-mono text-[10px] uppercase tracking-mono text-ink-2 lg:mt-0.5">{e.month}</div>
                 <span className={"ml-auto inline-block px-2 py-0.5 font-mono text-[9px] tracking-eyebrow lg:hidden " + (e.tagAccent === "blue" ? "bg-blue/10 text-blue" : "bg-red/10 text-red")}>{e.tag}</span>
               </div>
-              {/* Title + subtitle */}
               <div className="px-4 pb-2 pt-3 lg:px-0 lg:py-0">
                 <div className="mb-1 font-serif text-[19px] leading-tight sm:text-[22px]">
                   <span className={"mr-2.5 hidden align-middle font-mono text-[9px] tracking-eyebrow lg:inline-block lg:px-2 lg:py-0.5 " + (e.tagAccent === "blue" ? "bg-blue/10 text-blue" : "bg-red/10 text-red")}>{e.tag}</span>
@@ -225,7 +220,6 @@ export default function Events() {
                 </div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2 sm:text-[11px]"><span className="text-ink-1">{e.sub_strong}</span>{e.sub_rest}</div>
               </div>
-              {/* Meta + seats: mobile side-by-side row, desktop separate columns */}
               <div className="flex items-start justify-between gap-3 border-t border-line/60 px-4 py-3 lg:contents">
                 <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-2 lg:px-0">
                   {e.metaLabel}<div className="font-serif text-sm italic normal-case tracking-normal text-ink-0">{e.metaVal}</div>
@@ -234,7 +228,6 @@ export default function Events() {
                   <span className={"block text-sm " + (e.seatsFull ? "text-ink-3" : "text-ink-0")}>{e.seats}</span>{e.seatsLabel}
                 </div>
               </div>
-              {/* CTA */}
               <div className="px-4 pb-4 pt-0 lg:px-0 lg:py-0">
                 {e.ctaVariant === "disabled" ? (
                   <span className="inline-flex min-h-[44px] w-full cursor-not-allowed items-center justify-center border border-line px-5 py-3 text-center font-sans text-xs font-semibold uppercase tracking-[0.18em] text-ink-3 lg:w-auto">{e.cta}</span>
@@ -247,7 +240,6 @@ export default function Events() {
         </div>
       </section>
 
-      {/* Past events */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow accent="blue">{t("spotkania.past_eyebrow", "// ARCHIWUM · ZAGRANE")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(28px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">

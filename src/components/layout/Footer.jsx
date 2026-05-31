@@ -42,7 +42,6 @@ export default function Footer() {
     <footer className="relative mt-32 border-t border-line bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.4))] px-5 pb-10 pt-20 lg:px-12">
       <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,42,42,0.4),transparent)]" />
       <div className="mx-auto mb-14 grid max-w-[1400px] grid-cols-2 gap-10 lg:grid-cols-[2fr_1fr_1fr_1fr_1.5fr]">
-        {/* Brand */}
         <div className="col-span-2 lg:col-span-1">
           <Brand />
           <p className="my-5 max-w-xs text-[13px] leading-relaxed text-ink-2">{t("footer.tagline")}</p>
@@ -65,7 +64,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Link cols */}
         {cols.map((col) => (
           <div key={col.head}>
             <h3 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t(col.head)}</h3>
@@ -81,7 +79,6 @@ export default function Footer() {
           </div>
         ))}
 
-        {/* Newsletter */}
         <div className="col-span-2 lg:col-span-1">
           <h3 className="mb-5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("footer.newsletter")}</h3>
           <p className="mb-3.5 text-[13px] leading-snug text-ink-1">{t("footer.newsletter_desc")}</p>

@@ -129,7 +129,6 @@ export default function Careers() {
 
   return (
     <>
-      {/* Hero */}
       <header className="relative overflow-hidden border-b border-line px-5 pb-10 pt-[130px] lg:px-12">
         <div
           className="pointer-events-none absolute -left-24 -top-24 h-[500px] w-[500px]"
@@ -163,7 +162,6 @@ export default function Careers() {
         </div>
       </header>
 
-      {/* Values */}
       <section className="mx-auto mt-20 max-w-[1400px] px-5 lg:px-12">
         <Eyebrow accent="blue">{t("kariera.values_eyebrow", "JAK PRACUJEMY")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -185,7 +183,6 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Roles */}
       <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
         <div className="mb-6 flex flex-col items-start justify-between gap-5 border-b border-line pb-5 sm:flex-row sm:items-end">
           <div>
@@ -202,7 +199,6 @@ export default function Careers() {
             key={i}
             className="mb-2 border border-line bg-bg-1/40 p-5 transition-all duration-200 hover:-translate-y-px hover:border-red/40 hover:bg-bg-1/70 lg:grid lg:grid-cols-[1fr_1fr_180px_140px_140px_auto] lg:items-center lg:gap-6 lg:px-6"
           >
-            {/* Title + description — stacked on mobile, separate cols on desktop */}
             <div className="mb-3 lg:mb-0">
               <div className="font-serif text-[22px] font-medium leading-tight sm:text-[24px]">
                 {r.ttl} <em className="italic text-ink-1">{r.em}</em>
@@ -210,7 +206,6 @@ export default function Careers() {
             </div>
             <div className="mb-3 text-[13px] leading-snug text-ink-1 lg:mb-0">{r.sub}</div>
 
-            {/* Meta grid: 2-col on mobile/tablet, each item its own col on desktop */}
             <div className="mb-4 grid grid-cols-2 gap-x-4 gap-y-3 lg:contents">
               {r.meta.map((m, j) => (
                 <div key={j} className={`font-mono text-[10px] uppercase tracking-eyebrow ${m.urgent ? "text-red" : "text-ink-2"}`}>
@@ -237,7 +232,6 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Process */}
       <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
         <Eyebrow accent="blue">{t("kariera.process_eyebrow", "PROCES REKRUTACJI · 4 KROKI · ŚREDNIO 18 DNI")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
@@ -260,7 +254,6 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Perks */}
       <section className="mx-auto mt-24 max-w-[1400px] px-5 pb-16 lg:px-12">
         <Eyebrow>{t("kariera.perks_eyebrow", "// CO JESZCZE")}</Eyebrow>
         <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">

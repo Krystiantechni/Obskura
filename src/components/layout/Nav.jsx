@@ -31,7 +31,6 @@ export default function Nav() {
     <nav className="fixed inset-x-0 top-0 z-[100] flex items-center justify-between border-b border-line/50 bg-[linear-gradient(180deg,rgba(5,6,8,0.92),rgba(5,6,8,0.7))] px-5 py-4 backdrop-blur-md lg:px-12 lg:py-[22px]">
       <Brand />
 
-      {/* Desktop links */}
       <div className="hidden gap-9 lg:flex">
         {LINKS.map((l) => (
           <NavLink key={l.to} to={l.to} end={l.end} className={linkClass}>
@@ -40,7 +39,6 @@ export default function Nav() {
         ))}
       </div>
 
-      {/* Desktop actions */}
       <div className="hidden items-center gap-3.5 lg:flex">
         <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-2">
           <span className="h-1.5 w-1.5 animate-obskura-pulse-fast rounded-full bg-[#00ff88] shadow-[0_0_8px_#00ff88]" />
@@ -52,7 +50,6 @@ export default function Nav() {
         </HorrorButton>
       </div>
 
-      {/* Mobile trigger — h-11 w-11 = 44px tap-area (WCAG 2.5.5), -mr-2.5 utrzymuje ikonę przy krawędzi */}
       <button
         type="button"
         className="-mr-2.5 grid h-11 w-11 place-items-center text-ink-0 lg:hidden"
@@ -62,7 +59,6 @@ export default function Nav() {
         {mobileOpen ? <X size={22} /> : <Menu size={22} />}
       </button>
 
-      {/* Mobile drawer */}
       {mobileOpen && (
         <div className="absolute inset-x-0 top-full flex flex-col gap-6 border-b border-line bg-bg-0 px-5 py-8 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.95)] lg:hidden">
           {LINKS.map((l) => (

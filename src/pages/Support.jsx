@@ -182,7 +182,6 @@ export default function Support() {
 
   return (
     <>
-      {/* Hero */}
       <section className="relative overflow-hidden px-5 pb-12 pt-[88px] lg:px-12 lg:pb-16 lg:pt-[120px]">
         <div className="mx-auto grid max-w-[1400px] items-end gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
           <div>
@@ -218,7 +217,6 @@ export default function Support() {
         </div>
       </section>
 
-      {/* Quick links */}
       <section className="mx-auto mt-12 max-w-[1400px] px-5 lg:mt-20 lg:px-12">
         <Eyebrow>{t("wsparcie.quick_eyebrow", "SZYBKIE LINKI")}</Eyebrow>
         <h2 className="mt-3 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em] sm:mt-4">
@@ -246,7 +244,6 @@ export default function Support() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section id="faq" className="mx-auto mt-16 max-w-[1400px] px-5 lg:mt-32 lg:px-12">
         <div className="mb-8 flex flex-col items-start justify-between gap-3 border-b border-line pb-5 sm:flex-row sm:items-end sm:gap-4 sm:pb-6 lg:mb-10">
           <div>
@@ -307,7 +304,6 @@ export default function Support() {
         </div>
       </section>
 
-      {/* Contact */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 pb-16 lg:mt-32 lg:px-12 lg:pb-24">
         <Eyebrow>{t("wsparcie.contact_eyebrow", "// JEŚLI FAQ NIE WYSTARCZY")}</Eyebrow>
         <h2 className="mt-3 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em] sm:mt-4">

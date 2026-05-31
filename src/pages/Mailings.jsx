@@ -242,7 +242,6 @@ function Email({ tpl, heads, t }) {
   const [name, addr] = h.from.split("<");
   return (
     <>
-      {/* Light mail header */}
       <div className="grid grid-cols-[80px_1fr] items-center gap-x-6 gap-y-3.5 bg-[#f4f1ea] px-6 py-6 text-[#050608] sm:grid-cols-[100px_1fr_auto] sm:px-8">
         <span className="font-mono text-[10px] uppercase tracking-mono text-[#6e6a60]">{t("mailingi.email_from", "Od")}</span>
         <span className="text-[13px]"><strong className="font-semibold">{name.trim()}</strong><br /><span className="text-[#6e6a60]">{addr?.replace(">", "")}</span></span>
@@ -252,7 +251,6 @@ function Email({ tpl, heads, t }) {
         <div className="col-span-2 mt-1.5 font-serif text-[22px] sm:text-[28px] leading-snug text-[#050608] sm:col-span-3">{h.subject}</div>
       </div>
 
-      {/* Dark branded body */}
       <div className="bg-[#050608]">
         <div className="mx-auto max-w-[600px] bg-bg-1">
           <div className="flex items-center gap-3 border-b border-white/[0.08] px-5 sm:px-8 py-6">
@@ -346,7 +344,6 @@ export default function Mailings() {
 
   return (
     <>
-      {/* Header */}
       <header className="border-b border-line px-5 pb-10 pt-[130px] lg:px-12">
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-end gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
           <div>
@@ -369,7 +366,6 @@ export default function Mailings() {
         </div>
       </header>
 
-      {/* Tabs */}
       <div className="sticky top-[68px] z-40 border-b border-line bg-bg-1/85 px-5 backdrop-blur-xl lg:px-12">
         <div className="relative mx-auto max-w-[1400px] after:pointer-events-none after:absolute after:right-0 after:top-0 after:h-full after:w-10 after:bg-gradient-to-l after:from-bg-1 after:to-transparent lg:after:hidden">
         <div className="flex overflow-x-auto">
@@ -390,9 +386,7 @@ export default function Mailings() {
         </div>
       </div>
 
-      {/* Canvas */}
       <div className="mx-auto mt-14 grid max-w-[1400px] grid-cols-1 items-start gap-10 px-5 pb-24 lg:grid-cols-[1fr_300px] lg:px-12">
-        {/* Mailbox mockup */}
         <div className="overflow-hidden border border-line bg-[#f4f1ea] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]">
           <div className="flex items-center gap-3 border-b border-black/[0.08] bg-[#e8e3d4] px-4 py-3 font-mono text-[11px] tracking-ui text-[#6e6a60]">
             <div className="flex gap-1.5">
@@ -406,7 +400,6 @@ export default function Mailings() {
           <Email tpl={tab} heads={HEADS} t={t} />
         </div>
 
-        {/* Sidebar */}
         <aside className="flex flex-col gap-4 lg:sticky lg:top-28">
           <SideBlock title={t("mailingi.side_meta", "// Metadane szablonu")}>
             <KV k="ID" v={`EMAIL-${String(idx + 1).padStart(3, "0")}`} />

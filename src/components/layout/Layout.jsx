@@ -60,7 +60,6 @@ export default function Layout() {
 
   return (
     <>
-      {/* Skip-link a11y — Tab z górki strony przeskakuje całe nav prosto do main. */}
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[1000] focus:bg-red focus:px-4 focus:py-2 focus:font-mono focus:text-[11px] focus:font-bold focus:uppercase focus:tracking-ui focus:text-black focus:shadow-[0_0_24px_rgba(255,42,42,0.45)]"

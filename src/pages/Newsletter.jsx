@@ -174,7 +174,6 @@ export default function Newsletter() {
 
   return (
     <div className="bg-bg-0">
-      {/* HERO — split obraz + zapis */}
       <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-16 pt-[140px] sm:pb-20 lg:px-12">
         <div className="absolute inset-0 z-0">
           <img
@@ -221,7 +220,6 @@ export default function Newsletter() {
         </div>
       </section>
 
-      {/* DLACZEGO WARTO */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow>{t("newsletter.what_eyebrow", "DLACZEGO WARTO")}</Eyebrow>
         <h2 className="mt-4 font-serif text-4xl font-medium leading-none tracking-[-0.02em] sm:text-5xl">
@@ -242,7 +240,6 @@ export default function Newsletter() {
         </div>
       </section>
 
-      {/* PODGLĄD MAILA */}
       <section className="mx-auto my-16 max-w-[1400px] px-5 sm:my-28 lg:px-12">
         <div className="mb-10 flex flex-col gap-6 border-b border-line pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>

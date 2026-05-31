@@ -52,7 +52,6 @@ function IosHomeScreen() {
 
   return (
     <div className="h-full overflow-y-auto bg-bg-0 pb-24 text-ink-0">
-      {/* hero card */}
       <div className="relative h-[300px] overflow-hidden">
         <img src="/images/dada.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_50%,rgba(5,6,8,0.95))]" />
@@ -80,7 +79,6 @@ function IosHomeScreen() {
         ))}
       </div>
 
-      {/* tab bar */}
       <div className="absolute inset-x-4 bottom-12 z-30 grid grid-cols-5 rounded-[22px] border border-white/10 bg-bg-2/95 p-2.5 backdrop-blur-xl">
         {tabs.map((tb, i) => (
           <span
@@ -210,7 +208,6 @@ function AndroidBrowseScreen() {
         ))}
       </div>
 
-      {/* mini player */}
       <div className="absolute inset-x-0 bottom-6 z-30 grid grid-cols-[44px_1fr_auto] items-center gap-3 border-t border-red/30 bg-bg-2/95 px-3 py-2.5 backdrop-blur-xl before:absolute before:left-0 before:top-0 before:h-0.5 before:w-[47%] before:bg-red before:shadow-[0_0_8px_rgba(255,42,42,0.5)] before:content-['']">
         <span className="h-11 w-11 bg-cover" style={{ backgroundImage: "url('/images/monster.webp')", backgroundPosition: "center 20%" }} />
         <span className="overflow-hidden">
@@ -247,7 +244,6 @@ export default function App() {
 
   return (
     <div className="pt-[88px]">
-      {/* HERO */}
       <header className="relative overflow-hidden border-b border-line px-5 pb-10 pt-8 sm:pb-14 sm:pt-12 lg:px-12">
         <div className="mx-auto max-w-[1400px]">
           <Eyebrow className="mb-3 sm:mb-4">{t("aplikacja.eyebrow", "// APLIKACJA MOBILNA · iOS 16+ · ANDROID 11+")}</Eyebrow>
@@ -280,7 +276,6 @@ export default function App() {
         </div>
       </header>
 
-      {/* SCREENS */}
       <section className="relative overflow-hidden bg-[linear-gradient(180deg,#050608_0%,#0a0d12_50%,#050608_100%)] px-5 py-12 sm:py-20 lg:px-12">
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,rgba(255,42,42,0.06),transparent_60%)]" />
         <div className="relative mx-auto flex max-w-[1400px] flex-col items-center gap-10 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-12">
@@ -299,7 +294,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* FEATURES */}
       <section className="mx-auto mt-12 max-w-[1400px] px-5 lg:mt-20 lg:px-12">
         <Eyebrow className="mb-4">{t("aplikacja.feat_eyebrow", "// EKSKLUZYWNIE W APLIKACJI")}</Eyebrow>
         <h2 className="font-serif text-[clamp(32px,5vw,64px)] font-medium leading-tight tracking-[-0.02em]">
@@ -318,7 +312,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* QR */}
       <section className="mx-auto mt-12 max-w-[1100px] px-5 pb-16 sm:pb-24 lg:mt-20 lg:px-12">
         <div className="grid grid-cols-1 items-center gap-8 border border-line bg-bg-1/50 p-6 sm:gap-12 sm:p-8 lg:grid-cols-[240px_1fr] lg:p-12">
           <div className="relative mx-auto grid h-[160px] w-[160px] place-items-center bg-ink-0 p-4 sm:h-[200px] sm:w-[200px] lg:h-[240px] lg:w-[240px]">

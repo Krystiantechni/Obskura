@@ -66,7 +66,6 @@ export default function LanguageSwitcher({ className = "" }) {
 
       {open && (
         <div className="absolute right-0 top-[calc(100%+6px)] z-[110] w-80 overflow-hidden border border-line bg-bg-1/95 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-xl">
-          {/* Search */}
           <div className="relative border-b border-line p-3">
             <Search
               size={14}
@@ -93,7 +92,6 @@ export default function LanguageSwitcher({ className = "" }) {
             )}
           </div>
 
-          {/* Lista pogrupowana */}
           <div className="max-h-80 overflow-y-auto" data-lenis-prevent>
             {Object.entries(grouped).map(([region, items]) => (
               <div key={region} className="border-b border-line/40 last:border-b-0">

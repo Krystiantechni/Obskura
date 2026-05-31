@@ -93,7 +93,6 @@ export default function Creators() {
 
   return (
     <>
-      {/* Hero */}
       <header className="relative overflow-hidden border-b border-line px-5 pb-12 pt-[140px] lg:pb-16 lg:px-12">
         <div className="mx-auto grid max-w-[1400px] items-end gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-[60px]">
           <div>
@@ -119,7 +118,6 @@ export default function Creators() {
         </div>
       </header>
 
-      {/* Featured creator */}
       <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow accent="blue">{t("tworcy.featured_eyebrow", "TWÓRCZYNI MIESIĄCA · MAJ 2026")}</Eyebrow>
         <div className="mt-6 grid items-center gap-8 sm:mt-8 sm:grid-cols-[1.1fr_1fr] sm:gap-10 lg:gap-[60px]">
@@ -167,7 +165,6 @@ export default function Creators() {
         </div>
       </section>
 
-      {/* Creators grid */}
       <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
         <div className="mb-8 flex flex-col gap-5 border-b border-line pb-6 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -216,7 +213,6 @@ export default function Creators() {
         </div>
       </section>
 
-      {/* Apply CTA */}
       <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
         <div className="relative grid items-center gap-10 overflow-hidden border border-line bg-bg-1/60 p-5 sm:p-8 lg:grid-cols-2 lg:gap-[60px] lg:p-[60px]">
           <div className="pointer-events-none absolute -right-24 -top-24 h-[400px] w-[400px]" style={{ background: "radial-gradient(circle, rgba(255,42,42,0.1), transparent 70%)" }} />

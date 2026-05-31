@@ -41,14 +41,12 @@ export default function MiniPlayer() {
           role="region"
           aria-label="Odtwarzacz"
         >
-          {/* czerwona nitka u góry + cienki progress (mobile) */}
           <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,42,42,0.5),transparent)]" />
           <div className="absolute inset-x-0 top-0 h-[2px] bg-white/5 lg:hidden">
             <span className="block h-full bg-red shadow-[0_0_6px_#ff2a2a] transition-[width] duration-300" style={{ width: `${progress * 100}%` }} />
           </div>
 
           <div className="mx-auto grid max-w-[1400px] grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 lg:grid-cols-[minmax(0,260px)_1fr_minmax(0,260px)] lg:gap-6 lg:px-12 lg:py-3.5">
-            {/* Track */}
             <div className="flex min-w-0 items-center gap-3.5">
               <div
                 className="relative h-12 w-12 flex-shrink-0 overflow-hidden bg-cover bg-center"
@@ -67,7 +65,6 @@ export default function MiniPlayer() {
               </div>
             </div>
 
-            {/* Controls + progress (desktop) */}
             <div className="hidden flex-col gap-1.5 lg:flex">
               <div className="flex items-center justify-center gap-6">
                 <button
@@ -104,9 +101,7 @@ export default function MiniPlayer() {
               </div>
             </div>
 
-            {/* Right: play (mobile) + actions */}
             <div className="flex items-center justify-end gap-2.5">
-              {/* mobilny play */}
               <button
                 type="button"
                 onClick={toggle}
@@ -128,7 +123,6 @@ export default function MiniPlayer() {
                 {liked ? <HeartFill /> : <Heart />}
               </button>
 
-              {/* głośność — desktop */}
               <div className="hidden items-center gap-2 lg:flex">
                 <Volume />
                 <input
@@ -143,7 +137,6 @@ export default function MiniPlayer() {
                 />
               </div>
 
-              {/* Kolejka */}
               <button
                 type="button"
                 onClick={() => togglePanel("queue")}
@@ -156,7 +149,6 @@ export default function MiniPlayer() {
                 <List />
               </button>
 
-              {/* Sleep timer */}
               <div className="relative hidden sm:block">
                 <button
                   type="button"
@@ -201,10 +193,8 @@ export default function MiniPlayer() {
             </div>
           </div>
 
-          {/* Panel kolejki */}
           <QueuePanel open={panel === "queue"} onClose={() => setPanel(null)} />
 
-          {/* Popover sleep timer */}
           <AnimatePresence>
             {panel === "sleep" && (
               <motion.div
