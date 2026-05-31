@@ -248,16 +248,16 @@ export default function App() {
   return (
     <div className="pt-[88px]">
       {/* HERO */}
-      <header className="relative overflow-hidden border-b border-line px-5 pb-14 pt-12 lg:px-12">
+      <header className="relative overflow-hidden border-b border-line px-5 pb-10 pt-8 sm:pb-14 sm:pt-12 lg:px-12">
         <div className="mx-auto max-w-[1400px]">
-          <Eyebrow className="mb-4">{t("aplikacja.eyebrow", "// APLIKACJA MOBILNA · iOS 16+ · ANDROID 11+")}</Eyebrow>
-          <h1 className="mb-5 font-serif text-[clamp(48px,7vw,104px)] font-medium leading-[0.95] tracking-[-0.02em]">
+          <Eyebrow className="mb-3 sm:mb-4">{t("aplikacja.eyebrow", "// APLIKACJA MOBILNA · iOS 16+ · ANDROID 11+")}</Eyebrow>
+          <h1 className="mb-4 font-serif text-[clamp(40px,7vw,104px)] font-medium leading-[0.95] tracking-[-0.02em] sm:mb-5">
             {t("aplikacja.title_p1", "Obskura")} <em className="italic text-ink-1">{t("aplikacja.title_em", "w kieszeni")}</em>.
           </h1>
-          <p className="mb-8 max-w-[640px] text-[17px] font-light leading-relaxed text-ink-1">
+          <p className="mb-6 max-w-[640px] text-[15px] font-light leading-relaxed text-ink-1 sm:mb-8 sm:text-[17px]">
             {t("aplikacja.lead", "Cała platforma w aplikacji — offline, binauralne 3D, sleep timer, kontynuowanie odsłuchania między urządzeniami. Bez reklam, bez trackingu, 27 MB.")}
           </p>
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
             {[
               { lab: t("aplikacja.dl_label", "POBIERZ NA"), name: "App Store" },
               { lab: t("aplikacja.dl_label", "POBIERZ NA"), name: "Google Play" },
@@ -273,7 +273,7 @@ export default function App() {
                 </span>
               </a>
             ))}
-            <span className="font-mono text-[10px] uppercase tracking-mono text-ink-2">
+            <span className="font-mono text-[9px] uppercase tracking-mono text-ink-2 sm:text-[10px]">
               <strong className="text-ink-0">4.9 ★</strong> APP STORE · <strong className="text-ink-0">4.8 ★</strong> GOOGLE PLAY · <strong className="text-ink-0">320K</strong> POBRAŃ
             </span>
           </div>
@@ -281,13 +281,13 @@ export default function App() {
       </header>
 
       {/* SCREENS */}
-      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#050608_0%,#0a0d12_50%,#050608_100%)] px-5 py-20 lg:px-12">
+      <section className="relative overflow-hidden bg-[linear-gradient(180deg,#050608_0%,#0a0d12_50%,#050608_100%)] px-5 py-12 sm:py-20 lg:px-12">
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,rgba(255,42,42,0.06),transparent_60%)]" />
-        <div className="relative mx-auto flex max-w-[1400px] flex-wrap justify-center gap-12">
+        <div className="relative mx-auto flex max-w-[1400px] flex-col items-center gap-10 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-12">
           {screens.map((s) => (
-            <div key={s.tag} className="flex flex-col items-center gap-4">
+            <div key={s.tag} className="flex w-full flex-col items-center gap-4 sm:w-auto">
               <span
-                className={`flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-mono text-ink-2 before:h-1.5 before:w-1.5 before:rounded-full before:content-[''] ${
+                className={`flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-mono text-ink-2 before:h-1.5 before:w-1.5 before:shrink-0 before:rounded-full before:content-[''] sm:text-[10px] ${
                   s.accent === "blue" ? "before:bg-blue before:shadow-[0_0_6px_#5fa8ff]" : "before:bg-red before:shadow-[0_0_6px_#ff2a2a]"
                 }`}
               >
@@ -300,16 +300,16 @@ export default function App() {
       </section>
 
       {/* FEATURES */}
-      <section className="mx-auto mt-20 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-12 max-w-[1400px] px-5 lg:mt-20 lg:px-12">
         <Eyebrow className="mb-4">{t("aplikacja.feat_eyebrow", "// EKSKLUZYWNIE W APLIKACJI")}</Eyebrow>
-        <h2 className="font-serif text-[clamp(36px,5vw,64px)] font-medium leading-tight tracking-[-0.02em]">
+        <h2 className="font-serif text-[clamp(32px,5vw,64px)] font-medium leading-tight tracking-[-0.02em]">
           {t("aplikacja.feat_h_p1", "Czego")} <em className="italic text-ink-1">{t("aplikacja.feat_h_em", "nie ma na webie")}</em>.
         </h2>
-        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:mt-10 lg:grid-cols-3">
           {FEATURES.map((f) => (
-            <div key={f.num} className="border border-line bg-bg-1/50 p-8 transition-colors hover:border-red/40">
+            <div key={f.num} className="border border-line bg-bg-1/50 p-6 transition-colors hover:border-red/40 sm:p-8">
               <div className="mb-3.5 font-mono text-[11px] tracking-mono text-red">{f.num}</div>
-              <h3 className="mb-3 font-serif text-[28px] font-medium leading-tight">
+              <h3 className="mb-3 font-serif text-[24px] font-medium leading-tight sm:text-[28px]">
                 {t(`aplikacja.${f.k}_t1`, f.t1)} <em className="italic text-ink-1">{t(`aplikacja.${f.k}_t2`, f.t2)}</em>
               </h3>
               <p className="text-[14px] font-light leading-relaxed text-ink-1">{t(`aplikacja.${f.k}_d`, f.d)}</p>
@@ -319,9 +319,9 @@ export default function App() {
       </section>
 
       {/* QR */}
-      <section className="mx-auto mt-20 max-w-[1100px] px-5 pb-24 lg:px-12">
-        <div className="grid grid-cols-1 items-center gap-12 border border-line bg-bg-1/50 p-8 lg:grid-cols-[240px_1fr] lg:p-12">
-          <div className="relative mx-auto grid h-[200px] w-[200px] place-items-center bg-ink-0 p-4 lg:h-[240px] lg:w-[240px]">
+      <section className="mx-auto mt-12 max-w-[1100px] px-5 pb-16 sm:pb-24 lg:mt-20 lg:px-12">
+        <div className="grid grid-cols-1 items-center gap-8 border border-line bg-bg-1/50 p-6 sm:gap-12 sm:p-8 lg:grid-cols-[240px_1fr] lg:p-12">
+          <div className="relative mx-auto grid h-[160px] w-[160px] place-items-center bg-ink-0 p-4 sm:h-[200px] sm:w-[200px] lg:h-[240px] lg:w-[240px]">
             <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden>
               <rect width="200" height="200" fill="#f4f1ea" />
               <g fill="#050608">
@@ -346,13 +346,13 @@ export default function App() {
           </div>
           <div>
             <Eyebrow accent="blue" className="mb-4">{t("aplikacja.qr_eyebrow", "// SKANUJ TELEFONEM")}</Eyebrow>
-            <h2 className="mb-3.5 font-serif text-[40px] font-medium leading-tight">
+            <h2 className="mb-3.5 font-serif text-[clamp(28px,4vw,40px)] font-medium leading-tight">
               {t("aplikacja.qr_h_p1", "Otwórz")} <em className="italic text-ink-1">{t("aplikacja.qr_h_em", "aparat")}</em> {t("aplikacja.qr_h_p2", "w telefonie")}.
             </h2>
-            <p className="text-[15px] font-light leading-relaxed text-ink-1">
+            <p className="text-[14px] font-light leading-relaxed text-ink-1 sm:text-[15px]">
               {t("aplikacja.qr_desc", "Skieruj na kod, kliknij banner — automatycznie otwieramy stronę z aplikacją w odpowiednim sklepie. Bez instalowania osobnej apki do skanowania.")}
             </p>
-            <div className="mt-6 font-mono text-[11px] uppercase tracking-mono text-ink-2">
+            <div className="mt-6 font-mono text-[10px] uppercase tracking-mono text-ink-2 sm:text-[11px]">
               APP STORE · GOOGLE PLAY · 27 MB · WERSJA 4.2.3 · POPRAWKI 24.05.2026
             </div>
           </div>
