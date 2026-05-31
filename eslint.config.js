@@ -6,7 +6,10 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
   // dist + foldery narzędziowe Claude (bundle designu, skille) — nie kod aplikacji
-  globalIgnores(['dist', '.claude/**']),
+  // scripts/narration/episodes.mjs — szyfrowane przez git-crypt; w CI bez klucza
+  //   to binary GITCRYPT* → eslint parser fail. Lokalnie odszyfrowane, ale i tak
+  //   pomijamy bo to czysta data file (teksty scenariuszy), nie kod do lintowania.
+  globalIgnores(['dist', '.claude/**', 'scripts/narration/episodes.mjs']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
