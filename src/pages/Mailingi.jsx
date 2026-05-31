@@ -1,28 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Mail, ChevronRight } from "lucide-react";
 import Eyebrow from "../components/ui/Eyebrow";
-
-const TEMPLATES = [
-  { id: "welcome", label: "Powitalny", purpose: "Po pierwszym logowaniu", freq: "Jednorazowo", tag: "TRANSAKCYJNY" },
-  { id: "newsletter", label: "Newsletter", purpose: "Co czwartek o 23:00", freq: "Tygodniowo", tag: "MARKETINGOWY" },
-  { id: "premiere", label: "Nowa premiera", purpose: "Gdy nowy odcinek", freq: "Co premierę", tag: "POWIADOMIENIE" },
-  { id: "reset", label: "Reset hasła", purpose: "Na żądanie", freq: "Na żądanie", tag: "TRANSAKCYJNY" },
-  { id: "invoice", label: "Faktura", purpose: "Po każdej płatności", freq: "Co odnowę", tag: "TRANSAKCYJNY" },
-  { id: "security", label: "Alert bezpieczeństwa", purpose: "Nietypowe logowanie", freq: "W razie potrzeby", tag: "KRYTYCZNY" },
-  { id: "cancel", label: "Potw. anulowania", purpose: "Po anulowaniu subskrypcji", freq: "Jednorazowo", tag: "TRANSAKCYJNY" },
-];
-
-const HEADS = {
-  welcome: { from: '"OBSKURA" <witaj@obskura.audio>', subject: (<>Witaj w Obskurze. <em className="italic text-[#6e6a60]">Pierwsze 30 dni — nic nie płacisz.</em></>) },
-  newsletter: { from: '"Obskura Listy" <listy@obskura.audio>', subject: (<>#183 · <em className="italic text-[#6e6a60]">Coś chce wrócić</em> — twój dostęp do S03E12 wygasa za 71h</>) },
-  premiere: { from: '"OBSKURA" <premiery@obskura.audio>', subject: (<>Nowy odcinek dla ciebie. <em className="italic text-[#6e6a60]">S03E12 · Mgła nad Wisłoujściem</em></>) },
-  reset: { from: '"OBSKURA bezpieczeństwo" <noreply@obskura.audio>', subject: (<>Reset hasła — <em className="italic text-[#6e6a60]">link wygasa za 30 minut</em></>) },
-  invoice: { from: '"OBSKURA Płatności" <faktury@obskura.audio>', subject: (<>Faktura VAT FV/2026/05/0847 · <em className="italic text-[#6e6a60]">288,00 PLN</em></>) },
-  security: { from: '"OBSKURA Alert" <alert@obskura.audio>', subject: (<>⚠ Nietypowe logowanie z <em className="italic text-[#6e6a60]">Berlin · 25.05.2026 · 14:23</em></>) },
-  cancel: { from: '"OBSKURA" <witaj@obskura.audio>', subject: (<>Anulowanie potwierdzone. <em className="italic text-[#6e6a60]">Brakuje nam ciebie już teraz.</em></>) },
-};
 
 // Bloki ciała maila (dark, branded) — wspólne style.
 function MailH1({ children }) {
@@ -97,18 +77,18 @@ function MailInvoice({ rows }) {
 }
 MailInvoice.propTypes = { rows: PropTypes.array.isRequired };
 
-function MailSig({ who, role }) {
+function MailSig({ who, role, t }) {
   return (
     <div className="mt-9 border-t border-white/[0.08] pt-6 font-serif text-sm italic text-[#c9c4b8]">
-      {role ? "Do usłyszenia," : "Bywaj,"}<br />
+      {role ? t("mailingi.sig_role", "Do usłyszenia,") : t("mailingi.sig_default", "Bywaj,")}<br />
       <span className="text-base text-[#f4f1ea]">— {who}</span><br />
-      reżyserka, OBSKURA
+      {t("mailingi.sig_company", "reżyserka, OBSKURA")}
     </div>
   );
 }
-MailSig.propTypes = { who: PropTypes.string.isRequired, role: PropTypes.bool };
+MailSig.propTypes = { who: PropTypes.string.isRequired, role: PropTypes.bool, t: PropTypes.func.isRequired };
 
-function MailBody({ tpl }) {
+function MailBody({ tpl, t }) {
   return (
     <>
       {tpl === "welcome" && (
@@ -117,37 +97,37 @@ function MailBody({ tpl }) {
             <img src="/images/dada.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </div>
           <div className="px-9 pb-12 pt-9">
-            <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Pierwszy mail · konto aktywne</div>
-            <MailH1>Witaj w <em className="italic text-[#c9c4b8]">Obskurze</em>, Nokturn_47.</MailH1>
-            <MailP drop>Trafiłeś w dobre miejsce. Tutaj nagrywamy historie, które słucha się na słuchawkach, w nocy, w ciszy mieszkania. 147 odcinków czeka. Pierwszy ci wybraliśmy.</MailP>
-            <MailP>Konto <strong className="font-medium text-[#f4f1ea]">aktywne</strong>. Pierwsze 30 dni planu Solo — gratis. Po tym czasie automatycznie przedłużamy do roku za 288 zł — ale możesz anulować w każdej chwili.</MailP>
-            <MailCard img="/images/img-hallway.webp" pos="center" ep="S03 · E11 · Wybrane dla ciebie" t1="Ostatnie" em="Światło" meta="52:08 · ★ 4.9 · Psychological" />
-            <MailCta>Posłuchaj pierwszego odcinka →</MailCta>
-            <MailH2>Co dalej?</MailH2>
+            <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.welcome_kicker", "// Pierwszy mail · konto aktywne")}</div>
+            <MailH1>{t("mailingi.welcome_h1_p1", "Witaj w")} <em className="italic text-[#c9c4b8]">{t("mailingi.welcome_h1_em", "Obskurze")}</em>{t("mailingi.welcome_h1_p2", ", Nokturn_47.")}</MailH1>
+            <MailP drop>{t("mailingi.welcome_p1", "Trafiłeś w dobre miejsce. Tutaj nagrywamy historie, które słucha się na słuchawkach, w nocy, w ciszy mieszkania. 147 odcinków czeka. Pierwszy ci wybraliśmy.")}</MailP>
+            <MailP>{t("mailingi.welcome_p2_p1", "Konto")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.welcome_p2_strong", "aktywne")}</strong>. {t("mailingi.welcome_p2_p2", "Pierwsze 30 dni planu Solo — gratis. Po tym czasie automatycznie przedłużamy do roku za 288 zł — ale możesz anulować w każdej chwili.")}</MailP>
+            <MailCard img="/images/img-hallway.webp" pos="center" ep={t("mailingi.welcome_card_ep", "S03 · E11 · Wybrane dla ciebie")} t1={t("mailingi.welcome_card_t1", "Ostatnie")} em={t("mailingi.welcome_card_em", "Światło")} meta={t("mailingi.welcome_card_meta", "52:08 · ★ 4.9 · Psychological")} />
+            <MailCta>{t("mailingi.welcome_cta", "Posłuchaj pierwszego odcinka →")}</MailCta>
+            <MailH2>{t("mailingi.welcome_h2", "Co dalej?")}</MailH2>
             <ul className="mb-4 list-disc pl-5">
-              <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]"><strong className="font-medium text-[#f4f1ea]">Załóż słuchawki</strong> — dźwięk binauralny działa tylko na nich.</li>
-              <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]"><strong className="font-medium text-[#f4f1ea]">Zgaś światło</strong> — nasze odcinki są zaprojektowane na ciemność.</li>
-              <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]"><strong className="font-medium text-[#f4f1ea]">Sprawdź ustawienia</strong> — pora powiadomień, jakość audio, tryb anonimowy.</li>
+              <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]"><strong className="font-medium text-[#f4f1ea]">{t("mailingi.welcome_step1_b", "Załóż słuchawki")}</strong> {t("mailingi.welcome_step1_t", "— dźwięk binauralny działa tylko na nich.")}</li>
+              <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]"><strong className="font-medium text-[#f4f1ea]">{t("mailingi.welcome_step2_b", "Zgaś światło")}</strong> {t("mailingi.welcome_step2_t", "— nasze odcinki są zaprojektowane na ciemność.")}</li>
+              <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]"><strong className="font-medium text-[#f4f1ea]">{t("mailingi.welcome_step3_b", "Sprawdź ustawienia")}</strong> {t("mailingi.welcome_step3_t", "— pora powiadomień, jakość audio, tryb anonimowy.")}</li>
             </ul>
-            <MailSig who="Marta Sobczak" role />
+            <MailSig who="Marta Sobczak" role t={t} />
           </div>
         </>
       )}
 
       {tpl === "newsletter" && (
         <div className="px-9 pb-12 pt-9">
-          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Wydanie #183 · czwartek 23:00</div>
-          <MailH1>Coś <em className="italic text-[#c9c4b8]">chce wrócić</em>.</MailH1>
-          <MailP drop>W zeszłą środę zamknęliśmy się w studiu z Katarzyną Wieczorek na sześć godzin. Nie wyszliśmy zadowoleni. Dziś rano wyszliśmy z czymś, co działa. Słuchasz tego pierwszy — link wygasa za 71 godzin.</MailP>
-          <MailCard img="/images/monster.webp" pos="center 25%" ep="S03 · E12 · Wygasa w 71h" t1="Mgła nad" em="Wisłoujściem" meta="47:12 · Binaural · K. Wieczorek" />
-          <MailCta>Słuchaj 72 godziny wcześniej →</MailCta>
-          <MailH2>Z <em className="italic text-[#c9c4b8]">notatek reżyserskich</em></MailH2>
-          <MailP>Wycięliśmy z S03E12 całą scenę w piwnicy. Marta opisała dlaczego — to wstrząsające 700 słów o tym, dlaczego cisza wygrywa z każdym efektem.</MailP>
-          <MailH2>Z <em className="italic text-[#c9c4b8]">tekstów członków</em></MailH2>
-          <MailP>Konkurs majowy „Napisz pierwszą scenę Pacjentki 23 w 500 słów” wygrała <strong className="font-medium text-[#f4f1ea]">Z. Kowalewicz</strong>. Czytamy jej tekst w pełni w tym mailu.</MailP>
-          <MailH2>Z <em className="italic text-[#c9c4b8]">archiwum</em></MailH2>
-          <MailP>Trzy lata temu premierowy odcinek „Pierwsze mleko” miał 38 minut. Dziś średnia długość to 56 minut. Co się stało? Krótki tekst od Jakuba.</MailP>
-          <p className="mt-8 font-serif italic text-[#6e6a60]">Do czwartku,<br />— Redakcja</p>
+          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.newsletter_kicker", "// Wydanie #183 · czwartek 23:00")}</div>
+          <MailH1>{t("mailingi.newsletter_h1_p1", "Coś")} <em className="italic text-[#c9c4b8]">{t("mailingi.newsletter_h1_em", "chce wrócić")}</em>.</MailH1>
+          <MailP drop>{t("mailingi.newsletter_p1", "W zeszłą środę zamknęliśmy się w studiu z Katarzyną Wieczorek na sześć godzin. Nie wyszliśmy zadowoleni. Dziś rano wyszliśmy z czymś, co działa. Słuchasz tego pierwszy — link wygasa za 71 godzin.")}</MailP>
+          <MailCard img="/images/monster.webp" pos="center 25%" ep={t("mailingi.newsletter_card_ep", "S03 · E12 · Wygasa w 71h")} t1={t("mailingi.newsletter_card_t1", "Mgła nad")} em={t("mailingi.newsletter_card_em", "Wisłoujściem")} meta={t("mailingi.newsletter_card_meta", "47:12 · Binaural · K. Wieczorek")} />
+          <MailCta>{t("mailingi.newsletter_cta", "Słuchaj 72 godziny wcześniej →")}</MailCta>
+          <MailH2>{t("mailingi.newsletter_h2a_p1", "Z")} <em className="italic text-[#c9c4b8]">{t("mailingi.newsletter_h2a_em", "notatek reżyserskich")}</em></MailH2>
+          <MailP>{t("mailingi.newsletter_p2", "Wycięliśmy z S03E12 całą scenę w piwnicy. Marta opisała dlaczego — to wstrząsające 700 słów o tym, dlaczego cisza wygrywa z każdym efektem.")}</MailP>
+          <MailH2>{t("mailingi.newsletter_h2b_p1", "Z")} <em className="italic text-[#c9c4b8]">{t("mailingi.newsletter_h2b_em", "tekstów członków")}</em></MailH2>
+          <MailP>{t("mailingi.newsletter_p3_p1", "Konkurs majowy „Napisz pierwszą scenę Pacjentki 23 w 500 słów” wygrała")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.newsletter_p3_strong", "Z. Kowalewicz")}</strong>. {t("mailingi.newsletter_p3_p2", "Czytamy jej tekst w pełni w tym mailu.")}</MailP>
+          <MailH2>{t("mailingi.newsletter_h2c_p1", "Z")} <em className="italic text-[#c9c4b8]">{t("mailingi.newsletter_h2c_em", "archiwum")}</em></MailH2>
+          <MailP>{t("mailingi.newsletter_p4", "Trzy lata temu premierowy odcinek „Pierwsze mleko” miał 38 minut. Dziś średnia długość to 56 minut. Co się stało? Krótki tekst od Jakuba.")}</MailP>
+          <p className="mt-8 font-serif italic text-[#6e6a60]">{t("mailingi.newsletter_outro", "Do czwartku,")}<br />{t("mailingi.newsletter_signature", "— Redakcja")}</p>
         </div>
       )}
 
@@ -157,118 +137,118 @@ function MailBody({ tpl }) {
             <img src="/images/monster.webp" alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-[center_25%]" />
           </div>
           <div className="px-9 pb-12 pt-9">
-            <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Premiera · dziś 23:00 · tylko twój</div>
-            <MailH1>Nowy odcinek <em className="italic text-[#c9c4b8]">czeka</em>.</MailH1>
-            <MailP>Trzeci sezon dobiega końca finałem nagrywanym przez nas <strong className="font-medium text-[#f4f1ea]">14 miesięcy</strong>. Premiera dla Klubu Solo — 72 godziny przed publicznym wydaniem.</MailP>
-            <MailCard img="/images/dada.webp" pos="center 30%" ep="S03 · E12 · Finał sezonu" t1="Mgła nad" em="Wisłoujściem" meta="47:12 · Cosmic dread · 18+ · Binaural 3D" />
-            <MailCta>▶ Słuchaj teraz</MailCta>
-            <MailH2>O <em className="italic text-[#c9c4b8]">czym jest</em></MailH2>
-            <MailP>Reporterka wraca do rodzinnego portu po 23 latach. Plan: napisać reportaż o zaginięciach z 1968 roku. Zostaje na jedną noc. Tej jednej nocy wystarczy.</MailP>
-            <MailAlert title="// Content warning">Opisy utonięcia, talasofobia, intensywne dźwięki infradźwięku (17.8 Hz). Nie zalecane dla osób z lękiem przed głęboką wodą.</MailAlert>
-            <MailP>Zwiastun: 2:14 min · <span className="text-[#ff2a2a]">Posłuchaj zwiastuna →</span></MailP>
+            <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.premiere_kicker", "// Premiera · dziś 23:00 · tylko twój")}</div>
+            <MailH1>{t("mailingi.premiere_h1_p1", "Nowy odcinek")} <em className="italic text-[#c9c4b8]">{t("mailingi.premiere_h1_em", "czeka")}</em>.</MailH1>
+            <MailP>{t("mailingi.premiere_p1_p1", "Trzeci sezon dobiega końca finałem nagrywanym przez nas")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.premiere_p1_strong", "14 miesięcy")}</strong>. {t("mailingi.premiere_p1_p2", "Premiera dla Klubu Solo — 72 godziny przed publicznym wydaniem.")}</MailP>
+            <MailCard img="/images/dada.webp" pos="center 30%" ep={t("mailingi.premiere_card_ep", "S03 · E12 · Finał sezonu")} t1={t("mailingi.premiere_card_t1", "Mgła nad")} em={t("mailingi.premiere_card_em", "Wisłoujściem")} meta={t("mailingi.premiere_card_meta", "47:12 · Cosmic dread · 18+ · Binaural 3D")} />
+            <MailCta>{t("mailingi.premiere_cta", "▶ Słuchaj teraz")}</MailCta>
+            <MailH2>{t("mailingi.premiere_h2_p1", "O")} <em className="italic text-[#c9c4b8]">{t("mailingi.premiere_h2_em", "czym jest")}</em></MailH2>
+            <MailP>{t("mailingi.premiere_p2", "Reporterka wraca do rodzinnego portu po 23 latach. Plan: napisać reportaż o zaginięciach z 1968 roku. Zostaje na jedną noc. Tej jednej nocy wystarczy.")}</MailP>
+            <MailAlert title={t("mailingi.premiere_alert_title", "// Content warning")}>{t("mailingi.premiere_alert_body", "Opisy utonięcia, talasofobia, intensywne dźwięki infradźwięku (17.8 Hz). Nie zalecane dla osób z lękiem przed głęboką wodą.")}</MailAlert>
+            <MailP>{t("mailingi.premiere_p3_p1", "Zwiastun: 2:14 min ·")} <span className="text-[#ff2a2a]">{t("mailingi.premiere_p3_link", "Posłuchaj zwiastuna →")}</span></MailP>
           </div>
         </>
       )}
 
       {tpl === "reset" && (
         <div className="px-9 pb-12 pt-9">
-          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Bezpieczeństwo · link jednorazowy</div>
-          <MailH1>Resetujesz <em className="italic text-[#c9c4b8]">hasło</em>.</MailH1>
-          <MailP>Ktoś (mamy nadzieję, że ty) poprosił o reset hasła do twojego konta OBSKURA. <strong className="font-medium text-[#f4f1ea]">Jeśli to nie ty</strong> — zignoruj ten e-mail, twoje hasło pozostanie bez zmian.</MailP>
-          <MailCta>Zresetuj hasło →</MailCta>
-          <p className="text-xs text-[#6e6a60]">Lub skopiuj ten link do przeglądarki:</p>
+          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.reset_kicker", "// Bezpieczeństwo · link jednorazowy")}</div>
+          <MailH1>{t("mailingi.reset_h1_p1", "Resetujesz")} <em className="italic text-[#c9c4b8]">{t("mailingi.reset_h1_em", "hasło")}</em>.</MailH1>
+          <MailP>{t("mailingi.reset_p1_p1", "Ktoś (mamy nadzieję, że ty) poprosił o reset hasła do twojego konta OBSKURA.")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.reset_p1_strong", "Jeśli to nie ty")}</strong> {t("mailingi.reset_p1_p2", "— zignoruj ten e-mail, twoje hasło pozostanie bez zmian.")}</MailP>
+          <MailCta>{t("mailingi.reset_cta", "Zresetuj hasło →")}</MailCta>
+          <p className="text-xs text-[#6e6a60]">{t("mailingi.reset_link_label", "Lub skopiuj ten link do przeglądarki:")}</p>
           <p className="break-all bg-black/40 p-3 font-mono text-[11px] text-[#5fa8ff]">https://obskura.audio/reset?token=k8f7d3a92b4c8e1f5a7d3a92b4c8e1f5a7d3a92b4c8e1f</p>
-          <MailAlert title="// Ważne">Link wygasa za <strong className="text-[#f4f1ea]">30 minut</strong> (06.06.2026 · 14:53 CET). Po tym czasie musisz poprosić o nowy link.</MailAlert>
-          <MailH2>Czego <em className="italic text-[#c9c4b8]">od ciebie nigdy</em> nie poprosimy</MailH2>
+          <MailAlert title={t("mailingi.reset_alert_title", "// Ważne")}>{t("mailingi.reset_alert_p1", "Link wygasa za")} <strong className="text-[#f4f1ea]">{t("mailingi.reset_alert_strong", "30 minut")}</strong> {t("mailingi.reset_alert_p2", "(06.06.2026 · 14:53 CET). Po tym czasie musisz poprosić o nowy link.")}</MailAlert>
+          <MailH2>{t("mailingi.reset_h2_p1", "Czego")} <em className="italic text-[#c9c4b8]">{t("mailingi.reset_h2_em", "od ciebie nigdy")}</em> {t("mailingi.reset_h2_p2", "nie poprosimy")}</MailH2>
           <ul className="mb-4 list-disc pl-5">
-            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">O hasło przez e-mail, czat lub telefon</li>
-            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">O dane karty kredytowej poza stroną płatności Stripe</li>
-            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">O zalogowanie się przez link inny niż na <strong className="font-medium text-[#f4f1ea]">obskura.audio</strong></li>
+            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">{t("mailingi.reset_never_1", "O hasło przez e-mail, czat lub telefon")}</li>
+            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">{t("mailingi.reset_never_2", "O dane karty kredytowej poza stroną płatności Stripe")}</li>
+            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">{t("mailingi.reset_never_3_p1", "O zalogowanie się przez link inny niż na")} <strong className="font-medium text-[#f4f1ea]">obskura.audio</strong></li>
           </ul>
-          <p className="mt-6 text-xs text-[#6e6a60]">Próba pochodziła z: Warszawa · PL · IP 5.184.x.x · Safari na macOS · 06.06.2026 · 14:23 CET</p>
+          <p className="mt-6 text-xs text-[#6e6a60]">{t("mailingi.reset_origin", "Próba pochodziła z: Warszawa · PL · IP 5.184.x.x · Safari na macOS · 06.06.2026 · 14:23 CET")}</p>
         </div>
       )}
 
       {tpl === "invoice" && (
         <div className="px-9 pb-12 pt-9">
-          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Faktura VAT · obowiązuje przez 5 lat (ustawa)</div>
-          <MailH1>Dziękujemy <em className="italic text-[#c9c4b8]">za płatność</em>.</MailH1>
-          <MailP>Subskrypcja Solo (roczna) odnowiona automatycznie. Wszystko działa, dostęp nieprzerwany. Faktura w załączniku — i poniżej do podglądu.</MailP>
+          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.invoice_kicker", "// Faktura VAT · obowiązuje przez 5 lat (ustawa)")}</div>
+          <MailH1>{t("mailingi.invoice_h1_p1", "Dziękujemy")} <em className="italic text-[#c9c4b8]">{t("mailingi.invoice_h1_em", "za płatność")}</em>.</MailH1>
+          <MailP>{t("mailingi.invoice_p1", "Subskrypcja Solo (roczna) odnowiona automatycznie. Wszystko działa, dostęp nieprzerwany. Faktura w załączniku — i poniżej do podglądu.")}</MailP>
           <MailInvoice rows={[
-            { k: "NUMER FAKTURY", v: "FV/2026/05/0847" },
-            { k: "DATA WYSTAWIENIA", v: "14.05.2026" },
-            { k: "DATA PŁATNOŚCI", v: "14.05.2026 · 03:14 CET" },
-            { k: "METODA", v: "VISA •••• 4137" },
-            { k: "USŁUGA", v: "OBSKURA SOLO · ROCZNIE", sep: true },
-            { k: "NETTO", v: "266,67 PLN" },
-            { k: "VAT (8%)", v: "21,33 PLN" },
-            { k: "RAZEM BRUTTO", v: "288,00 PLN", total: true },
+            { k: t("mailingi.invoice_row_number", "NUMER FAKTURY"), v: "FV/2026/05/0847" },
+            { k: t("mailingi.invoice_row_issued", "DATA WYSTAWIENIA"), v: "14.05.2026" },
+            { k: t("mailingi.invoice_row_paid", "DATA PŁATNOŚCI"), v: "14.05.2026 · 03:14 CET" },
+            { k: t("mailingi.invoice_row_method", "METODA"), v: "VISA •••• 4137" },
+            { k: t("mailingi.invoice_row_service", "USŁUGA"), v: t("mailingi.invoice_row_service_val", "OBSKURA SOLO · ROCZNIE"), sep: true },
+            { k: t("mailingi.invoice_row_net", "NETTO"), v: "266,67 PLN" },
+            { k: t("mailingi.invoice_row_vat", "VAT (8%)"), v: "21,33 PLN" },
+            { k: t("mailingi.invoice_row_total", "RAZEM BRUTTO"), v: "288,00 PLN", total: true },
           ]} />
-          <MailCta>↓ Pobierz fakturę PDF</MailCta>
-          <MailH2>Jak <em className="italic text-[#c9c4b8]">anulować</em></MailH2>
-          <MailP>Konto → Subskrypcja → Anuluj. Jedno kliknięcie. Dostęp pozostaje aktywny do końca opłaconego okresu (do <strong className="font-medium text-[#f4f1ea]">14.05.2027</strong>). Bez ekranów „jesteś pewien?”.</MailP>
-          <p className="text-xs text-[#6e6a60]">OBSKURA Audio sp. z o.o. · NIP 583-321-09-44 · ul. Stara Stocznia 27, 80-863 Gdańsk</p>
+          <MailCta>{t("mailingi.invoice_cta", "↓ Pobierz fakturę PDF")}</MailCta>
+          <MailH2>{t("mailingi.invoice_h2_p1", "Jak")} <em className="italic text-[#c9c4b8]">{t("mailingi.invoice_h2_em", "anulować")}</em></MailH2>
+          <MailP>{t("mailingi.invoice_p2_p1", "Konto → Subskrypcja → Anuluj. Jedno kliknięcie. Dostęp pozostaje aktywny do końca opłaconego okresu (do")} <strong className="font-medium text-[#f4f1ea]">14.05.2027</strong>{t("mailingi.invoice_p2_p2", "). Bez ekranów „jesteś pewien?”.")}</MailP>
+          <p className="text-xs text-[#6e6a60]">{t("mailingi.invoice_footer", "OBSKURA Audio sp. z o.o. · NIP 583-321-09-44 · ul. Stara Stocznia 27, 80-863 Gdańsk")}</p>
         </div>
       )}
 
       {tpl === "security" && (
         <div className="px-9 pb-12 pt-9">
-          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ffaa44]">// Alert · wymaga twojej uwagi</div>
-          <MailH1>Ktoś próbował <em className="italic text-[#c9c4b8]">cię odwiedzić</em>.</MailH1>
-          <MailP>Wczoraj o <strong className="font-medium text-[#f4f1ea]">14:23 CET</strong> wykonano nietypowe logowanie do twojego konta. Próba została <strong className="font-medium text-[#00ff88]">zablokowana</strong> przez nasz system, ale chcemy, żebyś wiedział.</MailP>
+          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ffaa44]">{t("mailingi.security_kicker", "// Alert · wymaga twojej uwagi")}</div>
+          <MailH1>{t("mailingi.security_h1_p1", "Ktoś próbował")} <em className="italic text-[#c9c4b8]">{t("mailingi.security_h1_em", "cię odwiedzić")}</em>.</MailH1>
+          <MailP>{t("mailingi.security_p1_p1", "Wczoraj o")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.security_p1_strong1", "14:23 CET")}</strong> {t("mailingi.security_p1_p2", "wykonano nietypowe logowanie do twojego konta. Próba została")} <strong className="font-medium text-[#00ff88]">{t("mailingi.security_p1_strong2", "zablokowana")}</strong> {t("mailingi.security_p1_p3", "przez nasz system, ale chcemy, żebyś wiedział.")}</MailP>
           <MailInvoice rows={[
-            { k: "LOKALIZACJA", v: "Berlin · DE" },
-            { k: "IP", v: "46.183.x.x" },
-            { k: "URZĄDZENIE", v: "Windows · Chrome 124" },
-            { k: "CZAS", v: "25.05.2026 · 14:23:08 CET" },
-            { k: "STATUS", v: "● ZABLOKOWANE", green: true, sep: true },
+            { k: t("mailingi.security_row_location", "LOKALIZACJA"), v: "Berlin · DE" },
+            { k: t("mailingi.security_row_ip", "IP"), v: "46.183.x.x" },
+            { k: t("mailingi.security_row_device", "URZĄDZENIE"), v: "Windows · Chrome 124" },
+            { k: t("mailingi.security_row_time", "CZAS"), v: "25.05.2026 · 14:23:08 CET" },
+            { k: t("mailingi.security_row_status", "STATUS"), v: t("mailingi.security_row_status_val", "● ZABLOKOWANE"), green: true, sep: true },
           ]} />
-          <MailH2>Co <em className="italic text-[#c9c4b8]">powinieneś zrobić</em></MailH2>
-          <MailP>Jeśli to <strong className="font-medium text-[#f4f1ea]">byłeś ty</strong> (np. podróżujesz, VPN) — zignoruj ten mail.</MailP>
-          <MailP>Jeśli to <strong className="font-medium text-[#f4f1ea]">nie ty</strong> — natychmiast zmień hasło i sprawdź aktywne sesje.</MailP>
-          <MailCta>Zmień hasło teraz →</MailCta>
-          <MailAlert accent="red" title="// Jeśli masz wątpliwości">Skontaktuj się z nami: <strong className="text-[#f4f1ea]">pomoc@obskura.audio</strong>. Odpowiadamy w 4h, w nocy w 12h.</MailAlert>
+          <MailH2>{t("mailingi.security_h2_p1", "Co")} <em className="italic text-[#c9c4b8]">{t("mailingi.security_h2_em", "powinieneś zrobić")}</em></MailH2>
+          <MailP>{t("mailingi.security_p2_p1", "Jeśli to")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.security_p2_strong", "byłeś ty")}</strong> {t("mailingi.security_p2_p2", "(np. podróżujesz, VPN) — zignoruj ten mail.")}</MailP>
+          <MailP>{t("mailingi.security_p3_p1", "Jeśli to")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.security_p3_strong", "nie ty")}</strong> {t("mailingi.security_p3_p2", "— natychmiast zmień hasło i sprawdź aktywne sesje.")}</MailP>
+          <MailCta>{t("mailingi.security_cta", "Zmień hasło teraz →")}</MailCta>
+          <MailAlert accent="red" title={t("mailingi.security_alert_title", "// Jeśli masz wątpliwości")}>{t("mailingi.security_alert_p1", "Skontaktuj się z nami:")} <strong className="text-[#f4f1ea]">pomoc@obskura.audio</strong>. {t("mailingi.security_alert_p2", "Odpowiadamy w 4h, w nocy w 12h.")}</MailAlert>
         </div>
       )}
 
       {tpl === "cancel" && (
         <div className="px-9 pb-12 pt-9">
-          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">// Anulowanie potwierdzone</div>
-          <MailH1>Twoja subskrypcja <em className="italic text-[#c9c4b8]">została anulowana</em>.</MailH1>
-          <MailP drop>To smutna wiadomość, ale szanujemy decyzję. Twój dostęp do całego katalogu pozostaje <strong className="font-medium text-[#f4f1ea]">aktywny do 14.05.2027</strong>. Po tym czasie wracasz na plan Próg (20 odcinków / miesiąc, z reklamami).</MailP>
-          <MailH2>Co <em className="italic text-[#c9c4b8]">teraz</em></MailH2>
+          <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.cancel_kicker", "// Anulowanie potwierdzone")}</div>
+          <MailH1>{t("mailingi.cancel_h1_p1", "Twoja subskrypcja")} <em className="italic text-[#c9c4b8]">{t("mailingi.cancel_h1_em", "została anulowana")}</em>.</MailH1>
+          <MailP drop>{t("mailingi.cancel_p1_p1", "To smutna wiadomość, ale szanujemy decyzję. Twój dostęp do całego katalogu pozostaje")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.cancel_p1_strong", "aktywny do 14.05.2027")}</strong>. {t("mailingi.cancel_p1_p2", "Po tym czasie wracasz na plan Próg (20 odcinków / miesiąc, z reklamami).")}</MailP>
+          <MailH2>{t("mailingi.cancel_h2a_p1", "Co")} <em className="italic text-[#c9c4b8]">{t("mailingi.cancel_h2a_em", "teraz")}</em></MailH2>
           <ul className="mb-4 list-disc pl-5">
-            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">Nadal masz pełen dostęp do <strong className="font-medium text-[#f4f1ea]">14.05.2027</strong></li>
-            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">Twoje konto, dane, historia słuchania — pozostają nietknięte</li>
-            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">Pobrane odcinki offline znikną z aplikacji po wygaśnięciu</li>
-            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">Twoje komentarze i polubienia — zostają</li>
+            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">{t("mailingi.cancel_li1_p1", "Nadal masz pełen dostęp do")} <strong className="font-medium text-[#f4f1ea]">14.05.2027</strong></li>
+            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">{t("mailingi.cancel_li2", "Twoje konto, dane, historia słuchania — pozostają nietknięte")}</li>
+            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">{t("mailingi.cancel_li3", "Pobrane odcinki offline znikną z aplikacji po wygaśnięciu")}</li>
+            <li className="mb-1.5 text-sm font-light leading-relaxed text-[#c9c4b8]">{t("mailingi.cancel_li4", "Twoje komentarze i polubienia — zostają")}</li>
           </ul>
-          <MailH2>Jeśli to <em className="italic text-[#c9c4b8]">pomyłka</em></MailH2>
-          <MailP>Możesz wrócić w każdej chwili. Anulowanie cofa się jednym kliknięciem — nie pytamy o powody.</MailP>
-          <MailCta>Cofnij anulowanie →</MailCta>
-          <MailH2>Powiedz <em className="italic text-[#c9c4b8]">dlaczego</em>?</MailH2>
-          <MailP>Jeśli chcesz, w 30 sekundach odpowiedz nam na 3 pytania. Po prostu chcemy wiedzieć — żeby być lepsi.</MailP>
-          <p className="text-center"><span className="font-mono text-xs uppercase tracking-ui text-[#5fa8ff]">30-sekundowa ankieta (anonimowa) →</span></p>
-          <MailSig who="Marta Sobczak" />
+          <MailH2>{t("mailingi.cancel_h2b_p1", "Jeśli to")} <em className="italic text-[#c9c4b8]">{t("mailingi.cancel_h2b_em", "pomyłka")}</em></MailH2>
+          <MailP>{t("mailingi.cancel_p2", "Możesz wrócić w każdej chwili. Anulowanie cofa się jednym kliknięciem — nie pytamy o powody.")}</MailP>
+          <MailCta>{t("mailingi.cancel_cta", "Cofnij anulowanie →")}</MailCta>
+          <MailH2>{t("mailingi.cancel_h2c_p1", "Powiedz")} <em className="italic text-[#c9c4b8]">{t("mailingi.cancel_h2c_em", "dlaczego")}</em>?</MailH2>
+          <MailP>{t("mailingi.cancel_p3", "Jeśli chcesz, w 30 sekundach odpowiedz nam na 3 pytania. Po prostu chcemy wiedzieć — żeby być lepsi.")}</MailP>
+          <p className="text-center"><span className="font-mono text-xs uppercase tracking-ui text-[#5fa8ff]">{t("mailingi.cancel_survey", "30-sekundowa ankieta (anonimowa) →")}</span></p>
+          <MailSig who="Marta Sobczak" t={t} />
         </div>
       )}
     </>
   );
 }
-MailBody.propTypes = { tpl: PropTypes.string.isRequired };
+MailBody.propTypes = { tpl: PropTypes.string.isRequired, t: PropTypes.func.isRequired };
 
-function Email({ tpl }) {
-  const h = HEADS[tpl];
+function Email({ tpl, heads, t }) {
+  const h = heads[tpl];
   const [name, addr] = h.from.split("<");
   return (
     <>
       {/* Light mail header */}
       <div className="grid grid-cols-[80px_1fr] items-center gap-x-6 gap-y-3.5 bg-[#f4f1ea] px-6 py-6 text-[#050608] sm:grid-cols-[100px_1fr_auto] sm:px-8">
-        <span className="font-mono text-[10px] uppercase tracking-mono text-[#6e6a60]">Od</span>
+        <span className="font-mono text-[10px] uppercase tracking-mono text-[#6e6a60]">{t("mailingi.email_from", "Od")}</span>
         <span className="text-[13px]"><strong className="font-semibold">{name.trim()}</strong><br /><span className="text-[#6e6a60]">{addr?.replace(">", "")}</span></span>
         <span className="hidden font-mono text-[10px] uppercase tracking-ui text-[#6e6a60] sm:block">↩ ↪ ⌄</span>
-        <span className="font-mono text-[10px] uppercase tracking-mono text-[#6e6a60]">Do</span>
-        <span className="text-[13px] sm:col-span-2">ty@email.com</span>
+        <span className="font-mono text-[10px] uppercase tracking-mono text-[#6e6a60]">{t("mailingi.email_to", "Do")}</span>
+        <span className="text-[13px] sm:col-span-2">{t("mailingi.email_recipient", "ty@email.com")}</span>
         <div className="col-span-2 mt-1.5 font-serif text-[28px] leading-snug text-[#050608] sm:col-span-3">{h.subject}</div>
       </div>
 
@@ -279,18 +259,18 @@ function Email({ tpl }) {
             <span className="relative h-[18px] w-[18px] rounded-full border-[1.5px] border-[#ff2a2a] after:absolute after:inset-[5px] after:rounded-full after:bg-[#ff2a2a]" />
             <span className="font-sans text-sm font-extrabold tracking-brand text-[#f4f1ea]">OBSKURA</span>
           </div>
-          <MailBody tpl={tpl} />
+          <MailBody tpl={tpl} t={t} />
           <div className="border-t border-white/[0.08] bg-[#050608] px-8 py-7">
             <div className="mb-3 space-x-4 font-mono text-[10px] tracking-ui">
-              <a href="#footer" className="text-[#c9c4b8]">Zarządzaj subskrypcjami</a>
-              <a href="#footer" className="text-[#c9c4b8]">Wypisz się</a>
-              <a href="#footer" className="text-[#c9c4b8]">Pomoc</a>
-              <a href="#footer" className="text-[#c9c4b8]">Polityka prywatności</a>
+              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_subs", "Zarządzaj subskrypcjami")}</a>
+              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_unsub", "Wypisz się")}</a>
+              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_help", "Pomoc")}</a>
+              <a href="#footer" className="text-[#c9c4b8]">{t("mailingi.footer_privacy", "Polityka prywatności")}</a>
             </div>
             <p className="font-mono text-[10px] leading-relaxed tracking-ui text-[#6e6a60]">
-              OBSKURA Audio sp. z o.o. · NIP 583-321-09-44<br />
-              ul. Stara Stocznia 27 · 80-863 Gdańsk · POLSKA<br />
-              © 2021–2026 · Wszystkie głosy zastrzeżone
+              {t("mailingi.footer_company", "OBSKURA Audio sp. z o.o. · NIP 583-321-09-44")}<br />
+              {t("mailingi.footer_address", "ul. Stara Stocznia 27 · 80-863 Gdańsk · POLSKA")}<br />
+              {t("mailingi.footer_rights", "© 2021–2026 · Wszystkie głosy zastrzeżone")}
             </p>
           </div>
         </div>
@@ -298,7 +278,7 @@ function Email({ tpl }) {
     </>
   );
 }
-Email.propTypes = { tpl: PropTypes.string.isRequired };
+Email.propTypes = { tpl: PropTypes.string.isRequired, heads: PropTypes.object.isRequired, t: PropTypes.func.isRequired };
 
 function SideBlock({ title, children, accent = false }) {
   return (
@@ -323,16 +303,46 @@ KV.propTypes = { k: PropTypes.string.isRequired, v: PropTypes.node.isRequired, c
 export default function Mailingi() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("welcome");
+
+  const TEMPLATES = useMemo(() => [
+    { id: "welcome", label: t("mailingi.tpl_welcome_label", "Powitalny"), purpose: t("mailingi.tpl_welcome_purpose", "Po pierwszym logowaniu"), freq: t("mailingi.freq_once", "Jednorazowo"), tag: t("mailingi.tag_transactional", "TRANSAKCYJNY") },
+    { id: "newsletter", label: t("mailingi.tpl_newsletter_label", "Newsletter"), purpose: t("mailingi.tpl_newsletter_purpose", "Co czwartek o 23:00"), freq: t("mailingi.freq_weekly", "Tygodniowo"), tag: t("mailingi.tag_marketing", "MARKETINGOWY") },
+    { id: "premiere", label: t("mailingi.tpl_premiere_label", "Nowa premiera"), purpose: t("mailingi.tpl_premiere_purpose", "Gdy nowy odcinek"), freq: t("mailingi.freq_per_release", "Co premierę"), tag: t("mailingi.tag_notification", "POWIADOMIENIE") },
+    { id: "reset", label: t("mailingi.tpl_reset_label", "Reset hasła"), purpose: t("mailingi.tpl_reset_purpose", "Na żądanie"), freq: t("mailingi.freq_on_demand", "Na żądanie"), tag: t("mailingi.tag_transactional", "TRANSAKCYJNY") },
+    { id: "invoice", label: t("mailingi.tpl_invoice_label", "Faktura"), purpose: t("mailingi.tpl_invoice_purpose", "Po każdej płatności"), freq: t("mailingi.freq_per_renewal", "Co odnowę"), tag: t("mailingi.tag_transactional", "TRANSAKCYJNY") },
+    { id: "security", label: t("mailingi.tpl_security_label", "Alert bezpieczeństwa"), purpose: t("mailingi.tpl_security_purpose", "Nietypowe logowanie"), freq: t("mailingi.freq_as_needed", "W razie potrzeby"), tag: t("mailingi.tag_critical", "KRYTYCZNY") },
+    { id: "cancel", label: t("mailingi.tpl_cancel_label", "Potw. anulowania"), purpose: t("mailingi.tpl_cancel_purpose", "Po anulowaniu subskrypcji"), freq: t("mailingi.freq_once", "Jednorazowo"), tag: t("mailingi.tag_transactional", "TRANSAKCYJNY") },
+  ], [t]);
+
+  const HEADS = useMemo(() => ({
+    welcome: { from: '"OBSKURA" <witaj@obskura.audio>', subject: (<>{t("mailingi.subj_welcome_p1", "Witaj w Obskurze.")} <em className="italic text-[#6e6a60]">{t("mailingi.subj_welcome_em", "Pierwsze 30 dni — nic nie płacisz.")}</em></>) },
+    newsletter: { from: '"Obskura Listy" <listy@obskura.audio>', subject: (<>#183 · <em className="italic text-[#6e6a60]">{t("mailingi.subj_newsletter_em", "Coś chce wrócić")}</em> {t("mailingi.subj_newsletter_p", "— twój dostęp do S03E12 wygasa za 71h")}</>) },
+    premiere: { from: '"OBSKURA" <premiery@obskura.audio>', subject: (<>{t("mailingi.subj_premiere_p1", "Nowy odcinek dla ciebie.")} <em className="italic text-[#6e6a60]">{t("mailingi.subj_premiere_em", "S03E12 · Mgła nad Wisłoujściem")}</em></>) },
+    reset: { from: `"${t("mailingi.from_reset", "OBSKURA bezpieczeństwo")}" <noreply@obskura.audio>`, subject: (<>{t("mailingi.subj_reset_p1", "Reset hasła —")} <em className="italic text-[#6e6a60]">{t("mailingi.subj_reset_em", "link wygasa za 30 minut")}</em></>) },
+    invoice: { from: `"${t("mailingi.from_invoice", "OBSKURA Płatności")}" <faktury@obskura.audio>`, subject: (<>{t("mailingi.subj_invoice_p1", "Faktura VAT FV/2026/05/0847 ·")} <em className="italic text-[#6e6a60]">288,00 PLN</em></>) },
+    security: { from: '"OBSKURA Alert" <alert@obskura.audio>', subject: (<>{t("mailingi.subj_security_p1", "⚠ Nietypowe logowanie z")} <em className="italic text-[#6e6a60]">{t("mailingi.subj_security_em", "Berlin · 25.05.2026 · 14:23")}</em></>) },
+    cancel: { from: '"OBSKURA" <witaj@obskura.audio>', subject: (<>{t("mailingi.subj_cancel_p1", "Anulowanie potwierdzone.")} <em className="italic text-[#6e6a60]">{t("mailingi.subj_cancel_em", "Brakuje nam ciebie już teraz.")}</em></>) },
+  }), [t]);
+
   const tpl = TEMPLATES.find((x) => x.id === tab);
   const idx = TEMPLATES.findIndex((x) => x.id === tab);
 
-  const tagColor = tpl.tag === "KRYTYCZNY" ? "text-red" : tpl.tag === "MARKETINGOWY" ? "text-blue" : "text-ink-0";
+  const KRYTYCZNY = t("mailingi.tag_critical", "KRYTYCZNY");
+  const MARKETINGOWY = t("mailingi.tag_marketing", "MARKETINGOWY");
+  const tagColor = tpl.tag === KRYTYCZNY ? "text-red" : tpl.tag === MARKETINGOWY ? "text-blue" : "text-ink-0";
   const metrics = {
     sent: tab === "newsletter" ? "47 832" : tab === "premiere" ? "12 047" : "847",
     open: tab === "newsletter" ? "68%" : tab === "security" ? "94%" : "72%",
     click: tab === "newsletter" ? "34%" : tab === "premiere" ? "52%" : "18%",
-    unsub: tab === "newsletter" ? "42 / mies." : "—",
+    unsub: tab === "newsletter" ? t("mailingi.metric_unsub_monthly", "42 / mies.") : "—",
   };
+
+  const headerStats = [
+    ["7", t("mailingi.hstat_active", "Aktywnych szablonów"), true],
+    ["47 800", t("mailingi.hstat_subs", "Subskrybentów"), false],
+    ["0%", t("mailingi.hstat_spam", "Spam reports"), false],
+    ["68%", t("mailingi.hstat_open", "Open rate"), false],
+  ];
 
   return (
     <>
@@ -342,14 +352,14 @@ export default function Mailingi() {
           <div>
             <Eyebrow>{t("mailingi.eyebrow", "// Szablony e-mail · Postmark · GDPR")}</Eyebrow>
             <h1 className="my-4 font-serif text-[clamp(48px,6vw,80px)] font-medium leading-[0.95] tracking-[-0.02em]">
-              Wszystkie wiadomości, <em className="italic text-ink-1">które kiedykolwiek od nas dostaniesz</em>.
+              {t("mailingi.hero_h1_p1", "Wszystkie wiadomości,")} <em className="italic text-ink-1">{t("mailingi.hero_h1_em", "które kiedykolwiek od nas dostaniesz")}</em>.
             </h1>
             <p className="max-w-[560px] text-base font-light leading-relaxed text-ink-1">
-              7 szablonów, jeden wspólny styl, jedna paleta. Maksymalnie 1 e-mail dziennie (poza rzeczami transakcyjnymi). Każda wiadomość ma link „wypisz się” jednym kliknięciem.
+              {t("mailingi.hero_lead", "7 szablonów, jeden wspólny styl, jedna paleta. Maksymalnie 1 e-mail dziennie (poza rzeczami transakcyjnymi). Każda wiadomość ma link „wypisz się” jednym kliknięciem.")}
             </p>
           </div>
           <div className="flex flex-wrap gap-9 pt-4">
-            {[["7", "Aktywnych szablonów", true], ["47 800", "Subskrybentów"], ["0%", "Spam reports"], ["68%", "Open rate"]].map(([n, l, red], i) => (
+            {headerStats.map(([n, l, red], i) => (
               <div key={i}>
                 <div className={`font-serif text-3xl font-medium leading-none ${red ? "text-red" : ""}`}>{n}</div>
                 <div className="mt-1.5 font-mono text-[9px] uppercase tracking-mono text-ink-2">{l}</div>
@@ -391,44 +401,44 @@ export default function Mailingi() {
             <span className="hidden flex-1 truncate text-center opacity-70 sm:block">postmark.app/preview · OBSKURA · 04.06.2026 23:00</span>
             <span className="ml-auto flex items-center gap-1.5"><Mail size={12} aria-hidden /> 14:23 PM · CET</span>
           </div>
-          <Email tpl={tab} />
+          <Email tpl={tab} heads={HEADS} t={t} />
         </div>
 
         {/* Sidebar */}
         <aside className="flex flex-col gap-4 lg:sticky lg:top-28">
-          <SideBlock title="// Metadane szablonu">
+          <SideBlock title={t("mailingi.side_meta", "// Metadane szablonu")}>
             <KV k="ID" v={`EMAIL-${String(idx + 1).padStart(3, "0")}`} />
-            <KV k="Typ" v={<span className={`not-italic font-mono text-[11px] font-semibold tracking-ui ${tagColor}`}>{tpl.tag}</span>} />
-            <KV k="Częstotliwość" v={tpl.freq} />
-            <KV k="Wyzwalacz" v={tpl.purpose} />
-            <KV k="Status" v={<span className="not-italic font-mono text-[11px] tracking-ui text-[#00ff88]">● Aktywny</span>} />
-            <KV k="Wersja" v="4.2.1" />
-            <KV k="Ostatnia edycja" v="23.04.2026" />
+            <KV k={t("mailingi.side_kv_type", "Typ")} v={<span className={`not-italic font-mono text-[11px] font-semibold tracking-ui ${tagColor}`}>{tpl.tag}</span>} />
+            <KV k={t("mailingi.side_kv_freq", "Częstotliwość")} v={tpl.freq} />
+            <KV k={t("mailingi.side_kv_trigger", "Wyzwalacz")} v={tpl.purpose} />
+            <KV k={t("mailingi.side_kv_status", "Status")} v={<span className="not-italic font-mono text-[11px] tracking-ui text-[#00ff88]">{t("mailingi.side_kv_status_val", "● Aktywny")}</span>} />
+            <KV k={t("mailingi.side_kv_version", "Wersja")} v="4.2.1" />
+            <KV k={t("mailingi.side_kv_last_edit", "Ostatnia edycja")} v="23.04.2026" />
           </SideBlock>
 
-          <SideBlock title="// Metryki · ostatnie 30 dni">
-            <KV k="Wysłane" v={metrics.sent} />
-            <KV k="Open rate" v={<span className="not-italic font-sans font-semibold text-red">{metrics.open}</span>} />
-            <KV k="Click rate" v={metrics.click} />
-            <KV k="Spam reports" v={<span className="not-italic font-mono text-[11px] tracking-ui text-[#00ff88]">0</span>} />
-            <KV k="Bounce" v="0.3%" />
-            <KV k="Unsub po tym" v={metrics.unsub} />
+          <SideBlock title={t("mailingi.side_metrics", "// Metryki · ostatnie 30 dni")}>
+            <KV k={t("mailingi.metric_sent", "Wysłane")} v={metrics.sent} />
+            <KV k={t("mailingi.metric_open", "Open rate")} v={<span className="not-italic font-sans font-semibold text-red">{metrics.open}</span>} />
+            <KV k={t("mailingi.metric_click", "Click rate")} v={metrics.click} />
+            <KV k={t("mailingi.metric_spam", "Spam reports")} v={<span className="not-italic font-mono text-[11px] tracking-ui text-[#00ff88]">0</span>} />
+            <KV k={t("mailingi.metric_bounce", "Bounce")} v="0.3%" />
+            <KV k={t("mailingi.metric_unsub", "Unsub po tym")} v={metrics.unsub} />
           </SideBlock>
 
-          <SideBlock title="// Tagi">
+          <SideBlock title={t("mailingi.side_tags", "// Tagi")}>
             <div className="flex flex-wrap gap-1.5">
-              {["PL/EN", "Responsive", "Dark mode", "GDPR", "Unsub 1-click", "Plain-text fallback"].map((tg) => (
+              {["PL/EN", t("mailingi.tag_responsive", "Responsive"), t("mailingi.tag_dark_mode", "Dark mode"), "GDPR", t("mailingi.tag_unsub", "Unsub 1-click"), t("mailingi.tag_fallback", "Plain-text fallback")].map((tg) => (
                 <span key={tg} className="border border-red/30 bg-red/5 px-2.5 py-1 font-mono text-[9px] uppercase tracking-mono text-red">{tg}</span>
               ))}
             </div>
           </SideBlock>
 
-          <SideBlock title="// Zasady" accent>
+          <SideBlock title={t("mailingi.side_rules", "// Zasady")} accent>
             <p className="text-xs font-light leading-relaxed text-ink-1">
-              Max <strong className="font-medium text-ink-0">1 mail / dzień</strong> per user (poza transakcyjnymi).<br />
-              <strong className="font-medium text-ink-0">0 dark patterns</strong> przy wypisaniu.<br />
-              <strong className="font-medium text-ink-0">Bez śledzenia</strong> klików w marketingowych.<br />
-              Każdy mail = plain-text fallback dla czytników. <ChevronRight size={11} className="inline text-red" aria-hidden />
+              {t("mailingi.rules_max_p1", "Max")} <strong className="font-medium text-ink-0">{t("mailingi.rules_max_strong", "1 mail / dzień")}</strong> {t("mailingi.rules_max_p2", "per user (poza transakcyjnymi).")}<br />
+              <strong className="font-medium text-ink-0">{t("mailingi.rules_dark_strong", "0 dark patterns")}</strong> {t("mailingi.rules_dark_t", "przy wypisaniu.")}<br />
+              <strong className="font-medium text-ink-0">{t("mailingi.rules_track_strong", "Bez śledzenia")}</strong> {t("mailingi.rules_track_t", "klików w marketingowych.")}<br />
+              {t("mailingi.rules_fallback", "Każdy mail = plain-text fallback dla czytników.")} <ChevronRight size={11} className="inline text-red" aria-hidden />
             </p>
           </SideBlock>
         </aside>

@@ -73,4 +73,15 @@ export function applySeo(pathname, t = null) {
   setMeta("property", "og:description", trDesc);
   setMeta("name", "twitter:title", fullTitle);
   setMeta("name", "twitter:description", trDesc);
+
+  // Per-route OG image — generowane przez scripts/og-routes.mjs do public/og/{key}.png.
+  // Fallback do statycznego og-cover.jpg jeśli plik nie istnieje (crawler dostanie 404,
+  // ale meta i tak zostanie odczytane — nasz fallback w index.html łapie taki przypadek).
+  const ogPath = `/og/${key}.png`;
+  const absOg = new URL(ogPath, window.location.origin).href;
+  setMeta("property", "og:image", absOg);
+  setMeta("property", "og:image:width", "1200");
+  setMeta("property", "og:image:height", "630");
+  setMeta("name", "twitter:image", absOg);
+  setMeta("name", "twitter:card", "summary_large_image");
 }

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:ssg": "VITE_SSG=true vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
@@ -14,6 +15,7 @@
     "i18n:check": "node scripts/i18n-check.cjs",
     "narration": "node scripts/generate-narration.mjs",
     "og": "node scripts/og-image.mjs",
+    "og:routes": "node scripts/og-routes.mjs",
     "images:webp": "node scripts/images-to-webp.mjs"
   },
   "engines": {
@@ -42,6 +44,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@prerenderer/renderer-puppeteer": "^1.2.4",
+    "@prerenderer/rollup-plugin": "^0.3.12",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.0",
@@ -57,6 +61,7 @@
     "jsdom": "^25.0.0",
     "postcss": "^8.5.15",
     "prop-types": "^15.8.1",
+    "puppeteer": "^25.1.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.19",
     "vite": "^8.0.12",
