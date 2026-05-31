@@ -9,7 +9,7 @@
 - [x] **Faza 0** — Fundament: rename route'ów EN + redirecty 301 + routing/SSG _(commit `e7a435f`)_
 - [x] **Faza 1** — Auth + proste statyczne (6/6 zakładek)
 - [x] **Faza 2** — Konto + email + onboarding (6/6)
-- [ ] **Faza 3** — Listy i treść (0/6)
+- [x] **Faza 3** — Listy i treść (6/6)
 - [ ] **Faza 4** — Core audio / złożone (0/4)
 - [ ] **PR** `mobile-first` → `main`
 
@@ -103,14 +103,14 @@ Rozłączne pliki, każda = osobny agent + osobny commit.
 - [x] `Patrons` (`/patrons`, ex-Patroni) — tiery 1→sm:2→lg:3, wall 1→sm:3→lg:6
 - [x] `Press` (`/press`, ex-Prasa) — gridy sm:2-col, fluid typo, hero box sm:obok
 
-## FAZA 3 — Listy i treść (równolegle, 6)
+## FAZA 3 — Listy i treść (równolegle, 6) ✅
 
-- [ ] `Archive` (`/archive`)
-- [ ] `Club` (`/club`)
-- [ ] `Creators` (`/creators`, ex-Tworcy)
-- [ ] `Events` (`/events`, ex-Spotkania)
-- [ ] `States` (`/states`, ex-Stany)
-- [ ] `App` (`/app`, ex-Aplikacja) — + `IosFrame` + `AndroidFrame`
+- [x] `Archive` (`/archive`) — stats grid 3-col mobile, toolbar 2-row, karty fluid
+- [x] `Club` (`/club`) — fluid hero/sekcje, billing toggle full-width, tier price fluid
+- [x] `Creators` (`/creators`, ex-Tworcy) — featured 2-col od sm:, taby scroll mobile
+- [x] `Events` (`/events`, ex-Spotkania) — wiersze stack+separatory mobile, featured image progresywna
+- [x] `States` (`/states`, ex-Stany) — tab switcher min-h-44, panel meta flex-col, OfflineRow 3-col
+- [x] `App` (`/app`, ex-Aplikacja) — hero CTA stack, ramki full-width (IosFrame/AndroidFrame już mobile-ready)
 
 ## FAZA 4 — Core audio / złożone (równolegle, 4)
 
@@ -136,6 +136,6 @@ Po każdej fazie: zbiorczy build/lint + przegląd, potem przejście do kolejnej.
 
 ## Kolejność realizacji
 
-`Faza 0` ✅ → `Faza 1` ✅ → `Faza 2` ✅ → `Faza 3` ⏳ → `Faza 4` → PR `mobile-first` → `main`.
+`Faza 0` ✅ → `Faza 1` ✅ → `Faza 2` ✅ → `Faza 3` ✅ → `Faza 4` ⏳ → PR `mobile-first` → `main`.
 
-Łącznie: 21 zakładek + warstwa wspólna, 5 faz. **Postęp: 13/21 zakładek (Faza 0 + 1 + 2).**
+Łącznie: 21 zakładek + warstwa wspólna, 5 faz. **Postęp: 19/21 zakładek (Faza 0 + 1 + 2 + 3). Zostaje Faza 4 (4 zakładki).**
