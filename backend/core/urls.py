@@ -1,2 +1,7 @@
-# Placeholder routingu core — HealthView dochodzi w Task 5 (B0).
-urlpatterns: list = []
+from django.urls import path
+
+from core.views import HealthView
+
+urlpatterns = [
+    path("health/", HealthView.as_view(), name="health"),
+]
