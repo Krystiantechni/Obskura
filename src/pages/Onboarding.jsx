@@ -35,7 +35,7 @@ const MORE_RECS = ["Łańcuch Fenrira", "Coś patrzy z lasu", "Mgła nad Wisłou
 
 function OnboardingEyebrow({ children }) {
   return (
-    <div className="mb-7 inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-eyebrow text-red">
+    <div className="mb-4 inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-eyebrow text-red lg:mb-7">
       <span className="h-px w-8 bg-red shadow-[0_0_6px_#ff2a2a]" />
       {children}
       <span className="h-px w-8 bg-red shadow-[0_0_6px_#ff2a2a]" />
@@ -59,7 +59,7 @@ export default function Onboarding() {
   const selectedTime = TIMES.find((tm) => tm.id === when);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-bg-0 pb-32 pt-[120px]">
+    <div className="relative min-h-screen overflow-hidden bg-bg-0 pb-24 pt-20 lg:pb-32 lg:pt-[120px]">
       {/* Atmospheric backgrounds — fade between steps */}
       {STEPS.map((s, i) => (
         <div key={s.id} className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-[1500ms] ease-in-out" style={{ opacity: i === step ? 1 : 0 }}>
@@ -90,7 +90,7 @@ export default function Onboarding() {
                 {t("onboarding.welcome_h1_p1", "Witaj")} <em className="italic text-ink-1">{t("onboarding.welcome_h1_em", "w")}</em>{" "}
                 <span className="text-red [text-shadow:0_0_24px_rgba(255,42,42,0.4)]">{t("onboarding.welcome_h1_p2", "Obskurze")}</span>.
               </h1>
-              <p className="mx-auto mb-10 max-w-[580px] text-lg font-light leading-relaxed text-ink-1">
+              <p className="mx-auto mb-6 max-w-[580px] text-base font-light leading-relaxed text-ink-1 lg:mb-10 lg:text-lg">
                 {t("onboarding.welcome_sub_p1", "Zanim podasz nam słuchawki, chcemy wiedzieć")}{" "}
                 <strong className="font-medium text-ink-0">{t("onboarding.welcome_sub_b1", "czego się boisz")}</strong>{" "}
                 {t("onboarding.welcome_sub_p2", "i")}{" "}
@@ -100,7 +100,7 @@ export default function Onboarding() {
               <div className="flex flex-wrap justify-center gap-3.5">
                 <HorrorButton onClick={next}>{t("onboarding.welcome_cta", "Zaczynamy")} <Arrow /></HorrorButton>
               </div>
-              <div className="mt-14 font-mono text-[10px] uppercase tracking-mono text-ink-2">
+              <div className="mt-8 font-mono text-[10px] uppercase tracking-mono text-ink-2 lg:mt-14">
                 {t("onboarding.welcome_note", "ZALECANE: SŁUCHAWKI · NOC · CISZA · OD 18 LAT")}
               </div>
             </>
@@ -113,7 +113,7 @@ export default function Onboarding() {
               <h1 className="mb-6 font-serif font-medium leading-[0.95] tracking-[-0.02em]" style={{ fontSize: "clamp(48px, 7vw, 96px)" }}>
                 {t("onboarding.genres_h1_p1", "Co cię")} <em className="italic text-ink-1">{t("onboarding.genres_h1_em", "obudzi")}</em> {t("onboarding.genres_h1_p2", "o trzeciej?")}
               </h1>
-              <p className="mx-auto mb-10 max-w-[580px] text-lg font-light leading-relaxed text-ink-1">
+              <p className="mx-auto mb-6 max-w-[580px] text-base font-light leading-relaxed text-ink-1 lg:mb-10 lg:text-lg">
                 {t("onboarding.genres_sub_p1", "Wybierz")} <strong className="font-medium text-ink-0">{t("onboarding.genres_sub_b", "minimum 1")}</strong>{" "}
                 {t("onboarding.genres_sub_p2", "max 8. Algorytm dobierze ci historie. Możesz to zmienić później w ustawieniach.")}
               </p>
@@ -148,7 +148,7 @@ export default function Onboarding() {
                         {sel ? <Check size={13} strokeWidth={2.5} /> : null}
                       </span>
                       <span className="absolute inset-x-3.5 bottom-3.5 z-[2] text-left">
-                        <span className="mb-1 block font-serif text-xl italic leading-tight">{t(`onboarding.genre_${g.id}_name`, g.nameDef)}</span>
+                        <span className="mb-1 block font-serif text-base italic leading-tight sm:text-xl">{t(`onboarding.genre_${g.id}_name`, g.nameDef)}</span>
                         <span className="block font-mono text-[9px] uppercase tracking-ui text-ink-2">{t(`onboarding.genre_${g.id}_tag`, g.tagDef)}</span>
                       </span>
                     </button>
@@ -174,11 +174,11 @@ export default function Onboarding() {
               <h1 className="mb-6 font-serif font-medium leading-[0.95] tracking-[-0.02em]" style={{ fontSize: "clamp(48px, 7vw, 96px)" }}>
                 {t("onboarding.when_h1_p1", "O której najlepiej")} <em className="italic text-ink-1">{t("onboarding.when_h1_em", "słuchać")}</em>?
               </h1>
-              <p className="mx-auto mb-10 max-w-[580px] text-lg font-light leading-relaxed text-ink-1">
+              <p className="mx-auto mb-6 max-w-[580px] text-base font-light leading-relaxed text-ink-1 lg:mb-10 lg:text-lg">
                 {t("onboarding.when_sub", "Ustawiamy ci powiadomienia o premierach na tę porę. Bez budzenia cię w środku dnia.")}
               </p>
 
-              <div className="mx-auto grid max-w-[760px] gap-4 md:grid-cols-3">
+              <div className="mx-auto grid max-w-[760px] grid-cols-1 gap-4 md:grid-cols-3">
                 {TIMES.map((tm) => {
                   const sel = when === tm.id;
                   return (
@@ -213,7 +213,7 @@ export default function Onboarding() {
               <h1 className="mb-6 font-serif font-medium leading-[0.95] tracking-[-0.02em]" style={{ fontSize: "clamp(48px, 7vw, 96px)" }}>
                 {t("onboarding.audio_h1_p1", "Sprawdzamy")} <em className="italic text-ink-1">{t("onboarding.audio_h1_em", "słuchawki")}</em>.
               </h1>
-              <p className="mx-auto mb-10 max-w-[580px] text-lg font-light leading-relaxed text-ink-1">
+              <p className="mx-auto mb-6 max-w-[580px] text-base font-light leading-relaxed text-ink-1 lg:mb-10 lg:text-lg">
                 {t("onboarding.audio_sub_p1", "Klikniesz")} <strong className="font-medium text-ink-0">play</strong>,{" "}
                 {t("onboarding.audio_sub_p2", "usłyszysz krótki dźwięk panoramowany binauralnie. Powiedz nam, z której strony słyszysz głos — to wystarczy do kalibracji 3D mixu.")}
               </p>
@@ -240,7 +240,7 @@ export default function Onboarding() {
                   <div className="py-5 text-center font-serif text-xl italic text-ink-0">
                     {t("onboarding.audio_question_p1", '"Skąd słyszysz głos szeptający')} <em className="text-ink-1">{t("onboarding.audio_question_em", "twoje imię")}</em>{t("onboarding.audio_question_p2", '?"')}
                   </div>
-                  <div className="mt-5 grid grid-cols-3 gap-3">
+                  <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
                     {[
                       { id: "L", labelDef: "Z lewej" },
                       { id: "C", labelDef: "Środek / nie wiem" },
@@ -288,19 +288,19 @@ export default function Onboarding() {
               <h1 className="mb-6 font-serif font-medium leading-[0.95] tracking-[-0.02em]" style={{ fontSize: "clamp(48px, 7vw, 96px)" }}>
                 {t("onboarding.first_h1_p1", "Mamy")} <em className="italic text-ink-1">{t("onboarding.first_h1_em", "kogoś")}</em> {t("onboarding.first_h1_p2", "dla ciebie.")}
               </h1>
-              <p className="mx-auto mb-10 max-w-[580px] text-lg font-light leading-relaxed text-ink-1">
+              <p className="mx-auto mb-6 max-w-[580px] text-base font-light leading-relaxed text-ink-1 lg:mb-10 lg:text-lg">
                 {t("onboarding.first_sub_p1", "Na podstawie twoich wyborów —")}{" "}
                 <strong className="font-medium text-ink-0">{genres.length} {t("onboarding.first_sub_genres", "gatunków")}</strong>,{" "}
                 {t("onboarding.first_sub_p2", "porę")} <strong className="font-medium text-ink-0">{selectedTime?.hours}</strong> —{" "}
                 {t("onboarding.first_sub_p3", "wybraliśmy ci ten odcinek. Załóż słuchawki, zgaś światło. 47 minut. Zaczynamy.")}
               </p>
 
-              <div className="mx-auto grid max-w-[720px] overflow-hidden border border-line bg-bg-2/60 text-left md:grid-cols-[220px_1fr]">
-                <div className="relative min-h-[180px] bg-cover bg-center" style={{ backgroundImage: "url('/images/img-hallway.webp')" }}>
+              <div className="mx-auto grid max-w-[720px] grid-cols-1 overflow-hidden border border-line bg-bg-2/60 text-left md:grid-cols-[220px_1fr]">
+                <div className="relative min-h-[160px] bg-cover bg-center md:min-h-[180px]" style={{ backgroundImage: "url('/images/img-hallway.webp')" }}>
                   <span aria-hidden className="absolute inset-0 bg-gradient-to-b from-red/10 to-bg-0/50" />
                   <span className="absolute left-4 top-4 bg-black/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-ui text-red">{t("onboarding.first_rec_tag", "// REKOMENDACJA #01")}</span>
                 </div>
-                <div className="p-7 sm:p-8">
+                <div className="p-5 sm:p-7 md:p-8">
                   <div className="mb-2 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("onboarding.first_rec_pre", "SEZON 03 · ODCINEK 11 · PSYCHOLOGICAL")}</div>
                   <h3 className="mb-2 font-serif text-3xl font-medium leading-tight">
                     {t("onboarding.first_rec_title_p1", "Ostatnie")} <em className="italic text-ink-1">{t("onboarding.first_rec_title_em", "Światło")}</em>
