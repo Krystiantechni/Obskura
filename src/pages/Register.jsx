@@ -46,15 +46,15 @@ export default function Register() {
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
       {/* Form (order-1) */}
-      <div className="relative order-2 flex items-center justify-center px-6 py-20 lg:order-1 lg:px-[60px]">
-        <Link to="/" className="absolute left-6 top-8 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px]">
+      <div className="relative order-2 flex items-center justify-center px-5 py-16 lg:order-1 lg:px-[60px] lg:py-20">
+        <Link to="/" className="absolute left-5 top-6 inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0 lg:left-[60px] lg:top-8">
           {t("register.back")}
         </Link>
 
         <form className="w-full max-w-[460px]" onSubmit={submit}>
           {step < 4 && (
             <>
-              <div className="mb-8 flex items-center gap-3">
+              <div className="mb-6 flex items-center gap-3 lg:mb-8">
                 {[1, 2, 3].map((n, i) => (
                   <div key={n} className="contents">
                     <div
@@ -79,10 +79,10 @@ export default function Register() {
 
           {step === 1 && (
             <>
-              <h1 className="mb-3 font-serif text-5xl font-medium leading-none tracking-[-0.02em]">
+              <h1 className="mb-3 font-serif text-[clamp(2.25rem,7vw,3rem)] font-medium leading-none tracking-[-0.02em] lg:text-5xl">
                 {t("register.step1_h1_p1")} <em className="italic text-ink-1">{t("register.step1_h1_p2")}</em>.
               </h1>
-              <p className="mb-9 text-sm leading-relaxed text-ink-1">{t("register.step1_sub")}</p>
+              <p className="mb-7 text-sm leading-relaxed text-ink-1 lg:mb-9">{t("register.step1_sub")}</p>
 
               <div className="mb-5 flex flex-col gap-2">
                 <label className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("register.email_label")}</label>
@@ -108,7 +108,7 @@ export default function Register() {
 
           {step === 2 && (
             <>
-              <h1 className="mb-3 font-serif text-5xl font-medium leading-none tracking-[-0.02em]">
+              <h1 className="mb-3 font-serif text-[clamp(2.25rem,7vw,3rem)] font-medium leading-none tracking-[-0.02em] lg:text-5xl">
                 {t("register.step2_h1_p1")} <em className="italic text-ink-1">{t("register.step2_h1_p2")}</em>?
               </h1>
               <p className="mb-7 text-sm leading-relaxed text-ink-1">{t("register.step2_sub")}</p>
@@ -167,7 +167,7 @@ export default function Register() {
 
           {step === 3 && (
             <>
-              <h1 className="mb-3 font-serif text-5xl font-medium leading-none tracking-[-0.02em]">
+              <h1 className="mb-3 font-serif text-[clamp(2.25rem,7vw,3rem)] font-medium leading-none tracking-[-0.02em] lg:text-5xl">
                 {t("register.step3_h1_p1")} <em className="italic text-ink-1">{t("register.step3_h1_p2")}</em>.
               </h1>
               <p className="mb-7 text-sm leading-relaxed text-ink-1">{t("register.step3_sub")}</p>
@@ -205,10 +205,10 @@ export default function Register() {
           )}
 
           {step === 4 && (
-            <div className="py-10 text-center">
+            <div className="py-8 text-center lg:py-10">
               <div className="mx-auto mb-6 grid h-20 w-20 animate-obskura-pulse place-items-center rounded-full border border-red text-[32px] font-light text-red shadow-[0_0_32px_rgba(255,42,42,0.3)]">✓</div>
               <Eyebrow centered className="mb-6 justify-center">{t("register.success_eyebrow")} · {data.name.toUpperCase()}</Eyebrow>
-              <h1 className="font-serif text-5xl font-medium leading-none tracking-[-0.02em]">
+              <h1 className="font-serif text-[clamp(2.25rem,7vw,3rem)] font-medium leading-none tracking-[-0.02em] lg:text-5xl">
                 {t("register.success_h1_p1")} <em className="italic text-ink-1">{t("register.success_h1_p2")}</em>.
               </h1>
               <p className="mb-8 mt-4 text-sm leading-relaxed text-ink-1">{t("register.success_sub")}</p>
