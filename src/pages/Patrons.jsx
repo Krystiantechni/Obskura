@@ -83,18 +83,18 @@ export default function Patrons() {
         <div className="pointer-events-none absolute -right-24 top-16 h-[500px] w-[500px]" style={{ background: "radial-gradient(circle, rgba(255,42,42,0.08), transparent 60%)" }} />
         <div className="relative mx-auto max-w-[1400px]">
           <Eyebrow>{t("patroni.eyebrow", "// PATRONI · 412 OSÓB · FINANSUJĄ SEZON 04")}</Eyebrow>
-          <h1 className="my-5 max-w-[1200px] font-serif text-[clamp(48px,8vw,120px)] font-medium leading-[0.92] tracking-[-0.02em]">
+          <h1 className="my-4 max-w-[1200px] break-words font-serif text-[clamp(40px,8vw,120px)] font-medium leading-[0.95] tracking-[-0.02em] lg:my-5 lg:leading-[0.92]">
             {t("patroni.title_p1", "Bez was")} <em className="italic text-ink-1">{t("patroni.title_em1", "nie nagrywamy")}</em>.
             <br />
             {t("patroni.title_p2", "Bez was nie ma")} <em className="italic text-ink-1">{t("patroni.title_em2", "Obskury")}</em>.
           </h1>
-          <p className="max-w-[660px] text-[18px] font-light leading-relaxed text-ink-1">
+          <p className="max-w-[660px] text-base font-light leading-relaxed text-ink-1 lg:text-[18px]">
             {t("patroni.lead", "Patroni to coś innego niż Klub. Klub to subskrypcja. Patroni to ludzie, którzy finansują konkretny sezon, dostają nazwisko w napisach końcowych i decydują o tym, co nagramy za pół roku.")}
           </p>
-          <div className="mt-10 grid grid-cols-2 gap-8 border-t border-line pt-8 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 border-t border-line pt-6 lg:mt-10 lg:gap-8 lg:grid-cols-4 lg:pt-8">
             {counters.map((c) => (
               <div key={c.l}>
-                <div className={`font-serif text-[clamp(28px,4vw,40px)] font-medium leading-none ${c.accent ? "text-red" : ""}`}>{c.n}</div>
+                <div className={`font-serif text-[clamp(24px,4vw,40px)] font-medium leading-none ${c.accent ? "text-red" : ""}`}>{c.n}</div>
                 <div className="mt-2 font-mono text-[10px] uppercase tracking-mono text-ink-2">{c.l}</div>
               </div>
             ))}
@@ -103,12 +103,12 @@ export default function Patrons() {
       </header>
 
       {/* Patroni vs Klub */}
-      <section className="mx-auto mt-20 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-14 max-w-[1400px] px-5 lg:mt-20 lg:px-12">
         <Eyebrow accent="blue">{t("patroni.vs_eyebrow", "JAKA RÓŻNICA")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-4 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("patroni.vs_title_p1", "Patroni")} <em className="italic text-ink-1">{t("patroni.vs_title_em", "vs.")}</em> {t("patroni.vs_title_p2", "Klub.")}
         </h2>
-        <div className="mt-8 grid gap-9 border border-line bg-bg-1/60 p-9 lg:grid-cols-2">
+        <div className="mt-8 grid gap-6 border border-line bg-bg-1/60 p-5 lg:gap-9 lg:p-9 lg:grid-cols-2">
           <div>
             <h4 className="mb-4 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("patroni.vs_klub_label", "// KLUB")}</h4>
             <div className="mb-4 font-serif text-[28px] font-medium">{t("patroni.vs_klub_name_p1", "Słuchasz")} <em className="italic text-ink-1">{t("patroni.vs_klub_name_em", "tego, co już jest")}</em></div>
@@ -123,14 +123,14 @@ export default function Patrons() {
       </section>
 
       {/* Tiers */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 lg:mt-24 lg:px-12">
         <Eyebrow>{t("patroni.tiers_eyebrow", "SEZON 04 · LATO 2026")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-4 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("patroni.tiers_title_p1", "Trzy")} <em className="italic text-ink-1">{t("patroni.tiers_title_em", "poziomy")}</em>.
         </h2>
-        <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-10 lg:grid-cols-3">
           {tiers.map((tier) => (
-            <div key={tier.role} className={`relative p-8 transition-all duration-300 hover:-translate-y-1 ${tier.featured ? "border border-red bg-[linear-gradient(180deg,rgba(255,42,42,0.06),rgba(15,18,24,0.7))] shadow-[0_0_0_1px_rgba(255,42,42,0.3),0_30px_80px_-20px_rgba(255,42,42,0.18)]" : "border border-line bg-bg-1/50 hover:border-red/40"}`}>
+            <div key={tier.role} className={`relative p-5 transition-all duration-300 hover:-translate-y-1 sm:col-auto lg:p-8 ${tier.featured ? "border border-red bg-[linear-gradient(180deg,rgba(255,42,42,0.06),rgba(15,18,24,0.7))] shadow-[0_0_0_1px_rgba(255,42,42,0.3),0_30px_80px_-20px_rgba(255,42,42,0.18)] sm:col-span-2 lg:col-span-1" : "border border-line bg-bg-1/50 hover:border-red/40"}`}>
               <div className={`mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow ${tier.featured ? "text-red" : "text-ink-2"}`}>{tier.role}</div>
               <h3 className="mb-1.5 font-serif text-4xl font-medium leading-none">
                 {tier.name_p1}{tier.nameJoined ? "" : " "}<em className="italic text-ink-1">{tier.name_em}</em>
@@ -156,31 +156,31 @@ export default function Patrons() {
       </section>
 
       {/* Wall of patrons */}
-      <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-20 max-w-[1400px] px-5 lg:mt-32 lg:px-12">
         <div className="mb-8 flex flex-col items-start justify-between gap-3.5 border-b border-line pb-6 lg:flex-row lg:items-end">
           <div>
             <Eyebrow accent="blue">{t("patroni.wall_eyebrow", "// ŚCIANA SEZONU 03 · ZAMKNIĘTA 31.12.2025")}</Eyebrow>
-            <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+            <h2 className="mt-4 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
               {t("patroni.wall_title_p1", "Ci, którzy")} <em className="italic text-ink-1">{t("patroni.wall_title_em", "byli tu pierwsi")}</em>.
             </h2>
           </div>
           <div className="font-mono text-[11px] uppercase tracking-mono text-ink-2">{t("patroni.wall_count", "327 PATRONÓW · 11 PRODUCENTÓW")}</div>
         </div>
 
-        <div className="grid grid-cols-2 gap-1 border border-line bg-black/40 p-1 lg:grid-cols-6">
+        <div className="grid grid-cols-1 gap-1 border border-line bg-black/40 p-1 sm:grid-cols-3 lg:grid-cols-6">
           {execNames.map((n) => (
-            <div key={n} className="bg-bg-1/60 px-4 py-3.5 font-sans text-[14px] uppercase tracking-[0.05em] text-red transition-colors hover:bg-red/[0.08]">{n}</div>
+            <div key={n} className="bg-bg-1/60 px-3 py-3 font-sans text-[13px] uppercase tracking-[0.05em] text-red transition-colors hover:bg-red/[0.08] lg:px-4 lg:py-3.5 lg:text-[14px]">{n}</div>
           ))}
           {regularNames.map((n) => (
-            <div key={n} className="bg-bg-1/60 px-4 py-3.5 font-serif text-[17px] italic text-ink-1 transition-colors hover:bg-red/[0.08] hover:text-ink-0">{n}</div>
+            <div key={n} className="bg-bg-1/60 px-3 py-3 font-serif text-[15px] italic text-ink-1 transition-colors hover:bg-red/[0.08] hover:text-ink-0 lg:px-4 lg:py-3.5 lg:text-[17px]">{n}</div>
           ))}
           {anonNames.map((n) => (
-            <div key={n} className="bg-bg-1/60 px-4 py-3.5 font-serif text-[17px] italic text-ink-3 transition-colors hover:bg-red/[0.08]">{n}</div>
+            <div key={n} className="bg-bg-1/60 px-3 py-3 font-serif text-[15px] italic text-ink-3 transition-colors hover:bg-red/[0.08] lg:px-4 lg:py-3.5 lg:text-[17px]">{n}</div>
           ))}
           {moreNames.map((n) => (
-            <div key={n} className="bg-bg-1/60 px-4 py-3.5 font-serif text-[17px] italic text-ink-1 transition-colors hover:bg-red/[0.08] hover:text-ink-0">{n}</div>
+            <div key={n} className="bg-bg-1/60 px-3 py-3 font-serif text-[15px] italic text-ink-1 transition-colors hover:bg-red/[0.08] hover:text-ink-0 lg:px-4 lg:py-3.5 lg:text-[17px]">{n}</div>
           ))}
-          <div className="bg-bg-1/60 px-4 py-3.5 font-serif text-[17px] italic text-ink-3 transition-colors hover:bg-red/[0.08]">{t("patroni.wall_more", "+ 291 osób")}</div>
+          <div className="bg-bg-1/60 px-3 py-3 font-serif text-[15px] italic text-ink-3 transition-colors hover:bg-red/[0.08] lg:px-4 lg:py-3.5 lg:text-[17px]">{t("patroni.wall_more", "+ 291 osób")}</div>
         </div>
         <div className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.15em] text-ink-2">
           {t("patroni.wall_meta", "NAZWISKA POJAWIAJĄ SIĘ W KAŻDYM ODCINKU SEZONU · ANONIM = TYLKO NUMER · BEZ NACISKU")}
@@ -188,15 +188,15 @@ export default function Patrons() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto mt-32 max-w-[1100px] px-5 lg:px-12">
+      <section className="mx-auto mt-20 max-w-[1100px] px-5 lg:mt-32 lg:px-12">
         <Eyebrow>{t("patroni.faq_eyebrow", "CZĘSTE PYTANIA")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-4 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("patroni.faq_title_p1", "Zanim")} <em className="italic text-ink-1">{t("patroni.faq_title_em", "klikniesz")}</em>.
         </h2>
-        <div className="mt-10">
+        <div className="mt-8 lg:mt-10">
           {faqs.map((f, i) => (
-            <div key={i} className="border-t border-line py-6 last:border-b">
-              <h4 className="mb-2 font-serif text-[22px] font-medium">
+            <div key={i} className="border-t border-line py-5 last:border-b lg:py-6">
+              <h4 className="mb-2 font-serif text-[18px] font-medium lg:text-[22px]">
                 {f.q_p1} <em className="italic text-ink-1">{f.q_em}</em>{f.q_p2 === "?" ? "?" : ` ${f.q_p2}`}
               </h4>
               <p className="text-sm font-light leading-relaxed text-ink-1">{f.a}</p>
