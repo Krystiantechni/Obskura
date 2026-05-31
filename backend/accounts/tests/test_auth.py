@@ -83,3 +83,5 @@ def test_logout_invalidates_token():
     ).json()["token"]
     client.credentials(HTTP_AUTHORIZATION=f"Token {token}")
     assert client.post("/api/v1/auth/logout").status_code == 204
+    # after logout the token must no longer authenticate
+    assert client.get("/api/v1/accounts/me").status_code == 401
