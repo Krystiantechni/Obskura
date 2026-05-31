@@ -91,20 +91,20 @@ export default function Club() {
         </div>
         <div className="relative z-[2] mx-auto w-full max-w-[1400px]">
           <Eyebrow>{t("club.eyebrow")}</Eyebrow>
-          <h1 className="my-6 max-w-5xl font-serif text-[clamp(56px,9vw,144px)] font-medium leading-[0.9] tracking-[-0.03em]">
+          <h1 className="my-5 max-w-5xl font-serif text-[clamp(40px,9vw,144px)] font-medium leading-[0.9] tracking-[-0.03em] sm:my-6">
             {t("club.title_p1")} <em className="italic text-ink-1">{t("club.title_em")}</em>
             <br />
             <span className="text-red drop-shadow-[0_0_32px_rgba(255,42,42,0.5)]">{t("club.title_glow")}</span>
           </h1>
-          <p className="my-8 max-w-xl text-lg font-light leading-relaxed text-ink-1">{t("club.sub")}</p>
+          <p className="my-6 max-w-xl text-base font-light leading-relaxed text-ink-1 sm:my-8 sm:text-lg">{t("club.sub")}</p>
         </div>
       </section>
 
       {/* Billing toggle */}
       <div className="mx-auto -mt-16 max-w-[1400px] px-5 lg:px-12">
-        <div className="relative z-[3] inline-flex items-center border border-line bg-bg-1/70 p-1">
-          <button onClick={() => setYearly(false)} className={`inline-flex min-h-[44px] items-center px-6 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors ${!yearly ? "bg-red text-white" : "text-ink-2"}`}>{t("club.billing_monthly")}</button>
-          <button onClick={() => setYearly(true)} className={`inline-flex min-h-[44px] items-center px-6 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors ${yearly ? "bg-red text-white" : "text-ink-2"}`}>
+        <div className="relative z-[3] inline-flex w-full items-center border border-line bg-bg-1/70 p-1 sm:w-auto">
+          <button onClick={() => setYearly(false)} className={`inline-flex flex-1 min-h-[44px] items-center justify-center px-5 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors sm:flex-none sm:px-6 ${!yearly ? "bg-red text-white" : "text-ink-2"}`}>{t("club.billing_monthly")}</button>
+          <button onClick={() => setYearly(true)} className={`inline-flex flex-1 min-h-[44px] items-center justify-center px-5 py-3 font-mono text-[11px] uppercase tracking-ui transition-colors sm:flex-none sm:px-6 ${yearly ? "bg-red text-white" : "text-ink-2"}`}>
             {t("club.billing_yearly")} <span className="ml-2 text-[9px] text-[#00ff88]">{t("club.billing_save")}</span>
           </button>
         </div>
@@ -125,7 +125,7 @@ export default function Club() {
                 <div className="mb-6 font-mono text-[10px] uppercase tracking-mono text-ink-2">{tier.tag}</div>
                 <div className="mb-2 flex items-baseline gap-2">
                   {!isFree && <span className="font-mono text-sm text-ink-2">PLN</span>}
-                  <span className="font-serif text-[64px] font-medium leading-none text-ink-0">{isFree ? "0" : price}</span>
+                  <span className="font-serif text-[52px] font-medium leading-none text-ink-0 sm:text-[64px]">{isFree ? "0" : price}</span>
                   <span className="text-[13px] text-ink-2">{isFree ? t("club.forever") : t("club.per_month")}</span>
                 </div>
                 <div className={`mb-7 h-[18px] text-xs ${yearly && !isFree ? "text-[#00ff88]" : "text-ink-2"}`}>
@@ -150,9 +150,9 @@ export default function Club() {
       </section>
 
       {/* Compare */}
-      <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
         <Eyebrow>{t("club.compare_eyebrow")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-4 font-serif text-[clamp(28px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("club.compare_title_p1")} <em className="italic text-ink-2">{t("club.compare_title_em")}</em>?
         </h2>
         <div className="mt-10 overflow-x-auto border border-line bg-bg-1/40">
@@ -182,20 +182,20 @@ export default function Club() {
       </section>
 
       {/* Extras */}
-      <section className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-20 max-w-[1400px] px-5 sm:mt-32 lg:px-12">
         <Eyebrow accent="blue">{t("club.extras_eyebrow")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-4 font-serif text-[clamp(28px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
           {t("club.extras_title_p1")} <em className="italic text-ink-1">{t("club.extras_title_em")}</em>.
         </h2>
-        <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:gap-8 lg:grid-cols-2">
           {extras.map((ex, i) => (
-            <div key={i} className="group relative aspect-[16/11] cursor-pointer overflow-hidden bg-bg-1">
+            <div key={i} className="group relative aspect-[4/3] cursor-pointer overflow-hidden bg-bg-1 sm:aspect-[16/11]">
               <img src={ex.img} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ filter: "contrast(1.05) saturate(0.9)" }} />
               <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,6,8,0.4) 0%, transparent 30%, rgba(5,6,8,0.95) 95%)" }} />
-              <div className="absolute inset-x-0 bottom-0 z-[2] p-8">
-                <span className="mb-4 inline-block border border-red bg-red/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-eyebrow text-red">{ex.tag}</span>
-                <h3 className="mb-2.5 font-serif text-3xl font-medium leading-tight">{ex.p1} <em className="italic text-ink-1">{ex.em}</em></h3>
-                <p className="max-w-md text-sm font-light leading-relaxed text-ink-1">{ex.desc}</p>
+              <div className="absolute inset-x-0 bottom-0 z-[2] p-5 sm:p-8">
+                <span className="mb-3 inline-block border border-red bg-red/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-eyebrow text-red sm:mb-4">{ex.tag}</span>
+                <h3 className="mb-2 font-serif text-xl font-medium leading-tight sm:mb-2.5 sm:text-3xl">{ex.p1} <em className="italic text-ink-1">{ex.em}</em></h3>
+                <p className="max-w-md text-xs font-light leading-relaxed text-ink-1 sm:text-sm">{ex.desc}</p>
               </div>
             </div>
           ))}
@@ -203,16 +203,16 @@ export default function Club() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto mt-36 max-w-5xl px-5 text-center lg:px-12">
-        <div className="relative overflow-hidden border border-line bg-bg-1/60 px-5 py-20 lg:px-12">
+      <section className="mx-auto mb-16 mt-20 max-w-5xl px-5 text-center sm:mb-0 sm:mt-36 lg:px-12">
+        <div className="relative overflow-hidden border border-line bg-bg-1/60 px-5 py-14 sm:py-20 lg:px-12">
           <div className="pointer-events-none absolute left-1/2 top-[-50%] h-[300px] w-[600px] -translate-x-1/2" style={{ background: "radial-gradient(ellipse, rgba(255,42,42,0.15), transparent 70%)" }} />
-          <Eyebrow centered className="relative mb-6">{t("club.cta_eyebrow")}</Eyebrow>
-          <h2 className="relative font-serif text-[clamp(40px,5vw,64px)] font-medium leading-none">
+          <Eyebrow centered className="relative mb-5 sm:mb-6">{t("club.cta_eyebrow")}</Eyebrow>
+          <h2 className="relative font-serif text-[clamp(32px,5vw,64px)] font-medium leading-none">
             {t("club.cta_h_p1")} <em className="italic text-ink-1">{t("club.cta_h_em")}</em>
             <br />
             {t("club.cta_h_p2")}
           </h2>
-          <p className="relative mx-auto mb-8 mt-4 max-w-xl text-[17px] font-light leading-relaxed text-ink-1">{t("club.cta_desc")}</p>
+          <p className="relative mx-auto mb-8 mt-4 max-w-xl text-[15px] font-light leading-relaxed text-ink-1 sm:text-[17px]">{t("club.cta_desc")}</p>
           <div className="relative flex justify-center">
             <HorrorButton to="/register" className="!px-8 !py-[18px] !text-[13px]">
               {t("club.cta_btn")} <Arrow />
