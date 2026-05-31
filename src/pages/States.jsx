@@ -79,13 +79,13 @@ NoSearchResults.propTypes = { t: PropTypes.func.isRequired };
 
 function OfflineRow({ img, pos, ep, t1, em, size }) {
   return (
-    <div className="grid grid-cols-[48px_1fr_auto_auto] items-center gap-3.5 border-b border-line-soft px-5 py-3 text-left last:border-b-0">
-      <div className="h-12 w-12 bg-cover" style={{ backgroundImage: `url('${img}')`, backgroundPosition: pos }} />
+    <div className="grid grid-cols-[40px_1fr_auto] items-center gap-2.5 border-b border-line-soft px-4 py-3 text-left last:border-b-0 sm:grid-cols-[48px_1fr_auto_auto] sm:gap-3.5 sm:px-5">
+      <div className="h-10 w-10 bg-cover sm:h-12 sm:w-12" style={{ backgroundImage: `url('${img}')`, backgroundPosition: pos }} />
       <div>
         <div className="mb-0.5 font-mono text-[9px] tracking-mono text-red">{ep}</div>
-        <div className="font-serif text-base leading-tight">{t1} <em className="italic text-ink-1">{em}</em></div>
+        <div className="font-serif text-[15px] leading-tight sm:text-base">{t1} <em className="italic text-ink-1">{em}</em></div>
       </div>
-      <div className="font-mono text-[10px] tracking-ui text-ink-2">{size}</div>
+      <div className="hidden font-mono text-[10px] tracking-ui text-ink-2 sm:block">{size}</div>
       <div className="text-[#00ff88]"><Play size={14} /></div>
     </div>
   );
@@ -188,8 +188,8 @@ function Maintenance({ t }) {
       <p className="mx-auto mb-8 max-w-lg text-[15px] font-light leading-relaxed text-ink-1">{t("stany.maint_p", "Ostatni krok przed sezonem 04 — przepisujemy bazę odcinków na nowy silnik. Twoje dane są bezpieczne, pobrane odcinki działają normalnie.")}</p>
       <div className="border border-line bg-black/40 p-5 text-left">
         {rows.map((r, i) => (
-          <div key={i} className="flex items-center gap-3.5 border-b border-line-soft py-2.5 font-mono text-[11px] tracking-ui last:border-b-0">
-            <span className="min-w-[80px] text-[10px] text-ink-2">{r.time}</span>
+          <div key={i} className="flex items-center gap-2.5 border-b border-line-soft py-2.5 font-mono text-[10px] tracking-ui last:border-b-0 sm:gap-3.5 sm:text-[11px]">
+            <span className="min-w-[52px] text-[9px] text-ink-2 sm:min-w-[80px] sm:text-[10px]">{r.time}</span>
             <span className={`h-2.5 w-2.5 flex-shrink-0 rounded-full ${r.state === "done" ? "bg-[#00ff88]" : r.state === "cur" ? "bg-red shadow-[0_0_8px_#ff2a2a] animate-obskura-pulse-fast" : "bg-ink-3"}`} />
             <span className={r.state === "done" ? "text-ink-2 line-through" : r.state === "cur" ? "text-ink-0" : "text-ink-1"}>{r.lbl}</span>
           </div>
@@ -313,20 +313,20 @@ export default function States() {
       </header>
 
       {/* Tabs */}
-      <div className="sticky top-[68px] z-40 border-b border-line bg-bg-1/85 px-5 backdrop-blur-xl lg:px-12">
-        <div className="mx-auto flex max-w-[1400px] overflow-x-auto">
+      <div className="sticky top-[68px] z-40 border-b border-line bg-bg-1/85 px-0 backdrop-blur-xl lg:px-12">
+        <div className="mx-auto flex max-w-[1400px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {STATES.map((s) => (
             <button
               key={s.id}
               type="button"
               onClick={() => setTab(s.id)}
-              className={`flex items-center gap-2 whitespace-nowrap border-b-2 px-5 py-4 font-mono text-[11px] uppercase tracking-mono transition-colors ${
+              className={`flex min-h-[44px] flex-shrink-0 items-center gap-1.5 whitespace-nowrap border-b-2 px-3 py-3 font-mono text-[10px] uppercase tracking-mono transition-colors sm:gap-2 sm:px-5 sm:py-4 sm:text-[11px] ${
                 tab === s.id ? "border-red text-red" : "border-transparent text-ink-2 hover:text-ink-0"
               }`}
             >
               <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${s.dot}`} />
               <span>{s.label}</span>
-              <span className={`text-[9px] ${tab === s.id ? "text-red" : "text-ink-3"}`}>{s.code}</span>
+              <span className={`hidden text-[9px] sm:inline ${tab === s.id ? "text-red" : "text-ink-3"}`}>{s.code}</span>
             </button>
           ))}
         </div>
@@ -334,16 +334,22 @@ export default function States() {
 
       {/* Preview */}
       <div className="mx-auto mt-10 max-w-[1400px] px-5 pb-20 lg:px-12">
-        <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
+        <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
           <div>
             <Eyebrow>// {cur.code}</Eyebrow>
             <h2 className="mt-3 font-serif text-3xl font-medium leading-none">{m.title}</h2>
             <p className="mt-1.5 max-w-[520px] text-[13px] font-light leading-relaxed text-ink-1">{m.desc}</p>
           </div>
-          <div className="text-right font-mono text-[10px] uppercase tracking-ui text-ink-2">
-            {t("stany.tech_trigger_label", "Wyzwalacz")}<strong className="mt-1 block text-ink-0">{m.tech.trigger}</strong>
-            <div className="mt-2.5">{t("stany.tech_when_label", "Kiedy")}<strong className="mt-1 block text-ink-0">{m.tech.when}</strong></div>
-            <div className="mt-2.5">{t("stany.tech_timeout_label", "Timeout")}<strong className="mt-1 block text-ink-0">{m.tech.timeout}</strong></div>
+          <div className="flex gap-5 font-mono text-[10px] uppercase tracking-ui text-ink-2 sm:block sm:gap-0 sm:text-right">
+            <div>
+              {t("stany.tech_trigger_label", "Wyzwalacz")}<strong className="mt-1 block text-ink-0">{m.tech.trigger}</strong>
+            </div>
+            <div className="sm:mt-2.5">
+              {t("stany.tech_when_label", "Kiedy")}<strong className="mt-1 block text-ink-0">{m.tech.when}</strong>
+            </div>
+            <div className="sm:mt-2.5">
+              {t("stany.tech_timeout_label", "Timeout")}<strong className="mt-1 block text-ink-0">{m.tech.timeout}</strong>
+            </div>
           </div>
         </div>
 
@@ -364,7 +370,7 @@ export default function States() {
               <span>{m.tech.status}</span>
             </div>
           </div>
-          <div className="relative flex min-h-[360px] flex-col items-center justify-center px-5 py-16 sm:min-h-[540px] sm:px-10">
+          <div className="relative flex min-h-[360px] flex-col items-center justify-center px-4 py-10 sm:min-h-[540px] sm:px-10 sm:py-16">
             <Stage t={t} />
           </div>
         </div>
