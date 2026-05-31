@@ -12,36 +12,36 @@ const DEFAULT = {
 // Tytuł krótki (bez sufiksu) — sufiks „· OBSKURA" doklejany automatycznie poza stroną główną.
 const ROUTES = {
   "/": DEFAULT,
-  "/archiwum": { title: "Archiwum", description: "Pełny katalog historii grozy OBSKURY — filtruj po gatunku, czasie i narratorze." },
-  "/klub": { title: "Klub", description: "Dołącz do klubu OBSKURA — wczesny dostęp, bonusy i materiały zza kulis." },
-  "/aplikacja": { title: "Aplikacja", description: "Słuchaj OBSKURY na telefonie — pobieranie offline, binauralny dźwięk 3D, tryb nocny." },
+  "/archive": { title: "Archiwum", description: "Pełny katalog historii grozy OBSKURY — filtruj po gatunku, czasie i narratorze." },
+  "/club": { title: "Klub", description: "Dołącz do klubu OBSKURA — wczesny dostęp, bonusy i materiały zza kulis." },
+  "/app": { title: "Aplikacja", description: "Słuchaj OBSKURY na telefonie — pobieranie offline, binauralny dźwięk 3D, tryb nocny." },
   "/forum": { title: "Forum", description: "Społeczność OBSKURY — teorie, znaleziska i rozmowy o odcinkach." },
-  "/kariera": { title: "Kariera", description: "Dołącz do ekipy OBSKURY — narratorzy, scenarzyści, reżyserzy dźwięku." },
-  "/konto": { title: "Twoje konto", description: "Historia odsłuchań, ulubione i ustawienia konta OBSKURA." },
-  "/mailingi": { title: "Mailingi", description: "Podglądy newsletterów i powiadomień OBSKURY." },
+  "/careers": { title: "Kariera", description: "Dołącz do ekipy OBSKURY — narratorzy, scenarzyści, reżyserzy dźwięku." },
+  "/account": { title: "Twoje konto", description: "Historia odsłuchań, ulubione i ustawienia konta OBSKURA." },
+  "/mailings": { title: "Mailingi", description: "Podglądy newsletterów i powiadomień OBSKURY." },
   "/newsletter": { title: "Newsletter", description: "Zapisz się — nowe odcinki i historie prosto na skrzynkę." },
   "/onboarding": { title: "Konfiguracja", description: "Skalibruj binauralny dźwięk 3D i dobierz gatunki na start." },
-  "/patroni": { title: "Patroni", description: "Wesprzyj OBSKURĘ i odblokuj materiały dla patronów." },
+  "/patrons": { title: "Patroni", description: "Wesprzyj OBSKURĘ i odblokuj materiały dla patronów." },
   "/player": { title: "Odtwarzacz", description: "Immersyjny odtwarzacz z transkryptem, rozdziałami i notatkami." },
-  "/prasa": { title: "Prasa", description: "Materiały prasowe, fakty i kontakt dla mediów." },
-  "/prawne": { title: "Informacje prawne", description: "Regulamin, polityka prywatności i warunki korzystania z OBSKURY." },
-  "/spotkania": { title: "Spotkania", description: "Wydarzenia na żywo i odsłuchania OBSKURY." },
-  "/stany": { title: "Stany / Offline", description: "Pobrane odcinki i zarządzanie trybem offline." },
-  "/tworcy": { title: "Twórcy", description: "Ludzie, których głos zostaje po ostatnim wyrazie — twórcy OBSKURY." },
-  "/wsparcie": { title: "Wsparcie", description: "Pomoc i odpowiedzi na najczęstsze pytania o OBSKURĘ." },
-  "/zaloguj": { title: "Zaloguj się", description: "Wróć do swoich historii — zaloguj się do OBSKURY." },
-  "/rejestracja": { title: "Rejestracja", description: "Załóż konto OBSKURA i zacznij słuchać." },
+  "/press": { title: "Prasa", description: "Materiały prasowe, fakty i kontakt dla mediów." },
+  "/legal": { title: "Informacje prawne", description: "Regulamin, polityka prywatności i warunki korzystania z OBSKURY." },
+  "/events": { title: "Spotkania", description: "Wydarzenia na żywo i odsłuchania OBSKURY." },
+  "/states": { title: "Stany / Offline", description: "Pobrane odcinki i zarządzanie trybem offline." },
+  "/creators": { title: "Twórcy", description: "Ludzie, których głos zostaje po ostatnim wyrazie — twórcy OBSKURY." },
+  "/support": { title: "Wsparcie", description: "Pomoc i odpowiedzi na najczęstsze pytania o OBSKURĘ." },
+  "/login": { title: "Zaloguj się", description: "Wróć do swoich historii — zaloguj się do OBSKURY." },
+  "/register": { title: "Rejestracja", description: "Załóż konto OBSKURA i zacznij słuchać." },
 };
 
 function routeKey(pathname) {
   if (pathname === "/") return "home";
-  if (pathname.startsWith("/odcinek/")) return "episode";
+  if (pathname.startsWith("/episode/")) return "episode";
   return pathname.slice(1).replace(/\//g, "_");
 }
 
 function metaFor(pathname) {
   if (ROUTES[pathname]) return { ...ROUTES[pathname], key: routeKey(pathname) };
-  if (pathname.startsWith("/odcinek/")) {
+  if (pathname.startsWith("/episode/")) {
     return { title: "Odcinek", description: "Posłuchaj odcinka grozy w binauralnym dźwięku 3D na OBSKURZE.", key: "episode" };
   }
   return { ...DEFAULT, key: "home" };

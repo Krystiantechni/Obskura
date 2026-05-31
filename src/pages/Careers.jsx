@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
 
-export default function Kariera() {
+export default function Careers() {
   const { t } = useTranslation();
 
   const values = [

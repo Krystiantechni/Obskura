@@ -184,7 +184,7 @@ async function generate() {
     console.log(`✓ ${key}.png`);
   }
 
-  // Fallback "episode" — używany dla dynamicznych /odcinek/:slug
+  // Fallback "episode" — używany dla dynamicznych /episode/:slug
   const epSvg = svgFor("Odcinek", "Posłuchaj odcinka grozy w binauralnym dźwięku 3D na OBSKURZE.");
   await sharp(baseBg)
     .composite([{ input: Buffer.from(epSvg), top: 0, left: 0 }])

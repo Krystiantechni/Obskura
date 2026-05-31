@@ -131,7 +131,7 @@ export default function Club() {
                 <div className={`mb-7 h-[18px] text-xs ${yearly && !isFree ? "text-[#00ff88]" : "text-ink-2"}`}>
                   {isFree ? t("club.tier_free_sub_zero") : yearly ? t("club.save_text_yearly", { total: price * 12, save }) : t("club.save_text_monthly")}
                 </div>
-                <HorrorButton to="/rejestracja" variant={tier.featured ? "primary" : "ghost"} block className="!mb-8">
+                <HorrorButton to="/register" variant={tier.featured ? "primary" : "ghost"} block className="!mb-8">
                   {tier.cta} →
                 </HorrorButton>
                 <ul className="border-t border-line pt-6">
@@ -214,7 +214,7 @@ export default function Club() {
           </h2>
           <p className="relative mx-auto mb-8 mt-4 max-w-xl text-[17px] font-light leading-relaxed text-ink-1">{t("club.cta_desc")}</p>
           <div className="relative flex justify-center">
-            <HorrorButton to="/rejestracja" className="!px-8 !py-[18px] !text-[13px]">
+            <HorrorButton to="/register" className="!px-8 !py-[18px] !text-[13px]">
               {t("club.cta_btn")} <Arrow />
             </HorrorButton>
           </div>

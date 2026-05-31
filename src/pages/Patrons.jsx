@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
 
-export default function Patroni() {
+export default function Patrons() {
   const { t } = useTranslation();
 
   const counters = [
@@ -147,7 +147,7 @@ export default function Patroni() {
                   </li>
                 ))}
               </ul>
-              <HorrorButton to="/rejestracja" variant={tier.variant} block className="!mt-6">
+              <HorrorButton to="/register" variant={tier.variant} block className="!mt-6">
                 {tier.cta}
               </HorrorButton>
             </div>

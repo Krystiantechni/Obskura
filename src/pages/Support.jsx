@@ -12,7 +12,7 @@ const FIELD =
 
 const LABEL = "font-mono text-[10px] uppercase tracking-mono text-ink-2";
 
-export default function Wsparcie() {
+export default function Support() {
   const { t } = useTranslation();
 
   const systems = [

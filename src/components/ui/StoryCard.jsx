@@ -6,7 +6,7 @@ import { usePlayer } from "../../context/PlayerContext";
 import { TRACKS, getTrack } from "../../data/tracks";
 
 // Karta historii 3:4 — obraz z grayscale→kolor na hover, wideo (opcjonalne) play na mouseenter.
-export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm, duration, rating, image, video, to = "/odcinek/1" }) {
+export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm, duration, rating, image, video, to = "/episode/1" }) {
   const videoRef = useRef(null);
   const { current, playing, playQueue, toggle } = usePlayer();
 

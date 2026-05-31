@@ -300,7 +300,7 @@ function KV({ k, v, color }) {
 }
 KV.propTypes = { k: PropTypes.string.isRequired, v: PropTypes.node.isRequired, color: PropTypes.string };
 
-export default function Mailingi() {
+export default function Mailings() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("welcome");
 

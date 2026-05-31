@@ -19,7 +19,7 @@ function useCountdown(targetIso) {
   return { days, hours, mins, secs, done: diff === 0 };
 }
 
-export default function Spotkania() {
+export default function Events() {
   const { t } = useTranslation();
   const cd = useCountdown("2026-06-02T23:00:00+02:00");
 
@@ -46,7 +46,7 @@ export default function Spotkania() {
       sub_strong: t("spotkania.e1_sub_strong", "Online · Discord stage"), sub_rest: t("spotkania.e1_sub_rest", " · 23:00 CET · 90 min"),
       metaLabel: t("spotkania.meta_host", "PROWADZI"), metaVal: "M. Sobczak",
       seats: "134 / 500", seatsLabel: t("spotkania.seats_left", "POZOSTAŁO"),
-      cta: t("spotkania.cta_signup", "Zapisz się"), ctaVariant: "primary", to: "/rejestracja",
+      cta: t("spotkania.cta_signup", "Zapisz się"), ctaVariant: "primary", to: "/register",
     },
     {
       day: "14", month: t("spotkania.mon_jun", "CZE"), type: "live",
@@ -82,7 +82,7 @@ export default function Spotkania() {
       sub_strong: t("spotkania.e5_sub_strong", "Online · Discord stage"), sub_rest: t("spotkania.e5_sub_rest", " · 22:00 · 90 min"),
       metaLabel: t("spotkania.meta_host", "PROWADZI"), metaVal: "T. Reich",
       seats: "412 / 500", seatsLabel: t("spotkania.seats_left", "POZOSTAŁO"),
-      cta: t("spotkania.cta_signup", "Zapisz się"), ctaVariant: "primary", to: "/rejestracja",
+      cta: t("spotkania.cta_signup", "Zapisz się"), ctaVariant: "primary", to: "/register",
     },
     {
       day: "09", month: t("spotkania.mon_aug", "SIE"), type: "live",
@@ -174,7 +174,7 @@ export default function Spotkania() {
               ))}
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-3.5">
-              <HorrorButton to="/rejestracja">{t("spotkania.feat_cta1", "Zapisz się (bezpłatne)")}</HorrorButton>
+              <HorrorButton to="/register">{t("spotkania.feat_cta1", "Zapisz się (bezpłatne)")}</HorrorButton>
               <HorrorButton to="/forum" variant="ghost">{t("spotkania.feat_cta2", "Wątek z pytaniami")}</HorrorButton>
               <div className="font-mono text-[11px] uppercase tracking-[0.15em] text-ink-2">
                 {t("spotkania.feat_seats_p1", "POZOSTAŁO")} <strong className="text-red">134 / 500</strong> {t("spotkania.feat_seats_p2", "MIEJSC")}
@@ -258,7 +258,7 @@ export default function Spotkania() {
           ))}
         </div>
         <div className="mt-10 text-center">
-          <HorrorButton to="/archiwum" variant="ghost">{t("spotkania.past_all", "Wszystkie 23 archiwalne nagrania →")}</HorrorButton>
+          <HorrorButton to="/archive" variant="ghost">{t("spotkania.past_all", "Wszystkie 23 archiwalne nagrania →")}</HorrorButton>
         </div>
       </section>
 

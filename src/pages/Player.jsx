@@ -150,7 +150,7 @@ export default function Player() {
         {/* topbar */}
         <div className="absolute inset-x-0 top-[72px] z-10 flex items-center justify-between px-5 py-5 lg:top-0 lg:px-10 lg:py-7">
           <Link
-            to="/odcinek/12"
+            to="/episode/12"
             className="inline-flex min-h-[44px] items-center gap-3 border border-line bg-black/40 px-3.5 py-2.5 font-mono text-[11px] uppercase tracking-mono text-ink-1 backdrop-blur transition-colors hover:border-red hover:text-ink-0"
           >
             <span className="rotate-180">

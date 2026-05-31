@@ -8,10 +8,10 @@ import HorrorButton from "../ui/HorrorButton";
 
 const LINKS = [
   { to: "/", key: "nav.listen", end: true },
-  { to: "/archiwum", key: "nav.archive" },
-  { to: "/tworcy", key: "nav.creators" },
-  { to: "/klub", key: "nav.club" },
-  { to: "/wsparcie", key: "nav.support" },
+  { to: "/archive", key: "nav.archive" },
+  { to: "/creators", key: "nav.creators" },
+  { to: "/club", key: "nav.club" },
+  { to: "/support", key: "nav.support" },
 ];
 
 export default function Nav() {
@@ -47,7 +47,7 @@ export default function Nav() {
           <span>{t("nav.stream-live")}</span>
         </div>
         <LanguageSwitcher />
-        <HorrorButton to="/zaloguj" variant="ghost" className="!px-[18px] !py-2.5">
+        <HorrorButton to="/login" variant="ghost" className="!px-[18px] !py-2.5">
           {t("nav.login")}
         </HorrorButton>
       </div>
@@ -80,7 +80,7 @@ export default function Nav() {
           ))}
           <div className="flex items-center justify-between border-t border-line pt-6">
             <LanguageSwitcher />
-            <HorrorButton to="/zaloguj" variant="ghost" className="!px-5 !py-3" onClick={() => setMobileOpen(false)}>
+            <HorrorButton to="/login" variant="ghost" className="!px-5 !py-3" onClick={() => setMobileOpen(false)}>
               {t("nav.login")}
             </HorrorButton>
           </div>

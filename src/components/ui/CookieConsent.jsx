@@ -119,7 +119,7 @@ export default function CookieConsent() {
                 <h2 className="mb-1 font-serif text-[15px] font-medium text-ink-0">{t("cookie.title", "Ustawienia plików cookie")}</h2>
                 <p className="text-[11.5px] font-light leading-snug text-ink-1">
                   {t("cookie.desc", "Używamy plików cookie. Niezbędne są wymagane do działania serwisu — pozostałe uruchamiamy wyłącznie za Twoją zgodą.")}{" "}
-                  <Link to="/prawne" className="whitespace-nowrap text-ink-0 underline decoration-red/50 underline-offset-2 transition-colors hover:decoration-red">{t("cookie.privacy_link", "Polityka prywatności")}</Link>
+                  <Link to="/legal" className="whitespace-nowrap text-ink-0 underline decoration-red/50 underline-offset-2 transition-colors hover:decoration-red">{t("cookie.privacy_link", "Polityka prywatności")}</Link>
                 </p>
               </div>
             </div>

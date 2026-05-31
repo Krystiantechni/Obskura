@@ -113,7 +113,7 @@ ToggleRow.propTypes = {
   onToggle: PropTypes.func,
 };
 
-export default function Prawne() {
+export default function Legal() {
   const { t } = useTranslation();
 
   const TABS = [
@@ -343,7 +343,7 @@ export default function Prawne() {
               <P>{t("prawne.tos_p2b", "Konto jest osobiste. Współdzielenie loginu / hasła z osobami spoza domu — narusza regulamin. W Planie Klan dopuszczamy do 5 profili rodzinnych.")}</P>
 
               <DocHeading sec={t("prawne.tos_section_3", "// § 3")}><span id="r3" />{t("prawne.tos_h3", "Subskrypcja i plany")}.</DocHeading>
-              <P>{t("prawne.tos_p3_p1", "OBSKURA oferuje trzy plany:")} <strong className="font-medium text-ink-0">{t("prawne.tos_plan_prog", "Próg")}</strong> {t("prawne.tos_p3_p2", "(bezpłatny, ograniczony),")} <strong className="font-medium text-ink-0">{t("prawne.tos_plan_solo", "Solo")}</strong> {t("prawne.tos_p3_p3", "(płatny indywidualny),")} <strong className="font-medium text-ink-0">{t("prawne.tos_plan_klan", "Klan")}</strong> {t("prawne.tos_p3_p4", "(płatny rodzinny). Szczegóły cen znajdziesz na")} <Code>obskura.audio/klub</Code>.</P>
+              <P>{t("prawne.tos_p3_p1", "OBSKURA oferuje trzy plany:")} <strong className="font-medium text-ink-0">{t("prawne.tos_plan_prog", "Próg")}</strong> {t("prawne.tos_p3_p2", "(bezpłatny, ograniczony),")} <strong className="font-medium text-ink-0">{t("prawne.tos_plan_solo", "Solo")}</strong> {t("prawne.tos_p3_p3", "(płatny indywidualny),")} <strong className="font-medium text-ink-0">{t("prawne.tos_plan_klan", "Klan")}</strong> {t("prawne.tos_p3_p4", "(płatny rodzinny). Szczegóły cen znajdziesz na")} <Code>obskura.audio/club</Code>.</P>
               <P>{t("prawne.tos_p3b", "Subskrypcja odnawia się automatycznie do momentu jej anulowania. Anulowania można dokonać w każdej chwili w panelu Konto → Subskrypcja → Anuluj.")}</P>
 
               <DocHeading sec={t("prawne.tos_section_4", "// § 4")}><span id="r4" />{t("prawne.tos_h4", "Płatności")}.</DocHeading>
@@ -377,7 +377,7 @@ export default function Prawne() {
 
               <DocHeading sec={t("prawne.tos_section_9", "// § 9")}><span id="r9" />{t("prawne.tos_h9", "Zmiany regulaminu")}.</DocHeading>
               <P>{t("prawne.tos_p9_p1", "O zmianach regulaminu informujemy z")} <strong className="font-medium text-ink-0">{t("prawne.tos_p9_strong", "30-dniowym wyprzedzeniem")}</strong> {t("prawne.tos_p9_p2", "— e-mailem i banerem. Jeśli nie akceptujesz nowej wersji — masz prawo usunąć konto z pełnym zwrotem niewykorzystanej Subskrypcji.")}</P>
-              <P>{t("prawne.tos_p9b_p1", "Historia wszystkich wersji — pod")} <Code>obskura.audio/prawne/historia</Code>.</P>
+              <P>{t("prawne.tos_p9b_p1", "Historia wszystkich wersji — pod")} <Code>obskura.audio/legal/historia</Code>.</P>
             </>
           )}
 

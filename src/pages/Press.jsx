@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Download } from "lucide-react";
 import Eyebrow from "../components/ui/Eyebrow";
 
-export default function Prasa() {
+export default function Press() {
   const { t } = useTranslation();
 
   const quickRows = [

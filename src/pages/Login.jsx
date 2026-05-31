@@ -115,7 +115,7 @@ export default function Login() {
 
           <div className="mt-8 text-center text-[13px] text-ink-1">
             {t("login.no_account")}{" "}
-            <Link to="/rejestracja" className="border-b border-red pb-px text-ink-0 hover:text-red">{t("login.create_link")}</Link>
+            <Link to="/register" className="border-b border-red pb-px text-ink-0 hover:text-red">{t("login.create_link")}</Link>
           </div>
         </form>
       </div>

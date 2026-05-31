@@ -219,7 +219,7 @@ export default function Register() {
           {step < 4 && (
             <div className="mt-8 text-center text-[13px] text-ink-2">
               {t("register.already_account")}{" "}
-              <Link to="/zaloguj" className="border-b border-red pb-px text-ink-0 hover:text-red">{t("register.login_link")}</Link>
+              <Link to="/login" className="border-b border-red pb-px text-ink-0 hover:text-red">{t("register.login_link")}</Link>
             </div>
           )}
         </form>

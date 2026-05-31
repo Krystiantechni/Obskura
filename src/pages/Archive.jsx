@@ -179,7 +179,7 @@ export default function Archive() {
               const tag = GENRE_TAG[s.genre];
               const tagCls = tag === "red" ? "text-red border-red/40" : tag === "blue" ? "text-blue border-blue/40" : "text-ink-1 border-white/20";
               return (
-                <Link key={s.id} to={`/odcinek/${s.id}`} className="group relative block aspect-[3/4] overflow-hidden bg-bg-1">
+                <Link key={s.id} to={`/episode/${s.id}`} className="group relative block aspect-[3/4] overflow-hidden bg-bg-1">
                   <div className="absolute inset-0 bg-cover bg-[center_30%] brightness-[0.85] grayscale-[0.4] transition-all duration-500 group-hover:scale-105 group-hover:brightness-100 group-hover:grayscale-0" style={{ backgroundImage: `url(${IMGS[s.img]})` }} />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg-0/95" />
                   <div className="absolute left-3.5 top-3.5 z-[2] bg-black/50 px-2 py-1 font-mono text-[10px] tracking-mono text-ink-1 backdrop-blur-sm">S{String(s.season).padStart(2, "0")}·E{String(s.num).padStart(2, "0")}</div>
@@ -203,7 +203,7 @@ export default function Archive() {
               const tag = GENRE_TAG[s.genre];
               const tagCls = tag === "red" ? "text-red border-red/40" : tag === "blue" ? "text-blue border-blue/40" : "text-ink-1 border-white/20";
               return (
-                <Link key={s.id} to={`/odcinek/${s.id}`} className="grid grid-cols-[64px_1fr_auto] items-center gap-3 border border-line bg-bg-1/40 p-3 transition-colors hover:border-red/30 hover:bg-bg-1/70 sm:grid-cols-[100px_1fr_auto_auto] sm:gap-5">
+                <Link key={s.id} to={`/episode/${s.id}`} className="grid grid-cols-[64px_1fr_auto] items-center gap-3 border border-line bg-bg-1/40 p-3 transition-colors hover:border-red/30 hover:bg-bg-1/70 sm:grid-cols-[100px_1fr_auto_auto] sm:gap-5">
                   <div className="h-[50px] w-16 bg-cover bg-[center_30%] sm:h-20 sm:w-[100px]" style={{ backgroundImage: `url(${IMGS[s.img]})` }} />
                   <div>
                     <span className={`mb-1.5 inline-block border bg-black/40 px-2 py-[3px] font-mono text-[9px] uppercase tracking-mono ${tagCls}`}>{genreLabel[s.genre]}</span>

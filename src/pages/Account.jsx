@@ -126,7 +126,7 @@ HistoryRow.propTypes = {
   icon: PropTypes.string,
 };
 
-export default function Konto() {
+export default function Account() {
   const { t } = useTranslation();
   const [section, setSection] = useState("profile");
   // Realne ulubione z globalnego playera (zapisane w localStorage). Filtrujemy nulle (usunięte ID).
@@ -345,7 +345,7 @@ export default function Konto() {
                   <p className="mx-auto mb-6 max-w-md text-sm font-light leading-relaxed text-ink-1">
                     {t("konto.favs_empty_desc", "Kliknij ♥ na karcie odcinka — zostanie zapamiętany tutaj. Polubione zsynchronizują się po zalogowaniu.")}
                   </p>
-                  <HorrorButton to="/archiwum">{t("konto.favs_empty_cta", "Przeglądaj archiwum")} →</HorrorButton>
+                  <HorrorButton to="/archive">{t("konto.favs_empty_cta", "Przeglądaj archiwum")} →</HorrorButton>
                 </div>
               ) : (
                 <>

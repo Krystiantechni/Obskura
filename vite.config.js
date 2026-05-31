@@ -36,29 +36,29 @@ export default defineConfig(({ mode }) => {
   const port = Number(env.VITE_DEV_PORT) || 5175;
   const ssg = process.env.VITE_SSG === "true";
 
-  // Statyczne trasy z Router.jsx (bez /odcinek/:id — dynamic).
+  // Statyczne trasy z Router.jsx (bez /episode/:id — dynamic).
   // Każda dostaje własny dist/<path>/index.html z gotowym HTML, meta i og:*.
   const prerenderRoutes = [
     "/",
-    "/archiwum",
-    "/klub",
-    "/aplikacja",
+    "/archive",
+    "/club",
+    "/app",
     "/forum",
-    "/kariera",
-    "/konto",
-    "/mailingi",
+    "/careers",
+    "/account",
+    "/mailings",
     "/newsletter",
     "/onboarding",
-    "/patroni",
+    "/patrons",
     "/player",
-    "/prasa",
-    "/prawne",
-    "/spotkania",
-    "/stany",
-    "/tworcy",
-    "/wsparcie",
-    "/zaloguj",
-    "/rejestracja",
+    "/press",
+    "/legal",
+    "/events",
+    "/states",
+    "/creators",
+    "/support",
+    "/login",
+    "/register",
   ];
 
   // Stan przekazywany między plugin-prerender (postProcess) a rootIndexFix (closeBundle).

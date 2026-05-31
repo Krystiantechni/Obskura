@@ -7,7 +7,7 @@ import { Arrow } from "../components/ui/Icons";
 const FIELD =
   "border border-line bg-white/[0.02] px-4 py-3.5 text-[15px] text-ink-0 transition-colors placeholder:text-ink-3 focus:border-red focus:bg-red/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70";
 
-export default function Tworcy() {
+export default function Creators() {
   const { t } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
 

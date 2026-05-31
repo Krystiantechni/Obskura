@@ -10,30 +10,30 @@ export default function Footer() {
       head: "footer.listen",
       links: [
         { key: "footer.home", to: "/" },
-        { key: "footer.archive", to: "/archiwum" },
-        { key: "footer.new", to: "/archiwum" },
-        { key: "footer.series", to: "/archiwum" },
-        { key: "footer.playlists", to: "/archiwum" },
+        { key: "footer.archive", to: "/archive" },
+        { key: "footer.new", to: "/archive" },
+        { key: "footer.series", to: "/archive" },
+        { key: "footer.playlists", to: "/archive" },
       ],
     },
     {
       head: "footer.community",
       links: [
-        { key: "footer.creators", to: "/tworcy" },
-        { key: "footer.club", to: "/klub" },
-        { key: "footer.patrons", to: "/patroni" },
+        { key: "footer.creators", to: "/creators" },
+        { key: "footer.club", to: "/club" },
+        { key: "footer.patrons", to: "/patrons" },
         { key: "footer.forum", to: "/forum" },
-        { key: "footer.events", to: "/spotkania" },
+        { key: "footer.events", to: "/events" },
       ],
     },
     {
       head: "footer.help",
       links: [
-        { key: "footer.support", to: "/wsparcie" },
-        { key: "footer.faq", to: "/wsparcie" },
-        { key: "footer.contact", to: "/wsparcie" },
-        { key: "footer.press", to: "/prasa" },
-        { key: "footer.careers", to: "/kariera" },
+        { key: "footer.support", to: "/support" },
+        { key: "footer.faq", to: "/support" },
+        { key: "footer.contact", to: "/support" },
+        { key: "footer.press", to: "/press" },
+        { key: "footer.careers", to: "/careers" },
       ],
     },
   ];
@@ -104,9 +104,9 @@ export default function Footer() {
       <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-4 border-t border-line pt-8 font-mono text-[11px] tracking-[0.1em] text-ink-2 sm:flex-row sm:items-center">
         <div>{t("footer.copyright")}</div>
         <div className="flex flex-wrap gap-x-6 gap-y-1">
-          <Link to="/prawne" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.privacy")}</Link>
-          <Link to="/prawne" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.terms")}</Link>
-          <Link to="/prawne" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.cookies")}</Link>
+          <Link to="/legal" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.privacy")}</Link>
+          <Link to="/legal" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.terms")}</Link>
+          <Link to="/legal" className="inline-block py-1.5 text-ink-2 hover:text-ink-0">{t("footer.cookies")}</Link>
         </div>
       </div>
     </footer>

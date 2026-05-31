@@ -30,7 +30,7 @@ export default function Episode() {
   return (
     <div className="px-5 pb-32 pt-[120px] lg:px-12">
       <div className="mx-auto max-w-[1400px]">
-        <Link to="/archiwum" className="inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0">{t("episode.back")}</Link>
+        <Link to="/archive" className="inline-flex min-h-[44px] items-center font-mono text-[11px] uppercase tracking-mono text-ink-2 hover:text-ink-0">{t("episode.back")}</Link>
 
         {/* Cinematic header */}
         <div className="relative mt-6 aspect-[3/2] overflow-hidden border border-white/6 bg-bg-0 sm:aspect-[21/9]">
@@ -92,7 +92,7 @@ export default function Episode() {
                 <div className="mt-6 flex items-center gap-3 border-t border-line pt-6">
                   <span className="grid h-9 w-9 place-items-center rounded-full border border-red text-red">🔒</span>
                   <span className="text-sm text-ink-1">{t("episode.transcript_lock")}</span>
-                  <HorrorButton to="/klub" variant="ghost" className="ml-auto inline-flex min-h-[44px] items-center !px-4 !py-3">{t("nav.club")}</HorrorButton>
+                  <HorrorButton to="/club" variant="ghost" className="ml-auto inline-flex min-h-[44px] items-center !px-4 !py-3">{t("nav.club")}</HorrorButton>
                 </div>
               </div>
             </div>

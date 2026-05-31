@@ -236,7 +236,7 @@ const FEATURES = [
   { num: "// 06", t1: "Dynamic Island", t2: "+ Live Activity", k: "f6", d: "Pokazujemy aktualny rozdział i progres w Dynamic Island (iPhone) i jako persistent notification (Android)." },
 ];
 
-export default function Aplikacja() {
+export default function App() {
   const { t } = useTranslation();
 
   const screens = [

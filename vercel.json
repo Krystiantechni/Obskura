@@ -4,5 +4,23 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
+  "redirects": [
+    { "source": "/zaloguj", "destination": "/login", "permanent": true },
+    { "source": "/rejestracja", "destination": "/register", "permanent": true },
+    { "source": "/archiwum", "destination": "/archive", "permanent": true },
+    { "source": "/klub", "destination": "/club", "permanent": true },
+    { "source": "/odcinek/:id", "destination": "/episode/:id", "permanent": true },
+    { "source": "/aplikacja", "destination": "/app", "permanent": true },
+    { "source": "/kariera", "destination": "/careers", "permanent": true },
+    { "source": "/konto", "destination": "/account", "permanent": true },
+    { "source": "/mailingi", "destination": "/mailings", "permanent": true },
+    { "source": "/patroni", "destination": "/patrons", "permanent": true },
+    { "source": "/prasa", "destination": "/press", "permanent": true },
+    { "source": "/prawne", "destination": "/legal", "permanent": true },
+    { "source": "/spotkania", "destination": "/events", "permanent": true },
+    { "source": "/stany", "destination": "/states", "permanent": true },
+    { "source": "/tworcy", "destination": "/creators", "permanent": true },
+    { "source": "/wsparcie", "destination": "/support", "permanent": true }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }

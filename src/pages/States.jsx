@@ -38,7 +38,7 @@ function Empty({ t }) {
       <h3 className="mb-4 font-serif text-4xl font-medium leading-tight">{t("stany.empty_h_p1", "Cisza w")} <em className="italic text-ink-1">{t("stany.empty_h_em", "twoich ulubionych")}</em>.</h3>
       <p className="mb-7 text-[15px] font-light leading-relaxed text-ink-1">{t("stany.empty_p", "Nie polubiłeś jeszcze żadnego odcinka. Posłuchaj kilku i kliknij serce — wrócimy do nich razem.")}</p>
       <div className="flex flex-wrap justify-center gap-3">
-        <HorrorButton to="/archiwum">{t("stany.empty_cta_browse", "Przeglądaj archiwum →")}</HorrorButton>
+        <HorrorButton to="/archive">{t("stany.empty_cta_browse", "Przeglądaj archiwum →")}</HorrorButton>
         <HorrorButton to="/" variant="ghost">{t("stany.empty_cta_picks", "Polecane tej nocy")}</HorrorButton>
       </div>
     </div>
@@ -141,8 +141,8 @@ function Err404({ t }) {
       <p className="mx-auto mb-7 max-w-lg text-[15px] font-light leading-relaxed text-ink-1">{t("stany.err404_p", "Strona pod tym adresem nie istnieje. Może została usunięta, może nigdy nie istniała. Możesz wrócić — albo zostać tu jeszcze chwilę.")}</p>
       <div className="flex flex-wrap justify-center gap-3">
         <HorrorButton to="/">{t("stany.err404_cta_home", "← Strona główna")}</HorrorButton>
-        <HorrorButton to="/archiwum" variant="ghost">{t("stany.err404_cta_archive", "Archiwum")}</HorrorButton>
-        <HorrorButton to="/wsparcie" variant="ghost">{t("stany.err404_cta_help", "Pomoc")}</HorrorButton>
+        <HorrorButton to="/archive" variant="ghost">{t("stany.err404_cta_archive", "Archiwum")}</HorrorButton>
+        <HorrorButton to="/support" variant="ghost">{t("stany.err404_cta_help", "Pomoc")}</HorrorButton>
       </div>
       <div className="mt-8 font-mono text-[10px] uppercase tracking-mono text-ink-3">
         {t("stany.err404_url_label", "Próbowałeś otworzyć:")} <span className="text-ink-2">obskura.audio/ten-pokoj-nie-istnieje</span>
@@ -161,7 +161,7 @@ function Err500({ t }) {
       <p className="mx-auto mb-7 max-w-lg text-[15px] font-light leading-relaxed text-ink-1">{t("stany.err500_p", "Coś poszło nie tak na naszej stronie. Już o tym wiemy, pracujemy nad naprawą. Możesz spróbować ponownie — odświeżymy stronę za 30 sekund automatycznie.")}</p>
       <div className="flex flex-wrap justify-center gap-3">
         <HorrorButton type="button">{t("stany.err500_cta_retry", "↻ Spróbuj ponownie")}</HorrorButton>
-        <HorrorButton to="/wsparcie" variant="ghost">{t("stany.err500_cta_status", "Status systemów")}</HorrorButton>
+        <HorrorButton to="/support" variant="ghost">{t("stany.err500_cta_status", "Status systemów")}</HorrorButton>
       </div>
       <div className="mx-auto mt-8 max-w-md border border-line bg-black/40 px-5 py-3.5 font-mono text-[10px] tracking-ui text-ink-2">
         {t("stany.err500_err_id_label", "BŁĄD ID:")} <span className="text-red">err_8f4d92b3c8e1f5a7</span> {t("stany.err500_err_id_meta", "· WYSŁANY DO SENTRY · 26.05.2026 14:23:08")}
@@ -196,7 +196,7 @@ function Maintenance({ t }) {
         ))}
       </div>
       <div className="mt-8 font-mono text-[10px] uppercase tracking-mono text-ink-2">
-        {t("stany.maint_status_p1", "Status na żywo ·")} <a href="/wsparcie" className="text-red">{t("stany.maint_status_link", "status.obskura.audio →")}</a>
+        {t("stany.maint_status_p1", "Status na żywo ·")} <a href="/support" className="text-red">{t("stany.maint_status_link", "status.obskura.audio →")}</a>
       </div>
     </div>
   );
@@ -217,7 +217,7 @@ function Expired({ t }) {
       <p className="text-sm font-light leading-relaxed text-ink-1">{t("stany.expired_p2", "Nie ma presji. Wybierz co dalej — kiedy chcesz.")}</p>
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {opts.map((o, i) => (
-          <a key={i} href="/klub" className={`relative block border p-6 text-left transition-all duration-200 ${o.featured ? "border-red bg-red/[0.04]" : "border-line bg-bg-2/50 hover:border-red hover:bg-red/[0.04]"}`}>
+          <a key={i} href="/club" className={`relative block border p-6 text-left transition-all duration-200 ${o.featured ? "border-red bg-red/[0.04]" : "border-line bg-bg-2/50 hover:border-red hover:bg-red/[0.04]"}`}>
             {o.featured && <span className="absolute -top-4 left-6 font-mono text-[9px] uppercase tracking-eyebrow text-red">{t("stany.expired_featured", "Polecane")}</span>}
             <h4 className="mb-1.5 font-serif text-xl font-medium">{o.t1} <em className="italic text-ink-1">{o.em}</em></h4>
             <p className="text-xs font-light leading-relaxed text-ink-1">{o.desc}</p>
@@ -235,7 +235,7 @@ const STAGES = {
   404: Err404, 500: Err500, maint: Maintenance, expired: Expired,
 };
 
-export default function Stany() {
+export default function States() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("loading");
 
