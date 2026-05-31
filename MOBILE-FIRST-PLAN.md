@@ -4,6 +4,15 @@
 > Commity: **każda zakładka osobno**, autor: użytkownik, **bez** `Co-Authored-By`.
 > Po każdej zakładce: test na **3 breakpointach** (375 telefon / 768 tablet / 1440 desktop).
 
+## Postęp
+
+- [x] **Faza 0** — Fundament: rename route'ów EN + redirecty 301 + routing/SSG _(commit `e7a435f`)_
+- [x] **Faza 1** — Auth + proste statyczne (6/6 zakładek)
+- [x] **Faza 2** — Konto + email + onboarding (6/6)
+- [ ] **Faza 3** — Listy i treść (0/6)
+- [ ] **Faza 4** — Core audio / złożone (0/4)
+- [ ] **PR** `mobile-first` → `main`
+
 ## Cel i zasady
 
 1. **Mobile-first jako metoda** — klasy bazowe (bez prefiksu) = stan mobilny; desktop dobudowywany przez `sm:`/`lg:`. Odwrotnie niż obecny desktop-down.
@@ -28,76 +37,87 @@ Test zakładki: `ROUTES="/<route>" node scripts/mobile-audit-shots.mjs` → zrzu
 
 ---
 
-## Mapa rename route'ów (PL → EN) — DO ZATWIERDZENIA
+## Mapa rename route'ów (PL → EN) — ✅ ZATWIERDZONE (route + pliki + komponenty)
 
-| # | Route PL | Route EN | Plik PL | Plik EN | Uwaga |
-|---|----------|----------|---------|---------|-------|
+| # | Route PL | Route EN | Plik PL | Plik EN | Status |
+|---|----------|----------|---------|---------|--------|
 | 1 | `/` | `/` | Home.jsx | Home.jsx | bez zmian |
-| 2 | `/zaloguj` | `/login` | Login.jsx | Login.jsx | plik już EN |
-| 3 | `/rejestracja` | `/register` | Register.jsx | Register.jsx | plik już EN |
-| 4 | `/archiwum` | `/archive` | Archive.jsx | Archive.jsx | plik już EN |
-| 5 | `/klub` | `/club` | Club.jsx | Club.jsx | plik już EN |
-| 6 | `/odcinek/:id` | `/episode/:id` | Episode.jsx | Episode.jsx | plik już EN |
-| 7 | `/aplikacja` | `/app` | Aplikacja.jsx | App.jsx | + IosFrame/AndroidFrame |
+| 2 | `/zaloguj` | `/login` | Login.jsx | Login.jsx | [x] |
+| 3 | `/rejestracja` | `/register` | Register.jsx | Register.jsx | [x] |
+| 4 | `/archiwum` | `/archive` | Archive.jsx | Archive.jsx | [x] |
+| 5 | `/klub` | `/club` | Club.jsx | Club.jsx | [x] |
+| 6 | `/odcinek/:id` | `/episode/:id` | Episode.jsx | Episode.jsx | [x] |
+| 7 | `/aplikacja` | `/app` | Aplikacja.jsx | App.jsx | [x] |
 | 8 | `/forum` | `/forum` | Forum.jsx | Forum.jsx | bez zmian |
-| 9 | `/kariera` | `/careers` | Kariera.jsx | Careers.jsx | |
-| 10 | `/konto` | `/account` | Konto.jsx | Account.jsx | |
-| 11 | `/mailingi` | `/mailings` | Mailingi.jsx | Mailings.jsx | |
+| 9 | `/kariera` | `/careers` | Kariera.jsx | Careers.jsx | [x] |
+| 10 | `/konto` | `/account` | Konto.jsx | Account.jsx | [x] |
+| 11 | `/mailingi` | `/mailings` | Mailingi.jsx | Mailings.jsx | [x] |
 | 12 | `/newsletter` | `/newsletter` | Newsletter.jsx | Newsletter.jsx | bez zmian |
 | 13 | `/onboarding` | `/onboarding` | Onboarding.jsx | Onboarding.jsx | bez zmian |
-| 14 | `/patroni` | `/patrons` | Patroni.jsx | Patrons.jsx | |
+| 14 | `/patroni` | `/patrons` | Patroni.jsx | Patrons.jsx | [x] |
 | 15 | `/player` | `/player` | Player.jsx | Player.jsx | bez zmian |
-| 16 | `/prasa` | `/press` | Prasa.jsx | Press.jsx | |
-| 17 | `/prawne` | `/legal` | Prawne.jsx | Legal.jsx | |
-| 18 | `/spotkania` | `/events` | Spotkania.jsx | Events.jsx | |
-| 19 | `/stany` | `/states` | Stany.jsx | States.jsx | strona „stany UI" (loading/error/empty) |
-| 20 | `/tworcy` | `/creators` | Tworcy.jsx | Creators.jsx | |
-| 21 | `/wsparcie` | `/support` | Wsparcie.jsx | Support.jsx | |
+| 16 | `/prasa` | `/press` | Prasa.jsx | Press.jsx | [x] |
+| 17 | `/prawne` | `/legal` | Prawne.jsx | Legal.jsx | [x] |
+| 18 | `/spotkania` | `/events` | Spotkania.jsx | Events.jsx | [x] |
+| 19 | `/stany` | `/states` | Stany.jsx | States.jsx | [x] |
+| 20 | `/tworcy` | `/creators` | Tworcy.jsx | Creators.jsx | [x] |
+| 21 | `/wsparcie` | `/support` | Wsparcie.jsx | Support.jsx | [x] |
 
-> **Decyzje do potwierdzenia:** (a) czy zmieniamy też nazwy **plików/komponentów** (kolumna „Plik EN"), czy tylko route'y? (b) `/stany` → `/states` czy `/ui-states`? (c) `/mailingi` → `/mailings` czy `/campaigns`? (d) `/aplikacja` → `/app` czy `/get-app`?
+> Rename (route + plik + komponent) wykonany w Fazie 0. Redirecty 301 PL→EN działają (SPA Navigate + `vercel.json`).
 
 ---
 
-## FAZA 0 — Fundament (sekwencyjnie, JA, bez równoległości)
+## FAZA 0 — Fundament (sekwencyjnie, JA, bez równoległości) ✅
 
 Przekrojowa — dotyka całej nawigacji, więc nie da się jej rozdzielić na agentów.
 
-**0a. Rename route'ów** w `src/Router.jsx` na EN.
-**0b. Redirecty 301** ze starych ścieżek PL:
-- SPA: trasy `<Navigate to="/<en>" replace />` dla każdej starej PL ścieżki (UX + zakładki użytkowników).
-- Server: `vercel.json` `redirects` (301, SEO) PL → EN.
-**0c. Rename plików/komponentów** PL → EN (jeśli zatwierdzone) + aktualizacja importów w Router.
-**0d. Aktualizacja wszystkich definicji route poza Routerem:**
-- `vite.config.js` — lista route'ów SSG/prerender
-- `scripts/og-routes.mjs` — generowanie OG per route
-- `public/sitemap.xml` — adresy EN
-- `public/robots.txt` (jeśli wymienia ścieżki)
-- weryfikacja `public/locales/*/translation.json` (39 jęz.) — czy trzymają ścieżki (raczej tylko etykiety; potwierdzić)
-**0e. Aktualizacja linków wewnętrznych:** `Nav.jsx` (LINKS), `Footer.jsx` (cols), `CookieConsent.jsx` (`/prawne`→`/legal`), oraz linki w stronach (`to="/..."`).
-**0f. Mobile-first przegląd warstwy wspólnej:** `Nav`, `Footer`, `Layout`, `MiniPlayer`, `CookieConsent` + drobne `ui/` (`Eyebrow`, `HorrorButton`, `Icons`, `WaveformBar`, `FloatingMetaCard`, `FavoriteRow`).
-
-**Test Fazy 0:** przeklikać całą nawigację (każdy link prowadzi do EN, stare PL robią 301), `build` + `lint`, smoke 375/768/1440.
-**Commit:** `mobile-first(0): rename route'ów EN + redirecty 301 + warstwa wspólna`
+- [x] **0a. Rename route'ów** w `src/Router.jsx` na EN
+- [x] **0b. Redirecty 301** ze starych ścieżek PL (SPA `<Navigate replace>` + `vercel.json` redirects)
+- [x] **0c. Rename plików/komponentów** PL→EN + aktualizacja importów w Router
+- [x] **0d. Definicje route poza Routerem:** `vite.config.js` (SSG), `scripts/og-routes.mjs`, `public/sitemap.xml`, `robots.txt`, weryfikacja i18n (tylko etykiety — bez ścieżek)
+- [x] **0e. Linki wewnętrzne:** `Nav.jsx`, `Footer.jsx`, `CookieConsent.jsx`, linki w stronach → EN
+- [x] **0f. Mobile-first warstwy wspólnej:** `Nav`, `Footer`, `CookieConsent` (touch-targety 44px, drawer, FAB) — warstwa mobile-first
+- [x] **Test:** 20/20 EN route renderuje, 5/5 redirectów PL→EN, build + lint czyste
 
 ---
 
-## FAZA 1 — Auth + proste statyczne (równolegle, 6 zakładek)
+## FAZA 1 — Auth + proste statyczne (równolegle, 6 zakładek) ✅
 
-`Login` · `Register` · `Legal` (Prawne) · `Support` (Wsparcie) · `Careers` (Kariera) · `NotFound` (ComingSoon/404)
+Rozłączne pliki, każda = osobny agent + osobny commit.
 
-Rozłączne pliki, każda = osobny agent. Proste formularze/treść — szybki cykl, walidacja wzorca.
+- [x] `Login` (`/login`) — fluid h1, mobilny padding, flex-wrap remember-row
+- [x] `Register` (`/register`) — fluid nagłówki kroków, mobilny padding
+- [x] `Legal` (`/legal`, ex-Prawne) — TOC grid na mobile, tabela edge-scroll, taby 44px
+- [x] `Support` (`/support`, ex-Wsparcie) — mobilny akordeon FAQ, kontakt stacking
+- [x] `Careers` (`/careers`, ex-Kariera) — role blok→grid `lg:`, gridy `sm:`/`lg:`
+- [x] `NotFound` (ComingSoon/404) — fluid headline 404, mobilny rytm pionowy
 
-## FAZA 2 — Konto + email + onboarding (równolegle, 6)
+---
 
-`Account` (Konto) · `Newsletter` · `Mailings` (Mailingi) · `Onboarding` · `Patrons` (Patroni) · `Press` (Prasa)
+## FAZA 2 — Konto + email + onboarding (równolegle, 6) ✅
+
+- [x] `Account` (`/account`, ex-Konto) — SettingRow segmenty wrap, fluid h2, mobilny padding
+- [x] `Newsletter` (`/newsletter`) — fluid h1, lead full-width, mobilny spacing
+- [x] `Mailings` (`/mailings`, ex-Mailingi) — px-5 sm:px-9 body, subject 22→28, MailCta full-width
+- [x] `Onboarding` (`/onboarding`) — fluid text kroków, audio answers grid-cols-1
+- [x] `Patrons` (`/patrons`, ex-Patroni) — tiery 1→sm:2→lg:3, wall 1→sm:3→lg:6
+- [x] `Press` (`/press`, ex-Prasa) — gridy sm:2-col, fluid typo, hero box sm:obok
 
 ## FAZA 3 — Listy i treść (równolegle, 6)
 
-`Archive` · `Club` · `Creators` (Tworcy) · `Events` (Spotkania) · `States` (Stany) · `App` (Aplikacja + `IosFrame` + `AndroidFrame`)
+- [ ] `Archive` (`/archive`)
+- [ ] `Club` (`/club`)
+- [ ] `Creators` (`/creators`, ex-Tworcy)
+- [ ] `Events` (`/events`, ex-Spotkania)
+- [ ] `States` (`/states`, ex-Stany)
+- [ ] `App` (`/app`, ex-Aplikacja) — + `IosFrame` + `AndroidFrame`
 
 ## FAZA 4 — Core audio / złożone (równolegle, 4)
 
-`Home` (+ `Hero`, `AudioPlayerSection`, `FeaturedBanner`, `StoriesGrid`, `StoryCard`) · `Episode` · `Player` · `Forum` (+ `ForumCategory`)
+- [ ] `Home` (`/`) — + `Hero`, `AudioPlayerSection`, `FeaturedBanner`, `StoriesGrid`, `StoryCard`
+- [ ] `Episode` (`/episode/:id`)
+- [ ] `Player` (`/player`)
+- [ ] `Forum` (`/forum`) — + `ForumCategory`
 
 > Najcięższe i z własnymi sekcjami — każdy agent bierze stronę razem z jej sekcjami (zero współdzielenia plików między tymi zakładkami).
 
@@ -116,6 +136,6 @@ Po każdej fazie: zbiorczy build/lint + przegląd, potem przejście do kolejnej.
 
 ## Kolejność realizacji
 
-`Faza 0` → `Faza 1` → `Faza 2` → `Faza 3` → `Faza 4` → PR `mobile-first` → `main`.
+`Faza 0` ✅ → `Faza 1` ✅ → `Faza 2` ✅ → `Faza 3` ⏳ → `Faza 4` → PR `mobile-first` → `main`.
 
-Łącznie: 21 zakładek + warstwa wspólna, 5 faz, ~22 commity (1 na zakładkę + faza 0).
+Łącznie: 21 zakładek + warstwa wspólna, 5 faz. **Postęp: 13/21 zakładek (Faza 0 + 1 + 2).**
