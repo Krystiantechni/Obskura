@@ -2,7 +2,13 @@ from catalog.models import Creator, Episode, Genre, Season
 
 
 def episodes_list(*, genre=None, season=None):
-    qs = Episode.objects.select_related("season", "genre").prefetch_related("creators")
+    # Tylko opublikowane (published_at != NULL): drafty nie wychodzą publicznie, a cursor
+    # pagination po -published_at jest stabilna tylko bez NULL-i.
+    qs = (
+        Episode.objects.filter(published_at__isnull=False)
+        .select_related("season", "genre")
+        .prefetch_related("creators")
+    )
     if genre:
         qs = qs.filter(genre__slug=genre)
     if season is not None:
