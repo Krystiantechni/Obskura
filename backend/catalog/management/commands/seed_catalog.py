@@ -460,7 +460,7 @@ class Command(BaseCommand):
                 f"{Genre.objects.count()} genres, "
                 f"{Season.objects.count()} seasons, "
                 f"{Creator.objects.count()} creators, "
-                f"{Episode.objects.count()} episodes "
+                f"{Episode.all_objects.count()} episodes "
                 f"({ep_count} real, {gen_count} generated), "
                 f"ep12: {ch_count} chapters, {tr_count} transcript lines."
             )
@@ -528,7 +528,9 @@ class Command(BaseCommand):
             title_slug = pl_slugify(full_title)
             slug = f"s{ep['season_number']:02d}-e{ep['num']:02d}-{title_slug}"
 
-            _, created = Episode.objects.update_or_create(
+            # all_objects + un-delete: idempotentny re-seed nawet gdy odcinek był soft-deleted
+            # (jego slug wciąż zajmuje unique constraint — Episode.objects by go nie widział).
+            _, created = Episode.all_objects.update_or_create(
                 season=season,
                 number=ep["num"],
                 defaults={
@@ -543,6 +545,8 @@ class Command(BaseCommand):
                     "is_true_horror": is_true,
                     "kind": kind,
                     "published_at": _dt(ep["year"]),
+                    "is_deleted": False,
+                    "deleted_at": None,
                 },
             )
             if created:
@@ -554,7 +558,7 @@ class Command(BaseCommand):
     # ------------------------------------------------------------------
 
     def _seed_generated_episodes(self, genre_map: dict, season_map: dict) -> int:
-        current = Episode.objects.count()
+        current = Episode.all_objects.count()
         if current >= TOTAL_TARGET:
             return 0
 
@@ -564,12 +568,12 @@ class Command(BaseCommand):
         season_numbers = list(season_map.keys())
 
         # Track which (season_id, number) pairs are already used.
-        used: set = set(Episode.objects.values_list("season_id", "number"))
+        used: set = set(Episode.all_objects.values_list("season_id", "number"))
         season_id_map = {s.number: s.id for s in season_map.values()}
 
         created_count = 0
         i = 0
-        while Episode.objects.count() < TOTAL_TARGET:
+        while Episode.all_objects.count() < TOTAL_TARGET:
             i += 1
             season_num = rng.choice(season_numbers)
             season = season_map[season_num]
@@ -592,7 +596,7 @@ class Command(BaseCommand):
             slug = f"s{season_num:02d}-e{ep_num:02d}-echo-{i}"
             published_at = _dt(rng.randint(2022, 2026))
 
-            Episode.objects.get_or_create(
+            Episode.all_objects.update_or_create(
                 season=season,
                 number=ep_num,
                 defaults={
@@ -606,6 +610,8 @@ class Command(BaseCommand):
                     "is_true_horror": is_true,
                     "kind": kind,
                     "published_at": published_at,
+                    "is_deleted": False,
+                    "deleted_at": None,
                 },
             )
             used.add((season_id, ep_num))
@@ -620,7 +626,7 @@ class Command(BaseCommand):
     def _seed_ep12_content(self, season_map: dict) -> tuple[int, int]:
         """Seed chapters and transcript lines for S03E12. Idempotent."""
         season = season_map[3]
-        ep = Episode.objects.get(season=season, number=12)
+        ep = Episode.all_objects.get(season=season, number=12)
 
         for ch in EP12_CHAPTERS:
             Chapter.objects.update_or_create(
