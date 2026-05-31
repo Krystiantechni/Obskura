@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # local
     "core",
     "accounts",
+    "catalog",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
