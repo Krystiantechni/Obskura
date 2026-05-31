@@ -30,7 +30,10 @@ INSTALLED_APPS = [
     "django_filters",
     # local
     "core",
+    "accounts",
 ]
+
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
