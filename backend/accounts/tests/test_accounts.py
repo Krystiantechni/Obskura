@@ -31,6 +31,9 @@ def test_me_patch_updates_display_name():
     user = UserFactory(email="patch@example.com", display_name="Old")
     res = _auth_client(user).patch("/api/v1/accounts/me", {"display_name": "New"}, format="json")
     assert res.status_code == 200
+    # Odpowiedź = pełny user (jak GET /me), nie samo zmienione pole.
+    assert res.json()["email"] == "patch@example.com"
+    assert res.json()["display_name"] == "New"
     user.refresh_from_db()
     assert user.display_name == "New"
 

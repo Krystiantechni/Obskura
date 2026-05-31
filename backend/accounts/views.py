@@ -68,6 +68,11 @@ class MeView(RetrieveUpdateAPIView):
             return MeUpdateSerializer
         return UserReadSerializer
 
+    def update(self, request, *args, **kwargs):
+        super().update(request, *args, **kwargs)
+        # Po PATCH zwróć kanoniczny kształt użytkownika (jak GET /me), nie tylko zmienione pole.
+        return Response(UserReadSerializer(self.get_object()).data)
+
 
 class MePrefsView(APIView):
     permission_classes = [IsAuthenticated]
