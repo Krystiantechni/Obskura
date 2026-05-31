@@ -62,6 +62,14 @@ coverage/
 .cache/
 .parcel-cache/
 
+# --- Python (backend) ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
 # --- Test / automation artifacts ---
 test-results/
 playwright-report/
@@ -79,7 +87,7 @@ CLAUDE.md
 .mcp.local.json
 
 # --- Local-only files (kept on disk, not in repo) ---
-README.md
+/README.md
 public/fonts/README.md
 public/icons.svg
 src/assets/
