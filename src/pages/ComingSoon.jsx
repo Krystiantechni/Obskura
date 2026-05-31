@@ -11,12 +11,12 @@ export default function ComingSoon({ title, reference }) {
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-20 text-center lg:px-12">
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 animate-red-breath" style={{ background: "radial-gradient(circle, rgba(255,42,42,0.1), transparent 60%)" }} />
       <div className="relative max-w-xl">
-        <Eyebrow centered className="mb-8 justify-center">{t("common.coming_soon_eyebrow")}</Eyebrow>
-        <h1 className="font-serif text-[clamp(48px,8vw,96px)] font-medium leading-[0.95] tracking-[-0.02em]">
+        <Eyebrow centered className="mb-4 justify-center sm:mb-8">{t("common.coming_soon_eyebrow")}</Eyebrow>
+        <h1 className="font-serif text-[clamp(40px,10vw,96px)] font-medium leading-[0.95] tracking-[-0.02em]">
           {title}
         </h1>
-        <p className="mx-auto mb-2 mt-2 font-serif text-3xl italic text-ink-2">{t("common.coming_soon_h_em")}</p>
-        <p className="mx-auto mb-10 mt-6 max-w-md text-base font-light leading-relaxed text-ink-1">{t("common.coming_soon_desc")}</p>
+        <p className="mx-auto mb-2 mt-2 font-serif text-2xl italic text-ink-2 sm:text-3xl">{t("common.coming_soon_h_em")}</p>
+        <p className="mx-auto mb-8 mt-4 max-w-md text-base font-light leading-relaxed text-ink-1 sm:mb-10 sm:mt-6">{t("common.coming_soon_desc")}</p>
         <div className="flex justify-center">
           <HorrorButton to="/" variant="ghost">{t("common.coming_soon_cta")}</HorrorButton>
         </div>
