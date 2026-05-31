@@ -175,7 +175,7 @@ export default function Newsletter() {
   return (
     <div className="bg-bg-0">
       {/* HERO — split obraz + zapis */}
-      <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-20 pt-[140px] lg:px-12">
+      <section className="relative flex min-h-[70vh] items-center overflow-hidden px-5 pb-16 pt-[140px] sm:pb-20 lg:px-12">
         <div className="absolute inset-0 z-0">
           <img
             src="/images/img-forest.webp"
@@ -195,14 +195,14 @@ export default function Newsletter() {
         <div className="relative z-[2] mx-auto grid w-full max-w-[1400px] items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
           <div>
             <Eyebrow>{t("newsletter.hero_eyebrow", "// TYGODNIK NOCNY · CO CZWARTEK O 23:00")}</Eyebrow>
-            <h1 className="my-6 font-serif font-medium leading-[0.92] tracking-[-0.02em]" style={{ fontSize: "clamp(56px, 8vw, 112px)" }}>
+            <h1 className="my-6 font-serif font-medium leading-[0.92] tracking-[-0.02em]" style={{ fontSize: "clamp(40px, 8vw, 112px)" }}>
               {t("newsletter.hero_h1_p1", "Listy")} <em className="italic text-ink-1">{t("newsletter.hero_h1_p2", "z")}</em>
               <br />
               <span className="text-red [text-shadow:0_0_24px_rgba(255,42,42,0.4)]">{t("newsletter.hero_h1_p3", "ciemnej")}</span>
               <br />
               {t("newsletter.hero_h1_p4", "strony.")}
             </h1>
-            <p className="mb-9 max-w-[480px] text-[17px] font-light leading-relaxed text-ink-1">
+            <p className="mb-9 w-full text-[15px] font-light leading-relaxed text-ink-1 sm:max-w-[480px] sm:text-[17px]">
               {t(
                 "newsletter.hero_lead",
                 "Newsletter dla tych, którzy słuchają historii w drodze do domu o trzeciej w nocy. Co czwartek wysyłamy ci nowy odcinek przed premierą, kulisy nagrań i jeden krótki tekst, który nie pozwoli ci zasnąć.",
@@ -222,14 +222,14 @@ export default function Newsletter() {
       </section>
 
       {/* DLACZEGO WARTO */}
-      <section className="mx-auto mt-24 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 sm:mt-24 lg:px-12">
         <Eyebrow>{t("newsletter.what_eyebrow", "DLACZEGO WARTO")}</Eyebrow>
         <h2 className="mt-4 font-serif text-4xl font-medium leading-none tracking-[-0.02em] sm:text-5xl">
           {t("newsletter.what_h2_p1", "Trzy rzeczy, które dostajesz,")}{" "}
           <em className="italic text-ink-1">{t("newsletter.what_h2_p2", "i nic więcej")}</em>.
         </h2>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:mt-14 sm:gap-8 md:grid-cols-3">
           {WHAT_ITEMS.map((item, i) => (
             <div key={i} className="border-t border-line pt-8">
               <div className="mb-4 font-mono text-[11px] tracking-mono text-red">{t(`newsletter.what_${i}_num`, item.num)}</div>
@@ -243,7 +243,7 @@ export default function Newsletter() {
       </section>
 
       {/* PODGLĄD MAILA */}
-      <section className="mx-auto my-28 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto my-16 max-w-[1400px] px-5 sm:my-28 lg:px-12">
         <div className="mb-10 flex flex-col gap-6 border-b border-line pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <Eyebrow accent="blue" className="mb-3">
@@ -258,7 +258,7 @@ export default function Newsletter() {
           </div>
         </div>
 
-        <div className="grid gap-12 border border-line bg-bg-1/60 p-6 sm:p-12 lg:grid-cols-[1fr_2fr]">
+        <div className="grid gap-8 border border-line bg-bg-1/60 p-6 sm:gap-12 sm:p-12 lg:grid-cols-[1fr_2fr]">
           <div className="border-b border-line pb-6 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-12">
             <div className="mb-2 font-mono text-[10px] uppercase tracking-ui text-ink-2">{t("newsletter.preview_from", "OD")}</div>
             <div className="mb-4 text-[13px] text-ink-0">obskura@listy.obskura.audio</div>
