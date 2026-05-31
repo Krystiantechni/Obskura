@@ -13,7 +13,7 @@ const CATEGORIES = [
     threads: [
       { t: "[S03E12] Mgła nad Wisłoujściem — dyskusja po premierze", meta: "PRZEZ M. SOBCZAK · ZAŁOŻONY 23.05.2026 · OFICJALNY", badge: "pin", replies: "847", views: "23.4K", who: "Eliza Z.", when: "12 MIN TEMU" },
       { t: "Czy ktoś inny słyszał oddech w 31:14? (Mgła nad Wisłoujściem)", meta: "PRZEZ NOKTURN_47 · ZAŁOŻONY 24.05.2026", badge: "hot", replies: "412", views: "9.1K", who: "Karol P.", when: "18 MIN TEMU" },
-      { t: "Analiza zakończenia „Ostatnie Światło” — kto naprawdę był w pokoju 304?", meta: "PRZEZ MAJA O. · ZAŁOŻONY 21.05.2026", replies: "289", views: "6.7K", who: "P. Górski", when: "1H TEMU" },
+      { t: "Analiza zakończenia \"Ostatnie Światło\" — kto naprawdę był w pokoju 304?", meta: "PRZEZ MAJA O. · ZAŁOŻONY 21.05.2026", replies: "289", views: "6.7K", who: "P. Górski", when: "1H TEMU" },
       { t: "[S03E10] Coś patrzy z lasu — debata o znaczeniu sceny w 47:08", meta: "PRZEZ TOMASZ R. · ZAŁOŻONY 18.05.2026", replies: "178", views: "4.2K", who: "N.N.", when: "3H TEMU" },
       { t: "Najlepsze odcinki sezonu 3 — głosowanie", meta: "PRZEZ ANONIM_023 · ZAŁOŻONY 15.05.2026", replies: "523", views: "11.8K", who: "Hanna O.", when: "4H TEMU" },
     ],
@@ -35,7 +35,7 @@ const CATEGORIES = [
     threads: [
       { t: "[CREEPYPASTA] Wiadomość od mojej zmarłej babci na automacie biletowym", meta: "PRZEZ ZUZIA K. · ZAŁOŻONY 23.05.2026", replies: "72", views: "1.8K", who: "Marcin N.", when: "2H TEMU" },
       { t: "[MIKROPOWIEŚĆ · 800 słów] Pokój nad sklepem mięsnym", meta: "PRZEZ JAKUB G. · ZAŁOŻONY 22.05.2026 · OZNACZONO PRZEZ ZESPÓŁ", replies: "134", views: "3.4K", who: "M. Sobczak", when: "5H TEMU" },
-      { t: "Konkurs majowy: napisz pierwszą scenę odcinka „Pacjentka 23” w 500 słów", meta: "PRZEZ MODERACJA · DEADLINE: 31.05.2026 · NAGRODA", replies: "67", views: "1.2K", who: "Bartek M.", when: "1D TEMU" },
+      { t: "Konkurs majowy: napisz pierwszą scenę odcinka \"Pacjentka 23\" w 500 słów", meta: "PRZEZ MODERACJA · DEADLINE: 31.05.2026 · NAGRODA", replies: "67", views: "1.2K", who: "Bartek M.", when: "1D TEMU" },
     ],
   },
   {
@@ -78,7 +78,7 @@ export default function Forum() {
   return (
     <div className="pt-[88px]">
       {/* HERO */}
-      <header className="border-b border-line px-5 pb-10 pt-12 lg:px-12">
+      <header className="border-b border-line px-5 pb-8 pt-8 sm:pb-10 sm:pt-12 lg:px-12">
         <div className="mx-auto max-w-[1400px]">
           <Eyebrow className="mb-4">{t("forum.eyebrow", "// FORUM · MIEJSCE NA NIESPOKOJNE PYTANIA")}</Eyebrow>
           <h1 className="my-4 font-serif text-[clamp(44px,6vw,88px)] font-medium leading-[0.95] tracking-[-0.02em]">
@@ -89,10 +89,10 @@ export default function Forum() {
           <p className="max-w-[600px] text-[16px] font-light leading-relaxed text-ink-1">
             {t("forum.lead", "Forum dla słuchaczy Obskury. Bez politycznych awantur, bez creepypast bez kontekstu. Moderowane przez nasz zespół, nie przez algorytm. Dołącz — zaloguj się kontem Obskury.")}
           </p>
-          <div className="mt-7 flex flex-wrap gap-10 border-t border-line pt-5">
+          <div className="mt-7 flex flex-wrap gap-6 border-t border-line pt-5 sm:gap-10">
             {STATS.map((s) => (
               <div key={s.l}>
-                <div className={`font-serif text-[28px] ${s.accent ? "text-red" : ""}`}>{s.n}</div>
+                <div className={`font-serif text-[22px] sm:text-[28px] ${s.accent ? "text-red" : ""}`}>{s.n}</div>
                 <div className="mt-1 font-mono text-[9px] uppercase tracking-mono text-ink-2">{t(`forum.stat_${s.l}`, s.l)}</div>
               </div>
             ))}
@@ -158,12 +158,13 @@ export default function Forum() {
 
           <div className="border border-line bg-bg-1/40 p-5">
             <HorrorButton block>{t("forum.new_thread", "+ Załóż wątek")}</HorrorButton>
-            <p className="mt-2.5 text-center font-mono text-[9px] uppercase tracking-mono text-ink-3">
-              {t("forum.requires_account", "WYMAGA KONTA")} ·{" "}
+            <p className="mt-2.5 flex flex-wrap items-center justify-center gap-x-1 font-mono text-[9px] uppercase tracking-mono text-ink-3">
+              <span>{t("forum.requires_account", "WYMAGA KONTA")}</span>
+              <span>·</span>
               <Link to="/login" className="inline-flex min-h-[44px] items-center text-ink-1 hover:text-ink-0">
                 {t("forum.login", "ZALOGUJ")}
-              </Link>{" "}
-              /{" "}
+              </Link>
+              <span>/</span>
               <Link to="/register" className="inline-flex min-h-[44px] items-center text-red hover:text-red-soft">
                 {t("forum.register", "UTWÓRZ")}
               </Link>

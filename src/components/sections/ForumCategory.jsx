@@ -28,26 +28,46 @@ export default function ForumCategory({ category }) {
         <button
           key={th.t}
           type="button"
-          className="grid w-full cursor-pointer grid-cols-1 items-center gap-2 border-b border-line-soft px-4 py-4 text-left transition-colors last:border-b-0 hover:bg-red/[0.04] sm:px-6 lg:grid-cols-[1fr_80px_80px_160px] lg:gap-4"
+          className="w-full cursor-pointer border-b border-line-soft px-4 py-4 text-left transition-colors last:border-b-0 hover:bg-red/[0.04] sm:px-6 lg:grid lg:grid-cols-[1fr_80px_80px_160px] lg:items-center lg:gap-4"
         >
-          <span className="min-w-0">
+          {/* Title + meta row */}
+          <span className="block min-w-0">
             <span className="mb-1 block text-[15px] font-medium leading-snug text-ink-0">
-              {th.badge === "pin" && <span className="mr-2 text-red">📌</span>}
-              {th.badge === "hot" && <span className="mr-2 text-blue">🔥</span>}
+              {th.badge === "pin" && <span className="mr-2 text-red">&#128204;</span>}
+              {th.badge === "hot" && <span className="mr-2 text-blue">&#128293;</span>}
               {th.t}
             </span>
             <span className="block font-mono text-[10px] uppercase tracking-ui text-ink-2">{th.meta}</span>
           </span>
-          <span className="font-mono text-[13px] text-ink-1 lg:text-center">
+
+          {/* Mobile footer row: stats + who/when — hidden on lg (each column takes over) */}
+          <span className="mt-2 flex items-center gap-4 lg:hidden">
+            <span className="font-mono text-[11px] text-ink-1">
+              {th.replies}
+              <span className="ml-0.5 font-mono text-[9px] uppercase tracking-ui text-ink-3">odp.</span>
+            </span>
+            <span className="font-mono text-[11px] text-ink-1">
+              {th.views}
+              <span className="ml-0.5 font-mono text-[9px] uppercase tracking-ui text-ink-3">odsłon</span>
+            </span>
+            <span className="ml-auto font-mono text-[10px] uppercase tracking-ui text-ink-2">
+              <span className="font-serif text-[12px] normal-case italic tracking-normal text-ink-0">{th.who}</span>
+              {" · "}
+              {th.when}
+            </span>
+          </span>
+
+          {/* Desktop-only stat columns */}
+          <span className="hidden font-mono text-[13px] text-ink-1 lg:block lg:text-center">
             {th.replies}
-            <span className="ml-1 font-mono text-[9px] uppercase tracking-ui text-ink-3 lg:ml-0 lg:block">odp.</span>
+            <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-ui text-ink-3">odp.</span>
           </span>
-          <span className="font-mono text-[13px] text-ink-1 lg:text-center">
+          <span className="hidden font-mono text-[13px] text-ink-1 lg:block lg:text-center">
             {th.views}
-            <span className="ml-1 font-mono text-[9px] uppercase tracking-ui text-ink-3 lg:ml-0 lg:block">odsłon</span>
+            <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-ui text-ink-3">odsłon</span>
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-ui text-ink-2 lg:text-right">
-            <span className="font-serif text-[13px] normal-case italic tracking-normal text-ink-0 lg:mb-0.5 lg:block">{th.who}</span>{" "}
+          <span className="hidden font-mono text-[10px] uppercase tracking-ui text-ink-2 lg:block lg:text-right">
+            <span className="mb-0.5 block font-serif text-[13px] normal-case italic tracking-normal text-ink-0">{th.who}</span>
             {th.when}
           </span>
         </button>
