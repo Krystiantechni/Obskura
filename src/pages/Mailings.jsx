@@ -26,7 +26,7 @@ MailP.propTypes = { children: PropTypes.node.isRequired, drop: PropTypes.bool };
 
 function MailCta({ children }) {
   return (
-    <span className="my-4 inline-block bg-[#ff2a2a] px-6 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-white">
+    <span className="my-4 inline-block w-full sm:w-auto text-center bg-[#ff2a2a] px-6 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.18em] text-white">
       {children}
     </span>
   );
@@ -40,7 +40,7 @@ function MailCard({ img, pos, ep, t1, em, meta }) {
       <div>
         <div className="mb-1 font-mono text-[10px] tracking-mono text-[#ff2a2a]">{ep}</div>
         <div className="mb-1 font-serif text-[22px] leading-tight text-[#f4f1ea]">{t1} <em className="italic text-[#c9c4b8]">{em}</em></div>
-        <div className="font-mono text-[11px] uppercase tracking-ui text-[#6e6a60]">{meta}</div>
+        <div className="font-mono text-[11px] uppercase tracking-ui text-[#6e6a60] break-words">{meta}</div>
       </div>
     </div>
   );
@@ -65,7 +65,7 @@ MailAlert.propTypes = { accent: PropTypes.oneOf(["amber", "red"]), title: PropTy
 
 function MailInvoice({ rows }) {
   return (
-    <div className="my-6 border border-white/[0.08] bg-black/40 p-6 font-mono text-xs leading-relaxed text-[#c9c4b8]">
+    <div className="my-6 border border-white/[0.08] bg-black/40 p-4 sm:p-6 font-mono text-xs leading-relaxed text-[#c9c4b8]">
       {rows.map((r, i) => (
         <div key={i} className={`flex justify-between py-1 ${r.total ? "mt-2 border-t border-white/[0.08] pt-2 text-sm text-[#f4f1ea]" : ""} ${r.sep ? "mt-3 border-t border-white/[0.08] pt-2" : ""}`}>
           <span>{r.k}</span>
@@ -115,7 +115,7 @@ function MailBody({ tpl, t }) {
       )}
 
       {tpl === "newsletter" && (
-        <div className="px-9 pb-12 pt-9">
+        <div className="px-5 sm:px-9 pb-12 pt-9">
           <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.newsletter_kicker", "// Wydanie #183 · czwartek 23:00")}</div>
           <MailH1>{t("mailingi.newsletter_h1_p1", "Coś")} <em className="italic text-[#c9c4b8]">{t("mailingi.newsletter_h1_em", "chce wrócić")}</em>.</MailH1>
           <MailP drop>{t("mailingi.newsletter_p1", "W zeszłą środę zamknęliśmy się w studiu z Katarzyną Wieczorek na sześć godzin. Nie wyszliśmy zadowoleni. Dziś rano wyszliśmy z czymś, co działa. Słuchasz tego pierwszy — link wygasa za 71 godzin.")}</MailP>
@@ -151,7 +151,7 @@ function MailBody({ tpl, t }) {
       )}
 
       {tpl === "reset" && (
-        <div className="px-9 pb-12 pt-9">
+        <div className="px-5 sm:px-9 pb-12 pt-9">
           <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.reset_kicker", "// Bezpieczeństwo · link jednorazowy")}</div>
           <MailH1>{t("mailingi.reset_h1_p1", "Resetujesz")} <em className="italic text-[#c9c4b8]">{t("mailingi.reset_h1_em", "hasło")}</em>.</MailH1>
           <MailP>{t("mailingi.reset_p1_p1", "Ktoś (mamy nadzieję, że ty) poprosił o reset hasła do twojego konta OBSKURA.")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.reset_p1_strong", "Jeśli to nie ty")}</strong> {t("mailingi.reset_p1_p2", "— zignoruj ten e-mail, twoje hasło pozostanie bez zmian.")}</MailP>
@@ -170,7 +170,7 @@ function MailBody({ tpl, t }) {
       )}
 
       {tpl === "invoice" && (
-        <div className="px-9 pb-12 pt-9">
+        <div className="px-5 sm:px-9 pb-12 pt-9">
           <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.invoice_kicker", "// Faktura VAT · obowiązuje przez 5 lat (ustawa)")}</div>
           <MailH1>{t("mailingi.invoice_h1_p1", "Dziękujemy")} <em className="italic text-[#c9c4b8]">{t("mailingi.invoice_h1_em", "za płatność")}</em>.</MailH1>
           <MailP>{t("mailingi.invoice_p1", "Subskrypcja Solo (roczna) odnowiona automatycznie. Wszystko działa, dostęp nieprzerwany. Faktura w załączniku — i poniżej do podglądu.")}</MailP>
@@ -192,7 +192,7 @@ function MailBody({ tpl, t }) {
       )}
 
       {tpl === "security" && (
-        <div className="px-9 pb-12 pt-9">
+        <div className="px-5 sm:px-9 pb-12 pt-9">
           <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ffaa44]">{t("mailingi.security_kicker", "// Alert · wymaga twojej uwagi")}</div>
           <MailH1>{t("mailingi.security_h1_p1", "Ktoś próbował")} <em className="italic text-[#c9c4b8]">{t("mailingi.security_h1_em", "cię odwiedzić")}</em>.</MailH1>
           <MailP>{t("mailingi.security_p1_p1", "Wczoraj o")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.security_p1_strong1", "14:23 CET")}</strong> {t("mailingi.security_p1_p2", "wykonano nietypowe logowanie do twojego konta. Próba została")} <strong className="font-medium text-[#00ff88]">{t("mailingi.security_p1_strong2", "zablokowana")}</strong> {t("mailingi.security_p1_p3", "przez nasz system, ale chcemy, żebyś wiedział.")}</MailP>
@@ -212,7 +212,7 @@ function MailBody({ tpl, t }) {
       )}
 
       {tpl === "cancel" && (
-        <div className="px-9 pb-12 pt-9">
+        <div className="px-5 sm:px-9 pb-12 pt-9">
           <div className="mb-3.5 font-mono text-[10px] uppercase tracking-eyebrow text-[#ff2a2a]">{t("mailingi.cancel_kicker", "// Anulowanie potwierdzone")}</div>
           <MailH1>{t("mailingi.cancel_h1_p1", "Twoja subskrypcja")} <em className="italic text-[#c9c4b8]">{t("mailingi.cancel_h1_em", "została anulowana")}</em>.</MailH1>
           <MailP drop>{t("mailingi.cancel_p1_p1", "To smutna wiadomość, ale szanujemy decyzję. Twój dostęp do całego katalogu pozostaje")} <strong className="font-medium text-[#f4f1ea]">{t("mailingi.cancel_p1_strong", "aktywny do 14.05.2027")}</strong>. {t("mailingi.cancel_p1_p2", "Po tym czasie wracasz na plan Próg (20 odcinków / miesiąc, z reklamami).")}</MailP>
@@ -249,18 +249,18 @@ function Email({ tpl, heads, t }) {
         <span className="hidden font-mono text-[10px] uppercase tracking-ui text-[#6e6a60] sm:block">↩ ↪ ⌄</span>
         <span className="font-mono text-[10px] uppercase tracking-mono text-[#6e6a60]">{t("mailingi.email_to", "Do")}</span>
         <span className="text-[13px] sm:col-span-2">{t("mailingi.email_recipient", "ty@email.com")}</span>
-        <div className="col-span-2 mt-1.5 font-serif text-[28px] leading-snug text-[#050608] sm:col-span-3">{h.subject}</div>
+        <div className="col-span-2 mt-1.5 font-serif text-[22px] sm:text-[28px] leading-snug text-[#050608] sm:col-span-3">{h.subject}</div>
       </div>
 
       {/* Dark branded body */}
       <div className="bg-[#050608]">
         <div className="mx-auto max-w-[600px] bg-bg-1">
-          <div className="flex items-center gap-3 border-b border-white/[0.08] px-8 py-6">
+          <div className="flex items-center gap-3 border-b border-white/[0.08] px-5 sm:px-8 py-6">
             <span className="relative h-[18px] w-[18px] rounded-full border-[1.5px] border-[#ff2a2a] after:absolute after:inset-[5px] after:rounded-full after:bg-[#ff2a2a]" />
             <span className="font-sans text-sm font-extrabold tracking-brand text-[#f4f1ea]">OBSKURA</span>
           </div>
           <MailBody tpl={tpl} t={t} />
-          <div className="border-t border-white/[0.08] bg-[#050608] px-8 py-7">
+          <div className="border-t border-white/[0.08] bg-[#050608] px-5 sm:px-8 py-7">
             <div className="mb-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] tracking-ui">
               <a href="#footer" className="inline-block py-2 text-[#c9c4b8]">{t("mailingi.footer_subs", "Zarządzaj subskrypcjami")}</a>
               <a href="#footer" className="inline-block py-2 text-[#c9c4b8]">{t("mailingi.footer_unsub", "Wypisz się")}</a>
