@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 import environ
@@ -30,7 +31,10 @@ INSTALLED_APPS = [
     "django_filters",
     # local
     "core",
+    "accounts",
 ]
+
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -100,7 +104,12 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
     ),
-    "DEFAULT_THROTTLE_RATES": {"anon": "60/min", "user": "1000/day"},
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "60/min",
+        "user": "1000/day",
+        "register": "10/hour",
+        "login": "10/min",
+    },
 }
 
 CORS_ALLOWED_ORIGINS = env("CORS_ALLOWED_ORIGINS")
@@ -113,7 +122,13 @@ USE_TZ = True
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# API REST: bez auto-redirectu na trailing slash. Klient JS woła dokładne ścieżki;
+# brak slasha => jawny 404 zamiast cichego 301, który gubiłby body POST-a.
+APPEND_SLASH = False
+
 # --- dev guard: wykrywanie N+1 i debug toolbar (tylko DEBUG=True) ---
+_TESTING = "pytest" in sys.modules
+
 if DEBUG:
     INSTALLED_APPS += ["debug_toolbar"]
     MIDDLEWARE = [
@@ -122,6 +137,7 @@ if DEBUG:
         *MIDDLEWARE,
     ]
     INTERNAL_IPS = ["127.0.0.1"]
-    # W Dockerze IP klienta != 127.0.0.1 — pokazuj toolbar zawsze w DEBUG:
-    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda request: True}
+    # W Dockerze IP klienta != 127.0.0.1 — pokazuj toolbar zawsze w DEBUG,
+    # ale wyłącz podczas pytest (toolbar crashuje w test-clientcie przez djdt: namespace).
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda request: not _TESTING}
     NPLUSONE_RAISE = False  # loguje N+1; ustaw True by twardo failować

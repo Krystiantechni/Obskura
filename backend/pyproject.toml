@@ -5,6 +5,10 @@ target-version = "py313"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "DJ"]
 
+[tool.ruff.lint.per-file-ignores]
+# Migracje są auto-generowane przez Django — nie lintujemy długości linii ani kolejności importów.
+"*/migrations/*.py" = ["E501", "I001"]
+
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "obskura.settings"
 python_files = ["test_*.py", "tests.py"]
