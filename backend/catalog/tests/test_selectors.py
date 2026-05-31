@@ -22,10 +22,20 @@ def test_episodes_list_no_nplus1(django_assert_num_queries):
 def test_episode_by_slug_no_nplus1(django_assert_num_queries):
     ep = EpisodeFactory()
     ep.creators.set([CreatorFactory(), CreatorFactory()])
-    # 1 query (episode + select_related season/genre) + 1 (prefetch creators) = 2
-    with django_assert_num_queries(2):
+    # 1 query (episode + select_related season/genre)
+    # + 1 (prefetch creators)
+    # + 1 (prefetch chapters)
+    # + 1 (prefetch transcript)
+    # = 4
+    with django_assert_num_queries(4):
         result = episode_by_slug(ep.slug)
-        _ = (result.season.number, result.genre.name, list(result.creators.all()))
+        _ = (
+            result.season.number,
+            result.genre.name,
+            list(result.creators.all()),
+            list(result.chapters.all()),
+            list(result.transcript.all()),
+        )
 
 
 @pytest.mark.django_db

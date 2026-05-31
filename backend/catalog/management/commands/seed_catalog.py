@@ -12,7 +12,7 @@ from datetime import UTC, datetime
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from catalog.models import Creator, Episode, Genre, Season
+from catalog.models import Chapter, Creator, Episode, Genre, Season, TranscriptLine
 from core.text import pl_slugify
 
 # ---------------------------------------------------------------------------
@@ -281,6 +281,151 @@ REAL_EPISODES = [
 
 TOTAL_TARGET = 50
 
+# ---------------------------------------------------------------------------
+# Episode 12 content (mirrored from src/data/tracks.js id="12")
+# ---------------------------------------------------------------------------
+
+EP12_CHAPTERS = [
+    {"n": 1, "key": "ch1", "title": "Powrót po 23 latach", "time_str": "00:00", "sec": 0},
+    {"n": 2, "key": "ch2", "title": "Listy ojca", "time_str": "04:18", "sec": 258},
+    {"n": 3, "key": "ch3", "title": "Wywiad z Marią P.", "time_str": "11:02", "sec": 662},
+    {
+        "n": 4,
+        "key": "ch4",
+        "title": "Pierwszy raz przy molo nocą",
+        "time_str": "19:43",
+        "sec": 1183,
+    },
+    {"n": 5, "key": "ch5", "title": "Mgła wchodzi do miasta", "time_str": "27:14", "sec": 1634},
+    {"n": 6, "key": "ch6", "title": "Oddech pod wodą", "time_str": "31:48", "sec": 1908},
+    {
+        "n": 7,
+        "key": "ch7",
+        "title": "Co naprawdę widział ojciec",
+        "time_str": "36:22",
+        "sec": 2182,
+    },
+    {"n": 8, "key": "ch8", "title": "Decyzja Elizy", "time_str": "41:05", "sec": 2465},
+    {"n": 9, "key": "ch9", "title": "Co zostaje rano", "time_str": "44:30", "sec": 2670},
+]
+
+# order = sequential index (0-based) in the order they appear in tracks.js
+EP12_TRANSCRIPT = [
+    {
+        "key": "t1",
+        "order": 0,
+        "sec": 1145,
+        "speaker": "narratorka",
+        "marker": "",
+        "text": "Wisłoujście, sierpień 1907 roku. Mgła wchodzi do portu o czwartej po południu.",
+    },
+    {
+        "key": "t2",
+        "order": 1,
+        "sec": 1158,
+        "speaker": "narratorka",
+        "marker": "",
+        "text": "Rybacy wracają wcześniej niż zwykle. Nikt nie tłumaczy dlaczego.",
+    },
+    {
+        "key": "m1",
+        "order": 2,
+        "sec": None,
+        "speaker": "",
+        "marker": "sfx",
+        "text": "SFX · Foghorn w oddali · Plusk wody o pal",
+    },
+    {
+        "key": "t3",
+        "order": 3,
+        "sec": 1183,
+        "speaker": "archiwum",
+        "marker": "",
+        "text": (
+            "„Tego dnia mój dziadek wrócił o trzeciej, choć siatki były puste."
+            " Powiedział żonie tylko: nie wychodź dziś z dziećmi nad wodę."
+            " Nigdy więcej nic nie wyjaśnił.”"
+        ),
+    },
+    {
+        "key": "t4",
+        "order": 4,
+        "sec": 1208,
+        "speaker": "narratorka",
+        "marker": "",
+        "text": (
+            "Eliza wraca do Wisłoujścia po dwudziestu trzech latach."
+            " Ostatni raz była tu, gdy umarł jej ojciec."
+            " Zostawiła wtedy klucze do domu pod kamieniem przy bramie. Jeszcze tam są."
+        ),
+    },
+    {
+        "key": "m2",
+        "order": 5,
+        "sec": None,
+        "speaker": "",
+        "marker": "chapter",
+        "text": "// CHAPTER 04 · Pierwszy raz przy molo nocą",
+    },
+    {
+        "key": "t5",
+        "order": 6,
+        "sec": 1247,
+        "speaker": "narratorka",
+        "marker": "",
+        "text": "Molo o północy. Latarnia portowa pulsuje co cztery sekundy. Eliza naciska record.",
+    },
+    {
+        "key": "t6",
+        "order": 7,
+        "sec": 1263,
+        "speaker": "eliza",
+        "marker": "",
+        "text": (
+            "...test, raz, dwa. Jest dwudziesta trzecia czterdzieści siedem."
+            " Jestem na molo zachodnim w Wisłoujściu. Wiatr czternaście węzłów z północy."
+            " Mgła gęstnieje."
+        ),
+    },
+    {
+        "key": "t7",
+        "order": 8,
+        "sec": 1289,
+        "speaker": "eliza",
+        "marker": "",
+        "text": (
+            "Słyszę... coś. Nie jestem pewna co. Jakby... oddech." " Ale to chyba moja wyobraźnia."
+        ),
+    },
+    {
+        "key": "m3",
+        "order": 9,
+        "sec": None,
+        "speaker": "",
+        "marker": "sfx",
+        "text": "SFX · Niski dźwięk infradźwięku (17.8 Hz) · Słychać tylko na słuchawkach",
+    },
+    {
+        "key": "t8",
+        "order": 10,
+        "sec": 1322,
+        "speaker": "narratorka",
+        "marker": "",
+        "text": (
+            "O tym, że na nagraniu jest jeszcze jeden głos, dowie się dopiero w domu,"
+            " gdy odsłucha plik na komputerze. Głos, który nie należy do niej."
+        ),
+    },
+    {
+        "key": "t9",
+        "order": 11,
+        "sec": 1348,
+        "speaker": "narratorka",
+        "marker": "",
+        "text": "I nie należy do nikogo żywego.",
+    },
+]
+
 
 def _parse_plays(plays_str: str) -> int:
     """Convert '847K' → 847000, '1.2M' → 1200000."""
@@ -307,6 +452,7 @@ class Command(BaseCommand):
             self._seed_creators()
             ep_count = self._seed_real_episodes(genre_map, season_map)
             gen_count = self._seed_generated_episodes(genre_map, season_map)
+            ch_count, tr_count = self._seed_ep12_content(season_map)
 
         self.stdout.write(
             self.style.SUCCESS(
@@ -315,7 +461,8 @@ class Command(BaseCommand):
                 f"{Season.objects.count()} seasons, "
                 f"{Creator.objects.count()} creators, "
                 f"{Episode.objects.count()} episodes "
-                f"({ep_count} real, {gen_count} generated)."
+                f"({ep_count} real, {gen_count} generated), "
+                f"ep12: {ch_count} chapters, {tr_count} transcript lines."
             )
         )
 
@@ -465,3 +612,41 @@ class Command(BaseCommand):
             created_count += 1
 
         return created_count
+
+    # ------------------------------------------------------------------
+    # Episode 12 content (chapters + transcript)
+    # ------------------------------------------------------------------
+
+    def _seed_ep12_content(self, season_map: dict) -> tuple[int, int]:
+        """Seed chapters and transcript lines for S03E12. Idempotent."""
+        season = season_map[3]
+        ep = Episode.objects.get(season=season, number=12)
+
+        for ch in EP12_CHAPTERS:
+            Chapter.objects.update_or_create(
+                episode=ep,
+                n=ch["n"],
+                defaults={
+                    "key": ch["key"],
+                    "title": ch["title"],
+                    "time_str": ch["time_str"],
+                    "sec": ch["sec"],
+                },
+            )
+
+        for line in EP12_TRANSCRIPT:
+            TranscriptLine.objects.update_or_create(
+                episode=ep,
+                order=line["order"],
+                defaults={
+                    "key": line["key"],
+                    "sec": line["sec"],
+                    "speaker": line["speaker"],
+                    "marker": line["marker"],
+                    "text": line["text"],
+                },
+            )
+
+        ch_count = ep.chapters.count()
+        tr_count = ep.transcript.count()
+        return ch_count, tr_count

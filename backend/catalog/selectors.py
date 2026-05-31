@@ -23,7 +23,7 @@ def episodes_list(*, genre=None, season=None):
 def episode_by_slug(slug):
     return (
         Episode.objects.select_related("season", "genre")
-        .prefetch_related("creators")
+        .prefetch_related("creators", "chapters", "transcript")
         .get(slug=slug)
     )
 
