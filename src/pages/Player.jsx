@@ -129,7 +129,7 @@ export default function Player() {
   return (
     <div className="grid min-h-screen grid-cols-1 bg-bg-0 pt-[88px] lg:grid-cols-[1fr_460px] lg:pt-0">
       {/* STAGE */}
-      <div className="relative min-h-[60vh] overflow-hidden bg-bg-1 lg:min-h-screen">
+      <div className="relative min-h-[56vh] overflow-hidden bg-bg-1 sm:min-h-[64vh] lg:min-h-screen">
         {/* bg */}
         <div className="absolute inset-0">
           <img
@@ -148,10 +148,10 @@ export default function Player() {
         </div>
 
         {/* topbar */}
-        <div className="absolute inset-x-0 top-[72px] z-10 flex items-center justify-between px-5 py-5 lg:top-0 lg:px-10 lg:py-7">
+        <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-4 sm:px-5 sm:py-5 lg:px-10 lg:py-7">
           <Link
             to="/episode/12"
-            className="inline-flex min-h-[44px] items-center gap-3 border border-line bg-black/40 px-3.5 py-2.5 font-mono text-[11px] uppercase tracking-mono text-ink-1 backdrop-blur transition-colors hover:border-red hover:text-ink-0"
+            className="inline-flex min-h-[44px] items-center gap-2 border border-line bg-black/40 px-3 py-2.5 font-mono text-[11px] uppercase tracking-mono text-ink-1 backdrop-blur transition-colors hover:border-red hover:text-ink-0 sm:gap-3 sm:px-3.5"
           >
             <span className="rotate-180">
               <Arrow size={10} />
@@ -167,16 +167,16 @@ export default function Player() {
         </div>
 
         {/* center */}
-        <div className="absolute left-1/2 top-1/2 z-[5] w-full -translate-x-1/2 -translate-y-1/2 px-5 text-center lg:px-10">
-          <div className="mb-4 flex items-center justify-center gap-3 font-mono text-[11px] uppercase tracking-mono text-red before:h-px before:w-8 before:bg-red before:shadow-[0_0_6px_#ff2a2a] before:content-[''] after:h-px after:w-8 after:bg-red after:shadow-[0_0_6px_#ff2a2a] after:content-['']">
+        <div className="absolute left-1/2 top-1/2 z-[5] w-full -translate-x-1/2 -translate-y-1/2 px-4 text-center sm:px-5 lg:px-10">
+          <div className="mb-3 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-mono text-red before:h-px before:w-5 before:bg-red before:shadow-[0_0_6px_#ff2a2a] before:content-[''] after:h-px after:w-5 after:bg-red after:shadow-[0_0_6px_#ff2a2a] after:content-[''] sm:mb-4 sm:gap-3 sm:text-[11px] sm:before:w-8 sm:after:w-8">
             {t("player.ep_num", "Sezon 03 · Odcinek 12 · Finał")}
           </div>
-          <h1 className="mb-4 font-serif text-[clamp(40px,5vw,80px)] font-medium leading-[0.95] tracking-[-0.02em]">
+          <h1 className="mb-3 font-serif text-[clamp(28px,6vw,80px)] font-medium leading-[0.95] tracking-[-0.02em] sm:mb-4 sm:text-[clamp(36px,5vw,80px)]">
             {t("playerpage.title_p1", "Mgła nad")} <em className="italic text-ink-1">{t("playerpage.title_em", "Wisłoujściem")}</em>
           </h1>
           {currentCh && (
-            <div className="mt-8 font-serif text-[22px] italic text-ink-1">
-              <span className="mr-3 font-mono text-[11px] not-italic uppercase tracking-mono text-red">
+            <div className="mt-4 font-serif text-[16px] italic text-ink-1 sm:mt-8 sm:text-[22px]">
+              <span className="mr-2 font-mono text-[10px] not-italic uppercase tracking-mono text-red sm:mr-3 sm:text-[11px]">
                 {`// CHAPTER ${String(currentCh.n).padStart(2, "0")} ·`}
               </span>
               {t(`playerpage.${currentCh.key}`, currentCh.t)}
@@ -185,18 +185,18 @@ export default function Player() {
         </div>
 
         {/* bottom */}
-        <div className="absolute inset-x-0 bottom-0 z-10 bg-[linear-gradient(0deg,rgba(5,6,8,0.92),transparent)] px-5 pb-8 pt-20 lg:px-10 lg:pb-10">
+        <div className="absolute inset-x-0 bottom-0 z-10 bg-[linear-gradient(0deg,rgba(5,6,8,0.92),transparent)] px-4 pb-6 pt-16 sm:px-5 sm:pb-8 sm:pt-20 lg:px-10 lg:pb-10">
           <Visualizer playing={playing} frame={frame} />
 
-          <div className="mb-6 flex items-center gap-2 sm:gap-4">
-            <span className="min-w-[44px] font-mono text-[12px] tracking-ui text-red sm:min-w-[56px] sm:text-[13px]">{fmt(seconds)}</span>
+          <div className="mb-5 flex items-center gap-2 sm:mb-6 sm:gap-4">
+            <span className="min-w-[40px] font-mono text-[11px] tracking-ui text-red sm:min-w-[44px] sm:text-[12px] lg:min-w-[56px] lg:text-[13px]">{fmt(seconds)}</span>
             <WaveformBar progress={progress} onSeek={(p) => seek(p)} className="min-w-0 flex-1" />
-            <span className="min-w-[44px] text-right font-mono text-[12px] tracking-ui text-ink-1 sm:min-w-[56px] sm:text-[13px]">
+            <span className="min-w-[40px] text-right font-mono text-[11px] tracking-ui text-ink-1 sm:min-w-[44px] sm:text-[12px] lg:min-w-[56px] lg:text-[13px]">
               {fmt(Math.max(0, total - seconds))}
             </span>
           </div>
 
-          <div className="flex items-center justify-center gap-7">
+          <div className="flex items-center justify-center gap-5 sm:gap-7">
             <button
               type="button"
               aria-label={t("playerpage.prev_chapter", "Poprzedni rozdział")}
@@ -220,7 +220,7 @@ export default function Player() {
               type="button"
               aria-label={playing ? t("playerpage.pause", "Pauza") : t("playerpage.play", "Odtwórz")}
               onClick={() => toggle()}
-              className="grid h-[72px] w-[72px] place-items-center rounded-full bg-ink-0 text-bg-0 shadow-[0_0_0_1px_rgba(255,255,255,0.2)] transition-all hover:scale-105 hover:bg-red hover:text-white hover:shadow-[0_0_0_1px_rgba(255,42,42,0.4),0_0_32px_rgba(255,42,42,0.4)]"
+              className="grid h-[60px] w-[60px] place-items-center rounded-full bg-ink-0 text-bg-0 shadow-[0_0_0_1px_rgba(255,255,255,0.2)] transition-all hover:scale-105 hover:bg-red hover:text-white hover:shadow-[0_0_0_1px_rgba(255,42,42,0.4),0_0_32px_rgba(255,42,42,0.4)] sm:h-[72px] sm:w-[72px]"
             >
               {playing ? <Pause size={22} /> : <Play size={22} />}
             </button>
@@ -245,14 +245,14 @@ export default function Player() {
             </button>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
-            <div className="flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4 sm:mt-6 sm:gap-4 sm:pt-5">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {SPEEDS.map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => setSpeed(s)}
-                  className={`inline-flex min-h-[44px] items-center border px-3.5 py-2 font-mono text-[11px] tracking-ui transition-colors ${
+                  className={`inline-flex min-h-[44px] items-center border px-3 py-2 font-mono text-[11px] tracking-ui transition-colors sm:px-3.5 ${
                     speed === s ? "border-red bg-red text-black" : "border-line bg-black/40 text-ink-1 hover:border-red hover:text-red"
                   }`}
                 >
@@ -260,7 +260,7 @@ export default function Player() {
                 </button>
               ))}
             </div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 sm:gap-2.5">
               <button type="button" aria-label={t("playerpage.save", "Zapisz")} className="grid h-11 w-11 place-items-center border border-line text-ink-1 transition-colors hover:border-red hover:text-red">
                 <Heart />
               </button>
@@ -283,7 +283,7 @@ export default function Player() {
               key={tb.id}
               type="button"
               onClick={() => setTab(tb.id)}
-              className={`flex-1 border-b-2 px-4 py-[18px] font-mono text-[11px] uppercase tracking-mono transition-colors ${
+              className={`flex-1 min-h-[44px] border-b-2 px-3 py-[14px] font-mono text-[11px] uppercase tracking-mono transition-colors sm:px-4 sm:py-[18px] ${
                 tab === tb.id ? "border-red text-red" : "border-transparent text-ink-2 hover:text-ink-0"
               }`}
             >
@@ -292,7 +292,7 @@ export default function Player() {
           ))}
         </div>
 
-        <div ref={panelRef} className="flex-1 overflow-y-auto px-6 py-7 lg:px-8">
+        <div ref={panelRef} className="flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
           {tab === "transcript" && TRANSCRIPT.length === 0 && (
             <div className="border border-dashed border-line bg-black/20 px-6 py-12 text-center">
               <p className="font-mono text-[10px] uppercase tracking-mono text-ink-3">
