@@ -11,29 +11,29 @@ import { mkdir, writeFile } from "node:fs/promises";
 const BASE = process.env.BASE_URL || "http://localhost:5188";
 const OUT = process.env.OUT_DIR || "/tmp/obskura-mobile-audit";
 
-// pełna mapa route -> slug (po renamingu EN aktualizować tutaj)
+// pełna mapa route -> slug (route'y EN po renamingu)
 const ALL_ROUTES = [
   ["/", "home"],
-  ["/zaloguj", "login"],
-  ["/rejestracja", "register"],
-  ["/archiwum", "archiwum"],
-  ["/klub", "klub"],
-  ["/odcinek/1", "odcinek"],
-  ["/aplikacja", "aplikacja"],
+  ["/login", "login"],
+  ["/register", "register"],
+  ["/archive", "archive"],
+  ["/club", "club"],
+  ["/episode/1", "episode"],
+  ["/app", "app"],
   ["/forum", "forum"],
-  ["/kariera", "kariera"],
-  ["/konto", "konto"],
-  ["/mailingi", "mailingi"],
+  ["/careers", "careers"],
+  ["/account", "account"],
+  ["/mailings", "mailings"],
   ["/newsletter", "newsletter"],
   ["/onboarding", "onboarding"],
-  ["/patroni", "patroni"],
+  ["/patrons", "patrons"],
   ["/player", "player"],
-  ["/prasa", "prasa"],
-  ["/prawne", "prawne"],
-  ["/spotkania", "spotkania"],
-  ["/stany", "stany"],
-  ["/tworcy", "tworcy"],
-  ["/wsparcie", "wsparcie"],
+  ["/press", "press"],
+  ["/legal", "legal"],
+  ["/events", "events"],
+  ["/states", "states"],
+  ["/creators", "creators"],
+  ["/support", "support"],
   ["/nie-istnieje-404", "notfound404"],
 ];
 
