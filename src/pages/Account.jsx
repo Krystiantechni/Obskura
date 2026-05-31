@@ -41,13 +41,13 @@ Toggle.propTypes = { on: PropTypes.bool.isRequired, onClick: PropTypes.func };
 
 function Segment({ options, value, onChange }) {
   return (
-    <div className="inline-flex flex-shrink-0 border border-line bg-black/40 p-[3px]">
+    <div className="flex flex-shrink-0 flex-wrap border border-line bg-black/40 p-[3px] sm:inline-flex sm:flex-nowrap">
       {options.map((o) => (
         <button
           key={o.value}
           type="button"
           onClick={() => onChange?.(o.value)}
-          className={`px-3.5 py-2 font-mono text-[10px] uppercase tracking-ui transition-all ${value === o.value ? "bg-red text-black" : "text-ink-2 hover:text-ink-0"} ${o.dim ? "opacity-50" : ""}`}
+          className={`px-2.5 py-2 font-mono text-[10px] uppercase tracking-ui transition-all sm:px-3.5 ${value === o.value ? "bg-red text-black" : "text-ink-2 hover:text-ink-0"} ${o.dim ? "opacity-50" : ""}`}
         >
           {o.label}
         </button>
@@ -78,9 +78,9 @@ SettingInfo.propTypes = { children: PropTypes.node.isRequired, desc: PropTypes.n
 
 function PanelHead({ eyebrow, title, em, suffix = ".", desc, accent }) {
   return (
-    <div className="mb-7 border-b border-line pb-5">
+    <div className="mb-5 border-b border-line pb-4 sm:mb-7 sm:pb-5">
       <Eyebrow accent={accent} className="mb-3">{eyebrow}</Eyebrow>
-      <h2 className="font-serif text-4xl font-medium leading-none tracking-[-0.02em]">
+      <h2 className="font-serif text-3xl font-medium leading-none tracking-[-0.02em] sm:text-4xl">
         {title} <em className="italic text-ink-1">{em}</em>{suffix}
       </h2>
       {desc && <p className="mt-2 text-[13px] font-light leading-relaxed text-ink-1">{desc}</p>}
@@ -163,9 +163,9 @@ export default function Account() {
   return (
     <div className="bg-bg-0">
       {/* HERO */}
-      <header className="relative overflow-hidden border-b border-line px-5 pb-8 pt-[120px] lg:px-12">
+      <header className="relative overflow-hidden border-b border-line px-5 pb-8 pt-[80px] lg:px-12 lg:pt-[120px]">
         <span aria-hidden className="pointer-events-none absolute right-[-100px] top-[60px] h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,rgba(255,42,42,0.06),transparent_60%)]" />
-        <div className="relative mx-auto grid max-w-[1400px] items-end gap-10 lg:grid-cols-[1fr_auto]">
+        <div className="relative mx-auto grid max-w-[1400px] items-end gap-6 lg:gap-10 lg:grid-cols-[1fr_auto]">
           <div>
             <Eyebrow className="mb-4">{t("konto.hero_eyebrow", "// TWOJE KONTO · ZALOGOWANY 23:14")}</Eyebrow>
             <h1 className="font-serif font-medium leading-none tracking-[-0.02em]" style={{ fontSize: "clamp(40px, 5vw, 72px)" }}>
@@ -284,7 +284,7 @@ export default function Account() {
                 <Toggle on={tw.anon} onClick={() => flip("anon")} />
               </SettingRow>
 
-              <div className="mt-7 flex gap-3">
+              <div className="mt-7 flex flex-wrap gap-3">
                 <HorrorButton>{t("konto.profile_save", "Zapisz zmiany")}</HorrorButton>
                 <HorrorButton variant="ghost">{t("konto.profile_cancel", "Anuluj")}</HorrorButton>
               </div>
@@ -383,7 +383,7 @@ export default function Account() {
                 desc={t("konto.plan_desc", "Pełne zarządzanie subskrypcją. Wszystkie zmiany wchodzą w życie natychmiast.")}
               />
 
-              <div className="mb-6 border border-red bg-gradient-to-b from-red/[0.06] to-bg-2/70 p-8 shadow-[0_0_0_1px_rgba(255,42,42,0.2),0_20px_60px_-20px_rgba(255,42,42,0.15)]">
+              <div className="mb-6 border border-red bg-gradient-to-b from-red/[0.06] to-bg-2/70 p-5 shadow-[0_0_0_1px_rgba(255,42,42,0.2),0_20px_60px_-20px_rgba(255,42,42,0.15)] sm:p-8">
                 <div className="mb-2.5 font-mono text-[10px] uppercase tracking-eyebrow text-red">{t("konto.plan_card_tag", "// OBECNY PLAN")}</div>
                 <h3 className="mb-2 font-serif text-4xl font-medium">
                   {t("konto.plan_card_title", "Solo")} <em className="italic text-ink-1">{t("konto.plan_card_title_em", "· roczny")}</em>
@@ -430,7 +430,7 @@ export default function Account() {
                   { d: "14.08.2024 · Subskrypcja roczna", a: "288,00 PLN" },
                   { d: "14.08.2023 · Subskrypcja roczna", a: "240,00 PLN" },
                 ].map((p, i) => (
-                  <div key={i} className="flex justify-between border-b border-white/[0.04] py-2 font-mono text-xs text-ink-1">
+                  <div key={i} className="flex flex-wrap justify-between gap-x-4 border-b border-white/[0.04] py-2 font-mono text-xs text-ink-1">
                     <span>{p.d}</span>
                     <span className="text-ink-0">{p.a} · ✓ <button type="button" className="text-red">PDF</button></span>
                   </div>
@@ -567,7 +567,7 @@ export default function Account() {
                 <Toggle on={tw.recommend} onClick={() => flip("recommend")} />
               </SettingRow>
 
-              <div className="mt-8 border border-line bg-black/30 p-6">
+              <div className="mt-8 border border-line bg-black/30 p-4 sm:p-6">
                 <h3 className="mb-3.5 font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("konto.privacy_export_title", "// EKSPORT I USUWANIE · RODO ART. 15-22")}</h3>
                 <div className="mb-4 flex flex-wrap gap-3">
                   {[
