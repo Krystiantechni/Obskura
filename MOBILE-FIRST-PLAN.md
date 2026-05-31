@@ -10,7 +10,7 @@
 - [x] **Faza 1** — Auth + proste statyczne (6/6 zakładek)
 - [x] **Faza 2** — Konto + email + onboarding (6/6)
 - [x] **Faza 3** — Listy i treść (6/6)
-- [ ] **Faza 4** — Core audio / złożone (0/4)
+- [x] **Faza 4** — Core audio / złożone (4/4)
 - [ ] **PR** `mobile-first` → `main`
 
 ## Cel i zasady
@@ -112,14 +112,14 @@ Rozłączne pliki, każda = osobny agent + osobny commit.
 - [x] `States` (`/states`, ex-Stany) — tab switcher min-h-44, panel meta flex-col, OfflineRow 3-col
 - [x] `App` (`/app`, ex-Aplikacja) — hero CTA stack, ramki full-width (IosFrame/AndroidFrame już mobile-ready)
 
-## FAZA 4 — Core audio / złożone (równolegle, 4)
+## FAZA 4 — Core audio / złożone (równolegle, 4) ✅
 
-- [ ] `Home` (`/`) — + `Hero`, `AudioPlayerSection`, `FeaturedBanner`, `StoriesGrid`, `StoryCard`
-- [ ] `Episode` (`/episode/:id`)
-- [ ] `Player` (`/player`)
-- [ ] `Forum` (`/forum`) — + `ForumCategory`
+- [x] `Home` (`/`) — mobilny spacing sekcji, hero py/typo, AudioPlayerSection wrap, StoriesGrid rytm (+ Hero, FeaturedBanner, StoryCard)
+- [x] `Episode` (`/episode/:id`) — fluid h1+brackets, player bar wrap+truncate, sidebar grid 2-col mobile
+- [x] `Player` (`/player`) — topbar top-0, stage/typo fluid, taby min-h-44, kontrolki progresywne
+- [x] `Forum` (`/forum`) — wiersze wątków stack+footer mobile, sidebar (+ ForumCategory min-w-0)
 
-> Najcięższe i z własnymi sekcjami — każdy agent bierze stronę razem z jej sekcjami (zero współdzielenia plików między tymi zakładkami).
+> Najcięższe i z własnymi sekcjami — każdy agent wziął stronę razem z jej sekcjami. Desktop bez regresji (Δ0px na wszystkich 4).
 
 ---
 
@@ -136,6 +136,6 @@ Po każdej fazie: zbiorczy build/lint + przegląd, potem przejście do kolejnej.
 
 ## Kolejność realizacji
 
-`Faza 0` ✅ → `Faza 1` ✅ → `Faza 2` ✅ → `Faza 3` ✅ → `Faza 4` ⏳ → PR `mobile-first` → `main`.
+`Faza 0` ✅ → `Faza 1` ✅ → `Faza 2` ✅ → `Faza 3` ✅ → `Faza 4` ✅ → PR `mobile-first` → `main` ⏳.
 
-Łącznie: 21 zakładek + warstwa wspólna, 5 faz. **Postęp: 19/21 zakładek (Faza 0 + 1 + 2 + 3). Zostaje Faza 4 (4 zakładki).**
+Łącznie: 21 zakładek + warstwa wspólna, 5 faz. **Postęp: 21/21 zakładek — refactor mobile-first KOMPLETNY. Zostaje tylko PR do `main`.**
