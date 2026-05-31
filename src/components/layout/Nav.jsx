@@ -64,7 +64,7 @@ export default function Nav() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="absolute inset-x-0 top-full flex flex-col gap-6 border-b border-line bg-bg-0/98 px-5 py-8 backdrop-blur-xl lg:hidden">
+        <div className="absolute inset-x-0 top-full flex flex-col gap-6 border-b border-line bg-bg-0 px-5 py-8 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.95)] lg:hidden">
           {LINKS.map((l) => (
             <NavLink
               key={l.to}

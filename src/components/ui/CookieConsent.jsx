@@ -93,11 +93,11 @@ export default function CookieConsent() {
           type="button"
           onClick={reopen}
           aria-label={t("cookie.fab_aria", "Ustawienia plików cookie")}
-          className="cookie-fab fixed bottom-6 right-6 z-[85] grid h-[58px] w-[58px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] transition-colors hover:text-red"
+          className="cookie-fab fixed bottom-4 right-4 z-[85] grid h-[40px] w-[40px] place-items-center rounded-full bg-[rgba(10,13,18,0.96)] text-ink-0 shadow-[0_8px_30px_-8px_rgba(0,0,0,0.85)] transition-colors hover:text-red lg:bottom-6 lg:right-6 lg:h-[58px] lg:w-[58px]"
         >
           <span className="cookie-fab-ring" aria-hidden />
           <span className="cookie-fab-sheen" aria-hidden />
-          <span className="relative z-[2]"><Cookie size={26} /></span>
+          <span className="relative z-[2]"><Cookie size={18} className="lg:hidden" /><Cookie size={26} className="hidden lg:block" /></span>
         </button>
       )}
 
