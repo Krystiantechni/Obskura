@@ -31,7 +31,7 @@ export default function FeaturedBanner() {
   ];
 
   return (
-    <section className="cv-auto mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
+    <section className="cv-auto mx-auto mt-16 max-w-[1400px] px-5 lg:mt-32 lg:px-12">
       <div className="group relative aspect-[4/5] cursor-pointer overflow-hidden border border-white/6 bg-bg-0 sm:aspect-[21/9]">
         <video
           ref={videoRef}

@@ -47,7 +47,7 @@ export default function Hero({ variant = "wide" }) {
   const onToggle = () => (isHero ? toggle() : playTrack(HERO_TRACK));
 
   return (
-    <section className="relative min-h-screen overflow-hidden px-5 pb-16 pt-[140px] lg:px-12">
+    <section className="relative min-h-screen overflow-hidden px-5 pb-10 pt-[140px] lg:pb-16 lg:px-12">
       {/* Monster stage */}
       <div className="pointer-events-none absolute inset-0 z-[1] flex justify-center" style={{ alignItems: isWide ? "stretch" : "flex-end" }}>
         <div className={isWide ? "relative h-full w-full" : "relative mb-[-8%] aspect-[816/1456] h-[110%]"} style={{ filter: "contrast(1.2) saturate(0.65) brightness(0.82) hue-rotate(-8deg) blur(0.3px)" }}>
@@ -96,7 +96,7 @@ export default function Hero({ variant = "wide" }) {
 
       {/* Content */}
       <div className={`relative z-10 mx-auto grid min-h-[calc(100vh-200px)] max-w-[1400px] items-center gap-12 ${isWide ? "grid-cols-1" : "lg:grid-cols-2 lg:gap-20"}`}>
-        <div className={isWide ? "max-w-3xl bg-[linear-gradient(90deg,rgba(5,6,8,0.85),rgba(5,6,8,0.6)_60%,transparent)] py-9 pr-10 lg:-ml-10 lg:pl-10" : "pt-5"}>
+        <div className={isWide ? "max-w-3xl bg-[linear-gradient(90deg,rgba(5,6,8,0.85),rgba(5,6,8,0.6)_60%,transparent)] py-6 pr-4 lg:py-9 lg:pr-10 lg:-ml-10 lg:pl-10" : "pt-5"}>
           <Eyebrow className="mb-7">{t("hero.eyebrow")}</Eyebrow>
           <h1 className="mb-7 font-serif text-[clamp(48px,7.5vw,120px)] font-medium leading-[0.92] tracking-[-0.02em] text-ink-0">
             <span className="block">{t("hero.h1_line1")}</span>
@@ -105,11 +105,11 @@ export default function Hero({ variant = "wide" }) {
               <SciFiText text={t("hero.h1_line3")} />
             </span>
           </h1>
-          <p className="mb-10 max-w-lg text-[17px] font-light leading-relaxed text-ink-1">
+          <p className="mb-8 max-w-lg text-[15px] font-light leading-relaxed text-ink-1 lg:mb-10 lg:text-[17px]">
             <strong className="font-medium text-ink-0">{t("hero.desc_strong")}</strong> {t("hero.desc")}
           </p>
 
-          <div className="mb-14 flex flex-col items-stretch gap-6 sm:flex-row sm:items-center">
+          <div className="mb-10 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center lg:mb-14 lg:gap-6">
             <HorrorButton onClick={onToggle} className="!px-8 !py-[18px] !text-[13px] !tracking-[0.2em] !font-bold">
               <span className="grid h-[22px] w-[22px] place-items-center rounded-full bg-black/40">
                 {playing ? <Pause size={8} /> : <Play size={8} />}
@@ -121,7 +121,7 @@ export default function Hero({ variant = "wide" }) {
             </button>
           </div>
 
-          <div className="flex flex-wrap gap-12 border-t border-white/10 pt-8">
+          <div className="flex flex-wrap gap-8 border-t border-white/10 pt-6 lg:gap-12 lg:pt-8">
             {[
               { num: "147", accent: ".", label: t("hero.stats_episodes") },
               { num: "2.4M", accent: "+", label: t("hero.stats_listeners") },

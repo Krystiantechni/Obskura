@@ -25,8 +25,8 @@ export default function AudioPlayerSection() {
   const onPlay = () => (current?.id === track.id ? toggle() : playTrack(track));
 
   return (
-    <section className="cv-auto relative z-20 mx-auto -mt-10 max-w-[1320px] px-4 lg:px-12">
-      <div className="relative grid items-center gap-5 border border-white/8 bg-[linear-gradient(180deg,rgba(15,18,24,0.95),rgba(10,13,18,0.98))] p-5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,42,42,0.08)] backdrop-blur-xl lg:grid-cols-[auto_1fr_auto] lg:gap-8 lg:p-8">
+    <section className="cv-auto relative z-20 mx-auto -mt-4 max-w-[1320px] px-4 lg:-mt-10 lg:px-12">
+      <div className="relative grid items-center gap-4 border border-white/8 bg-[linear-gradient(180deg,rgba(15,18,24,0.95),rgba(10,13,18,0.98))] p-4 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,42,42,0.08)] backdrop-blur-xl lg:grid-cols-[auto_1fr_auto] lg:gap-8 lg:p-8">
         <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,42,42,0.5),transparent)]" />
 
         {/* Track */}
@@ -68,7 +68,7 @@ export default function AudioPlayerSection() {
         </div>
 
         {/* Right */}
-        <div className="flex items-center justify-center gap-[18px] lg:justify-end">
+        <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-end lg:gap-[18px]">
           <button
             type="button"
             onClick={() => toggleFavorite(track.id)}
