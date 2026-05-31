@@ -1,4 +1,8 @@
+from django.core.cache import cache
+
 from catalog.models import Creator, Episode, Genre, Season
+
+CACHE_TTL = 60 * 15  # 15 min
 
 
 def episodes_list(*, genre=None, season=None):
@@ -28,8 +32,24 @@ def genres_list():
     return Genre.objects.all()
 
 
+def genres_list_cached():
+    data = cache.get("catalog:genres")
+    if data is None:
+        data = list(genres_list())
+        cache.set("catalog:genres", data, CACHE_TTL)
+    return data
+
+
 def seasons_list():
     return Season.objects.all()
+
+
+def seasons_list_cached():
+    data = cache.get("catalog:seasons")
+    if data is None:
+        data = list(seasons_list())
+        cache.set("catalog:seasons", data, CACHE_TTL)
+    return data
 
 
 def creators_list(*, role=None):

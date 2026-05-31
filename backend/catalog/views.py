@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from catalog import selectors
@@ -38,22 +39,28 @@ class SeasonViewSet(ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     authentication_classes: list = []
     lookup_field = "slug"
-    pagination_class = DefaultPageNumberPagination
+    pagination_class = None
     serializer_class = SeasonSerializer
 
     def get_queryset(self):
         return selectors.seasons_list()
+
+    def list(self, request, *args, **kwargs):
+        return Response(SeasonSerializer(selectors.seasons_list_cached(), many=True).data)
 
 
 class GenreViewSet(ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     authentication_classes: list = []
     lookup_field = "slug"
-    pagination_class = DefaultPageNumberPagination
+    pagination_class = None
     serializer_class = GenreSerializer
 
     def get_queryset(self):
         return selectors.genres_list()
+
+    def list(self, request, *args, **kwargs):
+        return Response(GenreSerializer(selectors.genres_list_cached(), many=True).data)
 
 
 class CreatorViewSet(ReadOnlyModelViewSet):
