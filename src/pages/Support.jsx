@@ -183,30 +183,30 @@ export default function Support() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden px-5 pb-16 pt-[120px] lg:px-12">
-        <div className="mx-auto grid max-w-[1400px] items-end gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+      <section className="relative overflow-hidden px-5 pb-12 pt-[88px] lg:px-12 lg:pb-16 lg:pt-[120px]">
+        <div className="mx-auto grid max-w-[1400px] items-end gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
           <div>
             <Eyebrow>{t("wsparcie.hero_eyebrow", "// CENTRUM POMOCY · ODPOWIADAMY W < 4H")}</Eyebrow>
-            <h1 className="my-5 font-serif text-[clamp(48px,6vw,88px)] font-medium leading-[0.95] tracking-[-0.02em]">
+            <h1 className="my-4 font-serif text-[clamp(40px,6vw,88px)] font-medium leading-[0.95] tracking-[-0.02em] lg:my-5">
               {t("wsparcie.hero_title_p1", "Coś nie")} <em className="italic text-ink-1">{t("wsparcie.hero_title_em", "działa")}</em>?
               <br />
               {t("wsparcie.hero_title_p2", "Pomożemy.")}
             </h1>
-            <p className="max-w-[540px] text-[17px] font-light leading-relaxed text-ink-1">
+            <p className="text-[15px] font-light leading-relaxed text-ink-1 lg:max-w-[540px] lg:text-[17px]">
               {t("wsparcie.hero_lead", "Jeśli dźwięk zacina się w 23. minucie, jeśli twój znajomy nie może aktywować zaproszenia, albo jeśli po prostu chcesz coś powiedzieć — jesteśmy. Czytamy każdą wiadomość.")}
             </p>
           </div>
 
-          <div id="kontakt" className="relative border border-line bg-bg-1/70 p-7 backdrop-blur-md">
+          <div id="kontakt" className="relative border border-line bg-bg-1/70 p-5 backdrop-blur-md sm:p-7">
             <span className="absolute inset-x-0 top-[-1px] h-px bg-[linear-gradient(90deg,transparent,rgba(0,255,136,0.5),transparent)]" />
             <h3 className="mb-1 font-serif text-2xl font-medium">
               {t("wsparcie.status_h_p1", "Wszystkie systemy")} <span className="italic text-[#00ff88]">{t("wsparcie.status_h_em", "aktywne")}</span>.
             </h3>
             <div className="mb-4 font-mono text-[10px] uppercase tracking-mono text-ink-2">// LIVE · 26.05.2026 · 23:14:08</div>
             {systems.map((s) => (
-              <div key={s.label} className="flex items-center justify-between border-b border-line py-3.5 last:border-b-0">
-                <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-1">{s.label}</span>
-                <span className={`flex items-center gap-2 font-mono text-[11px] tracking-[0.15em] ${s.warn ? "text-[#ffaa44]" : "text-[#00ff88]"}`}>
+              <div key={s.label} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-line py-3 last:border-b-0 sm:flex-nowrap sm:py-3.5">
+                <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-1 sm:text-[11px]">{s.label}</span>
+                <span className={`flex flex-shrink-0 items-center gap-2 font-mono text-[10px] tracking-[0.12em] sm:text-[11px] sm:tracking-[0.15em] ${s.warn ? "text-[#ffaa44]" : "text-[#00ff88]"}`}>
                   <span
                     className={`h-1.5 w-1.5 rounded-full animate-obskura-pulse-fast ${s.warn ? "bg-[#ffaa44] shadow-[0_0_8px_#ffaa44]" : "bg-[#00ff88] shadow-[0_0_8px_#00ff88]"}`}
                   />
@@ -219,25 +219,25 @@ export default function Support() {
       </section>
 
       {/* Quick links */}
-      <section className="mx-auto mt-20 max-w-[1400px] px-5 lg:px-12">
+      <section className="mx-auto mt-12 max-w-[1400px] px-5 lg:mt-20 lg:px-12">
         <Eyebrow>{t("wsparcie.quick_eyebrow", "SZYBKIE LINKI")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-3 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em] sm:mt-4">
           {t("wsparcie.quick_title_p1", "Pierwszy")} <em className="italic text-ink-2">{t("wsparcie.quick_title_em", "krok")}</em>.
         </h2>
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 lg:mt-10 lg:grid-cols-4 lg:gap-4">
           {quickLinks.map((q, i) => (
             <a
               key={i}
               href={q.href}
-              className="group relative block border border-line bg-bg-1/50 p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-red hover:bg-red/[0.04]"
+              className="group relative block border border-line bg-bg-1/50 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-red hover:bg-red/[0.04] sm:p-6"
             >
-              <span className="absolute right-6 top-6 text-ink-3 transition-colors group-hover:text-red">
+              <span className="absolute right-5 top-5 text-ink-3 transition-colors group-hover:text-red sm:right-6 sm:top-6">
                 <Arrow size={14} />
               </span>
-              <div className="mb-5 grid h-9 w-9 place-items-center border border-line text-red transition-colors group-hover:border-red">
+              <div className="mb-4 grid h-9 w-9 place-items-center border border-line text-red transition-colors group-hover:border-red sm:mb-5">
                 {q.icon}
               </div>
-              <h4 className="mb-1.5 font-serif text-[22px] font-medium">
+              <h4 className="mb-1.5 font-serif text-[18px] font-medium sm:text-[22px]">
                 {q.h1} <em className="italic text-ink-1">{q.em}</em>
               </h4>
               <p className="text-[13px] leading-snug text-ink-1">{q.desc}</p>
@@ -247,18 +247,18 @@ export default function Support() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="mx-auto mt-32 max-w-[1400px] px-5 lg:px-12">
-        <div className="mb-10 flex flex-col items-start justify-between gap-4 border-b border-line pb-6 sm:flex-row sm:items-end">
+      <section id="faq" className="mx-auto mt-16 max-w-[1400px] px-5 lg:mt-32 lg:px-12">
+        <div className="mb-8 flex flex-col items-start justify-between gap-3 border-b border-line pb-5 sm:flex-row sm:items-end sm:gap-4 sm:pb-6 lg:mb-10">
           <div>
             <Eyebrow accent="blue">{t("wsparcie.faq_eyebrow", "FAQ · 34 PYTANIA")}</Eyebrow>
-            <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+            <h2 className="mt-3 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em] sm:mt-4">
               {t("wsparcie.faq_title_p1", "Najczęstsze")} <em className="italic text-ink-2">{t("wsparcie.faq_title_em", "wątpliwości")}</em>.
             </h2>
           </div>
           <div className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{t("wsparcie.faq_updated", "AKTUALIZACJA · 23.05.2026")}</div>
         </div>
 
-        <div className="mb-8 flex flex-wrap gap-2">
+        <div className="mb-6 flex flex-wrap gap-2 sm:mb-8">
           {cats.map((c) => (
             <button
               key={c.id}
@@ -285,19 +285,19 @@ export default function Support() {
               >
                 <button
                   onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="flex w-full items-center gap-6 px-5 py-5 text-left text-[15px] font-medium leading-snug text-ink-0 sm:px-7 sm:text-[17px]"
+                  className="flex w-full items-center gap-3 px-4 py-4 text-left text-[14px] font-medium leading-snug text-ink-0 sm:gap-6 sm:px-7 sm:py-5 sm:text-[17px]"
                   aria-expanded={isOpen}
                 >
-                  <span className="flex-shrink-0 font-mono text-[11px] tracking-mono text-ink-2">// {String(i + 1).padStart(2, "0")}</span>
+                  <span className="hidden flex-shrink-0 font-mono text-[11px] tracking-mono text-ink-2 sm:inline">// {String(i + 1).padStart(2, "0")}</span>
                   <span className="flex-1">{f.q}</span>
                   <span
-                    className={`grid h-7 w-7 flex-shrink-0 place-items-center border transition-all duration-200 ${isOpen ? "border-red bg-red text-black" : "border-line text-ink-1"}`}
+                    className={`grid h-8 w-8 flex-shrink-0 place-items-center border transition-all duration-200 sm:h-7 sm:w-7 ${isOpen ? "border-red bg-red text-black" : "border-line text-ink-1"}`}
                   >
                     <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-7 pl-5 text-[14px] font-light leading-relaxed text-ink-1 sm:px-7 sm:pl-[88px] sm:text-[15px]">
+                  <div className="px-4 pb-6 text-[13px] font-light leading-relaxed text-ink-1 sm:px-7 sm:pb-7 sm:pl-[88px] sm:text-[15px]">
                     {f.a}
                   </div>
                 )}
@@ -308,24 +308,24 @@ export default function Support() {
       </section>
 
       {/* Contact */}
-      <section className="mx-auto mt-32 max-w-[1400px] px-5 pb-24 lg:px-12">
+      <section className="mx-auto mt-16 max-w-[1400px] px-5 pb-16 lg:mt-32 lg:px-12 lg:pb-24">
         <Eyebrow>{t("wsparcie.contact_eyebrow", "// JEŚLI FAQ NIE WYSTARCZY")}</Eyebrow>
-        <h2 className="mt-4 font-serif text-[clamp(36px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em]">
+        <h2 className="mt-3 font-serif text-[clamp(32px,4.5vw,56px)] font-medium leading-none tracking-[-0.02em] sm:mt-4">
           {t("wsparcie.contact_title_p1", "Napisz")} <em className="italic text-ink-2">{t("wsparcie.contact_title_em", "do nas")}</em>.
         </h2>
 
-        <div className="mt-10 grid grid-cols-1 items-start gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
+        <div className="mt-8 grid grid-cols-1 items-start gap-8 lg:mt-10 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
           <div>
-            <p className="mb-6 text-[15px] font-light leading-relaxed text-ink-1">
+            <p className="mb-5 text-[14px] font-light leading-relaxed text-ink-1 sm:mb-6 sm:text-[15px]">
               {t("wsparcie.contact_info", "Mamy mały zespół wsparcia (5 osób). Każdy z nas słucha własnych historii i każdy odpowiada osobiście. Bez botów, bez szablonów, bez „przyjmiemy zgłoszenie”.")}
             </p>
             {channels.map((c) => (
               <div
                 key={c.tag}
-                className="grid grid-cols-1 items-center gap-1 border-t border-line py-5 sm:grid-cols-[1fr_2fr_auto] sm:gap-4"
+                className="grid grid-cols-1 gap-0.5 border-t border-line py-4 sm:grid-cols-[1fr_2fr_auto] sm:items-center sm:gap-4 sm:py-5"
               >
                 <div className="font-mono text-[10px] uppercase tracking-mono text-ink-2">{c.tag}</div>
-                <div className="font-serif text-[22px] italic text-ink-0">{c.val}</div>
+                <div className="font-serif text-[18px] italic text-ink-0 sm:text-[22px]">{c.val}</div>
                 <div className={`font-mono text-[10px] uppercase tracking-eyebrow sm:text-right ${c.live ? "text-[#00ff88]" : "text-ink-2"}`}>{c.meta}</div>
               </div>
             ))}
