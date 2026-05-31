@@ -1,7 +1,7 @@
 from django.db import models
-from django.utils.text import slugify
 
 from core.models import TimeStampedModel
+from core.text import pl_slugify
 
 
 class Genre(TimeStampedModel):
@@ -19,7 +19,7 @@ class Genre(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = pl_slugify(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Season(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = pl_slugify(self.title)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -65,7 +65,7 @@ class Creator(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = pl_slugify(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):
