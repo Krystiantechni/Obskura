@@ -35,24 +35,41 @@ class CategoryFactory(factory.django.DjangoModelFactory):
 class ThreadFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Thread
+        django_get_or_create = ("slug",)
+        skip_postgeneration_save = True
 
     category = factory.SubFactory(CategoryFactory)
     author = factory.SubFactory(UserFactory)
-    title = factory.Sequence(lambda n: f"Wątek {n}")
-    slug = factory.Sequence(lambda n: f"watek-{n}")
+    title = factory.Sequence(lambda n: f"Wątek numer {n}")
+    slug = factory.Sequence(lambda n: f"watek-numer-{n}")
     episode = None
     is_pinned = False
     is_locked = False
     last_post_at = factory.LazyFunction(timezone.now)
 
 
+class FirstPostFactory(factory.django.DjangoModelFactory):
+    """Post otwierający wątek (is_first=True) — domyślnie PUBLISHED."""
+
+    class Meta:
+        model = Post
+
+    thread = factory.SubFactory(ThreadFactory)
+    author = factory.LazyAttribute(lambda o: o.thread.author)
+    body = factory.Sequence(lambda n: f"Treść otwierająca {n}")
+    is_first = True
+    status = PostStatus.PUBLISHED
+
+
 class PostFactory(factory.django.DjangoModelFactory):
+    """Odpowiedź w wątku (is_first=False) — domyślnie PUBLISHED."""
+
     class Meta:
         model = Post
 
     thread = factory.SubFactory(ThreadFactory)
     author = factory.SubFactory(UserFactory)
-    body = factory.Sequence(lambda n: f"Treść posta {n}")
+    body = factory.Sequence(lambda n: f"Odpowiedź {n}")
     is_first = False
     status = PostStatus.PUBLISHED
 

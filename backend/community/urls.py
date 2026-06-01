@@ -1,4 +1,17 @@
-from django.urls import path  # noqa: F401
+from django.urls import path
 
-# Routes are added per task (read in B5a Task 3, write in 4+, moderation in 6).
-urlpatterns = []
+from community.views import (
+    CategoriesView,
+    ThreadDetailView,
+    ThreadListCreateView,
+)
+
+urlpatterns = [
+    path("community/categories", CategoriesView.as_view(), name="community-categories"),
+    path("community/threads", ThreadListCreateView.as_view(), name="community-threads"),
+    path(
+        "community/threads/<slug:slug>",
+        ThreadDetailView.as_view(),
+        name="community-thread-detail",
+    ),
+]
