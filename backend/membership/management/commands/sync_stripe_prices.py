@@ -45,19 +45,21 @@ class Command(BaseCommand):
     def _sync_plans(self) -> int:
         synced = 0
         for plan in Plan.objects.filter(code__in=PAID_PLAN_CODES):
+            # unit_amount w całych PLN — payments.ensure_product_and_price sam
+            # konwertuje na grosze (×100). recurring to dict {"interval": ...}.
             price_id_month = payments.ensure_product_and_price(
                 name=f"OBSKURA Klub {plan.name} (miesięcznie)",
-                unit_amount=plan.price_month * 100,
+                unit_amount=plan.price_month,
                 currency=plan.currency.lower(),
-                recurring="month",
+                recurring={"interval": "month"},
             )
             # Yearly billing: price_year is the monthly rate when paid yearly;
-            # the recurring yearly amount is price_year * 12.
+            # the recurring yearly amount is price_year * 12 (w całych PLN).
             price_id_year = payments.ensure_product_and_price(
                 name=f"OBSKURA Klub {plan.name} (rocznie)",
-                unit_amount=plan.price_year * 12 * 100,
+                unit_amount=plan.price_year * 12,
                 currency=plan.currency.lower(),
-                recurring="year",
+                recurring={"interval": "year"},
             )
             plan.stripe_price_id_month = price_id_month
             plan.stripe_price_id_year = price_id_year
@@ -75,7 +77,7 @@ class Command(BaseCommand):
         for tier in PatronTier.objects.filter(amount__gt=0).select_related("season"):
             price_id = payments.ensure_product_and_price(
                 name=f"OBSKURA Patronat {tier.title} ({tier.season.title})",
-                unit_amount=tier.amount * 100,
+                unit_amount=tier.amount,
                 currency=tier.currency.lower(),
                 recurring=None,
             )
