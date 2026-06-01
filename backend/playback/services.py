@@ -7,6 +7,9 @@ from playback.models import Progress, Rating
 
 @transaction.atomic
 def upsert_progress(*, user, episode, position_s, completed=False):
+    from membership.services import register_play
+
+    register_play(user=user, episode=episode)
     progress, created = Progress.objects.update_or_create(
         user=user,
         episode=episode,

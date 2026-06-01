@@ -89,10 +89,12 @@ class EpisodeDetailSerializer(serializers.ModelSerializer):
     audio_url = serializers.SerializerMethodField()
 
     def get_audio_url(self, obj):
-        if obj.premium:
-            request = self.context.get("request")
-            if not (request and request.user and request.user.is_authenticated):
-                return None
+        from membership.selectors import can_access_audio
+
+        request = self.context.get("request")
+        user = request.user if request else None
+        if not can_access_audio(user=user, episode=obj):
+            return None
         return obj.audio_url
 
     class Meta:

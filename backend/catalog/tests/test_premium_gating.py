@@ -1,9 +1,21 @@
+from datetime import timedelta
+
 import pytest
+from django.utils import timezone
 from knox.models import AuthToken
 from rest_framework.test import APIClient
 
 from accounts.tests.factories import UserFactory
 from catalog.tests.factories import EpisodeFactory
+from membership.models import SubStatus
+from membership.tests.factories import PlanFactory, SubscriptionFactory
+
+
+def _auth(user):
+    c = APIClient()
+    _, t = AuthToken.objects.create(user)
+    c.credentials(HTTP_AUTHORIZATION=f"Token {t}")
+    return c
 
 
 @pytest.mark.django_db
@@ -15,13 +27,25 @@ def test_premium_audio_hidden_for_anonymous():
 
 
 @pytest.mark.django_db
-def test_premium_audio_visible_for_authenticated():
+def test_premium_audio_hidden_for_free_authenticated():
+    # Tier-gating: zwykły zalogowany (free, bez subskrypcji) NIE widzi premium audio.
     EpisodeFactory(premium=True, audio_url="/audio/ep-12.mp3", slug="prem2")
+    c = _auth(UserFactory())
+    assert c.get("/api/v1/catalog/episodes/prem2").json()["audio_url"] is None
+
+
+@pytest.mark.django_db
+def test_premium_audio_visible_for_active_subscriber():
+    EpisodeFactory(premium=True, audio_url="/audio/ep-12.mp3", slug="prem3")
     user = UserFactory()
-    c = APIClient()
-    _, t = AuthToken.objects.create(user)
-    c.credentials(HTTP_AUTHORIZATION=f"Token {t}")
-    assert c.get("/api/v1/catalog/episodes/prem2").json()["audio_url"] == "/audio/ep-12.mp3"
+    SubscriptionFactory(
+        user=user,
+        plan=PlanFactory(code="solo"),
+        status=SubStatus.ACTIVE,
+        period_end=timezone.now() + timedelta(days=30),
+    )
+    c = _auth(user)
+    assert c.get("/api/v1/catalog/episodes/prem3").json()["audio_url"] == "/audio/ep-12.mp3"
 
 
 @pytest.mark.django_db

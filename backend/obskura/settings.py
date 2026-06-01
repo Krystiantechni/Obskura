@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "accounts",
     "catalog",
     "playback",
+    "membership",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -123,6 +124,13 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# --- Stripe (test mode) ---
+# Klucze testowe (sk_test_… / whsec_…) leżą off-repo w obskura-media; brak klucza =>
+# kod kompletny, testy zielone (payments.* monkeypatchowane), żywy flow nieaktywny.
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="")
+STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET", default="")
+STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="")
 
 # API REST: bez auto-redirectu na trailing slash. Klient JS woła dokładne ścieżki;
 # brak slasha => jawny 404 zamiast cichego 301, który gubiłby body POST-a.

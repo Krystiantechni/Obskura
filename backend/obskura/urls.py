@@ -8,6 +8,7 @@ urlpatterns = [
     path("api/v1/", include("accounts.urls")),
     path("api/v1/", include("catalog.urls")),
     path("api/v1/", include("playback.urls")),
+    path("api/v1/", include("membership.urls")),
 ]
 
 if settings.DEBUG:

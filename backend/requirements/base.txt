@@ -7,3 +7,4 @@ django-redis~=5.4.0
 django-cors-headers~=4.6.0
 django-filter~=24.3
 gunicorn~=23.0.0
+stripe~=11.0
