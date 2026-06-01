@@ -9,16 +9,21 @@ from rest_framework.views import APIView
 
 from catalog.models import Episode
 from community import selectors, services
-from community.models import Category, Post, Thread
+from community.models import Category, Post, Report, Thread
 from community.pagination import PostCursorPagination, ThreadCursorPagination
+from community.permissions import IsModerator
 from community.selectors import post_visible_to
 from community.serializers import (
     CategorySerializer,
+    ModerateSerializer,
     PostCreateSerializer,
     PostSerializer,
     ReactionWriteSerializer,
+    ReportWriteSerializer,
+    ResolveReportSerializer,
     ThreadCreateSerializer,
     ThreadDetailSerializer,
+    ThreadFlagSerializer,
     ThreadListSerializer,
 )
 from community.services import toggle_reaction
@@ -149,4 +154,131 @@ class ReactionView(APIView):
                 "reaction_count": post.reaction_count,
                 "reactions_breakdown": post.reactions_breakdown,
             }
+        )
+
+
+class ReportView(APIView):
+    """POST /community/posts/<pk>/report — user flags a post."""
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post.all_objects, pk=pk)
+        serializer = ReportWriteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        existed = Report.objects.filter(reporter=request.user, post=post).exists()
+        report = services.report_post(
+            user=request.user,
+            post=post,
+            reason=serializer.validated_data["reason"],
+            detail=serializer.validated_data.get("detail", ""),
+        )
+        code = status.HTTP_200_OK if existed else status.HTTP_201_CREATED
+        return Response(
+            {"id": report.pk, "status": report.status, "reason": report.reason},
+            status=code,
+        )
+
+
+class ModerationQueueView(APIView):
+    """GET /community/moderation/queue — pending + flagged posts (moderator only)."""
+
+    permission_classes = [IsModerator]
+
+    def get(self, request):
+        qs = selectors.moderation_queue()
+        paginator = PostCursorPagination()
+        page = paginator.paginate_queryset(qs, request, view=self)
+        serializer = PostSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
+class ModeratePostView(APIView):
+    """POST /community/posts/<pk>/moderate — approve/reject/remove/restore."""
+
+    permission_classes = [IsModerator]
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post.all_objects, pk=pk)
+        serializer = ModerateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        post = services.moderate_post(
+            moderator=request.user,
+            post=post,
+            action=serializer.validated_data["action"],
+            reason=serializer.validated_data.get("reason", ""),
+        )
+        return Response(PostSerializer(post).data, status=status.HTTP_200_OK)
+
+
+class ThreadFlagView(APIView):
+    """POST /community/threads/<slug>/flag — pin/unpin/lock/unlock."""
+
+    permission_classes = [IsModerator]
+
+    def post(self, request, slug):
+        thread = get_object_or_404(Thread.all_objects, slug=slug)
+        serializer = ThreadFlagSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        thread = services.set_thread_flag(
+            moderator=request.user,
+            thread=thread,
+            action=serializer.validated_data["action"],
+        )
+        return Response(
+            {
+                "slug": thread.slug,
+                "is_pinned": thread.is_pinned,
+                "is_locked": thread.is_locked,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class ReportsView(APIView):
+    """GET /community/reports — open reports (moderator only)."""
+
+    permission_classes = [IsModerator]
+
+    def get(self, request):
+        qs = selectors.open_reports()
+        paginator = PostCursorPagination()
+        page = paginator.paginate_queryset(qs, request, view=self)
+        data = [
+            {
+                "id": r.pk,
+                "post_id": r.post_id,
+                "reason": r.reason,
+                "detail": r.detail,
+                "status": r.status,
+                "created_at": r.created_at,
+            }
+            for r in page
+        ]
+        return paginator.get_paginated_response(data)
+
+
+class ResolveReportView(APIView):
+    """POST /community/reports/<pk>/resolve — resolved/dismissed + handled_by."""
+
+    permission_classes = [IsModerator]
+
+    def post(self, request, pk):
+        report = get_object_or_404(Report, pk=pk)
+        serializer = ResolveReportSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        report = services.resolve_report(
+            moderator=request.user,
+            report=report,
+            status=serializer.validated_data["status"],
+            resolution=serializer.validated_data.get("resolution", ""),
+        )
+        return Response(
+            {
+                "id": report.pk,
+                "status": report.status,
+                "handled_by": report.handled_by_id,
+                "resolution": report.resolution,
+            },
+            status=status.HTTP_200_OK,
         )

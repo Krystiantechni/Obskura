@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from django.db.models import Exists, OuterRef, Q
 
-from community.models import Category, Post, PostStatus, Thread
+from community.models import Category, Post, PostStatus, Report, ReportStatus, Thread
 
 CACHE_TTL = 60 * 15  # 15 min
 
@@ -85,3 +85,21 @@ def visible_posts(*, viewer, thread):
     if viewer is not None and getattr(viewer, "is_authenticated", False):
         visible |= Q(author=viewer)
     return qs.filter(visible)
+
+
+def moderation_queue():
+    """Posts awaiting moderator attention: PENDING + FLAGGED, oldest first."""
+    return (
+        Post.all_objects.filter(status__in=[PostStatus.PENDING, PostStatus.FLAGGED])
+        .select_related("author", "thread")
+        .order_by("created_at", "id")
+    )
+
+
+def open_reports():
+    """Unhandled reports for the moderator queue, oldest first."""
+    return (
+        Report.objects.filter(status=ReportStatus.OPEN)
+        .select_related("reporter", "post", "post__thread")
+        .order_by("created_at", "id")
+    )

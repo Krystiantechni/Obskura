@@ -2,7 +2,17 @@ from django.db import transaction
 from django.utils import timezone
 from rest_framework.exceptions import ErrorDetail, PermissionDenied
 
-from community.models import Post, PostStatus, Reaction, Thread
+from community.models import (
+    ModAction,
+    ModerationAction,
+    Post,
+    PostStatus,
+    Reaction,
+    Report,
+    ReportReason,
+    ReportStatus,
+    Thread,
+)
 from community.selectors import is_moderator
 
 
@@ -63,3 +73,86 @@ def toggle_reaction(*, user, post, kind):
         reaction.delete()
         return {"reacted": False}
     return {"reacted": True}
+
+
+@transaction.atomic
+def report_post(*, user, post, reason, detail=""):
+    """User report. Idempotent per (reporter, post) via get_or_create.
+
+    A published post becomes FLAGGED on first report so it surfaces in the
+    moderation queue; pending/removed posts keep their status.
+    """
+    report, _created = Report.objects.get_or_create(
+        reporter=user,
+        post=post,
+        defaults={
+            "reason": reason or ReportReason.OTHER,
+            "detail": detail or "",
+            "status": ReportStatus.OPEN,
+        },
+    )
+    if post.status == PostStatus.PUBLISHED:
+        post.status = PostStatus.FLAGGED
+        post.save(update_fields=["status", "updated_at"])
+    return report
+
+
+# Post status transition per moderator action.
+_POST_ACTION_STATUS = {
+    ModAction.APPROVE: PostStatus.PUBLISHED,
+    ModAction.RESTORE: PostStatus.PUBLISHED,
+    ModAction.REJECT: PostStatus.REMOVED,
+    ModAction.REMOVE: PostStatus.REMOVED,
+}
+
+
+@transaction.atomic
+def moderate_post(*, moderator, post, action, reason=""):
+    """Approve/restore -> PUBLISHED, reject/remove -> REMOVED. Append-only audit."""
+    new_status = _POST_ACTION_STATUS[action]
+    if post.status != new_status:
+        post.status = new_status
+        post.save(update_fields=["status", "updated_at"])
+    ModerationAction.objects.create(
+        moderator=moderator,
+        post=post,
+        thread=None,
+        action=action,
+        reason=reason or "",
+    )
+    return post
+
+
+# Thread flag action -> (field, value).
+_THREAD_FLAG_FIELD = {
+    ModAction.PIN: ("is_pinned", True),
+    ModAction.UNPIN: ("is_pinned", False),
+    ModAction.LOCK: ("is_locked", True),
+    ModAction.UNLOCK: ("is_locked", False),
+}
+
+
+@transaction.atomic
+def set_thread_flag(*, moderator, thread, action):
+    """Pin/unpin/lock/unlock a thread. Append-only audit."""
+    field, value = _THREAD_FLAG_FIELD[action]
+    setattr(thread, field, value)
+    thread.save(update_fields=[field, "updated_at"])
+    ModerationAction.objects.create(
+        moderator=moderator,
+        post=None,
+        thread=thread,
+        action=action,
+        reason="",
+    )
+    return thread
+
+
+@transaction.atomic
+def resolve_report(*, moderator, report, status, resolution=""):
+    """Resolve/dismiss a report; stamp handled_by + resolution."""
+    report.status = status
+    report.handled_by = moderator
+    report.resolution = resolution or ""
+    report.save(update_fields=["status", "handled_by", "resolution", "updated_at"])
+    return report

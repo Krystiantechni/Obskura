@@ -1,6 +1,15 @@
 from rest_framework import serializers
 
-from community.models import Category, Post, PostStatus, ReactionKind, Thread
+from community.models import (
+    Category,
+    ModAction,
+    Post,
+    PostStatus,
+    ReactionKind,
+    ReportReason,
+    ReportStatus,
+    Thread,
+)
 
 
 def _author_name(user):
@@ -111,3 +120,44 @@ class ReactionWriteSerializer(serializers.Serializer):
     """Kontrakt POST /community/posts/<pk>/reactions."""
 
     kind = serializers.ChoiceField(choices=ReactionKind.choices)
+
+
+class ReportWriteSerializer(serializers.Serializer):
+    reason = serializers.ChoiceField(
+        choices=ReportReason.choices,
+        error_messages={"invalid_choice": "Nieprawidłowy powód zgłoszenia."},
+    )
+    detail = serializers.CharField(required=False, allow_blank=True, default="")
+
+
+class ModerateSerializer(serializers.Serializer):
+    action = serializers.ChoiceField(
+        choices=[
+            ModAction.APPROVE,
+            ModAction.REJECT,
+            ModAction.REMOVE,
+            ModAction.RESTORE,
+        ],
+        error_messages={"invalid_choice": "Nieprawidłowa akcja moderacyjna."},
+    )
+    reason = serializers.CharField(required=False, allow_blank=True, default="")
+
+
+class ThreadFlagSerializer(serializers.Serializer):
+    action = serializers.ChoiceField(
+        choices=[
+            ModAction.PIN,
+            ModAction.UNPIN,
+            ModAction.LOCK,
+            ModAction.UNLOCK,
+        ],
+        error_messages={"invalid_choice": "Nieprawidłowa flaga wątku."},
+    )
+
+
+class ResolveReportSerializer(serializers.Serializer):
+    status = serializers.ChoiceField(
+        choices=[ReportStatus.RESOLVED, ReportStatus.DISMISSED],
+        error_messages={"invalid_choice": "Nieprawidłowy status rozstrzygnięcia."},
+    )
+    resolution = serializers.CharField(required=False, allow_blank=True, default="")
