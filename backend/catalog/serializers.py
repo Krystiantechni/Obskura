@@ -86,6 +86,14 @@ class EpisodeDetailSerializer(serializers.ModelSerializer):
     creators = CreatorSerializer(many=True, read_only=True)
     chapters = ChapterSerializer(many=True, read_only=True)
     transcript = TranscriptLineSerializer(many=True, read_only=True)
+    audio_url = serializers.SerializerMethodField()
+
+    def get_audio_url(self, obj):
+        if obj.premium:
+            request = self.context.get("request")
+            if not (request and request.user and request.user.is_authenticated):
+                return None
+        return obj.audio_url
 
     class Meta:
         model = Episode
@@ -119,7 +127,6 @@ class EpisodeDetailSerializer(serializers.ModelSerializer):
             "genre",
             "creators",
             "duration_s",
-            "audio_url",
             "poster",
             "video_preview",
             "rating_avg",
