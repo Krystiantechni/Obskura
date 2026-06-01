@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from catalog.models import Episode
 from core.pagination import DefaultCursorPagination, DefaultPageNumberPagination
-from playback.models import Favorite, QueueItem
+from playback.models import Favorite, QueueItem, Rating
 from playback.selectors import favorites, history, queue_items
 from playback.serializers import (
     FavoriteSerializer,
@@ -16,8 +16,10 @@ from playback.serializers import (
     ProgressWriteSerializer,
     QueueItemSerializer,
     QueueWriteSerializer,
+    RatingReadSerializer,
+    RatingWriteSerializer,
 )
-from playback.services import upsert_progress
+from playback.services import set_rating, upsert_progress
 
 
 class HistoryCursorPagination(DefaultCursorPagination):
@@ -138,3 +140,25 @@ class QueueDestroyView(APIView):
         item = get_object_or_404(QueueItem.objects.filter(user=request.user), pk=pk)
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class RatingView(APIView):
+    """GET/PUT /playback/ratings/<episode_slug> — get or upsert own rating for an episode."""
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, episode_slug):
+        episode = get_object_or_404(Episode, slug=episode_slug)
+        rating = get_object_or_404(Rating, user=request.user, episode=episode)
+        return Response(RatingReadSerializer(rating).data)
+
+    def put(self, request, episode_slug):
+        episode = get_object_or_404(Episode, slug=episode_slug)
+        serializer = RatingWriteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        rating = set_rating(
+            user=request.user,
+            episode=episode,
+            value=serializer.validated_data["value"],
+        )
+        return Response(RatingReadSerializer(rating).data)

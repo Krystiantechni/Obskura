@@ -7,6 +7,7 @@ from playback.views import (
     ProgressView,
     QueueDestroyView,
     QueueListCreateView,
+    RatingView,
 )
 
 urlpatterns = [
@@ -20,4 +21,5 @@ urlpatterns = [
     ),
     path("playback/queue", QueueListCreateView.as_view(), name="queue"),
     path("playback/queue/<int:pk>", QueueDestroyView.as_view(), name="queue-destroy"),
+    path("playback/ratings/<slug:episode_slug>", RatingView.as_view(), name="ratings"),
 ]

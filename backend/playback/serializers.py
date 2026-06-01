@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from catalog.serializers import EpisodeListSerializer
-from playback.models import Favorite, Progress, QueueItem
+from playback.models import Favorite, Progress, QueueItem, Rating
 
 
 class ProgressWriteSerializer(serializers.Serializer):
@@ -43,3 +43,14 @@ class QueueItemSerializer(serializers.ModelSerializer):
         model = QueueItem
         fields = ["id", "position", "episode"]
         read_only_fields = ["id", "position", "episode"]
+
+
+class RatingWriteSerializer(serializers.Serializer):
+    value = serializers.IntegerField(min_value=1, max_value=5)
+
+
+class RatingReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ["value"]
+        read_only_fields = ["value"]
