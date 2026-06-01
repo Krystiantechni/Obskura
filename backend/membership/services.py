@@ -1,11 +1,12 @@
 from django.db import transaction
 from django.db.models import Max
 from django.utils import timezone
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ErrorDetail, PermissionDenied, ValidationError
 
-from membership import payments
+from membership import payments, selectors
 from membership.models import (
     BillingPeriod,
+    FreePlayGrant,
     Patronage,
     PatronageStatus,
     PlanCode,
@@ -269,3 +270,32 @@ def _sub_by_stripe_id(stripe_subscription_id):
     if not stripe_subscription_id:
         return None
     return Subscription.objects.filter(stripe_subscription_id=stripe_subscription_id).first()
+
+
+@transaction.atomic
+def register_play(*, user, episode):
+    """Autorytatywne wymuszenie gatingu przy starcie odtwarzania (spec §6).
+
+    full → no-op; premium bez pełnego dostępu → 'premium_required';
+    free & nie-premium → konsumuje 1 z 20/mc (ten sam odcinek w mc liczy się raz).
+    """
+    ent = selectors.entitlement(user=user)
+    if ent["full_access"]:
+        return None
+
+    if episode.premium:
+        raise PermissionDenied(
+            ErrorDetail("Ten odcinek jest dostępny w Klubie.", code="premium_required")
+        )
+
+    period = current_period()
+    _, created = FreePlayGrant.objects.get_or_create(user=user, episode=episode, period=period)
+    if created and selectors.free_grants_used(user=user, period=period) > ent["monthly_quota"]:
+        FreePlayGrant.objects.filter(user=user, episode=episode, period=period).delete()
+        raise PermissionDenied(
+            ErrorDetail(
+                "Wyczerpałeś darmowy limit 20 odcinków w tym miesiącu.",
+                code="quota_exceeded",
+            )
+        )
+    return None
