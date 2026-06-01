@@ -50,6 +50,43 @@ def test_webhook_checkout_completed_sets_active(monkeypatch):
 
 
 @pytest.mark.django_db
+def test_webhook_checkout_completed_links_by_user_when_no_subscription_id(monkeypatch):
+    """Realny kształt sesji (payments.create_subscription_checkout): brak
+    metadata.subscription_id, jest client_reference_id + metadata.user_id."""
+    plan = PlanFactory(code=PlanCode.SOLO, price_month=29, price_year=24)
+    user = UserFactory()
+    sub = SubscriptionFactory(
+        user=user, plan=plan, status=SubStatus.INCOMPLETE, stripe_subscription_id=""
+    )
+    event = {
+        "type": "checkout.session.completed",
+        "data": {
+            "object": {
+                "mode": "subscription",
+                "customer": "cus_real",
+                "subscription": "sub_real",
+                "client_reference_id": str(user.pk),
+                "metadata": {"user_id": str(user.pk)},
+            }
+        },
+    }
+    monkeypatch.setattr("membership.payments.construct_event", lambda **kwargs: event)
+
+    r = APIClient().post(
+        "/api/v1/membership/stripe/webhook",
+        data=b"{}",
+        content_type="application/json",
+        HTTP_STRIPE_SIGNATURE="t=1,v1=deadbeef",
+    )
+
+    assert r.status_code == 200
+    sub.refresh_from_db()
+    assert sub.status == SubStatus.ACTIVE
+    assert sub.stripe_customer_id == "cus_real"
+    assert sub.stripe_subscription_id == "sub_real"
+
+
+@pytest.mark.django_db
 def test_webhook_subscription_deleted_sets_canceled(monkeypatch):
     plan = PlanFactory(code=PlanCode.SOLO)
     sub = SubscriptionFactory(plan=plan, status=SubStatus.ACTIVE, stripe_subscription_id="sub_zzz")

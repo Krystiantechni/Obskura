@@ -145,11 +145,30 @@ def handle_webhook_event(*, event):
 
 
 def _resolve_subscription(obj):
-    """Z Checkout Session: po metadata.subscription_id (lokalny pk), z fallbackiem."""
+    """Z Checkout Session do lokalnej subskrypcji, w kolejności:
+    1) metadata.subscription_id (lokalny pk, jeśli kiedyś ustawione),
+    2) stripe_subscription_id (gdy już powiązane),
+    3) po użytkowniku (client_reference_id / metadata.user_id) -> najnowsza INCOMPLETE.
+
+    Krok 3 to realny kształt sesji z payments.create_subscription_checkout, które
+    wstawia client_reference_id=user.pk i metadata.user_id (bez subscription_id).
+    """
     sub_id = (obj.get("metadata") or {}).get("subscription_id")
     if sub_id:
-        return Subscription.objects.filter(pk=sub_id).first()
-    return _sub_by_stripe_id(obj.get("subscription"))
+        sub = Subscription.objects.filter(pk=sub_id).first()
+        if sub is not None:
+            return sub
+    sub = _sub_by_stripe_id(obj.get("subscription"))
+    if sub is not None:
+        return sub
+    user_id = obj.get("client_reference_id") or (obj.get("metadata") or {}).get("user_id")
+    if user_id:
+        return (
+            Subscription.objects.filter(user_id=user_id, status=SubStatus.INCOMPLETE)
+            .order_by("-created_at")
+            .first()
+        )
+    return None
 
 
 def _sub_by_stripe_id(stripe_subscription_id):
