@@ -27,6 +27,32 @@ def _published_thread(**kwargs):
     return thread
 
 
+@pytest.mark.django_db
+def test_threads_cursor_pagination_walks_all_pages_once():
+    """>page_size wątków: kursor (-last_post_at, -id) zwraca każdy DOKŁADNIE raz.
+
+    Regresja: pierwsze pole kursora MUSI być monotoniczne (nie boolean is_pinned),
+    inaczej DRF CursorPagination gubi/duplikuje wiersze między stronami.
+    """
+    cat = CategoryFactory(is_moderated=False)
+    created = [_published_thread(category=cat).slug for _ in range(25)]
+    assert len(created) == 25
+
+    seen = []
+    url = "/api/v1/community/threads"
+    client = APIClient()
+    for _ in range(10):  # bezpiecznik na nieskończoną pętlę
+        body = client.get(url).json()
+        seen.extend(t["slug"] for t in body["results"])
+        if not body.get("next"):
+            break
+        url = body["next"]
+
+    assert len(seen) == 25
+    assert len(set(seen)) == 25  # zero duplikatów / pominięć
+    assert set(seen) == set(created)
+
+
 # --- categories ---------------------------------------------------------
 
 

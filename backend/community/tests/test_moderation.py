@@ -175,6 +175,7 @@ def test_unpin_thread_clears_flag():
 @pytest.mark.django_db
 def test_lock_thread_blocks_new_posts_for_normal_user():
     thread = ThreadFactory(is_locked=False, category=CategoryFactory(is_moderated=False))
+    PostFactory(thread=thread, author=thread.author, is_first=True, status=PostStatus.PUBLISHED)
     _client(_moderator()).post(
         f"/api/v1/community/threads/{thread.slug}/flag", {"action": "lock"}, format="json"
     )
@@ -187,14 +188,13 @@ def test_lock_thread_blocks_new_posts_for_normal_user():
         format="json",
     )
     assert res.status_code == 403
-    assert (
-        res.json().get("detail") and "locked" in str(res.json()).lower() or res.status_code == 403
-    )
+    assert res.json()["detail"] == "thread_locked"
 
 
 @pytest.mark.django_db
 def test_unlock_thread_allows_posting_again():
     thread = ThreadFactory(is_locked=True, category=CategoryFactory(is_moderated=False))
+    PostFactory(thread=thread, author=thread.author, is_first=True, status=PostStatus.PUBLISHED)
     _client(_moderator()).post(
         f"/api/v1/community/threads/{thread.slug}/flag", {"action": "unlock"}, format="json"
     )

@@ -79,8 +79,10 @@ def toggle_reaction(*, user, post, kind):
 def report_post(*, user, post, reason, detail=""):
     """User report. Idempotent per (reporter, post) via get_or_create.
 
-    A published post becomes FLAGGED on first report so it surfaces in the
-    moderation queue; pending/removed posts keep their status.
+    Zgłoszenie NIE zmienia statusu posta — post zostaje widoczny. To chroni przed
+    griefingiem (pojedynczy report nie ukrywa treści ani nie zbija liczników).
+    Post trafia do kolejki moderacji przez powiązany open Report (selectors.moderation_queue);
+    moderator decyduje (remove/dismiss).
     """
     report, _created = Report.objects.get_or_create(
         reporter=user,
@@ -91,9 +93,6 @@ def report_post(*, user, post, reason, detail=""):
             "status": ReportStatus.OPEN,
         },
     )
-    if post.status == PostStatus.PUBLISHED:
-        post.status = PostStatus.FLAGGED
-        post.save(update_fields=["status", "updated_at"])
     return report
 
 

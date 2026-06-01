@@ -116,7 +116,11 @@ class PostCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, slug):
-        thread = get_object_or_404(Thread.objects.select_related("category"), slug=slug)
+        # Odpowiadać można tylko w wątku widocznym dla użytkownika (np. nie w cudzym
+        # wątku z pierwszym postem pending). thread_detail respektuje widoczność.
+        thread = selectors.thread_detail(viewer=request.user, slug=slug)
+        if thread is None:
+            raise Http404
         serializer = PostCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         post = services.create_post(

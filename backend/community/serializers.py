@@ -4,7 +4,6 @@ from community.models import (
     Category,
     ModAction,
     Post,
-    PostStatus,
     ReactionKind,
     ReportReason,
     ReportStatus,
@@ -88,12 +87,8 @@ class ThreadDetailSerializer(ThreadListSerializer):
     first_post = serializers.SerializerMethodField()
 
     def get_first_post(self, obj):
-        post = next(
-            (p for p in obj.posts.all() if p.is_first and p.status == PostStatus.PUBLISHED),
-            None,
-        )
-        if post is None:
-            post = obj.posts.filter(is_first=True).first()
+        # Celowane zapytanie — bez materializacji wszystkich postów wątku (N+1/RAM).
+        post = obj.posts.filter(is_first=True).order_by("-created_at").first()
         return PostSerializer(post).data if post is not None else None
 
     class Meta(ThreadListSerializer.Meta):

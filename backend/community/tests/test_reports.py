@@ -36,7 +36,9 @@ def test_report_requires_auth(reply):
 
 
 @pytest.mark.django_db
-def test_report_creates_open_report_and_flags_published_post(reply):
+def test_report_creates_open_report_without_hiding_post(reply):
+    from community.selectors import moderation_queue
+
     reporter = UserFactory()
     res = _client(reporter).post(
         f"/api/v1/community/posts/{reply.pk}/report",
@@ -49,7 +51,10 @@ def test_report_creates_open_report_and_flags_published_post(reply):
     assert report.detail == "Bot spam."
     assert report.status == ReportStatus.OPEN
     reply.refresh_from_db()
-    assert reply.status == PostStatus.FLAGGED
+    # Report NIE ukrywa posta (anty-griefing) — zostaje PUBLISHED…
+    assert reply.status == PostStatus.PUBLISHED
+    # …ale trafia do kolejki moderacji przez otwarte zgłoszenie.
+    assert reply.pk in set(moderation_queue().values_list("pk", flat=True))
 
 
 @pytest.mark.django_db
@@ -99,4 +104,4 @@ def test_report_already_removed_post_stays_removed(reply):
         f"/api/v1/community/posts/{reply.pk}/report", {"reason": "spam"}, format="json"
     )
     reply.refresh_from_db()
-    assert reply.status == PostStatus.REMOVED  # only PUBLISHED transitions to FLAGGED
+    assert reply.status == PostStatus.REMOVED  # report never changes post status

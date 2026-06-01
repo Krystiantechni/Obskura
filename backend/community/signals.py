@@ -47,6 +47,12 @@ def _recompute_category(category):
         .count()
     )
     Category.objects.filter(pk=category.pk).update(threads_count=threads_count)
+    # .update() nie emituje post_save, więc cache kategorii (z threads_count) trzeba
+    # zbić ręcznie — inaczej /community/categories serwuje nieaktualny licznik.
+    try:
+        cache.delete_pattern("community:*")
+    except AttributeError:
+        cache.delete_many(["community:categories"])
 
 
 @receiver([post_save, post_delete], sender=Post)
