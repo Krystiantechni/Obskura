@@ -55,7 +55,7 @@ class PatronTierViewSet(ReadOnlyModelViewSet):
         try:
             return int(raw)
         except (TypeError, ValueError):
-            return None
+            raise ValidationError({"season": "Nieprawidłowy numer sezonu."}) from None
 
     def list(self, request, *args, **kwargs):
         season = self._season_param()

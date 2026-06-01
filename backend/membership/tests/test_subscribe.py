@@ -85,10 +85,9 @@ def test_subscribe_paid_returns_checkout_url_and_incomplete_row(monkeypatch):
     sub = Subscription.objects.get(user=user)
     assert sub.status == SubStatus.INCOMPLETE
     assert sub.plan.code == PlanCode.SOLO
-    assert (
-        getattr(sub, "stripe_checkout_session_id", None) == "cs_test_123"
-        or sub.stripe_subscription_id == ""
-    )
+    # Pre-webhook: brak powiązań Stripe (ustawiane dopiero przez checkout.session.completed).
+    assert sub.stripe_subscription_id == ""
+    assert sub.stripe_customer_id == ""
 
 
 @pytest.mark.django_db

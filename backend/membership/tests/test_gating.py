@@ -64,6 +64,27 @@ def test_entitlement_paid_patron_current_season_has_full_access():
 
 
 @pytest.mark.django_db
+def test_entitlement_active_sub_with_past_period_end_has_no_access():
+    # FIX 1: an ACTIVE row whose period_end is in the past must NOT grant access.
+    user = UserFactory()
+    plan = PlanFactory(code=PlanCode.SOLO)
+    SubscriptionFactory(
+        user=user,
+        plan=plan,
+        status=SubStatus.ACTIVE,
+        period_end=timezone.now() - timedelta(days=1),
+    )
+    ent = selectors.entitlement(user=user)
+    assert ent["full_access"] is False
+
+    ep = EpisodeFactory(premium=True)
+    assert selectors.can_access_audio(user=user, episode=ep) is False
+    with pytest.raises(PermissionDenied) as exc:
+        services.register_play(user=user, episode=ep)
+    assert exc.value.detail.code == "premium_required"
+
+
+@pytest.mark.django_db
 def test_can_access_audio_premium_hidden_for_anon_and_free():
     ep = EpisodeFactory(premium=True)
     free_user = UserFactory()

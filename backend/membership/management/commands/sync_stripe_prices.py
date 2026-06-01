@@ -45,6 +45,9 @@ class Command(BaseCommand):
     def _sync_plans(self) -> int:
         synced = 0
         for plan in Plan.objects.filter(code__in=PAID_PLAN_CODES):
+            if plan.stripe_price_id_month and plan.stripe_price_id_year:
+                self.stdout.write(f"  plan {plan.code}: skip (already synced)")
+                continue
             # unit_amount w całych PLN — payments.ensure_product_and_price sam
             # konwertuje na grosze (×100). recurring to dict {"interval": ...}.
             price_id_month = payments.ensure_product_and_price(
@@ -75,6 +78,11 @@ class Command(BaseCommand):
     def _sync_tiers(self) -> int:
         synced = 0
         for tier in PatronTier.objects.filter(amount__gt=0).select_related("season"):
+            if tier.stripe_price_id:
+                self.stdout.write(
+                    f"  tier {tier.code} (s{tier.season.number}): skip (already synced)"
+                )
+                continue
             price_id = payments.ensure_product_and_price(
                 name=f"OBSKURA Patronat {tier.title} ({tier.season.title})",
                 unit_amount=tier.amount,

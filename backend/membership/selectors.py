@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.db.models import Count, Q
+from django.utils import timezone
 
 from catalog.models import Season
 from membership.models import (
@@ -56,6 +57,7 @@ def active_subscription(*, user):
     return (
         Subscription.objects.select_related("plan")
         .filter(user=user, status__in=[SubStatus.TRIALING, SubStatus.ACTIVE])
+        .filter(Q(period_end__isnull=True) | Q(period_end__gt=timezone.now()))
         .first()
     )
 

@@ -9,6 +9,7 @@ from membership.models import (
     FreePlayGrant,
     Patronage,
     PatronageStatus,
+    PatronTier,
     PlanCode,
     Subscription,
     SubStatus,
@@ -53,17 +54,36 @@ def subscribe(*, user, plan, billing_period):
     Trial 30 dni tylko przy pierwszej subskrypcji użytkownika (anty-abuse).
     """
     if plan.code == PlanCode.FREE:
-        Subscription.objects.update_or_create(
-            user=user,
-            defaults={
-                "plan": plan,
-                "status": SubStatus.ACTIVE,
-                "billing_period": billing_period,
-            },
-        )
+        # Wielokrotne wiersze na usera są dozwolone (canceled/expired/incomplete),
+        # więc update_or_create(user=) wywaliłby MultipleObjectsReturned — bierzemy żywą.
+        live = Subscription.objects.filter(
+            user=user, status__in=[SubStatus.TRIALING, SubStatus.ACTIVE]
+        ).first()
+        if live is not None:
+            live.plan = plan
+            live.status = SubStatus.ACTIVE
+            live.billing_period = billing_period
+            live.save(update_fields=["plan", "status", "billing_period"])
+        else:
+            Subscription.objects.create(
+                user=user,
+                plan=plan,
+                status=SubStatus.ACTIVE,
+                billing_period=billing_period,
+            )
         return {"status": "active"}
 
-    had_prior = Subscription.objects.filter(user=user).exists()
+    # Jeden żywy płatny plan na usera — nie pozwalamy mnożyć checkoutów/wierszy.
+    # (Żywy plan FREE jest OK: to ścieżka upgrade free → paid, obsłużona w webhooku.)
+    existing = selectors.active_subscription(user=user)
+    if existing is not None and existing.plan.code in (PlanCode.SOLO, PlanCode.KLAN):
+        raise ValidationError({"plan_code": "Masz już aktywną subskrypcję."})
+
+    # Trial 30 dni tylko przy PIERWSZEJ płatnej subskrypcji (plan free nie zżera trialu).
+    # Liczymy też wiersze incomplete, by ponawiane checkouty nie resetowały anty-abuse.
+    had_prior = Subscription.objects.filter(
+        user=user, plan__code__in=[PlanCode.SOLO, PlanCode.KLAN]
+    ).exists()
     trial_days = 0 if had_prior else 30
 
     Subscription.objects.create(
@@ -107,6 +127,9 @@ def create_patronage(
     is_company=False,
     company_name="",
 ):
+    # Zablokuj wiersz tieru, by zserializować równoległe zakupy ostatnich miejsc.
+    tier = PatronTier.objects.select_for_update().get(pk=tier.pk)
+
     if not tier.is_active:
         raise ValidationError({"tier_id": "Ten poziom patronatu jest nieaktywny."})
 
@@ -173,9 +196,15 @@ def handle_webhook_event(*, event):
         if obj.get("mode") == "payment":
             _handle_patronage_paid(obj)
         else:
-            # subscription mode
+            # subscription mode — idempotentnie: tylko INCOMPLETE -> ACTIVE
+            # (re-delivery nie wskrzesza późniejszego CANCELED/PAST_DUE).
             sub = _resolve_subscription(obj)
-            if sub is not None:
+            if sub is not None and sub.status == SubStatus.INCOMPLETE:
+                # Upgrade free -> paid: zdegraduj inne żywe subskrypcje usera
+                # (constraint dopuszcza tylko jedną trialing/active na usera).
+                Subscription.objects.filter(
+                    user=sub.user, status__in=[SubStatus.TRIALING, SubStatus.ACTIVE]
+                ).exclude(pk=sub.pk).update(status=SubStatus.CANCELED)
                 sub.stripe_customer_id = obj.get("customer", "") or ""
                 sub.stripe_subscription_id = obj.get("subscription", "") or ""
                 sub.status = SubStatus.ACTIVE
@@ -212,19 +241,33 @@ def _handle_patronage_paid(obj):
     if not patronage_id:
         return
     patronage = Patronage.objects.select_related("tier__season").filter(pk=patronage_id).first()
-    if patronage is None:
+    # Idempotentnie: tylko PENDING -> PAID. Re-delivery nie wskrzesza REFUNDED/CANCELED
+    # ani nie nadaje anon_number drugi raz.
+    if patronage is None or patronage.status != PatronageStatus.PENDING:
         return
 
-    already_paid = patronage.status == PatronageStatus.PAID
+    tier = patronage.tier
+    # Recheck miejsc przy płatności (rzadki wyścig: dwa równoległe checkouty na ostatnie
+    # miejsce). Nadkomplet oznaczamy REFUNDED zamiast przyznać — zwrot w Stripe robiony
+    # out-of-band w test mode.
+    if tier.capacity is not None:
+        paid_others = (
+            tier.patronages.filter(status=PatronageStatus.PAID).exclude(pk=patronage.pk).count()
+        )
+        if paid_others >= tier.capacity:
+            patronage.status = PatronageStatus.REFUNDED
+            patronage.save(update_fields=["status", "updated_at"])
+            return
+
     patronage.status = PatronageStatus.PAID
+    update_fields = ["status", "updated_at"]
     payment_intent = obj.get("payment_intent") or ""
     if payment_intent:
         patronage.stripe_payment_intent_id = payment_intent
+        update_fields.append("stripe_payment_intent_id")
 
-    update_fields = ["status", "stripe_payment_intent_id", "updated_at"]
-
-    if patronage.is_anonymous and patronage.anon_number is None and not already_paid:
-        season = patronage.tier.season
+    if patronage.is_anonymous and patronage.anon_number is None:
+        season = tier.season
         current_max = (
             Patronage.objects.filter(
                 tier__season=season,

@@ -55,3 +55,22 @@ def test_sync_stripe_prices_passes_whole_pln_and_interval_dict(settings, monkeyp
     tier.refresh_from_db()
     assert solo.stripe_price_id_month and solo.stripe_price_id_year
     assert tier.stripe_price_id
+
+
+@pytest.mark.django_db
+def test_sync_stripe_prices_idempotent_second_run_no_calls(settings, monkeypatch):
+    settings.STRIPE_SECRET_KEY = "sk_test_dummy"
+    calls = []
+    monkeypatch.setattr(
+        "membership.payments.ensure_product_and_price",
+        lambda **kwargs: calls.append(kwargs) or f"price_{len(calls)}",
+    )
+    PlanFactory(code=PlanCode.SOLO, price_month=29, price_year=24, currency="PLN")
+    PatronTierFactory(code=PatronCode.EXEC, amount=2400, currency="PLN")
+
+    call_command("sync_stripe_prices")
+    first = len(calls)
+    assert first == 3  # solo month + year + exec one-time
+
+    call_command("sync_stripe_prices")  # już zsynchronizowane -> 0 nowych wywołań
+    assert len(calls) == first

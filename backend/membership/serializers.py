@@ -56,6 +56,29 @@ class PatronTierSerializer(serializers.ModelSerializer):
         read_only_fields = fields
 
 
+class PatronTierNestedSerializer(serializers.ModelSerializer):
+    """Wąski tier do zagnieżdżenia w patronacie — bez seats_remaining
+    (liczba miejsc nie jest znacząca w kontekście już zakupionego patronatu,
+    a user_patronages nie anotuje seats_taken, więc wartość byłaby myląca)."""
+
+    season_number = serializers.IntegerField(source="season.number", read_only=True)
+    season_title = serializers.CharField(source="season.title", read_only=True)
+
+    class Meta:
+        model = PatronTier
+        fields = [
+            "id",
+            "code",
+            "role_label",
+            "title",
+            "amount",
+            "currency",
+            "season_number",
+            "season_title",
+        ]
+        read_only_fields = fields
+
+
 class SubscribeWriteSerializer(serializers.Serializer):
     """Kontrakt POST /membership/subscribe (lustro przyszłego Zod schema)."""
 
@@ -98,7 +121,7 @@ class PatronageWriteSerializer(serializers.Serializer):
 
 
 class PatronageReadSerializer(serializers.ModelSerializer):
-    tier = PatronTierSerializer(read_only=True)
+    tier = PatronTierNestedSerializer(read_only=True)
 
     class Meta:
         model = Patronage
