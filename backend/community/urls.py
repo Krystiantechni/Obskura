@@ -2,6 +2,7 @@ from django.urls import path
 
 from community.views import (
     CategoriesView,
+    PostCreateView,
     ThreadDetailView,
     ThreadListCreateView,
 )
@@ -13,5 +14,10 @@ urlpatterns = [
         "community/threads/<slug:slug>",
         ThreadDetailView.as_view(),
         name="community-thread-detail",
+    ),
+    path(
+        "community/threads/<slug:slug>/posts",
+        PostCreateView.as_view(),
+        name="community-thread-posts",
     ),
 ]

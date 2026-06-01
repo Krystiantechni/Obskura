@@ -90,3 +90,18 @@ class ThreadDetailSerializer(ThreadListSerializer):
     class Meta(ThreadListSerializer.Meta):
         fields = ThreadListSerializer.Meta.fields + ["first_post"]
         read_only_fields = fields
+
+
+class ThreadCreateSerializer(serializers.Serializer):
+    """Kontrakt POST /community/threads (lustro przyszłego Zod schema)."""
+
+    category_slug = serializers.SlugField()
+    title = serializers.CharField(max_length=200)
+    body = serializers.CharField()
+    episode_slug = serializers.SlugField(required=False, allow_blank=True)
+
+
+class PostCreateSerializer(serializers.Serializer):
+    """Kontrakt POST /community/threads/<slug>/posts."""
+
+    body = serializers.CharField()
