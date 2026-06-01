@@ -15,18 +15,27 @@ from membership.models import (
     SubStatus,
 )
 
+_PLAN_CODES = [PlanCode.FREE, PlanCode.SOLO, PlanCode.KLAN]
+_PATRON_CODES = [PatronCode.WITNESS, PatronCode.ALLY, PatronCode.EXEC]
+
 
 class PlanFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Plan
         django_get_or_create = ("code",)
 
-    code = PlanCode.SOLO
-    name = "Solo"
+    code = factory.Iterator(_PLAN_CODES)
+    name = factory.Sequence(lambda n: f"Plan {n}")
     price_month = 29
     price_year = 24
+    currency = "PLN"
+    featured = False
+    tag = ""
+    badge = ""
+    cta_label = "Dołącz"
     monthly_quota = None
-    features = factory.LazyFunction(lambda: [{"ok": True, "text": "Bez limitu"}])
+    features = factory.List([])
+    is_active = True
     order = factory.Sequence(lambda n: n)
 
 
@@ -43,13 +52,19 @@ class SubscriptionFactory(factory.django.DjangoModelFactory):
 class PatronTierFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = PatronTier
+        django_get_or_create = ("season", "code")
 
     season = factory.SubFactory(SeasonFactory)
-    code = PatronCode.WITNESS
-    role_label = "// ŚWIADEK"
-    title = "Świadek"
+    code = factory.Iterator(_PATRON_CODES)
+    role_label = factory.Sequence(lambda n: f"// TIER {n}")
+    title = factory.Sequence(lambda n: f"Tier {n}")
     amount = 120
-    perks = factory.LazyFunction(lambda: ["Imię w napisach"])
+    currency = "PLN"
+    featured = False
+    capacity = None
+    requires_application = False
+    perks = factory.List([])
+    is_active = True
     order = factory.Sequence(lambda n: n)
 
 
@@ -61,6 +76,8 @@ class PatronageFactory(factory.django.DjangoModelFactory):
     tier = factory.SubFactory(PatronTierFactory)
     amount = factory.LazyAttribute(lambda o: o.tier.amount)
     status = PatronageStatus.PENDING
+    is_anonymous = False
+    credit_name = ""
 
 
 class FreePlayGrantFactory(factory.django.DjangoModelFactory):

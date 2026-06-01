@@ -1,2 +1,9 @@
-# Routes are added incrementally (Task 3: plans/patron-tiers, Task 4: subscribe, ...).
-urlpatterns = []
+from rest_framework.routers import DefaultRouter
+
+from membership.views import PatronTierViewSet, PlanViewSet
+
+router = DefaultRouter(trailing_slash=False)
+router.register("membership/plans", PlanViewSet, basename="plan")
+router.register("membership/patron-tiers", PatronTierViewSet, basename="patron-tier")
+
+urlpatterns = router.urls
