@@ -2,7 +2,7 @@ from django.core.cache import cache
 from django.db.models import Count, Q
 
 from catalog.models import Season
-from membership.models import PatronageStatus, PatronTier, Plan
+from membership.models import PatronageStatus, PatronTier, Plan, Subscription, SubStatus
 
 CACHE_TTL = 60 * 15  # 15 min
 
@@ -38,6 +38,17 @@ def patron_tiers(*, season=None):
     if season is not None:
         qs = qs.filter(season__number=season)
     return qs
+
+
+def active_subscription(*, user):
+    """Bieżąca żywa subskrypcja użytkownika (trialing/active) lub None."""
+    if not user or not user.is_authenticated:
+        return None
+    return (
+        Subscription.objects.select_related("plan")
+        .filter(user=user, status__in=[SubStatus.TRIALING, SubStatus.ACTIVE])
+        .first()
+    )
 
 
 def patron_tiers_cached(*, season=None):

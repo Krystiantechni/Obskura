@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from membership.models import PatronTier, Plan
+from membership.models import BillingPeriod, PatronTier, Plan, PlanCode, Subscription
 
 
 class PlanSerializer(serializers.ModelSerializer):
@@ -52,5 +52,34 @@ class PatronTierSerializer(serializers.ModelSerializer):
             "requires_application",
             "perks",
             "order",
+        ]
+        read_only_fields = fields
+
+
+class SubscribeWriteSerializer(serializers.Serializer):
+    """Kontrakt POST /membership/subscribe (lustro przyszłego Zod schema)."""
+
+    plan_code = serializers.ChoiceField(choices=PlanCode.choices)
+    billing_period = serializers.ChoiceField(choices=BillingPeriod.choices)
+
+
+class SubscriptionReadSerializer(serializers.ModelSerializer):
+    plan_code = serializers.CharField(source="plan.code", read_only=True)
+    plan_name = serializers.CharField(source="plan.name", read_only=True)
+
+    class Meta:
+        model = Subscription
+        fields = [
+            "id",
+            "plan_code",
+            "plan_name",
+            "status",
+            "billing_period",
+            "period_start",
+            "period_end",
+            "trial_end",
+            "auto_renew",
+            "cancel_at_period_end",
+            "created_at",
         ]
         read_only_fields = fields

@@ -47,6 +47,8 @@ class SubscriptionFactory(factory.django.DjangoModelFactory):
     plan = factory.SubFactory(PlanFactory)
     status = SubStatus.ACTIVE
     billing_period = BillingPeriod.MONTH
+    stripe_customer_id = ""
+    stripe_subscription_id = ""
 
 
 class PatronTierFactory(factory.django.DjangoModelFactory):
