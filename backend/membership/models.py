@@ -147,6 +147,8 @@ class Subscription(TimeStampedModel):
 class PatronTier(TimeStampedModel):
     """Tier patronatu, per sezon, płatność jednorazowa."""
 
+    PatronCode = PatronCode  # nested alias for convenience
+
     season = models.ForeignKey(
         Season, on_delete=models.PROTECT, related_name="patron_tiers", verbose_name="sezon"
     )
@@ -182,6 +184,8 @@ class PatronTier(TimeStampedModel):
 
 class Patronage(TimeStampedModel):
     """Patronat usera (jednorazowy zakup tieru)."""
+
+    PatronageStatus = PatronageStatus  # nested alias for convenience
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

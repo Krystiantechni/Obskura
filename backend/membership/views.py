@@ -1,20 +1,29 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from core.authentication import OptionalTokenAuthentication
+from core.pagination import DefaultCursorPagination
 from membership import payments, selectors, services
-from membership.models import Plan
-from membership.selectors import active_subscription
+from membership.models import PatronTier, Plan
+from membership.selectors import active_subscription, user_patronages
 from membership.serializers import (
+    PatronageReadSerializer,
+    PatronageWriteSerializer,
     PatronTierSerializer,
     PlanSerializer,
     SubscribeWriteSerializer,
     SubscriptionReadSerializer,
 )
+
+
+class PatronageCursorPagination(DefaultCursorPagination):
+    # DefaultCursorPagination orders by -created_at, matching newest-first patronages.
+    pass
 
 
 class PlanViewSet(ReadOnlyModelViewSet):
@@ -119,3 +128,32 @@ class StripeWebhookView(APIView):
             )
         services.handle_webhook_event(event=event)
         return Response(status=status.HTTP_200_OK)
+
+
+class PatronageListCreateView(APIView):
+    """GET /membership/patronages — own list; POST — create (returns checkout_url)."""
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        qs = user_patronages(user=request.user)
+        paginator = PatronageCursorPagination()
+        page = paginator.paginate_queryset(qs, request, view=self)
+        serializer = PatronageReadSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+    def post(self, request):
+        serializer = PatronageWriteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        tier = PatronTier.objects.filter(pk=serializer.validated_data["tier_id"]).first()
+        if tier is None:
+            raise ValidationError({"tier_id": "Nie znaleziono poziomu patronatu."})
+        result = services.create_patronage(
+            user=request.user,
+            tier=tier,
+            is_anonymous=serializer.validated_data["is_anonymous"],
+            credit_name=serializer.validated_data["credit_name"],
+            is_company=serializer.validated_data["is_company"],
+            company_name=serializer.validated_data["company_name"],
+        )
+        return Response(result, status=status.HTTP_201_CREATED)

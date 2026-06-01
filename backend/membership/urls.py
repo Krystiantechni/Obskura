@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from membership.views import (
     CancelSubscriptionView,
+    PatronageListCreateView,
     PatronTierViewSet,
     PlanViewSet,
     StripeWebhookView,
@@ -26,6 +27,7 @@ urlpatterns = router.urls + [
         CancelSubscriptionView.as_view(),
         name="membership-subscription-cancel",
     ),
+    path("membership/patronages", PatronageListCreateView.as_view(), name="patronages"),
     path(
         "membership/stripe/webhook",
         StripeWebhookView.as_view(),

@@ -1,8 +1,17 @@
 from django.db import transaction
+from django.db.models import Max
 from django.utils import timezone
+from rest_framework.exceptions import ValidationError
 
 from membership import payments
-from membership.models import BillingPeriod, PlanCode, Subscription, SubStatus
+from membership.models import (
+    BillingPeriod,
+    Patronage,
+    PatronageStatus,
+    PlanCode,
+    Subscription,
+    SubStatus,
+)
 
 
 def current_period():
@@ -87,6 +96,55 @@ def cancel_subscription(*, user):
     return sub
 
 
+@transaction.atomic
+def create_patronage(
+    *,
+    user,
+    tier,
+    is_anonymous=False,
+    credit_name="",
+    is_company=False,
+    company_name="",
+):
+    if not tier.is_active:
+        raise ValidationError({"tier_id": "Ten poziom patronatu jest nieaktywny."})
+
+    if tier.capacity is not None:
+        seats_taken = tier.patronages.filter(status=PatronageStatus.PAID).count()
+        if seats_taken >= tier.capacity:
+            raise ValidationError({"tier_id": "Brak wolnych miejsc na tym poziomie."})
+
+    exists = Patronage.objects.filter(
+        user=user,
+        tier=tier,
+        status__in=[PatronageStatus.PENDING, PatronageStatus.PAID],
+    ).exists()
+    if exists:
+        raise ValidationError({"tier_id": "Masz już aktywny patronat na tym poziomie."})
+
+    patronage = Patronage.objects.create(
+        user=user,
+        tier=tier,
+        amount=tier.amount,
+        status=PatronageStatus.PENDING,
+        is_anonymous=is_anonymous,
+        credit_name=credit_name,
+        is_company=is_company,
+        company_name=company_name,
+    )
+
+    session = payments.create_payment_checkout(
+        user=user,
+        price_id=tier.stripe_price_id,
+        amount=tier.amount,
+        metadata={"patronage_id": str(patronage.id)},
+    )
+    patronage.stripe_checkout_session_id = session.id
+    patronage.save(update_fields=["stripe_checkout_session_id", "updated_at"])
+
+    return {"checkout_url": session.url}
+
+
 def _epoch_to_dt(value):
     if not value:
         return None
@@ -110,13 +168,17 @@ def handle_webhook_event(*, event):
     event_type = event.get("type")
     obj = event.get("data", {}).get("object", {})
 
-    if event_type == "checkout.session.completed" and obj.get("mode") == "subscription":
-        sub = _resolve_subscription(obj)
-        if sub is not None:
-            sub.stripe_customer_id = obj.get("customer", "") or ""
-            sub.stripe_subscription_id = obj.get("subscription", "") or ""
-            sub.status = SubStatus.ACTIVE
-            sub.save(update_fields=["stripe_customer_id", "stripe_subscription_id", "status"])
+    if event_type == "checkout.session.completed":
+        if obj.get("mode") == "payment":
+            _handle_patronage_paid(obj)
+        else:
+            # subscription mode
+            sub = _resolve_subscription(obj)
+            if sub is not None:
+                sub.stripe_customer_id = obj.get("customer", "") or ""
+                sub.stripe_subscription_id = obj.get("subscription", "") or ""
+                sub.status = SubStatus.ACTIVE
+                sub.save(update_fields=["stripe_customer_id", "stripe_subscription_id", "status"])
         return
 
     if event_type == "customer.subscription.updated":
@@ -142,6 +204,38 @@ def handle_webhook_event(*, event):
         if sub is not None:
             _apply_subscription_status(sub, status=SubStatus.PAST_DUE)
         return
+
+
+def _handle_patronage_paid(obj):
+    patronage_id = (obj.get("metadata") or {}).get("patronage_id")
+    if not patronage_id:
+        return
+    patronage = Patronage.objects.select_related("tier__season").filter(pk=patronage_id).first()
+    if patronage is None:
+        return
+
+    already_paid = patronage.status == PatronageStatus.PAID
+    patronage.status = PatronageStatus.PAID
+    payment_intent = obj.get("payment_intent") or ""
+    if payment_intent:
+        patronage.stripe_payment_intent_id = payment_intent
+
+    update_fields = ["status", "stripe_payment_intent_id", "updated_at"]
+
+    if patronage.is_anonymous and patronage.anon_number is None and not already_paid:
+        season = patronage.tier.season
+        current_max = (
+            Patronage.objects.filter(
+                tier__season=season,
+                status=PatronageStatus.PAID,
+                anon_number__isnull=False,
+            ).aggregate(m=Max("anon_number"))["m"]
+            or 0
+        )
+        patronage.anon_number = current_max + 1
+        update_fields.append("anon_number")
+
+    patronage.save(update_fields=update_fields)
 
 
 def _resolve_subscription(obj):

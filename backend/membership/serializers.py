@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from membership.models import BillingPeriod, PatronTier, Plan, PlanCode, Subscription
+from membership.models import BillingPeriod, Patronage, PatronTier, Plan, PlanCode, Subscription
 
 
 class PlanSerializer(serializers.ModelSerializer):
@@ -80,6 +80,38 @@ class SubscriptionReadSerializer(serializers.ModelSerializer):
             "trial_end",
             "auto_renew",
             "cancel_at_period_end",
+            "created_at",
+        ]
+        read_only_fields = fields
+
+
+class PatronageWriteSerializer(serializers.Serializer):
+    tier_id = serializers.IntegerField()
+    is_anonymous = serializers.BooleanField(default=False, required=False)
+    credit_name = serializers.CharField(
+        max_length=120, allow_blank=True, required=False, default=""
+    )
+    is_company = serializers.BooleanField(default=False, required=False)
+    company_name = serializers.CharField(
+        max_length=200, allow_blank=True, required=False, default=""
+    )
+
+
+class PatronageReadSerializer(serializers.ModelSerializer):
+    tier = PatronTierSerializer(read_only=True)
+
+    class Meta:
+        model = Patronage
+        fields = [
+            "id",
+            "tier",
+            "amount",
+            "status",
+            "is_anonymous",
+            "credit_name",
+            "anon_number",
+            "is_company",
+            "company_name",
             "created_at",
         ]
         read_only_fields = fields

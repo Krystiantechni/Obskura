@@ -2,7 +2,7 @@ from django.core.cache import cache
 from django.db.models import Count, Q
 
 from catalog.models import Season
-from membership.models import PatronageStatus, PatronTier, Plan, Subscription, SubStatus
+from membership.models import Patronage, PatronageStatus, PatronTier, Plan, Subscription, SubStatus
 
 CACHE_TTL = 60 * 15  # 15 min
 
@@ -48,6 +48,14 @@ def active_subscription(*, user):
         Subscription.objects.select_related("plan")
         .filter(user=user, status__in=[SubStatus.TRIALING, SubStatus.ACTIVE])
         .first()
+    )
+
+
+def user_patronages(*, user):
+    return (
+        Patronage.objects.filter(user=user)
+        .select_related("tier", "tier__season")
+        .order_by("-created_at")
     )
 
 
