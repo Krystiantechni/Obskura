@@ -3,7 +3,7 @@ from django.db.models import Count, Q
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
-from community.models import Category, Post, PostStatus, Thread
+from community.models import Category, Post, PostStatus, Reaction, Thread
 
 
 @receiver([post_save, post_delete], sender=Category)
@@ -57,3 +57,17 @@ def denorm_on_post_change(sender, instance, **kwargs):
         return
     _recompute_thread(thread)
     _recompute_category(thread.category)
+
+
+@receiver([post_save, post_delete], sender=Reaction)
+def recompute_post_reactions(sender, instance, **kwargs):
+    """Denormalizacja reakcji na poście: reaction_count (total) + reactions_breakdown ({kind: n}).
+
+    Liczone na Post.all_objects, by liczniki działały też dla soft-deleted postów.
+    """
+    rows = Reaction.objects.filter(post_id=instance.post_id).values("kind").annotate(n=Count("id"))
+    breakdown = {row["kind"]: row["n"] for row in rows}
+    total = sum(breakdown.values())
+    Post.all_objects.filter(pk=instance.post_id).update(
+        reaction_count=total, reactions_breakdown=breakdown
+    )

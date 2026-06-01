@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from community.models import Category, Post, PostStatus, Thread
+from community.models import Category, Post, PostStatus, ReactionKind, Thread
 
 
 def _author_name(user):
@@ -105,3 +105,9 @@ class PostCreateSerializer(serializers.Serializer):
     """Kontrakt POST /community/threads/<slug>/posts."""
 
     body = serializers.CharField()
+
+
+class ReactionWriteSerializer(serializers.Serializer):
+    """Kontrakt POST /community/posts/<pk>/reactions."""
+
+    kind = serializers.ChoiceField(choices=ReactionKind.choices)

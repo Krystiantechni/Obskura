@@ -3,6 +3,7 @@ from django.urls import path
 from community.views import (
     CategoriesView,
     PostCreateView,
+    ReactionView,
     ThreadDetailView,
     ThreadListCreateView,
 )
@@ -20,4 +21,5 @@ urlpatterns = [
         PostCreateView.as_view(),
         name="community-thread-posts",
     ),
+    path("community/posts/<int:pk>/reactions", ReactionView.as_view(), name="reaction"),
 ]

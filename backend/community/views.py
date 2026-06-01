@@ -1,4 +1,5 @@
 from django.db.models import F
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.exceptions import NotFound
@@ -8,16 +9,19 @@ from rest_framework.views import APIView
 
 from catalog.models import Episode
 from community import selectors, services
-from community.models import Category, Thread
+from community.models import Category, Post, Thread
 from community.pagination import PostCursorPagination, ThreadCursorPagination
+from community.selectors import post_visible_to
 from community.serializers import (
     CategorySerializer,
     PostCreateSerializer,
     PostSerializer,
+    ReactionWriteSerializer,
     ThreadCreateSerializer,
     ThreadDetailSerializer,
     ThreadListSerializer,
 )
+from community.services import toggle_reaction
 from core.authentication import OptionalTokenAuthentication
 
 
@@ -116,3 +120,33 @@ class PostCreateView(APIView):
             body=serializer.validated_data["body"],
         )
         return Response(PostSerializer(post).data, status=status.HTTP_201_CREATED)
+
+
+class ReactionView(APIView):
+    """POST community/posts/<int:pk>/reactions — toggle the caller's reaction.
+
+    Reagować można tylko na posty widoczne dla użytkownika (PUBLISHED lub własne).
+    Niewidoczne/usunięte → 404 (nie ujawniamy istnienia ukrytych postów).
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post.all_objects, pk=pk)
+        if not post_visible_to(viewer=request.user, post=post):
+            raise Http404
+        serializer = ReactionWriteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        result = toggle_reaction(
+            user=request.user,
+            post=post,
+            kind=serializer.validated_data["kind"],
+        )
+        post.refresh_from_db(fields=["reaction_count", "reactions_breakdown"])
+        return Response(
+            {
+                "reacted": result["reacted"],
+                "reaction_count": post.reaction_count,
+                "reactions_breakdown": post.reactions_breakdown,
+            }
+        )

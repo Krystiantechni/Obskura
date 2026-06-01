@@ -2,7 +2,7 @@ from django.db import transaction
 from django.utils import timezone
 from rest_framework.exceptions import ErrorDetail, PermissionDenied
 
-from community.models import Post, PostStatus, Thread
+from community.models import Post, PostStatus, Reaction, Thread
 from community.selectors import is_moderator
 
 
@@ -48,3 +48,18 @@ def create_post(*, user, thread, body):
         is_first=False,
         status=status,
     )
+
+
+@transaction.atomic
+def toggle_reaction(*, user, post, kind):
+    """Przełącz reakcję użytkownika na poście.
+
+    Brak reakcji → utwórz (reacted=True). Istniejąca reakcja tego rodzaju →
+    usuń (reacted=False). Unikalność wymusza UniqueConstraint(post, user, kind);
+    signal przelicza reaction_count i reactions_breakdown.
+    """
+    reaction, created = Reaction.objects.get_or_create(post=post, user=user, kind=kind)
+    if not created:
+        reaction.delete()
+        return {"reacted": False}
+    return {"reacted": True}
