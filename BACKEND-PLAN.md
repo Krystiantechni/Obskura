@@ -146,11 +146,11 @@ Wszystkie listy: paginacja + `ETag`/`Last-Modified` dla cache. Walidacja seriali
 
 ## 7. Fazy wdrożenia
 
-- [ ] **B0 — Szkielet:** projekt `obskura-backend`, settings (env-based jak imroi: `SQL_ENGINE`, `REDIS_HOST`, `SECRET_KEY`), `core` (base models/mixiny), Docker + docker-compose (web+db+redis), CI (lint+test). DB `database-obskura` (env).
-- [ ] **B1 — Auth + accounts:** `accounts.User`, Knox, register/login/me/prefs, throttling. Testy.
-- [ ] **B2 — Catalog (read-heavy):** Season/Genre/Creator/Episode, filtry, cursor-pagination, cache, indeksy. Seed z istniejących danych frontu.
-- [ ] **B3 — Playback:** progress/favorites/queue/history (gated premium).
-- [ ] **B4 — Membership:** plany, tiery, subskrypcje (integracja płatności — Stripe/Przelewy24, faza osobna).
+- [x] **B0 — Szkielet:** projekt `obskura-backend`, settings (env-based jak imroi: `SQL_ENGINE`, `REDIS_HOST`, `SECRET_KEY`), `core` (base models/mixiny), Docker + docker-compose (web+db+redis), CI (lint+test). DB `database-obskura` (env).
+- [x] **B1 — Auth + accounts:** `accounts.User`, Knox, register/login/me/prefs, throttling. Testy.
+- [x] **B2 — Catalog (read-heavy):** Season/Genre/Creator/Episode, filtry, cursor-pagination, cache, indeksy. Seed z istniejących danych frontu.
+- [x] **B3 — Playback:** progress/favorites/queue/history (gated premium).
+- [x] **B4 — Membership:** plany Klubu (free/solo/klan), tiery Patroni (per sezon, seat-cap, anonimowość), subskrypcje ze **Stripe test mode** + trial 30 dni, webhook, oraz tier-gating premium + quota free 20/mc zastępujące auth-only z B3. Spec + plan w `docs/superpowers/`. _(do żywego flow potrzebny `sk_test_…`/`whsec_…` w obskura-media)_
 - [ ] **B5 — Community + Events:** forum (wątki/posty/moderacja), wydarzenia + zapisy.
 - [ ] **B6 — Support + Newsletter + Pages:** FAQ/tickety (Resend), subskrypcje/kampanie, CMS prawne/prasa.
 - [ ] **B7 — Real-time + async:** Channels (live stream status, push), Celery (maile, narracja, statystyki).
