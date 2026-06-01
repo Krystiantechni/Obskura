@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "catalog",
     "playback",
     "membership",
+    "community",
 ]
 
 AUTH_USER_MODEL = "accounts.User"

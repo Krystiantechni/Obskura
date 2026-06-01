@@ -12,6 +12,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     display_name = models.CharField(max_length=60, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_moderator = models.BooleanField(
+        default=False,
+        verbose_name="moderator",
+        help_text="Może moderować forum społeczności (kolejka, zgłoszenia, akcje na wątkach).",
+    )
     prefs = models.JSONField(default=dict, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
