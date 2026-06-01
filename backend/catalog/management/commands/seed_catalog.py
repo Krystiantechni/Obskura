@@ -545,6 +545,7 @@ class Command(BaseCommand):
                     "is_true_horror": is_true,
                     "kind": kind,
                     "published_at": _dt(ep["year"]),
+                    "premium": ep["num"] == 12,  # demo: finał S03E12 jako premium (gating B3)
                     "is_deleted": False,
                     "deleted_at": None,
                 },

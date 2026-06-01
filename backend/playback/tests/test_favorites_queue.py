@@ -71,3 +71,12 @@ def test_queue_delete_and_isolation():
     # not u2's item → 403 or 404
     assert _client(u2).delete(f"/api/v1/playback/queue/{item_id}").status_code in (403, 404)
     assert _client(u1).delete(f"/api/v1/playback/queue/{item_id}").status_code == 204
+
+
+@pytest.mark.django_db
+def test_queue_excludes_soft_deleted_episode():
+    user, ep = UserFactory(), EpisodeFactory()
+    c = _client(user)
+    c.post("/api/v1/playback/queue", {"episode_slug": ep.slug, "position": 0}, format="json")
+    ep.delete()  # soft-delete
+    assert len(c.get("/api/v1/playback/queue").json()["results"]) == 0

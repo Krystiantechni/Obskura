@@ -32,7 +32,11 @@ class EpisodeViewSet(ReadOnlyModelViewSet):
     search_fields = ["title", "title_em"]
 
     def get_queryset(self):
-        return selectors.episodes_list()
+        qs = selectors.episodes_list()
+        if self.action == "retrieve":
+            # detal zagnieżdża chapters/transcript — prefetch, by endpoint był N+1-free
+            qs = qs.prefetch_related("chapters", "transcript")
+        return qs
 
     def get_serializer_class(self):
         return EpisodeDetailSerializer if self.action == "retrieve" else EpisodeListSerializer
