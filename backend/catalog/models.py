@@ -125,3 +125,49 @@ class Episode(TimeStampedModel, SoftDeleteModel):
     def __str__(self):
         # Dotyka self.season — wołający listę powinien select_related("season") (N+1).
         return f"S{self.season.number:02d}E{self.number:02d} {self.title}"
+
+
+class Chapter(TimeStampedModel):
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE, related_name="chapters")
+    n = models.PositiveSmallIntegerField()
+    key = models.CharField(max_length=40)
+    title = models.CharField(max_length=200, blank=True)
+    time_str = models.CharField(max_length=12, blank=True)
+    sec = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["n"]
+        constraints = [
+            models.UniqueConstraint(fields=["episode", "n"], name="uniq_chapter_episode_n")
+        ]
+
+    def __str__(self):
+        return f"{self.episode.slug} ch{self.n}"
+
+
+class TranscriptLine(TimeStampedModel):
+    class Marker(models.TextChoices):
+        NONE = "", "—"
+        SFX = "sfx", "SFX"
+        CHAPTER = "chapter", "Rozdział"
+
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE, related_name="transcript")
+    key = models.CharField(max_length=40)
+    order = models.PositiveSmallIntegerField()
+    sec = models.PositiveIntegerField(null=True, blank=True)
+    speaker = models.CharField(max_length=40, blank=True)
+    marker = models.CharField(
+        max_length=10, choices=Marker.choices, blank=True, default=Marker.NONE
+    )
+    text = models.TextField()
+
+    class Meta:
+        ordering = ["order"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["episode", "order"], name="uniq_transcript_episode_order"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.episode.slug} #{self.order}"

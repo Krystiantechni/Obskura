@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from catalog.models import Creator, Episode, Genre, Season
+from catalog.models import Chapter, Creator, Episode, Genre, Season, TranscriptLine
 
 
 @admin.register(Genre)
@@ -26,6 +26,13 @@ class CreatorAdmin(admin.ModelAdmin):
     search_fields = ["name", "slug"]
 
 
+class ChapterInline(admin.TabularInline):
+    model = Chapter
+    extra = 0
+    fields = ["n", "key", "title", "time_str", "sec"]
+    ordering = ["n"]
+
+
 @admin.register(Episode)
 class EpisodeAdmin(admin.ModelAdmin):
     list_display = [
@@ -43,3 +50,13 @@ class EpisodeAdmin(admin.ModelAdmin):
     autocomplete_fields = ["season", "genre", "creators"]
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_at"
+    inlines = [ChapterInline]
+
+
+@admin.register(TranscriptLine)
+class TranscriptLineAdmin(admin.ModelAdmin):
+    list_display = ["episode", "order", "speaker", "marker", "sec", "text"]
+    list_filter = ["marker", "speaker"]
+    list_select_related = ["episode"]
+    autocomplete_fields = ["episode"]
+    search_fields = ["episode__title", "text", "speaker"]

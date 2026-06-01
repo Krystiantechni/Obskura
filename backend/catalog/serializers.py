@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from catalog.models import Creator, Episode, Genre, Season
+from catalog.models import Chapter, Creator, Episode, Genre, Season, TranscriptLine
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -66,10 +66,34 @@ class EpisodeListSerializer(serializers.ModelSerializer):
         ]
 
 
+class ChapterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chapter
+        fields = ["n", "key", "title", "time_str", "sec"]
+        read_only_fields = ["n", "key", "title", "time_str", "sec"]
+
+
+class TranscriptLineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TranscriptLine
+        fields = ["key", "order", "sec", "speaker", "marker", "text"]
+        read_only_fields = ["key", "order", "sec", "speaker", "marker", "text"]
+
+
 class EpisodeDetailSerializer(serializers.ModelSerializer):
     season = SeasonSerializer(read_only=True)
     genre = GenreSerializer(read_only=True)
     creators = CreatorSerializer(many=True, read_only=True)
+    chapters = ChapterSerializer(many=True, read_only=True)
+    transcript = TranscriptLineSerializer(many=True, read_only=True)
+    audio_url = serializers.SerializerMethodField()
+
+    def get_audio_url(self, obj):
+        if obj.premium:
+            request = self.context.get("request")
+            if not (request and request.user and request.user.is_authenticated):
+                return None
+        return obj.audio_url
 
     class Meta:
         model = Episode
@@ -91,6 +115,8 @@ class EpisodeDetailSerializer(serializers.ModelSerializer):
             "kind",
             "premium",
             "published_at",
+            "chapters",
+            "transcript",
         ]
         read_only_fields = [
             "slug",
@@ -101,7 +127,6 @@ class EpisodeDetailSerializer(serializers.ModelSerializer):
             "genre",
             "creators",
             "duration_s",
-            "audio_url",
             "poster",
             "video_preview",
             "rating_avg",
@@ -110,4 +135,6 @@ class EpisodeDetailSerializer(serializers.ModelSerializer):
             "kind",
             "premium",
             "published_at",
+            "chapters",
+            "transcript",
         ]

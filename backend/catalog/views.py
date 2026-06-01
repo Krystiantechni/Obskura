@@ -14,12 +14,15 @@ from catalog.serializers import (
     GenreSerializer,
     SeasonSerializer,
 )
+from core.authentication import OptionalTokenAuthentication
 from core.pagination import DefaultPageNumberPagination
 
 
 class EpisodeViewSet(ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
-    authentication_classes: list = []
+    # Optional Knox auth: rozpoznaje zalogowanego (premium audio), ale zły/wygasły token
+    # NIE daje 401 — endpoint pozostaje publiczny (anon dostaje 200 z zablokowanym audio).
+    authentication_classes = [OptionalTokenAuthentication]
     lookup_field = "slug"
     pagination_class = EpisodeCursorPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
@@ -29,7 +32,11 @@ class EpisodeViewSet(ReadOnlyModelViewSet):
     search_fields = ["title", "title_em"]
 
     def get_queryset(self):
-        return selectors.episodes_list()
+        qs = selectors.episodes_list()
+        if self.action == "retrieve":
+            # detal zagnieżdża chapters/transcript — prefetch, by endpoint był N+1-free
+            qs = qs.prefetch_related("chapters", "transcript")
+        return qs
 
     def get_serializer_class(self):
         return EpisodeDetailSerializer if self.action == "retrieve" else EpisodeListSerializer
