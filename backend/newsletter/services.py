@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.utils import timezone
 
+from core.tasks import send_email_task
 from newsletter.models import Subscriber
 
 
@@ -10,9 +11,7 @@ def subscribe(*, email, freq, consent):  # noqa: ARG001 — consent verified in 
         email=email,
         defaults={"freq": freq, "consent_at": timezone.now(), "is_active": True},
     )
-    from core.email import send_email
-
-    send_email(
+    send_email_task.delay(
         to=email,
         subject="Witaj w newsletterze OBSKURY",
         html="<p>Zapis potwierdzony. Do usłyszenia w ciemności.</p>",
