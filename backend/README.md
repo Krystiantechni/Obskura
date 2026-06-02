@@ -17,6 +17,21 @@ curl -s http://localhost:8000/api/v1/health/
 
 Zatrzymanie: `docker compose down` (dodaj `-v`, by skasować wolumen bazy).
 
+## Integracja z frontem (B8a)
+
+Front (`/`) gada z backendem przez `/api/v1` (token Knox w nagłówku):
+
+```bash
+# 1) backend
+cd backend && docker compose up -d
+docker compose exec web python manage.py migrate
+docker compose exec web python manage.py createsuperuser   # konto testowe
+# 2) front (z katalogu repo)
+npm run dev    # http://localhost:5175  (VITE_API_URL → :8000/api/v1)
+```
+
+CORS dla `:5175` jest w `CORS_ALLOWED_ORIGINS`. Sanity: `curl http://localhost:8000/api/v1/health/`.
+
 ## Testy i lint
 
 ```bash
