@@ -7,3 +7,4 @@ export { useTypewriter } from "./useTypewriter";
 export { useTilt3D } from "./useTilt3D";
 export { useCursor } from "./useCursor";
 export { useMouseSpotlight } from "./useMouseSpotlight";
+export { useAuth } from "../context/AuthContext";

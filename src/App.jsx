@@ -2,13 +2,17 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./Router";
 import { useLenisScroll } from "./hooks/useLenisScroll";
 import { PlayerProvider } from "./context/PlayerContext";
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   useLenisScroll();
-  // PlayerProvider ponad routerem — jeden <audio> gra nieprzerwanie przy zmianie tras.
+  // AuthProvider + PlayerProvider ponad routerem:
+  // sesja i jeden <audio> przeżywają zmianę tras.
   return (
-    <PlayerProvider>
-      <RouterProvider router={router} />
-    </PlayerProvider>
+    <AuthProvider>
+      <PlayerProvider>
+        <RouterProvider router={router} />
+      </PlayerProvider>
+    </AuthProvider>
   );
 }
