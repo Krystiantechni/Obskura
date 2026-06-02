@@ -168,7 +168,7 @@ export default function Player() {
             {t("player.ep_num", "Sezon 03 · Odcinek 12 · Finał")}
           </div>
           <h1 className="mb-3 font-serif text-[clamp(28px,6vw,80px)] font-medium leading-[0.95] tracking-[-0.02em] sm:mb-4 sm:text-[clamp(36px,5vw,80px)]">
-            {t("playerpage.title_p1", "Mgła nad")} <em className="italic text-ink-1">{t("playerpage.title_em", "Wisłoujściem")}</em>
+            {current?.title || t("playerpage.title_p1", "Mgła nad")} {current?.em ? <em className="italic text-ink-1">{current.em}</em> : <em className="italic text-ink-1">{t("playerpage.title_em", "Wisłoujściem")}</em>}
           </h1>
           {currentCh && (
             <div className="mt-4 font-serif text-[16px] italic text-ink-1 sm:mt-8 sm:text-[22px]">

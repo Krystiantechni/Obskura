@@ -16,7 +16,7 @@ function fmt(sec) {
 
 export default function Episode() {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { slug } = useParams();
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0.12);
   const [liked, setLiked] = useState(false);
@@ -100,7 +100,7 @@ export default function Episode() {
               { lab: t("episode.duration"), pre: "⏱" },
               { lab: t("episode.rating"), accent: true },
               { lab: t("episode.plays") },
-              { lab: `// EPIZOD ${id}` },
+              { lab: `// ${slug}` },
             ].map((row, i) => (
               <div key={i} className={`border border-line bg-bg-1/40 px-3 py-3 sm:px-4 sm:py-4 ${row.accent ? "text-red" : "text-ink-1"}`}>{row.lab}</div>
             ))}
