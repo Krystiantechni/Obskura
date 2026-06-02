@@ -39,6 +39,7 @@ export function AuthProvider({ children }) {
   // 401 z dowolnego żądania auth:true → apiClient emituje "auth:logout".
   useEffect(() => {
     const onLogout = () => {
+      clearToken(); // samowystarczalność — nie polegaj na kolejności czyszczenia w apiClient
       setUser(null);
       setStatus("guest");
     };

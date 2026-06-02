@@ -76,12 +76,33 @@ describe("AuthContext", () => {
     expect(clearToken).toHaveBeenCalled();
   });
 
-  it("zdarzenie auth:logout przełącza na guest", async () => {
+  it("zdarzenie auth:logout przełącza na guest i czyści token", async () => {
     getToken.mockReturnValue("tok");
     auth.me.mockResolvedValue({ display_name: "Mara" });
     renderApp();
     await waitFor(() => expect(screen.getByTestId("status")).toHaveTextContent("authed"));
+    clearToken.mockClear();
     await act(async () => { window.dispatchEvent(new Event("auth:logout")); });
     await waitFor(() => expect(screen.getByTestId("status")).toHaveTextContent("guest"));
+    expect(clearToken).toHaveBeenCalled();
+  });
+
+  it("register sukces → zapis tokenu + authed", async () => {
+    getToken.mockReturnValue(null);
+    auth.register.mockResolvedValue({ user: { display_name: "Nowa" }, token: "regtok" });
+    function RegProbe() {
+      const { status, register } = useAuth();
+      return (
+        <div>
+          <span data-testid="status">{status}</span>
+          <button onClick={() => register({ email: "a@b.co", password: "Password1", name: "Nowa", terms: true })}>reg</button>
+        </div>
+      );
+    }
+    render(<AuthProvider><RegProbe /></AuthProvider>);
+    await waitFor(() => expect(screen.getByTestId("status")).toHaveTextContent("guest"));
+    await act(async () => { screen.getByText("reg").click(); });
+    await waitFor(() => expect(screen.getByTestId("status")).toHaveTextContent("authed"));
+    expect(setToken).toHaveBeenCalledWith("regtok");
   });
 });
