@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     "membership",
     "community",
     "events",
+    "support",
+    "newsletter",
+    "pages",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -114,6 +117,8 @@ REST_FRAMEWORK = {
         "user": "1000/day",
         "register": "10/hour",
         "login": "10/min",
+        "contact": "10/hour",
+        "newsletter": "10/hour",
     },
 }
 
@@ -130,6 +135,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # --- Stripe (test mode) ---
 # Klucze testowe (sk_test_… / whsec_…) leżą off-repo w obskura-media; brak klucza =>
 # kod kompletny, testy zielone (payments.* monkeypatchowane), żywy flow nieaktywny.
+RESEND_API_KEY = env("RESEND_API_KEY", default="")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="OBSKURA <noreply@obskura.audio>")
+SUPPORT_NOTIFY_EMAIL = env("SUPPORT_NOTIFY_EMAIL", default="")
+
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="")
 STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET", default="")
 STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="")
