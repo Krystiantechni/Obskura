@@ -8,3 +8,4 @@ export { useTilt3D } from "./useTilt3D";
 export { useCursor } from "./useCursor";
 export { useMouseSpotlight } from "./useMouseSpotlight";
 export { useAuth } from "../context/AuthContext";
+export { useEpisodes, useEpisode, useSeasons, useGenres, useCreators } from "./useCatalog";
