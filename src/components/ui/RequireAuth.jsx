@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function RequireAuth({ children }) {
   const { status } = useAuth();
   const location = useLocation();
+  // Łapiemy lokalizację wejścia RAZ (leniwy init) — stała wartość sprawia, że
+  // <Navigate> ma niezmienne propsy i nie pętli się podczas tranzycji redirectu
+  // (gdy location zmienia się na /login w trakcie nawigacji). returnTo niesiemy w `state`.
+  const [from] = useState(() => location.pathname + location.search);
 
   if (status === "loading") {
     // Placeholder na czas hydratacji sesji — nie migamy redirectem do /login.
@@ -12,8 +17,7 @@ export default function RequireAuth({ children }) {
   }
 
   if (status === "guest") {
-    const returnTo = encodeURIComponent(location.pathname + location.search);
-    return <Navigate to={`/login?returnTo=${returnTo}`} replace />;
+    return <Navigate to="/login" state={{ from }} replace />;
   }
 
   return children;

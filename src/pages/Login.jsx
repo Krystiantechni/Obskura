@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
@@ -12,15 +12,26 @@ const FIELD =
 
 export default function Login() {
   const { t } = useTranslation();
-  const { login } = useAuth();
+  const { login, status } = useAuth();
   const navigate = useNavigate();
-  const [params] = useSearchParams();
+  const location = useLocation();
+  // Cel powrotu łapiemy raz (leniwy init) — efekt zależy tylko od `status`.
+  const [from] = useState(() => location.state?.from || "/account");
   const [showPw, setShowPw] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
+
+  // Redirect deklaratywnie po commicie statusu "authed" — uniknięcie race'a,
+  // w którym imperatywny navigate() w onSubmit wyprzedza zatwierdzenie sesji
+  // i guard /account odbija z powrotem na /login.
+  useEffect(() => {
+    if (status === "authed") {
+      navigate(from, { replace: true });
+    }
+  }, [status, navigate, from]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +45,7 @@ export default function Login() {
     setLoading(true);
     try {
       await login(parsed.data);
-      navigate(params.get("returnTo") || "/account", { replace: true });
+      // nawigacja obsłużona efektem powyżej po przejściu statusu na "authed"
     } catch (err) {
       if (err.fieldErrors) setErrors(err.fieldErrors);
       setServerError(err.message || "Logowanie nieudane.");
