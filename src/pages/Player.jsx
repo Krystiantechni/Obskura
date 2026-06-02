@@ -71,8 +71,8 @@ export default function Player() {
   const [frame, setFrame] = useState(0);
   const panelRef = useRef(null);
 
-  // Chapters i transcript pochodzą z metadata aktualnej ścieżki (src/data/tracks.js).
-  // Tracki bez tych pól pokazują fallback "Transkrypt wkrótce" / brak listy rozdziałów.
+  // Chapters i transcript pochodzą z detalu odcinka (catalog API, dociągany przez
+  // PlayerContext → useEpisode). Tracki bez tych pól pokazują fallback "wkrótce".
   // useMemo żeby empty-array fallback miał stabilną referencję (deps innych useMemo).
   const CHAPTERS = useMemo(() => current?.chapters ?? [], [current]);
   const TRANSCRIPT = useMemo(() => current?.transcript ?? [], [current]);
