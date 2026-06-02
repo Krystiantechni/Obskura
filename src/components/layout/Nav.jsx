@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import Brand from "../ui/Brand";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
 import HorrorButton from "../ui/HorrorButton";
+import { useAuth } from "../../context/AuthContext";
 
 const LINKS = [
   { to: "/", key: "nav.listen", end: true },
@@ -16,6 +17,7 @@ const LINKS = [
 
 export default function Nav() {
   const { t } = useTranslation();
+  const { status, user, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const linkClass = ({ isActive }) =>
@@ -45,9 +47,20 @@ export default function Nav() {
           <span>{t("nav.stream-live")}</span>
         </div>
         <LanguageSwitcher />
-        <HorrorButton to="/login" variant="ghost" className="!px-[18px] !py-2.5">
-          {t("nav.login")}
-        </HorrorButton>
+        {status === "authed" ? (
+          <div className="flex items-center gap-3">
+            <NavLink to="/account" className="font-mono text-[11px] uppercase tracking-ui text-ink-1 hover:text-ink-0">
+              {user?.display_name || t("nav.account", "Konto")}
+            </NavLink>
+            <HorrorButton variant="ghost" className="!px-[18px] !py-2.5" onClick={logout}>
+              {t("nav.logout", "Wyloguj")}
+            </HorrorButton>
+          </div>
+        ) : (
+          <HorrorButton to="/login" variant="ghost" className="!px-[18px] !py-2.5">
+            {t("nav.login")}
+          </HorrorButton>
+        )}
       </div>
 
       <button
@@ -76,9 +89,15 @@ export default function Nav() {
           ))}
           <div className="flex items-center justify-between border-t border-line pt-6">
             <LanguageSwitcher />
-            <HorrorButton to="/login" variant="ghost" className="!px-5 !py-3" onClick={() => setMobileOpen(false)}>
-              {t("nav.login")}
-            </HorrorButton>
+            {status === "authed" ? (
+              <HorrorButton variant="ghost" className="!px-5 !py-3" onClick={() => { logout(); setMobileOpen(false); }}>
+                {t("nav.logout", "Wyloguj")}
+              </HorrorButton>
+            ) : (
+              <HorrorButton to="/login" variant="ghost" className="!px-5 !py-3" onClick={() => setMobileOpen(false)}>
+                {t("nav.login")}
+              </HorrorButton>
+            )}
           </div>
         </div>
       )}
