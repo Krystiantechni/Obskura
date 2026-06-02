@@ -51,13 +51,25 @@ def create_post(*, user, thread, body):
     if thread.is_locked and not is_moderator(user):
         raise PermissionDenied(ErrorDetail("thread_locked", code="thread_locked"))
     status = PostStatus.PENDING if thread.category.is_moderated else PostStatus.PUBLISHED
-    return Post.objects.create(
+    post = Post.objects.create(
         thread=thread,
         author=user,
         body=body,
         is_first=False,
         status=status,
     )
+    if post.status == PostStatus.PUBLISHED and thread.author_id != user.id:
+        from notifications.models import NotificationKind
+        from notifications.services import notify
+
+        notify(
+            user=thread.author,
+            kind=NotificationKind.REPLY,
+            title="Nowa odpowiedź w Twoim wątku",
+            url=f"/forum/{thread.slug}",
+            payload={"thread_slug": thread.slug, "post_id": post.id},
+        )
+    return post
 
 
 @transaction.atomic

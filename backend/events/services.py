@@ -53,6 +53,16 @@ def cancel_registration(*, user, event):
         if promote is not None:
             promote.status = RegStatus.CONFIRMED
             promote.save(update_fields=["status", "updated_at"])
+            from notifications.models import NotificationKind
+            from notifications.services import notify
+
+            notify(
+                user=promote.user,
+                kind=NotificationKind.EVENT,
+                title="Zwolniło się miejsce — masz potwierdzony zapis",
+                url=f"/events/{event.slug}",
+                payload={"event_slug": event.slug},
+            )
     return reg
 
 
