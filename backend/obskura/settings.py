@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 import environ
+from celery.schedules import crontab
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -156,8 +157,24 @@ CELERY_TASK_IGNORE_RESULT = True
 CELERY_TASK_ALWAYS_EAGER = env.bool("CELERY_TASK_ALWAYS_EAGER", default=False)
 CELERY_TASK_EAGER_PROPAGATES = True
 CELERY_TIMEZONE = TIME_ZONE
-# CELERY_BEAT_SCHEDULE jest dopełniany w Tasku 5 (komplet jobów).
-CELERY_BEAT_SCHEDULE: dict = {}
+CELERY_BEAT_SCHEDULE = {
+    "expire-subscriptions": {
+        "task": "membership.tasks.expire_subscriptions",
+        "schedule": crontab(hour=3, minute=0),
+    },
+    "cleanup-stale-pending": {
+        "task": "membership.tasks.cleanup_stale_pending",
+        "schedule": crontab(minute=0),  # co godzinę
+    },
+    "cleanup-stale-registrations": {
+        "task": "events.tasks.cleanup_stale_registrations",
+        "schedule": crontab(minute=0),  # co godzinę
+    },
+    "recompute-all-ratings": {
+        "task": "playback.tasks.recompute_all_ratings",
+        "schedule": crontab(hour=4, minute=0),
+    },
+}
 
 # --- dev guard: wykrywanie N+1 i debug toolbar (tylko DEBUG=True) ---
 _TESTING = "pytest" in sys.modules
