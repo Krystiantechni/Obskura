@@ -28,3 +28,8 @@ def clear_cache():
     cache.clear()
     yield
     # No teardown needed — next test's setup clears anyway.
+
+
+@pytest.fixture(autouse=True)
+def _inmemory_channel_layer(settings):
+    settings.CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
