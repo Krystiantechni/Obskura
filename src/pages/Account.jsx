@@ -6,7 +6,7 @@ import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
 import FavoriteRow from "../components/ui/FavoriteRow";
 import { usePlayer } from "../context/PlayerContext";
-import { getTrack, TRACKS } from "../data/tracks";
+import { useEpisodes } from "../hooks/useCatalog";
 
 const FIELD =
   "border border-line bg-white/[0.02] px-4 py-3.5 text-[15px] text-ink-0 transition-colors placeholder:text-ink-3 focus:border-red focus:bg-red/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70";
@@ -131,7 +131,11 @@ export default function Account() {
   const [section, setSection] = useState("profile");
   // Realne ulubione z globalnego playera (zapisane w localStorage). Filtrujemy nulle (usunięte ID).
   const { favorites } = usePlayer();
-  const favTracks = favorites.map((id) => getTrack(id)).filter(Boolean);
+  const { episodes } = useEpisodes();
+  // Mapa slug→episode z katalogu; ulubione (slug[]) rozwiązujemy do tracków.
+  const bySlug = Object.fromEntries(episodes.map((e) => [e.slug, e]));
+  const favTracks = favorites.map((slug) => bySlug[slug]).filter(Boolean);
+  const totalEpisodes = episodes.length;
   const [tw, setTw] = useState({
     spatial: true,
     autoplay: true,
@@ -360,9 +364,9 @@ export default function Account() {
                     <FavoriteRow key={track.id} track={track} />
                   ))}
 
-                  {favTracks.length < TRACKS.length && (
+                  {favTracks.length < totalEpisodes && (
                     <p className="mt-5 text-center font-mono text-[10px] uppercase tracking-mono text-ink-3">
-                      {t("konto.favs_more", `Dostępne jeszcze ${TRACKS.length - favTracks.length} odcinków w archiwum`)}
+                      {t("konto.favs_more", `Dostępne jeszcze ${totalEpisodes - favTracks.length} odcinków w archiwum`)}
                     </p>
                   )}
                 </>
