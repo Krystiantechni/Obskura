@@ -15,7 +15,7 @@ def subscribe(*, email, freq, consent):  # noqa: ARG001 — consent verified in 
     send_email(
         to=email,
         subject="Witaj w newsletterze OBSKURY",
-        html="<p>Zapis potwierdzony. Do uslyszenia w ciemnosci.</p>",
+        html="<p>Zapis potwierdzony. Do usłyszenia w ciemności.</p>",
     )
     return sub
 

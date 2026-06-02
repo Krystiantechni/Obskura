@@ -11,10 +11,10 @@ def create_ticket(*, name, email, category, message):
 
     send_email(
         to=email,
-        subject="Otrzymalismy Twoje zgloszenie - OBSKURA",
+        subject="Otrzymaliśmy Twoje zgłoszenie — OBSKURA",
         html=(
-            f"<p>Czesc {name},</p>"
-            "<p>Dziekujemy za kontakt. Odpiszemy najszybciej, jak sie da.</p>"
+            f"<p>Cześć {name},</p>"
+            "<p>Dziękujemy za kontakt. Odpiszemy najszybciej, jak się da.</p>"
         ),
     )
     if settings.SUPPORT_NOTIFY_EMAIL:

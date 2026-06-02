@@ -35,7 +35,7 @@ def test_create_ticket_returns_201(client, monkeypatch):
     )
 
     assert resp.status_code == 201
-    assert resp.data["detail"] == "Zgloszenie przyjete."
+    assert resp.data["detail"] == "Zgłoszenie przyjęte."
 
 
 @pytest.mark.django_db

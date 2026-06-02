@@ -29,4 +29,4 @@ class TicketCreateView(APIView):
         s = TicketWriteSerializer(data=request.data)
         s.is_valid(raise_exception=True)
         services.create_ticket(**s.validated_data)
-        return Response({"detail": "Zgloszenie przyjete."}, status=status.HTTP_201_CREATED)
+        return Response({"detail": "Zgłoszenie przyjęte."}, status=status.HTTP_201_CREATED)

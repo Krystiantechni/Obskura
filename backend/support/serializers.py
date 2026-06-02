@@ -7,18 +7,18 @@ class TicketWriteSerializer(serializers.Serializer):
     name = serializers.CharField(
         min_length=2,
         max_length=60,
-        error_messages={"min_length": "Imie jest wymagane.", "blank": "Imie jest wymagane."},
+        error_messages={"min_length": "Imię jest wymagane.", "blank": "Imię jest wymagane."},
     )
-    email = serializers.EmailField(error_messages={"invalid": "Nieprawidlowy adres e-mail."})
+    email = serializers.EmailField(error_messages={"invalid": "Nieprawidłowy adres e-mail."})
     category = serializers.CharField(
         min_length=1,
         max_length=40,
-        error_messages={"blank": "Wybierz kategorie."},
+        error_messages={"blank": "Wybierz kategorię."},
     )
     message = serializers.CharField(
         min_length=10,
         max_length=5000,
-        error_messages={"min_length": "Wiadomosc musi miec min. 10 znakow."},
+        error_messages={"min_length": "Wiadomość musi mieć min. 10 znaków."},
     )
 
 

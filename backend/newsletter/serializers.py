@@ -4,13 +4,13 @@ from newsletter.models import Campaign, Freq
 
 
 class SubscribeWriteSerializer(serializers.Serializer):
-    email = serializers.EmailField(error_messages={"invalid": "Nieprawidlowy adres e-mail."})
+    email = serializers.EmailField(error_messages={"invalid": "Nieprawidłowy adres e-mail."})
     freq = serializers.ChoiceField(choices=Freq.choices, default=Freq.WEEK, required=False)
     consent = serializers.BooleanField()
 
     def validate_consent(self, value):
         if value is not True:
-            raise serializers.ValidationError("Wymagana zgoda na otrzymywanie wiadomosci.")
+            raise serializers.ValidationError("Wymagana zgoda na otrzymywanie wiadomości.")
         return value
 
 
