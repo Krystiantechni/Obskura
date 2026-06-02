@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,42 +14,84 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='StreamStatus',
+            name="StreamStatus",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_live', models.BooleanField(default=False, verbose_name='na żywo')),
-                ('title', models.CharField(blank=True, max_length=200, verbose_name='tytuł streamu')),
-                ('started_at', models.DateTimeField(blank=True, null=True, verbose_name='start')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_live", models.BooleanField(default=False, verbose_name="na żywo")),
+                (
+                    "title",
+                    models.CharField(blank=True, max_length=200, verbose_name="tytuł streamu"),
+                ),
+                ("started_at", models.DateTimeField(blank=True, null=True, verbose_name="start")),
             ],
             options={
-                'verbose_name': 'status streamu',
-                'verbose_name_plural': 'status streamu',
-                'ordering': ['-created_at'],
-                'abstract': False,
+                "verbose_name": "status streamu",
+                "verbose_name_plural": "status streamu",
+                "ordering": ["-created_at"],
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Notification',
+            name="Notification",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('kind', models.CharField(choices=[('system', 'Systemowe'), ('reply', 'Odpowiedź'), ('event', 'Wydarzenie'), ('membership', 'Subskrypcja'), ('patronage', 'Patronat')], max_length=16, verbose_name='rodzaj')),
-                ('title', models.CharField(max_length=160, verbose_name='tytuł')),
-                ('body', models.TextField(blank=True, verbose_name='treść')),
-                ('url', models.CharField(blank=True, max_length=300, verbose_name='link')),
-                ('payload', models.JSONField(blank=True, default=dict, verbose_name='dane')),
-                ('read_at', models.DateTimeField(blank=True, null=True, verbose_name='przeczytano')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='notifications', to=settings.AUTH_USER_MODEL, verbose_name='użytkownik')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "kind",
+                    models.CharField(
+                        choices=[
+                            ("system", "Systemowe"),
+                            ("reply", "Odpowiedź"),
+                            ("event", "Wydarzenie"),
+                            ("membership", "Subskrypcja"),
+                            ("patronage", "Patronat"),
+                        ],
+                        max_length=16,
+                        verbose_name="rodzaj",
+                    ),
+                ),
+                ("title", models.CharField(max_length=160, verbose_name="tytuł")),
+                ("body", models.TextField(blank=True, verbose_name="treść")),
+                ("url", models.CharField(blank=True, max_length=300, verbose_name="link")),
+                ("payload", models.JSONField(blank=True, default=dict, verbose_name="dane")),
+                (
+                    "read_at",
+                    models.DateTimeField(blank=True, null=True, verbose_name="przeczytano"),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="notifications",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="użytkownik",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'powiadomienie',
-                'verbose_name_plural': 'powiadomienia',
-                'ordering': ['-created_at'],
-                'abstract': False,
-                'indexes': [models.Index(fields=['user', '-created_at'], name='notificatio_user_id_05b4bc_idx'), models.Index(fields=['user', 'read_at'], name='notificatio_user_id_47e85c_idx')],
+                "verbose_name": "powiadomienie",
+                "verbose_name_plural": "powiadomienia",
+                "ordering": ["-created_at"],
+                "abstract": False,
+                "indexes": [
+                    models.Index(
+                        fields=["user", "-created_at"], name="notificatio_user_id_05b4bc_idx"
+                    ),
+                    models.Index(fields=["user", "read_at"], name="notificatio_user_id_47e85c_idx"),
+                ],
             },
         ),
     ]

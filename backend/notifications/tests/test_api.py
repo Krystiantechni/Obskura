@@ -10,6 +10,7 @@ from notifications.tests.factories import NotificationFactory
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _authed_client(user):
     """Return APIClient force-authenticated as user."""
     c = APIClient()
@@ -20,6 +21,7 @@ def _authed_client(user):
 # ---------------------------------------------------------------------------
 # GET /api/v1/notifications — list (own only, cursor-paginated, auth required)
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.django_db
 class TestNotificationList:
@@ -78,6 +80,7 @@ class TestNotificationList:
 # GET /api/v1/notifications/unread-count — unread counter
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.django_db
 class TestUnreadCount:
     URL = "/api/v1/notifications/unread-count"
@@ -114,6 +117,7 @@ class TestUnreadCount:
 # ---------------------------------------------------------------------------
 # POST /api/v1/notifications/{id}/read — mark single notification read
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.django_db
 class TestMarkRead:
@@ -163,6 +167,7 @@ class TestMarkRead:
 # POST /api/v1/notifications/read-all — mark all own unread as read
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.django_db
 class TestMarkAllRead:
     URL = "/api/v1/notifications/read-all"
@@ -179,6 +184,7 @@ class TestMarkAllRead:
         body = res.json()
         assert body == {"updated": 4}
         from notifications.models import Notification
+
         unread = Notification.objects.filter(user=user, read_at__isnull=True).count()
         assert unread == 0
 
@@ -200,6 +206,7 @@ class TestMarkAllRead:
         assert res.json() == {"updated": 1}
         # other user's notifications stay unread
         from notifications.models import Notification
+
         still_unread = Notification.objects.filter(user=other, read_at__isnull=True).count()
         assert still_unread == 3
 
@@ -213,6 +220,7 @@ class TestMarkAllRead:
 # ---------------------------------------------------------------------------
 # GET /api/v1/stream/status — public stream status
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.django_db
 class TestStreamStatus:

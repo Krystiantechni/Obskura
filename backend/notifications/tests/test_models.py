@@ -47,9 +47,7 @@ class TestNotification:
         assert n.title.startswith("Powiadomienie")
 
     def test_indexes_exist(self):
-        index_fields = [
-            tuple(idx.fields) for idx in Notification._meta.indexes
-        ]
+        index_fields = [tuple(idx.fields) for idx in Notification._meta.indexes]
         assert ("user", "-created_at") in index_fields
         assert ("user", "read_at") in index_fields
 

@@ -62,9 +62,7 @@ def test_reply_in_moderated_category_no_notification():
     post = create_post(user=replier, thread=thread, body="Pending reply")
 
     assert post.status == PostStatus.PENDING
-    assert (
-        Notification.objects.filter(user=thread_author, kind=NotificationKind.REPLY).count() == 0
-    )
+    assert Notification.objects.filter(user=thread_author, kind=NotificationKind.REPLY).count() == 0
 
 
 # ---------------------------------------------------------------------------
