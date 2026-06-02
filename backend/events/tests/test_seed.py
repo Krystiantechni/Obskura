@@ -1,4 +1,5 @@
 """Task 6 — seed_events command tests."""
+
 import pytest
 from django.core.management import call_command
 

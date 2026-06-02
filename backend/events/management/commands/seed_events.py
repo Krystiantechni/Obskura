@@ -3,6 +3,7 @@
 Idempotent: uses update_or_create keyed on slug.
 Data sourced from src/pages/Events.jsx.
 """
+
 from django.core.management.base import BaseCommand
 from django.utils.dateparse import parse_datetime
 
@@ -46,7 +47,7 @@ UPCOMING_EVENTS = [
     # seats "12 / 180" => capacity=180; seatsLabel "POZOSTALO, 35 zl" => price=35
     {
         "slug": "premiera-odsłuchowa-pacjentka-23-kino-iluzjon",
-        "title": "Premiera odsłuchowa \"Pacjentka 23\" - Kino Iluzjon",
+        "title": 'Premiera odsłuchowa "Pacjentka 23" - Kino Iluzjon',
         "mode": EventMode.LIVE,
         "starts_at": _dt("2026-06-14T22:00:00+02:00"),
         "duration_minutes": 110,
@@ -110,7 +111,7 @@ UPCOMING_EVENTS = [
     # seatsLabel "OD 15.06" (PREORDER) => capacity=None; price=0
     {
         "slug": "festiwal-mokry-pasek-obskura",
-        "title": "Festiwal \"Mokry Pąsek\" - OBSKURA scena audio",
+        "title": 'Festiwal "Mokry Pąsek" - OBSKURA scena audio',
         "mode": EventMode.LIVE,
         "starts_at": _dt("2026-08-09T21:00:00+02:00"),
         "duration_minutes": 0,
@@ -148,7 +149,7 @@ PAST_EVENTS = [
     # stat3 "WYPRZEDANE" => no recording
     {
         "slug": "premiera-lancuch-fenrira-kino-iluzjon",
-        "title": "Premiera \"Łańcuch Fenrira\"",
+        "title": 'Premiera "Łańcuch Fenrira"',
         "mode": EventMode.LIVE,
         "starts_at": _dt("2026-04-12T20:00:00+02:00"),
         "duration_minutes": 180,
