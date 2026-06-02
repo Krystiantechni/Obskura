@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from events.models import Event
+from events.models import Event, Registration
 from events.selectors import can_see_recording
 
 
@@ -54,3 +54,19 @@ class EventDetailSerializer(EventListSerializer):
         if can_see_recording(user=user, event=obj):
             return obj.recording_url or None
         return None
+
+
+class EventMinimalSerializer(serializers.ModelSerializer):
+    """Nested minimal event representation used inside RegistrationReadSerializer."""
+
+    class Meta:
+        model = Event
+        fields = ["slug", "title", "starts_at", "mode"]
+
+
+class RegistrationReadSerializer(serializers.ModelSerializer):
+    event = EventMinimalSerializer(read_only=True)
+
+    class Meta:
+        model = Registration
+        fields = ["id", "event", "status", "created_at"]

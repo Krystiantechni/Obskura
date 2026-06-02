@@ -1,13 +1,22 @@
 from rest_framework.exceptions import NotFound, ValidationError
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.authentication import OptionalTokenAuthentication
-from events.models import EventMode
-from events.pagination import EventCursorPagination, PastEventCursorPagination
-from events.selectors import event_detail, events_list, events_list_cached
-from events.serializers import EventDetailSerializer, EventListSerializer
+from events.models import Event, EventMode, EventStatus
+from events.pagination import (
+    EventCursorPagination,
+    PastEventCursorPagination,
+    RegistrationCursorPagination,
+)
+from events.selectors import event_detail, events_list, events_list_cached, user_registrations
+from events.serializers import (
+    EventDetailSerializer,
+    EventListSerializer,
+    RegistrationReadSerializer,
+)
+from events.services import cancel_registration, register_for_event
 
 _VALID_MODES = {m.value for m in EventMode}
 _VALID_WHEN = {"upcoming", "past"}
@@ -60,4 +69,40 @@ class EventDetailView(APIView):
         if event is None:
             raise NotFound()
         serializer = EventDetailSerializer(event, context={"request": request})
+        return Response(serializer.data)
+
+
+class RegisterView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, slug):
+        from django.shortcuts import get_object_or_404
+
+        event = get_object_or_404(Event.objects, slug=slug, status=EventStatus.PUBLISHED)
+        result = register_for_event(user=request.user, event=event)
+        return Response(result, status=201)
+
+
+class CancelRegistrationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, slug):
+        from django.shortcuts import get_object_or_404
+
+        event = get_object_or_404(Event.objects, slug=slug, status=EventStatus.PUBLISHED)
+        cancel_registration(user=request.user, event=event)
+        return Response({"detail": "ok"}, status=200)
+
+
+class RegistrationsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        qs = user_registrations(user=request.user)
+        paginator = RegistrationCursorPagination()
+        page = paginator.paginate_queryset(qs, request)
+        if page is not None:
+            serializer = RegistrationReadSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        serializer = RegistrationReadSerializer(qs, many=True)
         return Response(serializer.data)
