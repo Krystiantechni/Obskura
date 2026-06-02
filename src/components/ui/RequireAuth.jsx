@@ -20,7 +20,12 @@ export default function RequireAuth({ children }) {
     return <Navigate to="/login" state={{ from }} replace />;
   }
 
-  return children;
+  // Jawnie tylko dla "authed" — żaden inny/nieznany status nie przepuści treści chronionej.
+  if (status === "authed") {
+    return children;
+  }
+
+  return null;
 }
 
 RequireAuth.propTypes = { children: PropTypes.node };

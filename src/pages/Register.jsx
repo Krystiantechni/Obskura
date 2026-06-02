@@ -44,6 +44,8 @@ export default function Register() {
   const submit = async (e) => {
     e.preventDefault();
     setServerError("");
+    // Tylko pola akceptowane dziś przez RegisterSerializer. Preferencje (genres/intensity/
+    // pora słuchania) zbieramy w UI, ale sync przez /accounts/me/prefs dojdzie w późniejszej podfazie.
     const payload = { email: data.email, password: data.password, name: data.name, terms: data.terms };
     const parsed = registerSchema.safeParse(payload);
     if (!parsed.success) {
