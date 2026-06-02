@@ -56,10 +56,48 @@ def cancel_registration(*, user, event):
     return reg
 
 
-# ---------------------------------------------------------------------------
-# Temporary stub — replaced in Task 5 with real Stripe checkout
-# ---------------------------------------------------------------------------
-
-
+@transaction.atomic
 def _register_paid(*, user, event):
-    raise ValidationError({"event": "Płatne eventy w Tasku 5."})
+    """Płatny bilet: rezerwacja PENDING + Checkout Session (seat dopiero po webhooku)."""
+    if not _has_space(event):
+        raise ValidationError({"event": "Brak wolnych miejsc.", "code": "event_full"})
+    reg = Registration.objects.create(event=event, user=user, status=RegStatus.PENDING)
+    from membership import payments
+
+    session = payments.create_payment_checkout(
+        user=user,
+        price_id=event.stripe_price_id,
+        amount=event.price_pln,
+        metadata={"registration_id": str(reg.id)},
+    )
+    reg.stripe_checkout_session_id = session.id
+    reg.save(update_fields=["stripe_checkout_session_id", "updated_at"])
+    return {"checkout_url": session.url}
+
+
+@transaction.atomic
+def confirm_paid_registration(*, registration_id, payment_intent=""):
+    """Webhook: potwierdzenie opłaconego biletu. Tylko PENDING→CONFIRMED.
+
+    Recheck capacity pod lockiem — nadkomplet (rzadki wyścig) → CANCELED, zwrot
+    out-of-band w test mode (jak patronat).
+    """
+    reg = Registration.objects.select_related("event").filter(pk=registration_id).first()
+    if reg is None or reg.status != RegStatus.PENDING:
+        return None
+    event = Event.objects.select_for_update().get(pk=reg.event_id)
+    over_cap = event.capacity is not None and (
+        Registration.objects.filter(event=event, status=RegStatus.CONFIRMED).count()
+        >= event.capacity
+    )
+    if over_cap:
+        reg.status = RegStatus.CANCELED
+        reg.save(update_fields=["status", "updated_at"])
+        return reg
+    reg.status = RegStatus.CONFIRMED
+    fields = ["status", "updated_at"]
+    if payment_intent:
+        reg.stripe_payment_intent_id = payment_intent
+        fields.append("stripe_payment_intent_id")
+    reg.save(update_fields=fields)
+    return reg

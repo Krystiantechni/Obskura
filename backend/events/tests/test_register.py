@@ -73,7 +73,6 @@ def test_register_free_no_capacity_limit_confirmed():
 
 @pytest.mark.django_db
 def test_register_free_increments_seats_taken():
-
     e = _future_event(capacity=10, price_pln=0)
     u = UserFactory()
     _auth(u).post(REGISTER_URL.format(slug=e.slug))
@@ -99,7 +98,6 @@ def test_register_at_capacity_waitlisted():
 
 @pytest.mark.django_db
 def test_waitlisted_does_not_increment_seats_taken():
-
     e = _future_event(capacity=1, price_pln=0)
     RegistrationFactory(event=e, status=RegStatus.CONFIRMED)
     u = UserFactory()
@@ -170,7 +168,6 @@ def test_cancel_confirmed_becomes_canceled():
 
 @pytest.mark.django_db
 def test_cancel_confirmed_frees_seat():
-
     e = _future_event(capacity=5, price_pln=0)
     u = UserFactory()
     _auth(u).post(REGISTER_URL.format(slug=e.slug))
@@ -183,7 +180,6 @@ def test_cancel_confirmed_frees_seat():
 
 @pytest.mark.django_db
 def test_cancel_promotes_oldest_waitlisted():
-
     e = _future_event(capacity=1, price_pln=0)
     owner = UserFactory()
     # Fill seat
@@ -206,7 +202,6 @@ def test_cancel_promotes_oldest_waitlisted():
 
 @pytest.mark.django_db
 def test_cancel_promotes_updates_seats_taken():
-
     e = _future_event(capacity=1, price_pln=0)
     owner = UserFactory()
     RegistrationFactory(event=e, user=owner, status=RegStatus.CONFIRMED)
@@ -232,7 +227,6 @@ def test_cancel_promotes_updates_seats_taken():
 
 @pytest.mark.django_db
 def test_cancel_waitlisted_becomes_canceled():
-
     e = _future_event(capacity=1, price_pln=0)
     RegistrationFactory(event=e, status=RegStatus.CONFIRMED)  # seat taken
     w = UserFactory()
@@ -314,7 +308,6 @@ def test_registrations_list_fields():
 
 @pytest.mark.django_db
 def test_seats_taken_recomputed_on_registration_save():
-
     e = _future_event(capacity=10)
     RegistrationFactory(event=e, status=RegStatus.CONFIRMED)
     RegistrationFactory(event=e, status=RegStatus.CONFIRMED)
@@ -326,7 +319,6 @@ def test_seats_taken_recomputed_on_registration_save():
 
 @pytest.mark.django_db
 def test_seats_taken_decrements_on_delete():
-
     e = _future_event(capacity=10)
     reg = RegistrationFactory(event=e, status=RegStatus.CONFIRMED)
     e.refresh_from_db()

@@ -194,7 +194,18 @@ def handle_webhook_event(*, event):
 
     if event_type == "checkout.session.completed":
         if obj.get("mode") == "payment":
-            _handle_patronage_paid(obj)
+            # Jeden endpoint webhooka na konto Stripe — rozgałęzienie po metadata:
+            # registration_id → bilet na event (lazy import, by uniknąć cyklu); inaczej patronat.
+            meta = obj.get("metadata") or {}
+            if meta.get("registration_id"):
+                from events.services import confirm_paid_registration
+
+                confirm_paid_registration(
+                    registration_id=meta["registration_id"],
+                    payment_intent=obj.get("payment_intent") or "",
+                )
+            else:
+                _handle_patronage_paid(obj)
         else:
             # subscription mode — idempotentnie: tylko INCOMPLETE -> ACTIVE
             # (re-delivery nie wskrzesza późniejszego CANCELED/PAST_DUE).
