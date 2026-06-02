@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
+import { useAuth } from "../context/AuthContext";
+import { registerSchema, flattenErrors } from "../lib/formSchemas";
 
 const FIELD =
   "border border-line bg-white/[0.02] px-4 py-3.5 text-[15px] text-ink-0 transition-colors placeholder:text-ink-3 focus:border-red focus:bg-red/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70";
@@ -22,8 +24,11 @@ const PW_COLORS = ["bg-line", "bg-[#ff4444]", "bg-[#ff9944]", "bg-[#ffdd44]", "b
 
 export default function Register() {
   const { t } = useTranslation();
+  const { register } = useAuth();
   const [step, setStep] = useState(1);
   const [data, setData] = useState({ email: "", password: "", name: "", intensity: 7, genres: ["psy", "folk"], terms: false });
+  const [submitting, setSubmitting] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   const upd = (k, v) => setData((d) => ({ ...d, [k]: v }));
   const toggleGenre = (id) =>
@@ -36,9 +41,27 @@ export default function Register() {
   const canStep2 = data.genres.length >= 1;
   const canStep3 = data.name.length >= 2 && data.terms;
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    setStep(4);
+    setServerError("");
+    // Tylko pola akceptowane dziś przez RegisterSerializer. Preferencje (genres/intensity/
+    // pora słuchania) zbieramy w UI, ale sync przez /accounts/me/prefs dojdzie w późniejszej podfazie.
+    const payload = { email: data.email, password: data.password, name: data.name, terms: data.terms };
+    const parsed = registerSchema.safeParse(payload);
+    if (!parsed.success) {
+      const errs = flattenErrors(parsed.error);
+      setServerError(errs.password || errs.email || errs.name || "Sprawdź wprowadzone dane.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await register(parsed.data);
+      setStep(4);
+    } catch (err) {
+      setServerError(err.message || "Rejestracja nieudana.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const stepLabel = step === 1 ? t("register.step1_label") : step === 2 ? t("register.step2_label") : t("register.step3_label");
@@ -196,9 +219,16 @@ export default function Register() {
                 <span>{t("register.newsletter_optin")}</span>
               </label>
 
+              {serverError && (
+                <p className="mb-4 border border-red/40 bg-red/[0.06] p-2.5 font-mono text-[11px] text-red" role="alert">
+                  {serverError}
+                </p>
+              )}
               <div className="flex gap-3">
                 <HorrorButton variant="ghost" className="flex-1" onClick={() => setStep(2)}>{t("register.back_step")}</HorrorButton>
-                <HorrorButton type="submit" className="flex-1" disabled={!canStep3}>{t("register.submit")}</HorrorButton>
+                <HorrorButton type="submit" className="flex-1" disabled={!canStep3 || submitting}>
+                  {submitting ? t("register.submit_loading", "Tworzenie…") : t("register.submit")}
+                </HorrorButton>
               </div>
             </>
           )}

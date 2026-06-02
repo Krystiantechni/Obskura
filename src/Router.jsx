@@ -3,6 +3,7 @@ import { lazy } from "react";
 import { createBrowserRouter, Navigate, useParams } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
+import RequireAuth from "./components/ui/RequireAuth";
 
 // Home eager — najczęstsze wejście, szybki pierwszy paint.
 // Pozostałe trasy lazy — własny chunk ładowany na żądanie (Suspense + shimmer w Layout).
@@ -50,10 +51,10 @@ export const router = createBrowserRouter([
       { path: "app", element: <App /> },
       { path: "forum", element: <Forum /> },
       { path: "careers", element: <Careers /> },
-      { path: "account", element: <Account /> },
+      { path: "account", element: <RequireAuth><Account /></RequireAuth> },
       { path: "mailings", element: <Mailings /> },
       { path: "newsletter", element: <Newsletter /> },
-      { path: "onboarding", element: <Onboarding /> },
+      { path: "onboarding", element: <RequireAuth><Onboarding /></RequireAuth> },
       { path: "patrons", element: <Patrons /> },
       { path: "player", element: <Player /> },
       { path: "press", element: <Press /> },

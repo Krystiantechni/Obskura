@@ -345,17 +345,24 @@ async function postVercel(path, body) {
 
 export const subscribeNewsletter = (data) => postVercel("/api/newsletter", data);
 export const submitContact = (data) => postVercel("/api/contact", data);
+
+// TYMCZASOWE — Login.jsx wciąż importuje `login` (repin na useAuth w Task 6).
+// `register` nieużywane już dziś, ale trzymamy parę razem. Oba usuwa Task 6.
+export const login = (data) => postVercel("/api/auth/login", data);
+export const register = (data) => postVercel("/api/auth/register", data);
 ```
+
+> **Sekwencja:** NIE usuwamy `login`/`register` w tym tasku — `src/pages/Login.jsx` nadal je importuje, więc usunięcie teraz wywaliłoby build. Usunięcie przenosimy do Task 6 (repin Login). Reszta plików (Newsletter/Support) używa `subscribeNewsletter`/`submitContact` — bez zmian.
 
 - [ ] **Step 4: Run test to verify it passes**
 
 Run: `npm run test:run -- src/lib/__tests__/apiClient.test.js`
 Expected: PASS (8 tests).
 
-- [ ] **Step 5: Verify Vercel-consumers nadal importują poprawnie**
+- [ ] **Step 5: Verify build green (wszyscy konsumenci importują poprawnie)**
 
 Run: `npm run build`
-Expected: build OK (Newsletter/Support nadal importują `subscribeNewsletter`/`submitContact`).
+Expected: build OK — `subscribeNewsletter`/`submitContact` oraz tymczasowe `login`/`register` nadal eksportowane.
 
 - [ ] **Step 6: Commit**
 
@@ -869,16 +876,27 @@ export default function Login() {
   };
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [ ] **Step 5: Usunąć tymczasowe eksporty `login`/`register` z apiClient**
 
-Run: `npm run test:run -- src/pages/__tests__/Login.test.jsx`
-Expected: PASS (2 tests).
+Login już nie importuje `login` z `apiClient` (używa `useAuth`), a `register` było nieużywane — usuń z `src/lib/apiClient.js` cztery linie dodane tymczasowo w Task 2:
 
-- [ ] **Step 6: Commit**
+```js
+// TYMCZASOWE — Login.jsx wciąż importuje `login` (repin na useAuth w Task 6).
+// `register` nieużywane już dziś, ale trzymamy parę razem. Oba usuwa Task 6.
+export const login = (data) => postVercel("/api/auth/login", data);
+export const register = (data) => postVercel("/api/auth/register", data);
+```
+
+- [ ] **Step 6: Run test + build to verify it passes**
+
+Run: `npm run test:run -- src/pages/__tests__/Login.test.jsx && npm run build`
+Expected: testy PASS (2), build OK (brak martwych importów `login`/`register`).
+
+- [ ] **Step 7: Commit**
 
 ```bash
-git add src/pages/Login.jsx src/pages/__tests__/Login.test.jsx
-git commit -m "feat(auth): wire Login to AuthContext with returnTo redirect (B8a)"
+git add src/pages/Login.jsx src/pages/__tests__/Login.test.jsx src/lib/apiClient.js
+git commit -m "feat(auth): wire Login to AuthContext with returnTo, drop Vercel auth shims (B8a)"
 ```
 
 ---
