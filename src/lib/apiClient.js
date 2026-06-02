@@ -18,7 +18,10 @@ export class ApiError extends Error {
 // DRF zwraca: {detail:"…"} | {non_field_errors:["…"]} | {pole:["…"] | "…"}.
 function parseErrorBody(data) {
   if (!data || typeof data !== "object") return {};
-  if (typeof data.detail === "string") return { message: data.detail };
+  // `detail` bywa nie-stringiem (custom exception handler / Knox) — nie gub komunikatu.
+  if (data.detail != null) {
+    return { message: typeof data.detail === "string" ? data.detail : JSON.stringify(data.detail) };
+  }
   const fieldErrors = {};
   let firstMsg;
   for (const [key, val] of Object.entries(data)) {

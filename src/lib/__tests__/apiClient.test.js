@@ -81,4 +81,21 @@ describe("src/lib/apiClient.js — request", () => {
     expect(opts.method).toBe("POST");
     expect(res.token).toBe("t");
   });
+
+  it("5xx z pustym body → ApiError(status) z domyślnym komunikatem", async () => {
+    global.fetch = vi.fn().mockResolvedValue({ status: 500, ok: false, json: () => Promise.resolve(null) });
+    await expect(request("GET", "accounts/me", { auth: true })).rejects.toMatchObject({
+      status: 500,
+      message: "Błąd serwera (500).",
+      fieldErrors: null,
+    });
+  });
+
+  it("detail jako obiekt → message ze stringified payload", async () => {
+    global.fetch = mockFetch(403, { detail: { code: "not_authenticated", msg: "x" } });
+    await expect(request("GET", "accounts/me", { auth: true })).rejects.toMatchObject({
+      status: 403,
+      message: JSON.stringify({ code: "not_authenticated", msg: "x" }),
+    });
+  });
 });
