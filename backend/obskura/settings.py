@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 import environ
+from celery.schedules import crontab
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -146,6 +147,34 @@ STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="")
 # API REST: bez auto-redirectu na trailing slash. Klient JS woła dokładne ścieżki;
 # brak slasha => jawny 404 zamiast cichego 301, który gubiłby body POST-a.
 APPEND_SLASH = False
+
+# --- Celery (async) ---
+CELERY_BROKER_URL = env(
+    "CELERY_BROKER_URL",
+    default=f"redis://{env('REDIS_HOST', default='redis')}:{env('REDIS_PORT', default='6379')}/1",
+)
+CELERY_TASK_IGNORE_RESULT = True
+CELERY_TASK_ALWAYS_EAGER = env.bool("CELERY_TASK_ALWAYS_EAGER", default=False)
+CELERY_TASK_EAGER_PROPAGATES = True
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BEAT_SCHEDULE = {
+    "expire-subscriptions": {
+        "task": "membership.tasks.expire_subscriptions",
+        "schedule": crontab(hour=3, minute=0),
+    },
+    "cleanup-stale-pending": {
+        "task": "membership.tasks.cleanup_stale_pending",
+        "schedule": crontab(minute=0),  # co godzinę
+    },
+    "cleanup-stale-registrations": {
+        "task": "events.tasks.cleanup_stale_registrations",
+        "schedule": crontab(minute=0),  # co godzinę
+    },
+    "recompute-all-ratings": {
+        "task": "playback.tasks.recompute_all_ratings",
+        "schedule": crontab(hour=4, minute=0),
+    },
+}
 
 # --- dev guard: wykrywanie N+1 i debug toolbar (tylko DEBUG=True) ---
 _TESTING = "pytest" in sys.modules

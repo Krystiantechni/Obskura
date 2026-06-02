@@ -35,5 +35,29 @@ services:
       redis:
         condition: service_healthy
 
+  worker:
+    build: .
+    command: celery -A obskura worker -l info
+    volumes:
+      - .:/app
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  beat:
+    build: .
+    command: celery -A obskura beat -l info
+    volumes:
+      - .:/app
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
 volumes:
   pgdata:
