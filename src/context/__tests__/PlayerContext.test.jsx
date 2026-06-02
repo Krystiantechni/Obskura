@@ -2,6 +2,11 @@ import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
 import { PlayerProvider, usePlayer } from '../PlayerContext';
 
+// PlayerProvider woła useEpisode(currentId) po detal. W testach mockujemy go →
+// brak detalu (episode:null), więc current = summary z kolejki (mają własne `src`).
+// Dzięki temu nie potrzeba QueryClientProvider ani sieci.
+vi.mock('../../hooks/useCatalog.js', () => ({ useEpisode: () => ({ episode: null }) }));
+
 // jsdom nie implementuje HTMLMediaElement.play / pause — mockujemy globalnie.
 beforeAll(() => {
   window.HTMLMediaElement.prototype.play = vi.fn().mockResolvedValue(undefined);
