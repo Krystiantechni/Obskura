@@ -11,6 +11,9 @@ urlpatterns = [
     path("api/v1/", include("membership.urls")),
     path("api/v1/", include("community.urls")),
     path("api/v1/", include("events.urls")),
+    path("api/v1/", include("support.urls")),
+    path("api/v1/", include("newsletter.urls")),
+    path("api/v1/", include("pages.urls")),
 ]
 
 if settings.DEBUG:
