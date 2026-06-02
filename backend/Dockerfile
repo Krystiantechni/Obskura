@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir -r requirements/dev.txt
 COPY . .
 
 EXPOSE 8000
-CMD ["gunicorn", "obskura.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "obskura.asgi:application"]

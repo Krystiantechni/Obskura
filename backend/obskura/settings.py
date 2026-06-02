@@ -19,6 +19,7 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     "knox",
     "corsheaders",
     "django_filters",
+    "channels",
     # local
     "core",
     "accounts",
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     "support",
     "newsletter",
     "pages",
+    "notifications",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -191,3 +194,13 @@ if DEBUG:
     # ale wyłącz podczas pytest (toolbar crashuje w test-clientcie przez djdt: namespace).
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda request: not _TESTING}
     NPLUSONE_RAISE = False  # loguje N+1; ustaw True by twardo failować
+
+# --- Channels (real-time) ---
+_REDIS_HOST = env("REDIS_HOST", default="redis")
+_REDIS_PORT = env("REDIS_PORT", default="6379")
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {"hosts": [f"redis://{_REDIS_HOST}:{_REDIS_PORT}/2"]},
+    }
+}

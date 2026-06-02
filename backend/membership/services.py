@@ -220,6 +220,15 @@ def handle_webhook_event(*, event):
                 sub.stripe_subscription_id = obj.get("subscription", "") or ""
                 sub.status = SubStatus.ACTIVE
                 sub.save(update_fields=["stripe_customer_id", "stripe_subscription_id", "status"])
+                from notifications.models import NotificationKind
+                from notifications.services import notify
+
+                notify(
+                    user=sub.user,
+                    kind=NotificationKind.MEMBERSHIP,
+                    title="Subskrypcja aktywna",
+                    payload={"plan": sub.plan.code},
+                )
         return
 
     if event_type == "customer.subscription.updated":

@@ -13,3 +13,4 @@ select = ["E", "F", "I", "UP", "B", "DJ"]
 DJANGO_SETTINGS_MODULE = "obskura.settings"
 python_files = ["test_*.py", "tests.py"]
 addopts = "-q --reuse-db"
+asyncio_mode = "auto"

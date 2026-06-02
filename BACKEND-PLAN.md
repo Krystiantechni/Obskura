@@ -155,9 +155,9 @@ Wszystkie listy: paginacja + `ETag`/`Last-Modified` dla cache. Walidacja seriali
   - [x] **B5a — Community (forum):** Category/Thread/Post + reakcje, **pełny pipeline moderacji** (statusy postów, zgłoszenia bez auto-ukrywania, rola `is_moderator`, audit log), widoczność (autor widzi swoje pending/flagged), cursor pagination, cache. Spec + plan w `docs/superpowers/`.
   - [x] **B5b — Events:** wydarzenia online/live/klan, zapisy + capacity + waitlist, **klan-gating** przez membership (`has_klan_access`), **płatne bilety przez Stripe** (reuse seam + webhook dispatch po `metadata`), nagrania gated (klub/klan). Spec + plan w `docs/superpowers/`.
 - [x] **B6 — Support + Newsletter + Pages:** FAQ + tickety kontaktowe (Resend ack/notify, throttle), newsletter single opt-in + katalog szablonów (`/mailings`), CMS prawne (LegalDoc wersjonowany) + prasa. Wspólny `core/email.py` (Resend, mock w testach). Bulk-wysyłka kampanii odłożona do B7. Spec + plan w `docs/superpowers/`. _(żywe maile wymagają RESEND_API_KEY w obskura-media)_
-- [~] **B7 — Real-time + async** (rozbite na dwa podsystemy):
+- [x] **B7 — Real-time + async** (rozbite na dwa podsystemy):
   - [x] **B7a — Celery + async:** Celery app + broker Redis db1 + statyczny beat; `core.tasks.send_email_task` (maile ticket/welcome async), `newsletter.send_campaign_task` (bulk + command + akcja admin), periodic: `expire_subscriptions`, `cleanup_stale_pending`, `cleanup_stale_registrations`, `recompute_all_ratings`. docker-compose worker+beat. Testy eager. Spec+plan w `docs/superpowers/`. _(narracja ElevenLabs deferred — T8 zablokowane)_
-  - [ ] **B7b — Channels:** ASGI ProtocolTypeRouter + channels-redis, app `notifications` (model + per-user WS consumer, auth Knox), live-status broadcast. (web-push/VAPID deferred.)
+  - [x] **B7b — Channels:** ASGI ProtocolTypeRouter + channels-redis, `TokenAuthMiddleware` (Knox WS auth po `?token=`), app `notifications` (Notification + StreamStatus singleton, REST list/read + `/stream/status`, `NotificationConsumer` per-user + `StatusConsumer` live-status), `notify()` push + 3 triggery (reply/waitlist/sub-activation). `web`/Dockerfile na daphne. (web-push/VAPID deferred.) Spec+plan w `docs/superpowers/`.
 - [ ] **B8 — Integracja frontu:** podmiana `apiClient` na `/api/v1/`, CORS, env `VITE_API_URL`, migracja `api/*` Vercel.
 
 ---
