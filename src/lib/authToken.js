@@ -14,7 +14,7 @@ export function setToken(token) {
   try {
     localStorage.setItem(TOKEN_KEY, token);
   } catch {
-    /* storage niedostępny (tryb prywatny / wyłączony) — sesja tylko w pamięci */
+    /* storage niedostępny (tryb prywatny / wyłączony) — token się nie zapisze, po reloadzie sesja przepada */
   }
 }
 
