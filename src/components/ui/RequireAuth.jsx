@@ -6,8 +6,8 @@ export default function RequireAuth({ children }) {
   const { status } = useAuth();
   const location = useLocation();
 
-  if (status === "idle" || status === "loading") {
-    // Placeholder na czas hydratacji — nie migamy redirectem do /login.
+  if (status === "loading") {
+    // Placeholder na czas hydratacji sesji — nie migamy redirectem do /login.
     return <div className="min-h-screen bg-bg-0" aria-busy="true" />;
   }
 
