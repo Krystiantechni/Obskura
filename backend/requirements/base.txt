@@ -9,3 +9,4 @@ django-filter~=24.3
 gunicorn~=23.0.0
 stripe~=11.0
 resend~=2.0
+celery[redis]~=5.4

@@ -4,6 +4,16 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
+def _celery_eager(settings):
+    settings.CELERY_TASK_ALWAYS_EAGER = True
+    settings.CELERY_TASK_EAGER_PROPAGATES = True
+    from obskura.celery import app
+
+    app.conf.task_always_eager = True
+    app.conf.task_eager_propagates = True
+
+
+@pytest.fixture(autouse=True)
 def clear_cache():
     """
     Clear the Redis cache before every test.

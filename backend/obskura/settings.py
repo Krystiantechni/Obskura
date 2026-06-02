@@ -147,6 +147,18 @@ STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="")
 # brak slasha => jawny 404 zamiast cichego 301, który gubiłby body POST-a.
 APPEND_SLASH = False
 
+# --- Celery (async) ---
+CELERY_BROKER_URL = env(
+    "CELERY_BROKER_URL",
+    default=f"redis://{env('REDIS_HOST', default='redis')}:{env('REDIS_PORT', default='6379')}/1",
+)
+CELERY_TASK_IGNORE_RESULT = True
+CELERY_TASK_ALWAYS_EAGER = env.bool("CELERY_TASK_ALWAYS_EAGER", default=False)
+CELERY_TASK_EAGER_PROPAGATES = True
+CELERY_TIMEZONE = TIME_ZONE
+# CELERY_BEAT_SCHEDULE jest dopełniany w Tasku 5 (komplet jobów).
+CELERY_BEAT_SCHEDULE: dict = {}
+
 # --- dev guard: wykrywanie N+1 i debug toolbar (tylko DEBUG=True) ---
 _TESTING = "pytest" in sys.modules
 
