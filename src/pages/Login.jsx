@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Eyebrow from "../components/ui/Eyebrow";
 import HorrorButton from "../components/ui/HorrorButton";
 import { Arrow } from "../components/ui/Icons";
-import { login } from "../lib/apiClient";
+import { useAuth } from "../context/AuthContext";
 import { loginSchema, flattenErrors } from "../lib/formSchemas";
 
 const FIELD =
@@ -12,6 +12,9 @@ const FIELD =
 
 export default function Login() {
   const { t } = useTranslation();
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
   const [showPw, setShowPw] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,13 +24,19 @@ export default function Login() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setErrors({}); setServerError("");
+    setErrors({});
+    setServerError("");
     const parsed = loginSchema.safeParse({ email, password });
-    if (!parsed.success) { setErrors(flattenErrors(parsed.error)); return; }
+    if (!parsed.success) {
+      setErrors(flattenErrors(parsed.error));
+      return;
+    }
     setLoading(true);
     try {
       await login(parsed.data);
+      navigate(params.get("returnTo") || "/account", { replace: true });
     } catch (err) {
+      if (err.fieldErrors) setErrors(err.fieldErrors);
       setServerError(err.message || "Logowanie nieudane.");
     } finally {
       setLoading(false);

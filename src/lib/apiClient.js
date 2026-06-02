@@ -109,7 +109,3 @@ async function postVercel(path, body) {
 export const subscribeNewsletter = (data) => postVercel("/api/newsletter", data);
 export const submitContact = (data) => postVercel("/api/contact", data);
 
-// TYMCZASOWE — Login.jsx wciąż importuje `login` (repin na useAuth w Task 6).
-// `register` nieużywane już dziś, ale trzymamy parę razem. Oba usuwa Task 6.
-export const login = (data) => postVercel("/api/auth/login", data);
-export const register = (data) => postVercel("/api/auth/register", data);
