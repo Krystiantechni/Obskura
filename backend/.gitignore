@@ -1,0 +1,4 @@
+# Celery beat scheduler runtime DB (generowane przez serwis `beat`)
+celerybeat-schedule
+celerybeat-schedule-*
+celerybeat.pid
