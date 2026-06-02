@@ -158,7 +158,15 @@ Wszystkie listy: paginacja + `ETag`/`Last-Modified` dla cache. Walidacja seriali
 - [x] **B7 — Real-time + async** (rozbite na dwa podsystemy):
   - [x] **B7a — Celery + async:** Celery app + broker Redis db1 + statyczny beat; `core.tasks.send_email_task` (maile ticket/welcome async), `newsletter.send_campaign_task` (bulk + command + akcja admin), periodic: `expire_subscriptions`, `cleanup_stale_pending`, `cleanup_stale_registrations`, `recompute_all_ratings`. docker-compose worker+beat. Testy eager. Spec+plan w `docs/superpowers/`. _(narracja ElevenLabs deferred — T8 zablokowane)_
   - [x] **B7b — Channels:** ASGI ProtocolTypeRouter + channels-redis, `TokenAuthMiddleware` (Knox WS auth po `?token=`), app `notifications` (Notification + StreamStatus singleton, REST list/read + `/stream/status`, `NotificationConsumer` per-user + `StatusConsumer` live-status), `notify()` push + 3 triggery (reply/waitlist/sub-activation). `web`/Dockerfile na daphne. (web-push/VAPID deferred.) Spec+plan w `docs/superpowers/`.
-- [ ] **B8 — Integracja frontu:** podmiana `apiClient` na `/api/v1/`, CORS, env `VITE_API_URL`, migracja `api/*` Vercel.
+- [ ] **B8 — Integracja frontu** (meta-faza: spina ~9 podsystemów frontu z `/api/v1/` — rozbita na podfazy shippable):
+  - [ ] **B8a — Fundament + Auth:** klient `fetch` na `/api/v1/` (token Knox w nagłówku, env `VITE_API_URL`, CORS, backend lokalnie), `AuthContext` (login/register/logout/me), chronione trasy (Account/Onboarding). Token w localStorage, auth dodatkowy (guest-first). Spec w `docs/superpowers/specs/2026-06-02-frontend-b8a-integration-auth-design.md`.
+  - [ ] **B8b — Catalog:** `src/data/tracks.js` → `/catalog/episodes|seasons|genres|creators` (read-only). Rozważyć TanStack Query (cache list).
+  - [ ] **B8c — Playback sync:** favorites/queue/progress/history localStorage → API; merge stanu gościa przy logowaniu.
+  - [ ] **B8d — Membership:** Club/Patrons (plany, subscribe, status subskrypcji), premium-gating + quota free.
+  - [ ] **B8e — Community:** Forum (kategorie/wątki/posty, reakcje, moderacja widoczna autorowi).
+  - [ ] **B8f — Events + Support/Newsletter/Pages:** zapisy/waitlist; migracja `api/contact|newsletter` (Vercel) → Django; FAQ, legal/press z `/pages`.
+  - [ ] **B8g — Notifications (WS):** klient Channels (`?token=`), in-app notifications + live stream-status.
+  - [ ] **B8h — Deploy:** prod `VITE_API_URL`, domena backendu, CORS prod, odstawienie pozostałych `api/*` Vercel.
 
 ---
 
