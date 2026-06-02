@@ -7,7 +7,7 @@ import FloatingMetaCard from "../ui/FloatingMetaCard";
 import SciFiText from "../ui/SciFiText";
 import { Play, Pause, Arrow } from "../ui/Icons";
 import { usePlayer } from "../../context/PlayerContext";
-import { HERO_TRACK } from "../../data/tracks";
+import { useEpisodes } from "../../hooks/useCatalog";
 
 const MOBILE_MQ = "(max-width: 1023px)";
 
@@ -42,9 +42,16 @@ export default function Hero({ variant = "wide" }) {
     return () => io.disconnect();
   }, [showVideo]);
 
-  const isHero = current?.id === HERO_TRACK.id;
+  // Hero = najnowszy odcinek z katalogu (lista jest sortowana -published_at).
+  const { episodes } = useEpisodes();
+  const heroTrack = episodes[0] || null;
+  const isHero = !!heroTrack && current?.id === heroTrack.id;
   const playing = isHero && globalPlaying;
-  const onToggle = () => (isHero ? toggle() : playTrack(HERO_TRACK));
+  const onToggle = () => {
+    if (!heroTrack) return;
+    if (isHero) toggle();
+    else playTrack(heroTrack);
+  };
 
   return (
     <section className="relative min-h-screen overflow-hidden px-5 pb-10 pt-[140px] lg:pb-16 lg:px-12">

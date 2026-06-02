@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { hasConsent } from "../lib/consent";
+import { useEpisode } from "../hooks/useCatalog.js";
 
 const FAV_KEY = "obskura_favorites";
 const STATE_KEY = "obskura_player_state";
@@ -52,9 +53,16 @@ export function PlayerProvider({ children }) {
   const [sleepEndsAt, setSleepEndsAt] = useState(null);
   const [sleepRemaining, setSleepRemaining] = useState(0);
 
-  const current = useMemo(
+  // Kolejka trzyma summary (z listy katalogu). Detal (audio_url/chapters/transcript)
+  // dociągamy przez useEpisode(slug); `current` = summary wzbogacone o detal.
+  const summary = useMemo(
     () => queue.find((t) => t.id === currentId) || null,
     [queue, currentId],
+  );
+  const { episode: detail } = useEpisode(currentId);
+  const current = useMemo(
+    () => (summary ? { ...summary, ...(detail || {}) } : null),
+    [summary, detail],
   );
   const currentIndex = useMemo(
     () => queue.findIndex((t) => t.id === currentId),
@@ -68,16 +76,18 @@ export function PlayerProvider({ children }) {
     if (hasConsent("preferences")) localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
   }, [favorites]);
 
-  // Załaduj nowe źródło gdy zmienia się ścieżka.
+  // Załaduj źródło gdy zmienia się audio_url. Detal dociąga się async, więc
+  // kluczujemy efekt na `current?.src` (slug/id jest stały podczas dociągania).
+  // src === null/undefined (premium-gated lub jeszcze ładowane) → nie ładujemy.
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !current) return;
+    if (!audio || !current?.src) return;
     audio.src = current.src;
     audio.load();
     if (!pendingResume.current) setCurrentTime(0);
     if (playing) audio.play().catch(() => setPlaying(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current?.id]);
+  }, [current?.src]);
 
   // Synchronizacja play/pause.
   useEffect(() => {
@@ -245,6 +255,7 @@ export function PlayerProvider({ children }) {
     () => ({
       queue,
       current,
+      premiumLocked: !!(current && current.premium && !current.src),
       currentIndex,
       playing,
       currentTime,

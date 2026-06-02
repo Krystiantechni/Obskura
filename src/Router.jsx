@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components -- plik konfiguracji routera, nie granica fast-refresh */
 import { lazy } from "react";
-import { createBrowserRouter, Navigate, useParams } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import RequireAuth from "./components/ui/RequireAuth";
@@ -29,12 +29,6 @@ const Creators = lazy(() => import("./pages/Creators"));
 const Support = lazy(() => import("./pages/Support"));
 const ComingSoon = lazy(() => import("./pages/ComingSoon"));
 
-// Stare PL /odcinek/:id → /episode/:id z zachowaniem identyfikatora (301 client-side).
-function LegacyEpisodeRedirect() {
-  const { id } = useParams();
-  return <Navigate to={`/episode/${id}`} replace />;
-}
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -47,7 +41,7 @@ export const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "archive", element: <Archive /> },
       { path: "club", element: <Club /> },
-      { path: "episode/:id", element: <Episode /> },
+      { path: "episode/:slug", element: <Episode /> },
       { path: "app", element: <App /> },
       { path: "forum", element: <Forum /> },
       { path: "careers", element: <Careers /> },
@@ -69,7 +63,7 @@ export const router = createBrowserRouter([
       { path: "rejestracja", element: <Navigate to="/register" replace /> },
       { path: "archiwum", element: <Navigate to="/archive" replace /> },
       { path: "klub", element: <Navigate to="/club" replace /> },
-      { path: "odcinek/:id", element: <LegacyEpisodeRedirect /> },
+      { path: "odcinek/:id", element: <Navigate to="/archive" replace /> },
       { path: "aplikacja", element: <Navigate to="/app" replace /> },
       { path: "kariera", element: <Navigate to="/careers" replace /> },
       { path: "konto", element: <Navigate to="/account" replace /> },

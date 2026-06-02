@@ -11,11 +11,13 @@ vi.mock('../../../context/PlayerContext', () => ({
 }));
 
 const TRACK = {
-  id: 'ep-12',
-  num: '12',
+  id: 's03-e12-mgla',
+  slug: 's03-e12-mgla',
+  number: 12,
+  season: 3,
   title: 'Mgła nad',
   em: 'Wisłoujściem',
-  meta: '47:12 · 2026',
+  durationS: 2832,
   cover: '/images/monster.webp',
 };
 
@@ -46,7 +48,8 @@ describe('FavoriteRow', () => {
     const em = screen.getByText('Wisłoujściem');
     expect(em.tagName.toLowerCase()).toBe('em');
     expect(em).toHaveClass('italic');
-    expect(screen.getByText(TRACK.meta)).toBeInTheDocument();
+    expect(screen.getByText('47:12')).toBeInTheDocument(); // fmtDuration(2832)
+    expect(screen.getByText(/S03 · E12/)).toBeInTheDocument();
   });
 
   it('klik wiersza wywołuje playTrack(track) gdy current === null', async () => {

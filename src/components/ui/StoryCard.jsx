@@ -3,24 +3,41 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Play, Pause } from "./Icons";
 import { usePlayer } from "../../context/PlayerContext";
-import { TRACKS, getTrack } from "../../data/tracks";
+import { composeCardMeta } from "../../lib/catalogMap";
+
+const GENRE_ACCENT = {
+  psy: "red",
+  true: "red",
+  body: "red",
+  folk: "blue",
+  cosmic: "blue",
+  cyber: "blue",
+  noir: "red",
+  myth: "red",
+};
 
 // Karta historii 3:4 — obraz z grayscale→kolor na hover, wideo (opcjonalne) play na mouseenter.
-export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm, duration, rating, image, video, to = "/episode/1" }) {
+export default function StoryCard({ episode, queue = [], genreLabels = {}, video }) {
   const videoRef = useRef(null);
   const { current, playing, playQueue, toggle } = usePlayer();
 
-  const id = to.split("/").pop();
-  const track = getTrack(id);
-  const isCurrent = track && current?.id === track.id;
+  const isCurrent = current?.id === episode.id;
   const isPlaying = isCurrent && playing;
+  const to = `/episode/${episode.slug}`;
+  const tagAccent = GENRE_ACCENT[episode.genre] || "red";
+  const title = episode.title;
+  const titleEm = episode.em;
+  const tag = genreLabels[episode.genre] || episode.genre;
+  const duration = composeCardMeta(episode, genreLabels);
+  const rating = episode.rating != null ? `★ ${episode.rating.toFixed(1)}` : "";
+  const image = episode.cover;
+  const num = String(episode.number ?? "").padStart(2, "0");
 
   const onPlay = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!track) return;
     if (isCurrent) toggle();
-    else playQueue(TRACKS, track.id);
+    else playQueue(queue.length ? queue : [episode], episode.slug);
   };
 
   const onEnter = () => {
@@ -78,20 +95,18 @@ export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm,
         </span>
       )}
 
-      {track && (
-        <button
-          type="button"
-          onClick={onPlay}
-          aria-label={isPlaying ? `Pauza: ${title}` : `Odtwórz: ${title}`}
-          className={`absolute right-4 top-4 z-[5] grid h-11 w-11 place-items-center border backdrop-blur-sm transition-all duration-200 ${
-            isCurrent
-              ? "border-red bg-red text-white opacity-100"
-              : "translate-y-[-4px] border-white/15 bg-black/60 text-ink-0 opacity-0 hover:!bg-red hover:!border-red group-hover:translate-y-0 group-hover:opacity-100"
-          }`}
-        >
-          {isPlaying ? <Pause size={10} /> : <Play size={10} />}
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={onPlay}
+        aria-label={isPlaying ? `Pauza: ${title}` : `Odtwórz: ${title}`}
+        className={`absolute right-4 top-4 z-[5] grid h-11 w-11 place-items-center border backdrop-blur-sm transition-all duration-200 ${
+          isCurrent
+            ? "border-red bg-red text-white opacity-100"
+            : "translate-y-[-4px] border-white/15 bg-black/60 text-ink-0 opacity-0 hover:!bg-red hover:!border-red group-hover:translate-y-0 group-hover:opacity-100"
+        }`}
+      >
+        {isPlaying ? <Pause size={10} /> : <Play size={10} />}
+      </button>
 
       <div className="absolute inset-x-0 bottom-0 z-[3] p-6">
         <span className={`mb-3 inline-block border px-2.5 py-1 font-mono text-[9px] uppercase tracking-mono ${tagCls}`}>
@@ -110,14 +125,18 @@ export default function StoryCard({ num, tag, tagAccent = "red", title, titleEm,
 }
 
 StoryCard.propTypes = {
-  num: PropTypes.string.isRequired,
-  tag: PropTypes.string.isRequired,
-  tagAccent: PropTypes.oneOf(["red", "blue"]),
-  title: PropTypes.string.isRequired,
-  titleEm: PropTypes.string,
-  duration: PropTypes.string.isRequired,
-  rating: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  episode: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    em: PropTypes.string,
+    cover: PropTypes.string,
+    genre: PropTypes.string,
+    number: PropTypes.number,
+    rating: PropTypes.number,
+    durationS: PropTypes.number,
+  }).isRequired,
+  queue: PropTypes.arrayOf(PropTypes.object),
+  genreLabels: PropTypes.object,
   video: PropTypes.string,
-  to: PropTypes.string,
 };

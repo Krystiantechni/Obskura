@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import WaveformBar from "../components/ui/WaveformBar";
 import { Play, Pause, Prev, Next, Heart, Share, List, Arrow } from "../components/ui/Icons";
 import { usePlayer } from "../context/PlayerContext";
+import { composeEpisodeMeta } from "../lib/catalogMap";
 
 // Fallback długość, gdy żadna ścieżka nie jest jeszcze załadowana w PlayerContext
 // (np. wejście na /player bez wcześniejszego playTrack). Pozwala UI nie pęknąć
@@ -71,8 +72,8 @@ export default function Player() {
   const [frame, setFrame] = useState(0);
   const panelRef = useRef(null);
 
-  // Chapters i transcript pochodzą z metadata aktualnej ścieżki (src/data/tracks.js).
-  // Tracki bez tych pól pokazują fallback "Transkrypt wkrótce" / brak listy rozdziałów.
+  // Chapters i transcript pochodzą z detalu odcinka (catalog API, dociągany przez
+  // PlayerContext → useEpisode). Tracki bez tych pól pokazują fallback "wkrótce".
   // useMemo żeby empty-array fallback miał stabilną referencję (deps innych useMemo).
   const CHAPTERS = useMemo(() => current?.chapters ?? [], [current]);
   const TRANSCRIPT = useMemo(() => current?.transcript ?? [], [current]);
@@ -165,10 +166,10 @@ export default function Player() {
 
         <div className="absolute left-1/2 top-1/2 z-[5] w-full -translate-x-1/2 -translate-y-1/2 px-4 text-center sm:px-5 lg:px-10">
           <div className="mb-3 flex items-center justify-center gap-2 font-mono text-[10px] uppercase tracking-mono text-red before:h-px before:w-5 before:bg-red before:shadow-[0_0_6px_#ff2a2a] before:content-[''] after:h-px after:w-5 after:bg-red after:shadow-[0_0_6px_#ff2a2a] after:content-[''] sm:mb-4 sm:gap-3 sm:text-[11px] sm:before:w-8 sm:after:w-8">
-            {t("player.ep_num", "Sezon 03 · Odcinek 12 · Finał")}
+            {current?.number ? composeEpisodeMeta(current) : t("player.ep_num", "Sezon 03 · Odcinek 12 · Finał")}
           </div>
           <h1 className="mb-3 font-serif text-[clamp(28px,6vw,80px)] font-medium leading-[0.95] tracking-[-0.02em] sm:mb-4 sm:text-[clamp(36px,5vw,80px)]">
-            {t("playerpage.title_p1", "Mgła nad")} <em className="italic text-ink-1">{t("playerpage.title_em", "Wisłoujściem")}</em>
+            {current?.title || t("playerpage.title_p1", "Mgła nad")} {current?.em ? <em className="italic text-ink-1">{current.em}</em> : <em className="italic text-ink-1">{t("playerpage.title_em", "Wisłoujściem")}</em>}
           </h1>
           {currentCh && (
             <div className="mt-4 font-serif text-[16px] italic text-ink-1 sm:mt-8 sm:text-[22px]">

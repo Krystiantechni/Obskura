@@ -2,7 +2,8 @@ import { useTranslation } from "react-i18next";
 import WaveformBar from "../ui/WaveformBar";
 import { Play, Pause, Prev, Next, Heart, HeartFill, Volume, Share, List } from "../ui/Icons";
 import { usePlayer } from "../../context/PlayerContext";
-import { HERO_TRACK } from "../../data/tracks";
+import { useEpisodes, useGenres } from "../../hooks/useCatalog";
+import { composeCardMeta } from "../../lib/catalogMap";
 
 function fmt(sec) {
   if (!Number.isFinite(sec)) return "00:00";
@@ -20,7 +21,10 @@ export default function AudioPlayerSection() {
     hasNext, hasPrev, playTrack, toggle, next, prev, seek, toggleFavorite, isFavorite,
   } = usePlayer();
 
-  const track = current ?? HERO_TRACK;
+  const { episodes } = useEpisodes();
+  const { genreLabels } = useGenres();
+  const track = current ?? episodes[0] ?? null;
+  if (!track) return null;
   const liked = isFavorite(track.id);
   const onPlay = () => (current?.id === track.id ? toggle() : playTrack(track));
 
@@ -41,7 +45,7 @@ export default function AudioPlayerSection() {
             <div className="mb-1 font-serif text-[22px] font-medium leading-tight text-ink-0">
               {track.title} {track.em && <em className="italic text-ink-1">{track.em}</em>}
             </div>
-            <div className="text-[11px] text-ink-2">{track.meta}</div>
+            <div className="text-[11px] text-ink-2">{track.meta ?? composeCardMeta(track, genreLabels)}</div>
           </div>
         </div>
 
