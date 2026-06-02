@@ -5,19 +5,17 @@ import { getToken, setToken, clearToken } from "../lib/authToken.js";
 
 const AuthContext = createContext(null);
 
-// status: "idle" | "loading" | "authed" | "guest"
+// status: "loading" | "authed" | "guest"
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [status, setStatus] = useState("idle");
+  // Init leniwy z obecności tokenu — bez synchronicznego setState w efekcie
+  // (reguła react-hooks/set-state-in-effect). Token jest → hydratujemy ("loading"), inaczej "guest".
+  const [status, setStatus] = useState(() => (getToken() ? "loading" : "guest"));
 
-  // Hydratacja sesji po tokenie na mount.
+  // Hydratacja sesji po tokenie na mount (tylko gdy token istnieje).
   useEffect(() => {
+    if (!getToken()) return undefined;
     let cancelled = false;
-    if (!getToken()) {
-      setStatus("guest");
-      return undefined;
-    }
-    setStatus("loading");
     authApi
       .me()
       .then((u) => {
@@ -95,6 +93,7 @@ export function AuthProvider({ children }) {
 
 AuthProvider.propTypes = { children: PropTypes.node };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth musi być użyty wewnątrz <AuthProvider>");
