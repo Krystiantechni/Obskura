@@ -5,48 +5,64 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='FaqCategory',
+            name="FaqCategory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=200, verbose_name='nazwa')),
-                ('slug', models.SlugField(unique=True, verbose_name='slug')),
-                ('order', models.PositiveIntegerField(default=0, verbose_name='kolejnosc')),
-                ('is_active', models.BooleanField(default=True, verbose_name='aktywna')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=200, verbose_name="nazwa")),
+                ("slug", models.SlugField(unique=True, verbose_name="slug")),
+                ("order", models.PositiveIntegerField(default=0, verbose_name="kolejnosc")),
+                ("is_active", models.BooleanField(default=True, verbose_name="aktywna")),
             ],
             options={
-                'verbose_name': 'kategoria FAQ',
-                'verbose_name_plural': 'kategorie FAQ',
-                'ordering': ['order'],
-                'abstract': False,
+                "verbose_name": "kategoria FAQ",
+                "verbose_name_plural": "kategorie FAQ",
+                "ordering": ["order"],
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='FaqItem',
+            name="FaqItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('question', models.CharField(max_length=500, verbose_name='pytanie')),
-                ('answer', models.TextField(verbose_name='odpowiedz')),
-                ('order', models.PositiveIntegerField(default=0, verbose_name='kolejnosc')),
-                ('is_active', models.BooleanField(default=True, verbose_name='aktywny')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='items', to='support.faqcategory', verbose_name='kategoria')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("question", models.CharField(max_length=500, verbose_name="pytanie")),
+                ("answer", models.TextField(verbose_name="odpowiedz")),
+                ("order", models.PositiveIntegerField(default=0, verbose_name="kolejnosc")),
+                ("is_active", models.BooleanField(default=True, verbose_name="aktywny")),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="items",
+                        to="support.faqcategory",
+                        verbose_name="kategoria",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'pytanie FAQ',
-                'verbose_name_plural': 'pytania FAQ',
-                'ordering': ['order'],
-                'abstract': False,
+                "verbose_name": "pytanie FAQ",
+                "verbose_name_plural": "pytania FAQ",
+                "ordering": ["order"],
+                "abstract": False,
             },
         ),
     ]

@@ -4,51 +4,76 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='PressItem',
+            name="PressItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('source', models.CharField(max_length=200, verbose_name='źródło')),
-                ('quote', models.TextField(verbose_name='cytat')),
-                ('author', models.CharField(blank=True, max_length=200, verbose_name='autor')),
-                ('url', models.CharField(blank=True, max_length=500, verbose_name='URL')),
-                ('order', models.PositiveIntegerField(default=0, verbose_name='kolejność')),
-                ('is_active', models.BooleanField(default=True, verbose_name='aktywny')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("source", models.CharField(max_length=200, verbose_name="źródło")),
+                ("quote", models.TextField(verbose_name="cytat")),
+                ("author", models.CharField(blank=True, max_length=200, verbose_name="autor")),
+                ("url", models.CharField(blank=True, max_length=500, verbose_name="URL")),
+                ("order", models.PositiveIntegerField(default=0, verbose_name="kolejność")),
+                ("is_active", models.BooleanField(default=True, verbose_name="aktywny")),
             ],
             options={
-                'verbose_name': 'wzmianka prasowa',
-                'verbose_name_plural': 'wzmianki prasowe',
-                'ordering': ['order'],
-                'abstract': False,
+                "verbose_name": "wzmianka prasowa",
+                "verbose_name_plural": "wzmianki prasowe",
+                "ordering": ["order"],
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='LegalDoc',
+            name="LegalDoc",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('kind', models.CharField(choices=[('prywatnosc', 'Polityka prywatności'), ('regulamin', 'Regulamin'), ('cookies', 'Cookies')], max_length=20, verbose_name='rodzaj')),
-                ('version', models.CharField(max_length=30, verbose_name='wersja')),
-                ('body', models.TextField(verbose_name='treść')),
-                ('published_at', models.DateTimeField(verbose_name='data publikacji')),
-                ('is_current', models.BooleanField(default=False, verbose_name='bieżąca')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "kind",
+                    models.CharField(
+                        choices=[
+                            ("prywatnosc", "Polityka prywatności"),
+                            ("regulamin", "Regulamin"),
+                            ("cookies", "Cookies"),
+                        ],
+                        max_length=20,
+                        verbose_name="rodzaj",
+                    ),
+                ),
+                ("version", models.CharField(max_length=30, verbose_name="wersja")),
+                ("body", models.TextField(verbose_name="treść")),
+                ("published_at", models.DateTimeField(verbose_name="data publikacji")),
+                ("is_current", models.BooleanField(default=False, verbose_name="bieżąca")),
             ],
             options={
-                'verbose_name': 'dokument prawny',
-                'verbose_name_plural': 'dokumenty prawne',
-                'ordering': ['-created_at'],
-                'abstract': False,
-                'constraints': [models.UniqueConstraint(condition=models.Q(('is_current', True)), fields=('kind',), name='uniq_current_legaldoc_per_kind')],
+                "verbose_name": "dokument prawny",
+                "verbose_name_plural": "dokumenty prawne",
+                "ordering": ["-created_at"],
+                "abstract": False,
+                "constraints": [
+                    models.UniqueConstraint(
+                        condition=models.Q(("is_current", True)),
+                        fields=("kind",),
+                        name="uniq_current_legaldoc_per_kind",
+                    )
+                ],
             },
         ),
     ]

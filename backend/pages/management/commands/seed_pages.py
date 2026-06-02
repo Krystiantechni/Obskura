@@ -65,8 +65,7 @@ _PRESS_DATA = [
     {
         "source": "VICE POLSKA · 12.03.2026",
         "quote": (
-            'Nie spalem trzy dni po "Pacjentce 23". '
-            "Cos w tym dzwieku jest po prostu nieludzkie."
+            'Nie spalem trzy dni po "Pacjentce 23". ' "Cos w tym dzwieku jest po prostu nieludzkie."
         ),
         "author": "— PIOTR KARDAS · KULTURA",
         "url": "",

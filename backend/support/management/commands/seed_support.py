@@ -14,13 +14,11 @@ _FAQ_ITEMS = [
     {
         "category_slug": "tech",
         "order": 0,
-        "question": (
-            "Dzwiek zacina sie / spada jakosc w srodku odcinka. Co robic?"
-        ),
+        "question": ("Dzwiek zacina sie / spada jakosc w srodku odcinka. Co robic?"),
         "answer": (
             "Najczesciej to slaba siec. Sprobuj pobrac odcinek w aplikacji"
             " do offline (ikona v obok tytulu). Jesli sluchasz na komputerze,"
-            " sprawdz w ustawieniach jakosc 320 kbps i wylacz \"Adaptive\"."
+            ' sprawdz w ustawieniach jakosc 320 kbps i wylacz "Adaptive".'
             " Jezeli problem trwa po przelaczeniu na siec komorkowa"
             " -- daj nam znac, sprawdzimy CDN twojego regionu."
         ),
@@ -34,7 +32,7 @@ _FAQ_ITEMS = [
             " Na glośnikach efekt zanika."
             " Jesli uzywasz sluchawek i wciaz slyszysz zwykle stereo:"
             " w ustawieniach iOS wylącz Spatial Audio (Apple),"
-            " a w Androidzie Dolby Atmos -- one \"nadpisuja\" nasz mix."
+            ' a w Androidzie Dolby Atmos -- one "nadpisuja" nasz mix.'
         ),
     },
     {
@@ -57,7 +55,7 @@ _FAQ_ITEMS = [
         "answer": (
             "Wejdz w Konto -> Subskrypcja -> Anuluj."
             " Jedno klikniecie."
-            " Nie pytamy \"jestes pewien?\"."
+            ' Nie pytamy "jestes pewien?".'
             " Nie pokazujemy ekranow z prosba o zostanie."
             " Dostep masz do konca oplaconego okresu."
         ),
@@ -90,7 +88,7 @@ _FAQ_ITEMS = [
         "order": 0,
         "question": "Zapomnialem hasla. Jak je zresetowac?",
         "answer": (
-            "Na ekranie logowania kliknij \"Zapomnialem hasla\"."
+            'Na ekranie logowania kliknij "Zapomnialem hasla".'
             " Link resetujacy wygasa po 30 minutach (bezpieczenstwo)."
             " Jesli e-mail nie przychodzi w 5 minut"
             " -- sprawdz SPAM, a potem napisz do nas."
@@ -129,7 +127,7 @@ _FAQ_ITEMS = [
             " Wiekszosc to fikcja, ale czesto inspirowana doniesieniami"
             " prasowymi lub dokumentami."
             " Kazdy odcinek ma przypisany rodzaj"
-            " (\"oryginalna fikcja\", \"inspirowane faktami\", \"dokument\")."
+            ' ("oryginalna fikcja", "inspirowane faktami", "dokument").'
         ),
     },
     {
@@ -191,9 +189,7 @@ class Command(BaseCommand):
             try:
                 cat = FaqCategory.objects.get(slug=data["category_slug"])
             except FaqCategory.DoesNotExist:
-                self.stderr.write(
-                    f"Category slug '{data['category_slug']}' not found, skipping."
-                )
+                self.stderr.write(f"Category slug '{data['category_slug']}' not found, skipping.")
                 continue
 
             item, created = FaqItem.objects.get_or_create(
@@ -209,6 +205,4 @@ class Command(BaseCommand):
                 item.question = data["question"]
                 item.answer = data["answer"]
                 item.is_active = True
-                item.save(
-                    update_fields=["question", "answer", "is_active", "updated_at"]
-                )
+                item.save(update_fields=["question", "answer", "is_active", "updated_at"])

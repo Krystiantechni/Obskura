@@ -4,30 +4,49 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('support', '0001_initial'),
+        ("support", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Ticket',
+            name="Ticket",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=60, verbose_name='imie')),
-                ('email', models.EmailField(max_length=254, verbose_name='email')),
-                ('category', models.CharField(max_length=40, verbose_name='kategoria')),
-                ('message', models.TextField(verbose_name='wiadomosc')),
-                ('status', models.CharField(choices=[('open', 'Otwarte'), ('in_progress', 'W toku'), ('resolved', 'Rozwiazane'), ('closed', 'Zamkniete')], default='open', max_length=20, verbose_name='status')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_index=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=60, verbose_name="imie")),
+                ("email", models.EmailField(max_length=254, verbose_name="email")),
+                ("category", models.CharField(max_length=40, verbose_name="kategoria")),
+                ("message", models.TextField(verbose_name="wiadomosc")),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("open", "Otwarte"),
+                            ("in_progress", "W toku"),
+                            ("resolved", "Rozwiazane"),
+                            ("closed", "Zamkniete"),
+                        ],
+                        default="open",
+                        max_length=20,
+                        verbose_name="status",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'zgloszenie',
-                'verbose_name_plural': 'zgloszenia',
-                'ordering': ['-created_at'],
-                'abstract': False,
-                'indexes': [models.Index(fields=['status', '-created_at'], name='ticket_status_created_idx')],
+                "verbose_name": "zgloszenie",
+                "verbose_name_plural": "zgloszenia",
+                "ordering": ["-created_at"],
+                "abstract": False,
+                "indexes": [
+                    models.Index(fields=["status", "-created_at"], name="ticket_status_created_idx")
+                ],
             },
         ),
     ]

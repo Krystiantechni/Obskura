@@ -24,12 +24,15 @@ def test_create_ticket_returns_201(client, monkeypatch):
     calls = []
     monkeypatch.setattr("core.email.send_email", lambda **kw: calls.append(kw) or "eid")
 
-    resp = _post(client, {
-        "name": "Krystian",
-        "email": "user@example.com",
-        "category": "tech",
-        "message": "Hello, I have a problem.",
-    })
+    resp = _post(
+        client,
+        {
+            "name": "Krystian",
+            "email": "user@example.com",
+            "category": "tech",
+            "message": "Hello, I have a problem.",
+        },
+    )
 
     assert resp.status_code == 201
     assert resp.data["detail"] == "Zgloszenie przyjete."
@@ -39,12 +42,15 @@ def test_create_ticket_returns_201(client, monkeypatch):
 def test_create_ticket_saves_db_row(client, monkeypatch):
     monkeypatch.setattr("core.email.send_email", lambda **kw: "eid")
 
-    _post(client, {
-        "name": "Krystian",
-        "email": "user@example.com",
-        "category": "billing",
-        "message": "I need help with billing.",
-    })
+    _post(
+        client,
+        {
+            "name": "Krystian",
+            "email": "user@example.com",
+            "category": "billing",
+            "message": "I need help with billing.",
+        },
+    )
 
     assert Ticket.objects.count() == 1
     t = Ticket.objects.first()
@@ -59,12 +65,15 @@ def test_create_ticket_sends_ack_to_user(client, monkeypatch):
     calls = []
     monkeypatch.setattr("core.email.send_email", lambda **kw: calls.append(kw) or "eid")
 
-    _post(client, {
-        "name": "Ola",
-        "email": "ola@example.com",
-        "category": "tech",
-        "message": "Something is broken here.",
-    })
+    _post(
+        client,
+        {
+            "name": "Ola",
+            "email": "ola@example.com",
+            "category": "tech",
+            "message": "Something is broken here.",
+        },
+    )
 
     ack = next((c for c in calls if c["to"] == "ola@example.com"), None)
     assert ack is not None, "ack email to user not sent"
@@ -77,12 +86,15 @@ def test_create_ticket_sends_notify_when_support_email_set(client, monkeypatch, 
     calls = []
     monkeypatch.setattr("core.email.send_email", lambda **kw: calls.append(kw) or "eid")
 
-    _post(client, {
-        "name": "Jan",
-        "email": "jan@example.com",
-        "category": "general",
-        "message": "This is a test message.",
-    })
+    _post(
+        client,
+        {
+            "name": "Jan",
+            "email": "jan@example.com",
+            "category": "general",
+            "message": "This is a test message.",
+        },
+    )
 
     notify = next((c for c in calls if c["to"] == "support@obskura.audio"), None)
     assert notify is not None, "notify email not sent to SUPPORT_NOTIFY_EMAIL"
@@ -95,12 +107,15 @@ def test_create_ticket_no_notify_when_support_email_empty(client, monkeypatch, s
     calls = []
     monkeypatch.setattr("core.email.send_email", lambda **kw: calls.append(kw) or "eid")
 
-    _post(client, {
-        "name": "Jan",
-        "email": "jan@example.com",
-        "category": "general",
-        "message": "This is a test message.",
-    })
+    _post(
+        client,
+        {
+            "name": "Jan",
+            "email": "jan@example.com",
+            "category": "general",
+            "message": "This is a test message.",
+        },
+    )
 
     # Only the ack should be sent (1 call), no notify
     assert len(calls) == 1
@@ -116,12 +131,15 @@ def test_create_ticket_no_notify_when_support_email_empty(client, monkeypatch, s
 def test_name_too_short_returns_400(client, monkeypatch):
     monkeypatch.setattr("core.email.send_email", lambda **kw: "eid")
 
-    resp = _post(client, {
-        "name": "K",  # < 2 chars
-        "email": "user@example.com",
-        "category": "tech",
-        "message": "Hello, I have a problem.",
-    })
+    resp = _post(
+        client,
+        {
+            "name": "K",  # < 2 chars
+            "email": "user@example.com",
+            "category": "tech",
+            "message": "Hello, I have a problem.",
+        },
+    )
 
     assert resp.status_code == 400
 
@@ -130,12 +148,15 @@ def test_name_too_short_returns_400(client, monkeypatch):
 def test_message_too_short_returns_400(client, monkeypatch):
     monkeypatch.setattr("core.email.send_email", lambda **kw: "eid")
 
-    resp = _post(client, {
-        "name": "Krystian",
-        "email": "user@example.com",
-        "category": "tech",
-        "message": "Short",  # < 10 chars
-    })
+    resp = _post(
+        client,
+        {
+            "name": "Krystian",
+            "email": "user@example.com",
+            "category": "tech",
+            "message": "Short",  # < 10 chars
+        },
+    )
 
     assert resp.status_code == 400
 
@@ -144,12 +165,15 @@ def test_message_too_short_returns_400(client, monkeypatch):
 def test_bad_email_returns_400(client, monkeypatch):
     monkeypatch.setattr("core.email.send_email", lambda **kw: "eid")
 
-    resp = _post(client, {
-        "name": "Krystian",
-        "email": "not-an-email",
-        "category": "tech",
-        "message": "Hello, I have a problem.",
-    })
+    resp = _post(
+        client,
+        {
+            "name": "Krystian",
+            "email": "not-an-email",
+            "category": "tech",
+            "message": "Hello, I have a problem.",
+        },
+    )
 
     assert resp.status_code == 400
 
@@ -158,12 +182,15 @@ def test_bad_email_returns_400(client, monkeypatch):
 def test_empty_category_returns_400(client, monkeypatch):
     monkeypatch.setattr("core.email.send_email", lambda **kw: "eid")
 
-    resp = _post(client, {
-        "name": "Krystian",
-        "email": "user@example.com",
-        "category": "",  # blank
-        "message": "Hello, I have a problem.",
-    })
+    resp = _post(
+        client,
+        {
+            "name": "Krystian",
+            "email": "user@example.com",
+            "category": "",  # blank
+            "message": "Hello, I have a problem.",
+        },
+    )
 
     assert resp.status_code == 400
 
