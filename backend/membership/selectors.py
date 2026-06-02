@@ -111,6 +111,22 @@ def entitlement(*, user):
     return {"full_access": False, "plan_code": PlanCode.FREE, "monthly_quota": 20}
 
 
+def has_klan_access(*, user):
+    """Pełny dostęp do treści Klanu: aktywna subskrypcja planu KLAN LUB aktywny
+    patronat bieżącego sezonu (patron dostaje perki klanu). Solo NIE wystarcza."""
+    if user is None or not getattr(user, "is_authenticated", False):
+        return False
+    sub = active_subscription(user=user)
+    if sub is not None and sub.plan.code == PlanCode.KLAN:
+        return True
+    season = current_season()
+    if season is not None:
+        return Patronage.objects.filter(
+            user=user, tier__season=season, status=PatronageStatus.PAID
+        ).exists()
+    return False
+
+
 def can_access_audio(*, user, episode):
     """Czysty read (bez mutacji) — czy user widzi audio_url odcinka (spec §5/§6)."""
     ent = entitlement(user=user)

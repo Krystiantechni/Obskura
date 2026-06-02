@@ -151,9 +151,9 @@ Wszystkie listy: paginacja + `ETag`/`Last-Modified` dla cache. Walidacja seriali
 - [x] **B2 — Catalog (read-heavy):** Season/Genre/Creator/Episode, filtry, cursor-pagination, cache, indeksy. Seed z istniejących danych frontu.
 - [x] **B3 — Playback:** progress/favorites/queue/history (gated premium).
 - [x] **B4 — Membership:** plany Klubu (free/solo/klan), tiery Patroni (per sezon, seat-cap, anonimowość), subskrypcje ze **Stripe test mode** + trial 30 dni, webhook, oraz tier-gating premium + quota free 20/mc zastępujące auth-only z B3. Spec + plan w `docs/superpowers/`. _(do żywego flow potrzebny `sk_test_…`/`whsec_…` w obskura-media)_
-- [~] **B5 — Community + Events** (rozbite na dwa shippable podsystemy):
+- [x] **B5 — Community + Events** (rozbite na dwa shippable podsystemy):
   - [x] **B5a — Community (forum):** Category/Thread/Post + reakcje, **pełny pipeline moderacji** (statusy postów, zgłoszenia bez auto-ukrywania, rola `is_moderator`, audit log), widoczność (autor widzi swoje pending/flagged), cursor pagination, cache. Spec + plan w `docs/superpowers/`.
-  - [ ] **B5b — Events:** wydarzenia online/live/klan, zapisy + capacity + waitlist, klan-gating przez membership, płatne bilety przez Stripe.
+  - [x] **B5b — Events:** wydarzenia online/live/klan, zapisy + capacity + waitlist, **klan-gating** przez membership (`has_klan_access`), **płatne bilety przez Stripe** (reuse seam + webhook dispatch po `metadata`), nagrania gated (klub/klan). Spec + plan w `docs/superpowers/`.
 - [ ] **B6 — Support + Newsletter + Pages:** FAQ/tickety (Resend), subskrypcje/kampanie, CMS prawne/prasa.
 - [ ] **B7 — Real-time + async:** Channels (live stream status, push), Celery (maile, narracja, statystyki).
 - [ ] **B8 — Integracja frontu:** podmiana `apiClient` na `/api/v1/`, CORS, env `VITE_API_URL`, migracja `api/*` Vercel.
